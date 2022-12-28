@@ -55,7 +55,7 @@ impl AppEnv {
             Difficulty::Easy => {
                 AppEnv {
                     total_time: 120,
-                    sleep_time: 16,
+                    sleep_time: 15,
                     total_iteration: 100,
                     modulation_threshold: 10,
                 }
@@ -63,7 +63,7 @@ impl AppEnv {
             Difficulty::Hell => {
                 AppEnv {
                     total_time: 120,
-                    sleep_time: 6,
+                    sleep_time: 15,
                     total_iteration: 100,
                     modulation_threshold: 4,
                 }
