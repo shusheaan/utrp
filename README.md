@@ -7,7 +7,3 @@ interactive progression trainer for **ALL** harmonic dynamics, [midi](https://wi
 - minimum sequence to cover all seventh chord changes with inversions
 - detour to the target chord: (substitute) secondary dominant and 2-5-1
 - all modes and modulations: borrowed mode, shared chords, diminished sevenths
-
-## guitar ver
-- skip midi kb input/output selection step
-- score kb input for each chord

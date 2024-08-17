@@ -31,18 +31,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let input_rx = new_input_thread()?;
     let (msg_tx, msg_rx) = mpsc::channel();
 
-    let midi = MIDI::new()?;
-    let mut conn_out = midi.output.connect(&midi.output_port, "")?;
-    let _conn_in = midi.input.connect(
-        &midi.input_port,
-        "",
-        move |_, message, _| {
-            msg_tx.send(message[1]).unwrap();
-        },
-        (),
-    )?;
-
-    match App::new(input_rx)?.run(msg_rx) {
+    match App::new(input_rx, msg_tx)?.run(msg_rx) {
         Ok(duration) => {
             info!("run successful in {:?}", duration);
             exit(exits::SUCCESS);

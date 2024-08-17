@@ -30,25 +30,25 @@ impl fmt::Display for KeyType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             KeyType::Ionian => {
-                write!(f, "{}", "Ionian".green().bold().italic())
+                write!(f, "{}", "Ionian/1".green().bold().italic())
             }
             KeyType::Dorian => {
-                write!(f, "{}", "Dorian".blue().bold().italic())
+                write!(f, "{}", "Dorian/2".blue().bold().italic())
             }
             KeyType::Phrygian => {
-                write!(f, "{}", "Phrygian".cyan().bold().italic())
+                write!(f, "{}", "Phrygian/3".cyan().bold().italic())
             }
             KeyType::Lydian => {
-                write!(f, "{}", "Lydian".green().bold().italic())
+                write!(f, "{}", "Lydian/4".green().bold().italic())
             }
             KeyType::Mixolydian => {
-                write!(f, "{}", "Mixolydian".yellow().bold().italic())
+                write!(f, "{}", "Mixolydian/5".yellow().bold().italic())
             }
             KeyType::Aeolian => {
-                write!(f, "{}", "Aeolian".blue().bold().italic())
+                write!(f, "{}", "Aeolian/6".blue().bold().italic())
             }
             KeyType::Locrian => {
-                write!(f, "{}", "Locrian".purple().bold().italic())
+                write!(f, "{}", "Locrian/7".purple().bold().italic())
             }
         }
     }
@@ -61,7 +61,7 @@ impl KeyType {
         let prob = match difficulty {
             Difficulty::Easy => [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0],
             Difficulty::Hell => [1.0; 7],
-            Difficulty::Guitar => [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0],
+            Difficulty::Guitar => [1.0; 7],
         };
 
         let mnm = Categorical::new(&prob)?;
@@ -128,7 +128,7 @@ impl Key {
         let prob_mode = match difficulty {
             Difficulty::Easy => [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0],
             Difficulty::Hell => [1.0; 7],
-            Difficulty::Guitar => [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0],
+            Difficulty::Guitar => [1.0; 7],
         };
 
         let mnm_mode = Categorical::new(&prob_mode)?;

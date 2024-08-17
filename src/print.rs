@@ -22,7 +22,7 @@ pub(super) fn intro() {
         "*..-*-.-*-`*-".yellow().bold(),
         "*-**---``-..-".green().bold(),
         "U-TR-P".cyan().bold(),
-        "v0.1.0".purple().bold(),
+        "v0.2.0".purple().bold(),
         "by".yellow(),
         "@shusheaan".green().bold(),
         "-*-*-..-`.`-".blue().bold(),
@@ -64,13 +64,14 @@ pub(super) fn select_difficulty() {
                 {}
                 {}
 
-                {} / {}
+                {} / {} / {}
         ",
-        "-----------------".cyan().bold(),
-        "select difficulty".cyan().bold(),
-        "-----------------".cyan().bold(),
+        "----------------------".cyan().bold(),
+        "select mode/difficulty".cyan().bold(),
+        "----------------------".cyan().bold(),
         "[e]asy".green().bold(),
         "[h]ell".purple().bold(),
+        "[g]uitar".yellow().bold(),
     );
 }
 
@@ -81,9 +82,9 @@ pub(super) fn easy_selected() {
                 {}
                 {}
         ",
-        "--------------------------".green().bold(),
-        "[e]asy difficulty selected".green().bold(),
-        "--------------------------".green().bold(),
+        "-------------------------------".green().bold(),
+        "[e]asy mode/difficulty selected".green().bold(),
+        "-------------------------------".green().bold(),
     );
 }
 
@@ -94,9 +95,9 @@ pub(super) fn hell_selected() {
                 {}
                 {}
     ",
-        "--------------------------".purple().bold(),
-        "[h]ell difficulty selected".purple().bold(),
-        "--------------------------".purple().bold(),
+        "-------------------------------".purple().bold(),
+        "[h]ell mode/difficulty selected".purple().bold(),
+        "-------------------------------".purple().bold(),
     );
 }
 
@@ -107,9 +108,9 @@ pub(super) fn guitar_selected() {
                 {}
                 {}
     ",
-        "--------------------------".purple().bold(),
-        "[g]uitar difficulty selected".purple().bold(),
-        "--------------------------".purple().bold(),
+        "---------------------------------".purple().bold(),
+        "[g]uitar mode/difficulty selected".purple().bold(),
+        "---------------------------------".purple().bold(),
     );
 }
 
@@ -211,6 +212,21 @@ pub(super) fn game_timeout() {
     );
 }
 
+pub(super) fn manual_overwrite() {
+    println!(
+        "
+
+                {}
+                {}
+                {}
+
+        ",
+        "----------------".red().bold(),
+        "manual overwrite".red().bold(),
+        "----------------".red().bold(),
+    );
+}
+
 pub(super) fn kb_check(l: usize) {
     println!(
         "
@@ -244,7 +260,7 @@ pub(super) fn summary(duration: u64, difficulty: &Difficulty, score: i32) {
         "-------".cyan().bold(),
         "time(s)".cyan().bold(),
         duration,
-        "difficulty".cyan().bold(),
+        "mode/difficulty".cyan().bold(),
         difficulty,
         "score".cyan().bold(),
         score,

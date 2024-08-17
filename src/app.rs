@@ -12,7 +12,7 @@ use std::{
 
 use crate::{
     chord::{Chord, ChordType, Inversion},
-    input::AppSignal,
+    input::{AppSignal, MIDI},
     key::{Key, KeyType},
     modulation::{DeTour, Modulation},
     print,
@@ -68,13 +68,13 @@ impl AppEnv {
             },
             Difficulty::Hell => AppEnv {
                 total_time: 120,
-                sleep_time: 15,
+                sleep_time: 10,
                 total_iteration: 100,
                 modulation_threshold: 4,
             },
             Difficulty::Guitar => AppEnv {
                 total_time: 120,
-                sleep_time: 15,
+                sleep_time: 10,
                 total_iteration: 100,
                 modulation_threshold: 4,
             },
@@ -134,9 +134,24 @@ impl App {
         difficulty
     }
 
-    pub fn new(input_rx: Receiver<AppSignal>) -> anyhow::Result<App> {
-        print::select_difficulty();
+    fn init_midi(input_rx: &Receiver<AppSignal>, msg_tx: Sender<u8>) -> Result<(), Box<dyn Error>> {
+        let midi = MIDI::new()?;
+        let mut conn_out = midi.output.connect(&midi.output_port, "")?;
+        let _conn_in = midi.input.connect(
+            &midi.input_port,
+            "",
+            move |_, message, _| {
+                msg_tx.send(message[1]).unwrap();
+            },
+            (),
+        )?;
+        Ok(())
+    }
 
+    pub fn new(input_rx: Receiver<AppSignal>, msg_tx: Sender<u8>) -> Result<App, Box<dyn Error>> {
+        Self::init_midi(&input_rx, msg_tx);
+
+        print::select_difficulty();
         let difficulty = Self::select_difficulty(&input_rx);
         let env = AppEnv::new(&difficulty);
 
@@ -288,6 +303,20 @@ impl App {
                     if let Ok(signal) = self.input_rx.try_recv() {
                         if let AppSignal::Quit = signal {
                             break 'measure;
+                        }
+                        if let AppSignal::Next = signal {
+                            let next_end = SystemTime::now();
+                            let next_duration = next_end.duration_since(chord_match_start)?;
+
+                            if next_duration > Duration::from_secs(8) {
+                                self.score += 0
+                            } else {
+                                let secs = (8 - next_duration.as_secs());
+                                self.score += secs.pow(4) as i32;
+                            }
+                            print::manual_overwrite();
+                            print::score(self.score);
+                            continue 'measure;
                         }
                     }
 
