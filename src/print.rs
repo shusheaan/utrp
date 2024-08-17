@@ -22,7 +22,7 @@ pub(super) fn intro() {
         "*..-*-.-*-`*-".yellow().bold(),
         "*-**---``-..-".green().bold(),
         "U-TR-P".cyan().bold(),
-        "v0.2.0".purple().bold(),
+        "v0.2.1".purple().bold(),
         "by".yellow(),
         "@shusheaan".green().bold(),
         "-*-*-..-`.`-".blue().bold(),
@@ -38,9 +38,9 @@ pub(super) fn select_input() {
                 {}
                 {}
         ",
-        "------------".cyan().bold(),
-        "select input".cyan().bold(),
-        "------------".cyan().bold(),
+        "----------------------------".cyan().bold(),
+        "select input (enter to skip)".cyan().bold(),
+        "----------------------------".cyan().bold(),
     );
 }
 
@@ -174,6 +174,9 @@ pub(super) fn score(score: i32) {
                 {}
                 {} {}
                 {}
+
+
+
         ",
         "-----".blue().bold(),
         "score".blue().bold(),
@@ -209,21 +212,6 @@ pub(super) fn game_timeout() {
         "------------".red().bold(),
         "game timeout".red().bold(),
         "------------".red().bold(),
-    );
-}
-
-pub(super) fn manual_overwrite() {
-    println!(
-        "
-
-                {}
-                {}
-                {}
-
-        ",
-        "----------------".red().bold(),
-        "manual overwrite".red().bold(),
-        "----------------".red().bold(),
     );
 }
 

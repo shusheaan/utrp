@@ -263,7 +263,7 @@ impl App {
 
     pub fn run(&mut self, msg_rx: Receiver<u8>) -> anyhow::Result<Duration> {
         print::get_ready();
-        thread::sleep(Duration::from_secs(2));
+        thread::sleep(Duration::from_millis(1000));
         print::start();
 
         let start = SystemTime::now();
@@ -308,13 +308,15 @@ impl App {
                             let next_end = SystemTime::now();
                             let next_duration = next_end.duration_since(chord_match_start)?;
 
+                            let mut new_score = 0;
                             if next_duration > Duration::from_secs(8) {
-                                self.score += 0
+                                new_score = 0;
                             } else {
                                 let secs = (8 - next_duration.as_secs());
-                                self.score += secs.pow(4) as i32;
+                                new_score = secs.pow(4) as i32;
                             }
-                            print::manual_overwrite();
+                            if new_score > 4000 {new_score = 0}
+                            self.score += new_score;
                             print::score(self.score);
                             continue 'measure;
                         }

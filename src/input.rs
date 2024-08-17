@@ -39,7 +39,7 @@ pub(super) fn new_input_thread() -> anyhow::Result<Receiver<AppSignal>> {
                     if let KeyCode::Char('g') = key.code {
                         input_tx.send(AppSignal::Guitar);
                     }
-                    if let KeyCode::Char('n') = key.code {
+                    if let KeyCode::Enter = key.code {
                         input_tx.send(AppSignal::Next);
                     }
                 }
