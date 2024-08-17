@@ -62,19 +62,19 @@ impl AppEnv {
         match difficulty {
             Difficulty::Easy => AppEnv {
                 total_time: 120,
-                sleep_time: 15,
+                sleep_time: 30,
                 total_iteration: 100,
                 modulation_threshold: 10,
             },
             Difficulty::Hell => AppEnv {
                 total_time: 120,
-                sleep_time: 10,
+                sleep_time: 30,
                 total_iteration: 100,
                 modulation_threshold: 4,
             },
             Difficulty::Guitar => AppEnv {
                 total_time: 120,
-                sleep_time: 10,
+                sleep_time: 30,
                 total_iteration: 100,
                 modulation_threshold: 4,
             },
