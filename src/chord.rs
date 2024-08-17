@@ -1,21 +1,18 @@
-use std::{
-    fmt,
-    error::Error,
-};
+use colored::*;
+use log::info;
 use rand::{
-    Rng,
-    prelude::*,
     distributions::{Distribution, Standard},
+    prelude::*,
+    Rng,
 };
 use rand_chacha::ChaCha8Rng;
 use statrs::distribution::Categorical;
-use log::info;
-use colored::*;
+use std::{error::Error, fmt};
 
 use crate::{
     app::Difficulty,
     key::{Key, KeyType},
-    tone::{Tone, Interval},
+    tone::{Interval, Tone},
 };
 
 #[derive(Debug, Clone)]
@@ -30,30 +27,68 @@ pub(super) enum ChordType {
 impl fmt::Display for ChordType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            ChordType::Major7 => {write!(f, "{}", "M7".green().bold())},
-            ChordType::Minor7 => {write!(f, "{}", "m7".blue().bold())},
-            ChordType::Dominant7 => {write!(f, "{}", "7".yellow().bold())},
-            ChordType::HalfDiminished7 => {write!(f, "{}", "m7b5".purple().bold())},
-            ChordType::Diminished7 => {write!(f, "{}", "dim7".red().bold())},
+            ChordType::Major7 => {
+                write!(f, "{}", "M7".green().bold())
+            }
+            ChordType::Minor7 => {
+                write!(f, "{}", "m7".blue().bold())
+            }
+            ChordType::Dominant7 => {
+                write!(f, "{}", "7".yellow().bold())
+            }
+            ChordType::HalfDiminished7 => {
+                write!(f, "{}", "m7b5".purple().bold())
+            }
+            ChordType::Diminished7 => {
+                write!(f, "{}", "dim7".red().bold())
+            }
         }
     }
 }
 
 #[derive(Debug, Clone)]
 pub(super) enum Inversion {
-    Original,
-    First,
-    Second,
-    Third,
+    PianoOriginal,
+    PianoFirst,
+    PianoSecond,
+    PianoThird,
+    GuitarFirst,
+    GuitarSecond,
+    GuitarThird,
+    GuitarFourth,
+    GuitarFifth,
 }
 
 impl fmt::Display for Inversion {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Inversion::Original => {write!(f, "{}", "org".white().bold())},
-            Inversion::First => {write!(f, "{}", "1st".green().bold())},
-            Inversion::Second => {write!(f, "{}", "2nd".blue().bold())},
-            Inversion::Third => {write!(f, "{}", "3rd".cyan().bold())},
+            Inversion::PianoOriginal => {
+                write!(f, "{}", "piano-org".white().bold())
+            }
+            Inversion::PianoFirst => {
+                write!(f, "{}", "piano-1st".green().bold())
+            }
+            Inversion::PianoSecond => {
+                write!(f, "{}", "piano-2nd".blue().bold())
+            }
+            Inversion::PianoThird => {
+                write!(f, "{}", "piano-3rd".cyan().bold())
+            }
+            Inversion::GuitarFirst => {
+                write!(f, "{}", "guitar-1st".green().bold())
+            }
+            Inversion::GuitarSecond => {
+                write!(f, "{}", "guitar-2nd".blue().bold())
+            }
+            Inversion::GuitarThird => {
+                write!(f, "{}", "guitar-3rd".cyan().bold())
+            }
+            Inversion::GuitarFourth => {
+                write!(f, "{}", "guitar-4th".purple().bold())
+            }
+            Inversion::GuitarFifth => {
+                write!(f, "{}", "guitar-5th".yellow().bold())
+            }
         }
     }
 }
@@ -63,17 +98,23 @@ impl Inversion {
         // let mut rng_seed = ChaCha8Rng::seed_from_u64(42);
         let mut rng_seed = rand::thread_rng();
         let prob = match difficulty {
-            Difficulty::Easy => [1.0, 0.0, 0.0, 0.0],
-            Difficulty::Hell => [1.0; 4],
+            Difficulty::Easy => [1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+            Difficulty::Hell => [1.0, 1.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+            Difficulty::Guitar => [0.0, 0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0],
         };
 
         let mnm = Categorical::new(&prob)?;
         Ok(match mnm.sample(&mut rng_seed) as i32 {
-            0 => Inversion::Original,
-            1 => Inversion::First,
-            2 => Inversion::Second,
-            3 => Inversion::Third,
-            _ => panic!("random error")
+            0 => Inversion::PianoOriginal,
+            1 => Inversion::PianoFirst,
+            2 => Inversion::PianoSecond,
+            3 => Inversion::PianoThird,
+            4 => Inversion::GuitarFirst,
+            5 => Inversion::GuitarSecond,
+            6 => Inversion::GuitarThird,
+            7 => Inversion::GuitarFourth,
+            8 => Inversion::GuitarFifth,
+            _ => panic!("random error"),
         })
     }
 }
@@ -87,61 +128,97 @@ pub struct Chord {
 }
 
 impl Chord {
-    pub(super) fn new(
-        mut tonic: Tone,
-        chord_type: ChordType,
-        inversion: Inversion,
-    ) -> Self {
+    pub(super) fn new(mut tonic: Tone, chord_type: ChordType, inversion: Inversion) -> Self {
         info!("Chord::new(): build {}{}", tonic, chord_type);
         match chord_type {
             ChordType::Diminished7 => {
                 tonic = tonic.rematch_diminished();
-            },
+            }
             _ => {
                 tonic = tonic.rematch_chord(&chord_type);
             }
         };
-        let (third, fifth, seventh) =
-            match chord_type {
-                ChordType::Major7 => {(
-                    tonic.add_interval(Interval::MajorThird),
-                    tonic.add_interval(Interval::PerfectFifth),
-                    tonic.add_interval(Interval::MajorSeventh),
-                )},
-                ChordType::Minor7 => {(
-                    tonic.add_interval(Interval::MinorThird),
-                    tonic.add_interval(Interval::PerfectFifth),
-                    tonic.add_interval(Interval::MinorSeventh),
-                )},
-                ChordType::Dominant7 => {(
-                    tonic.add_interval(Interval::MajorThird),
-                    tonic.add_interval(Interval::PerfectFifth),
-                    tonic.add_interval(Interval::MinorSeventh),
-                )},
-                ChordType::HalfDiminished7 => {(
-                    tonic.add_interval(Interval::MinorThird),
-                    tonic.add_interval(Interval::DiminishedFifth),
-                    tonic.add_interval(Interval::MinorSeventh),
-                )},
-                ChordType::Diminished7 => {(
-                    tonic.add_interval(Interval::MinorThird),
-                    tonic.add_interval(Interval::DiminishedFifth),
-                    tonic.add_interval(Interval::MajorSixth),
-                )},
+        let (third, fifth, seventh) = match chord_type {
+            ChordType::Major7 => (
+                tonic.add_interval(Interval::MajorThird),
+                tonic.add_interval(Interval::PerfectFifth),
+                tonic.add_interval(Interval::MajorSeventh),
+            ),
+            ChordType::Minor7 => (
+                tonic.add_interval(Interval::MinorThird),
+                tonic.add_interval(Interval::PerfectFifth),
+                tonic.add_interval(Interval::MinorSeventh),
+            ),
+            ChordType::Dominant7 => (
+                tonic.add_interval(Interval::MajorThird),
+                tonic.add_interval(Interval::PerfectFifth),
+                tonic.add_interval(Interval::MinorSeventh),
+            ),
+            ChordType::HalfDiminished7 => (
+                tonic.add_interval(Interval::MinorThird),
+                tonic.add_interval(Interval::DiminishedFifth),
+                tonic.add_interval(Interval::MinorSeventh),
+            ),
+            ChordType::Diminished7 => (
+                tonic.add_interval(Interval::MinorThird),
+                tonic.add_interval(Interval::DiminishedFifth),
+                tonic.add_interval(Interval::MajorSixth),
+            ),
         };
 
         let tones = match inversion {
-            Inversion::Original => {vec![tonic.clone(), third, fifth, seventh]},
-            Inversion::First => {vec![third, fifth, seventh, tonic.clone()]},
-            Inversion::Second => {vec![fifth, seventh, tonic.clone(), third]},
-            Inversion::Third => {vec![seventh, tonic.clone(), third, fifth]},
+            Inversion::PianoOriginal => {
+                vec![tonic.clone(), third, fifth, seventh]
+            }
+            Inversion::PianoFirst => {
+                vec![third, fifth, seventh, tonic.clone()]
+            }
+            Inversion::PianoSecond => {
+                vec![fifth, seventh, tonic.clone(), third]
+            }
+            Inversion::PianoThird => {
+                vec![seventh, tonic.clone(), third, fifth]
+            }
+            Inversion::GuitarFirst => {
+                vec![
+                    tonic.clone(),
+                    fifth.clone(),
+                    seventh,
+                    third,
+                    fifth,
+                    tonic.clone(),
+                ]
+            }
+            Inversion::GuitarSecond => {
+                vec![
+                    fifth.clone(),
+                    tonic.clone(),
+                    fifth.clone(),
+                    seventh,
+                    third,
+                    fifth,
+                ]
+            }
+            Inversion::GuitarThird => {
+                vec![fifth.clone(), tonic.clone(), fifth, seventh, third]
+            }
+            Inversion::GuitarFourth => {
+                vec![seventh.clone(), third, fifth, tonic.clone(), seventh]
+            }
+            Inversion::GuitarFifth => {
+                vec![seventh, third, fifth, tonic.clone()]
+            }
         };
-        Chord{tonic, chord_type, inversion, tones}
+        Chord {
+            tonic,
+            chord_type,
+            inversion,
+            tones,
+        }
     }
 
     fn gen_diminished(&self, difficulty: Difficulty) -> anyhow::Result<Chord> {
-        let matched_tonic = self.tonic.clone()
-            .rematch_diminished();
+        let matched_tonic = self.tonic.clone().rematch_diminished();
         Ok(Chord::new(
             matched_tonic,
             ChordType::Diminished7,
@@ -151,11 +228,9 @@ impl Chord {
 
     pub(super) fn gen_secondary_dominant(&self, difficulty: Difficulty) -> anyhow::Result<Chord> {
         let chord_type = ChordType::Dominant7;
-        let matched_tonic = self.tonic.clone()
-            .rematch_chord(&chord_type);
+        let matched_tonic = self.tonic.clone().rematch_chord(&chord_type);
         Ok(Chord::new(
-            matched_tonic
-                .add_interval(Interval::PerfectFifth),
+            matched_tonic.add_interval(Interval::PerfectFifth),
             chord_type,
             Inversion::sample(difficulty)?,
         ))
@@ -163,11 +238,9 @@ impl Chord {
 
     pub(super) fn gen_substitute_sd(&self, difficulty: Difficulty) -> anyhow::Result<Chord> {
         let chord_type = ChordType::Dominant7;
-        let matched_tonic = self.tonic.clone()
-            .rematch_chord(&chord_type);
+        let matched_tonic = self.tonic.clone().rematch_chord(&chord_type);
         Ok(Chord::new(
-            matched_tonic
-                .add_interval(Interval::MajorSecond),
+            matched_tonic.add_interval(Interval::MajorSecond),
             chord_type,
             Inversion::sample(difficulty)?,
         ))
@@ -175,50 +248,30 @@ impl Chord {
 
     pub(super) fn gen_second_minor(&self, difficulty: Difficulty) -> anyhow::Result<Chord> {
         let chord_type = ChordType::Minor7;
-        let matched_tonic = self.tonic.clone()
-            .rematch_chord(&chord_type);
+        let matched_tonic = self.tonic.clone().rematch_chord(&chord_type);
         Ok(Chord::new(
-            matched_tonic
-                .add_interval(Interval::PerfectFifth),
+            matched_tonic.add_interval(Interval::PerfectFifth),
             chord_type,
             Inversion::sample(difficulty)?,
         ))
     }
 
     pub(super) fn gen_major_keys(&self) -> Vec<Key> {
-        let int_tonic_vec: Vec<Interval> =
-            match self.chord_type {
-                ChordType::Major7 => {
-                    Vec::from([
-                        Interval::PerfectUnison,
-                        Interval::PerfectFifth,
-                    ])
-                },
-                ChordType::Minor7 => {
-                    Vec::from([
-                        Interval::MinorSeventh,
-                        Interval::MinorSixth,
-                        Interval::MinorThird,
-                    ])
-                },
-                ChordType::Dominant7 => {
-                    Vec::from([
-                        Interval::PerfectFourth,
-                    ])
-                },
-                ChordType::HalfDiminished7 => {
-                    Vec::from([
-                        Interval::MinorSecond,
-                    ])
-                },
-                ChordType::Diminished7 => {
-                    Vec::from([
-                        Interval::MinorSecond,
-                        Interval::MajorThird,
-                        Interval::PerfectFifth,
-                        Interval::MinorSeventh,
-                    ])
-                },
+        let int_tonic_vec: Vec<Interval> = match self.chord_type {
+            ChordType::Major7 => Vec::from([Interval::PerfectUnison, Interval::PerfectFifth]),
+            ChordType::Minor7 => Vec::from([
+                Interval::MinorSeventh,
+                Interval::MinorSixth,
+                Interval::MinorThird,
+            ]),
+            ChordType::Dominant7 => Vec::from([Interval::PerfectFourth]),
+            ChordType::HalfDiminished7 => Vec::from([Interval::MinorSecond]),
+            ChordType::Diminished7 => Vec::from([
+                Interval::MinorSecond,
+                Interval::MajorThird,
+                Interval::PerfectFifth,
+                Interval::MinorSeventh,
+            ]),
         };
 
         let mut keys = Vec::new();
@@ -228,10 +281,7 @@ impl Chord {
 
             let key_type = KeyType::Ionian;
             let matched_new_tonic = new_tonic.clone().rematch_key(&key_type);
-            keys.push(Key::new(
-                new_tonic,
-                key_type
-            ));
+            keys.push(Key::new(new_tonic, key_type));
         }
         keys
     }
@@ -239,12 +289,20 @@ impl Chord {
 
 impl fmt::Display for Chord {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}{}-{}: {:?}", self.tonic, self.chord_type, self.inversion, self.tones)
+        write!(
+            f,
+            "{}{}-{}: {:?}",
+            self.tonic, self.chord_type, self.inversion, self.tones
+        )
     }
 }
 
 impl fmt::Debug for Chord {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        write!(f, "{}{}-{}: {:?}", self.tonic, self.chord_type, self.inversion, self.tones)
+        write!(
+            f,
+            "{}{}-{}: {:?}",
+            self.tonic, self.chord_type, self.inversion, self.tones
+        )
     }
 }

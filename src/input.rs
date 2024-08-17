@@ -1,29 +1,19 @@
-use std::{
-    fmt,
-    thread,
-    error::Error,
-    io::{stdin, stdout, Write},
-    sync::mpsc::{self, Receiver, Sender},
-    time::{Duration, Instant},
-};
 use colored::*;
 use crossterm::event::{Event, KeyCode};
-use midir::{
-    MidiInput,
-    MidiOutput,
-    MidiIO,
-    MidiInputPort,
-    MidiOutputPort,
+use midir::{MidiIO, MidiInput, MidiInputPort, MidiOutput, MidiOutputPort};
+use std::{
+    error::Error,
+    fmt,
+    io::{stdin, stdout, Write},
+    sync::mpsc::{self, Receiver, Sender},
+    thread,
+    time::{Duration, Instant},
 };
 
 use crate::print;
 
-pub(super) fn new_input_thread()
-    -> anyhow::Result<Receiver<AppSignal>> {
-
-    let (input_tx, input_rx):
-        (Sender<AppSignal>, Receiver<AppSignal>)
-         = mpsc::channel();
+pub(super) fn new_input_thread() -> anyhow::Result<Receiver<AppSignal>> {
+    let (input_tx, input_rx): (Sender<AppSignal>, Receiver<AppSignal>) = mpsc::channel();
 
     thread::spawn(move || -> anyhow::Result<()> {
         let mut last_tick = Instant::now();
@@ -45,6 +35,15 @@ pub(super) fn new_input_thread()
                     }
                     if let KeyCode::Char('h') = key.code {
                         input_tx.send(AppSignal::Hell);
+                    }
+                    if let KeyCode::Char('g') = key.code {
+                        input_tx.send(AppSignal::Guitar);
+                    }
+                    if let KeyCode::Char('s') = key.code {
+                        input_tx.send(AppSignal::SkipMIDI);
+                    }
+                    if let KeyCode::Enter = key.code {
+                        input_tx.send(AppSignal::Next);
                     }
                 }
             };
@@ -96,7 +95,8 @@ impl MIDI {
     fn select_port<T: MidiIO>(midi_io: &T) -> Result<T::Port, Box<dyn Error>> {
         let midi_ports = midi_io.ports();
         for (i, p) in midi_ports.iter().enumerate() {
-            println!("
+            println!(
+                "
                 {}: {}",
                 i.to_string().green().bold(),
                 midi_io.port_name(p)?.green().bold()
@@ -105,8 +105,9 @@ impl MIDI {
         stdout().flush()?;
         let mut input = String::new();
         stdin().read_line(&mut input)?;
-        let port = midi_ports.get(input.trim().parse::<usize>()?)
-                             .ok_or("invalid port number")?;
+        let port = midi_ports
+            .get(input.trim().parse::<usize>()?)
+            .ok_or("invalid port number")?;
         Ok(port.clone())
     }
 }
@@ -115,4 +116,7 @@ pub enum AppSignal {
     Quit,
     Easy,
     Hell,
+    Guitar,
+    SkipMIDI,
+    Next,
 }

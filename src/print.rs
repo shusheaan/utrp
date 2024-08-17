@@ -1,6 +1,9 @@
+use crate::{
+    app::{App, Difficulty},
+    chord::Chord,
+};
 use colored::*;
 use std::fmt;
-use crate::{chord::Chord, app::{Difficulty, App}};
 
 pub(super) fn intro() {
     println!(
@@ -29,7 +32,8 @@ pub(super) fn intro() {
 }
 
 pub(super) fn select_input() {
-    println!("
+    println!(
+        "
                 {}
                 {}
                 {}
@@ -41,7 +45,8 @@ pub(super) fn select_input() {
 }
 
 pub(super) fn select_output() {
-    println!("
+    println!(
+        "
                 {}
                 {}
                 {}
@@ -53,7 +58,8 @@ pub(super) fn select_output() {
 }
 
 pub(super) fn select_difficulty() {
-    println!("
+    println!(
+        "
                 {}
                 {}
                 {}
@@ -69,7 +75,8 @@ pub(super) fn select_difficulty() {
 }
 
 pub(super) fn easy_selected() {
-    println!("
+    println!(
+        "
                 {}
                 {}
                 {}
@@ -77,23 +84,38 @@ pub(super) fn easy_selected() {
         "--------------------------".green().bold(),
         "[e]asy difficulty selected".green().bold(),
         "--------------------------".green().bold(),
-        );
+    );
 }
 
 pub(super) fn hell_selected() {
-    println!("
+    println!(
+        "
                 {}
                 {}
                 {}
     ",
-    "--------------------------".purple().bold(),
-    "[h]ell difficulty selected".purple().bold(),
-    "--------------------------".purple().bold(),
+        "--------------------------".purple().bold(),
+        "[h]ell difficulty selected".purple().bold(),
+        "--------------------------".purple().bold(),
+    );
+}
+
+pub(super) fn guitar_selected() {
+    println!(
+        "
+                {}
+                {}
+                {}
+    ",
+        "--------------------------".purple().bold(),
+        "[g]uitar difficulty selected".purple().bold(),
+        "--------------------------".purple().bold(),
     );
 }
 
 pub(super) fn get_ready() {
-    println!("
+    println!(
+        "
                 {}
                 {}
                 {}
@@ -105,7 +127,8 @@ pub(super) fn get_ready() {
 }
 
 pub(super) fn start() {
-    println!("
+    println!(
+        "
                 {}
                 {}
                 {}
@@ -117,7 +140,8 @@ pub(super) fn start() {
 }
 
 pub(super) fn play(chord: &Chord) {
-    println!("
+    println!(
+        "
                 {}
                 {} {}
                 {}
@@ -130,7 +154,8 @@ pub(super) fn play(chord: &Chord) {
 }
 
 pub(super) fn matched(chord: &Chord) {
-    println!("
+    println!(
+        "
                 {}
                 {} {}
                 {}
@@ -143,7 +168,8 @@ pub(super) fn matched(chord: &Chord) {
 }
 
 pub(super) fn score(score: i32) {
-    println!("
+    println!(
+        "
                 {}
                 {} {}
                 {}
@@ -156,7 +182,8 @@ pub(super) fn score(score: i32) {
 }
 
 pub(super) fn measure_timeout() {
-    println!("
+    println!(
+        "
 
                 {}
                 {}
@@ -170,7 +197,8 @@ pub(super) fn measure_timeout() {
 }
 
 pub(super) fn game_timeout() {
-    println!("
+    println!(
+        "
 
                 {}
                 {}
@@ -184,24 +212,23 @@ pub(super) fn game_timeout() {
 }
 
 pub(super) fn kb_check(l: usize) {
-    println!("
+    println!(
+        "
 
                 {}
                 {} {}
                 {}
         ",
         "--------".green().bold(),
-        "kb check".green(), l,
+        "kb check".green(),
+        l,
         "--------".green().bold(),
     );
 }
 
-pub(super) fn summary(
-    duration: u64,
-    difficulty: &Difficulty,
-    score: i32,
-    ) {
-    println!("
+pub(super) fn summary(duration: u64, difficulty: &Difficulty, score: i32) {
+    println!(
+        "
 
                 {}
                 {}
@@ -215,9 +242,12 @@ pub(super) fn summary(
         "-------".cyan().bold(),
         "summary".cyan().bold(),
         "-------".cyan().bold(),
-        "time(s)".cyan().bold(), duration,
-        "difficulty".cyan().bold(), difficulty,
-        "score".cyan().bold(), score,
+        "time(s)".cyan().bold(),
+        duration,
+        "difficulty".cyan().bold(),
+        difficulty,
+        "score".cyan().bold(),
+        score,
     );
 }
 

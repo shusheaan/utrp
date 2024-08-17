@@ -1,34 +1,42 @@
-use std::{
-    fmt,
-    thread,
-    error::Error,
-    io::{stdin, stdout, Write},
-    sync::mpsc::{self, Receiver, Sender},
-    time::{Duration, SystemTime},
-};
-use rand::Rng;
 use colored::*;
 use log::debug;
+use rand::Rng;
+use std::{
+    error::Error,
+    fmt,
+    io::{stdin, stdout, Write},
+    sync::mpsc::{self, Receiver, Sender},
+    thread,
+    time::{Duration, SystemTime},
+};
 
 use crate::{
-    print,
+    chord::{Chord, ChordType, Inversion},
     input::AppSignal,
     key::{Key, KeyType},
     modulation::{DeTour, Modulation},
-    chord::{Chord, ChordType, Inversion},
+    print,
 };
 
 #[derive(Debug, Clone)]
 pub enum Difficulty {
     Easy,
     Hell,
+    Guitar,
 }
 
 impl fmt::Display for Difficulty {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Difficulty::Easy => {write!(f, "{}", "easy".green().bold())},
-            Difficulty::Hell => {write!(f, "{}", "hell".purple().bold())},
+            Difficulty::Easy => {
+                write!(f, "{}", "easy".green().bold())
+            }
+            Difficulty::Hell => {
+                write!(f, "{}", "hell".purple().bold())
+            }
+            Difficulty::Guitar => {
+                write!(f, "{}", "guitar".purple().bold())
+            }
         }
     }
 }
@@ -52,21 +60,23 @@ struct AppEnv {
 impl AppEnv {
     fn new(difficulty: &Difficulty) -> Self {
         match difficulty {
-            Difficulty::Easy => {
-                AppEnv {
-                    total_time: 120,
-                    sleep_time: 15,
-                    total_iteration: 100,
-                    modulation_threshold: 10,
-                }
+            Difficulty::Easy => AppEnv {
+                total_time: 120,
+                sleep_time: 15,
+                total_iteration: 100,
+                modulation_threshold: 10,
             },
-            Difficulty::Hell => {
-                AppEnv {
-                    total_time: 120,
-                    sleep_time: 15,
-                    total_iteration: 100,
-                    modulation_threshold: 4,
-                }
+            Difficulty::Hell => AppEnv {
+                total_time: 120,
+                sleep_time: 15,
+                total_iteration: 100,
+                modulation_threshold: 4,
+            },
+            Difficulty::Guitar => AppEnv {
+                total_time: 120,
+                sleep_time: 15,
+                total_iteration: 100,
+                modulation_threshold: 4,
             },
         }
     }
@@ -100,18 +110,27 @@ impl App {
                             difficulty = Difficulty::Easy;
                             print::easy_selected();
                             break 'set_difficulty;
-                        },
+                        }
                         AppSignal::Hell => {
                             difficulty = Difficulty::Hell;
                             print::hell_selected();
                             break 'set_difficulty;
-                        },
-                        _ => {continue;}
+                        }
+                        AppSignal::Guitar => {
+                            difficulty = Difficulty::Guitar;
+                            print::guitar_selected();
+                            break 'set_difficulty;
+                        }
+                        _ => {
+                            continue;
+                        }
                     };
-                },
-                Err(e) => {continue;}
+                }
+                Err(e) => {
+                    continue;
+                }
             }
-        };
+        }
         difficulty
     }
 
@@ -122,11 +141,8 @@ impl App {
         let env = AppEnv::new(&difficulty);
 
         let ss = vec![
-            1, 3, 1, 4, 2, 5, 6, 3,
-            7, 1, 4, 5, 3, 2, 4, 7,
-            6, 5, 6, 1, 7, 6, 2, 4,
-            5, 1, 5, 3, 6, 7, 3, 4,
-            2, 1, 6, 2, 7, 3, 5, 1,
+            1, 3, 1, 4, 2, 5, 6, 3, 7, 1, 4, 5, 3, 2, 4, 7, 6, 5, 6, 1, 7, 6, 2, 4, 5, 1, 5, 3, 6,
+            7, 3, 4, 2, 1, 6, 2, 7, 3, 5, 1,
         ];
 
         let current_key = Key::sample(difficulty.clone())?;
@@ -148,12 +164,16 @@ impl App {
         let detour: DeTour = DeTour::sample(difficulty.clone())?;
         let next_chords = detour.build_chords(
             current_key.gen_chord(ss[next_ss_idx], difficulty.clone())?,
-            difficulty.clone()
+            difficulty.clone(),
         )?;
 
         Ok(App {
-            input_rx, difficulty, env,
-            score: 0, ss, prevous_key,
+            input_rx,
+            difficulty,
+            env,
+            score: 0,
+            ss,
+            prevous_key,
 
             current: Status {
                 ss_idx: current_ss_idx,
@@ -181,9 +201,8 @@ impl App {
                 match any_kb_idx {
                     Ok(kb_idx) => {
                         if sorted_keys.contains(&kb_idx) {
-                            if let Some(idx) = sorted_keys.iter()
-                                .position(|x| *x == kb_idx) {
-                                    sorted_keys.remove(idx);
+                            if let Some(idx) = sorted_keys.iter().position(|x| *x == kb_idx) {
+                                sorted_keys.remove(idx);
                             }
                         } else {
                             sorted_keys.push(kb_idx);
@@ -191,9 +210,11 @@ impl App {
                         sorted_keys.sort();
                         vec_tx.send(sorted_keys.clone())?;
                     }
-                    Err(e) => {continue;}
+                    Err(e) => {
+                        continue;
+                    }
                 };
-            };
+            }
             Ok(())
         });
         vec_rx
@@ -209,7 +230,7 @@ impl App {
                 if duration > Duration::from_secs(total_time) {
                     game_timeout_tx.send(0);
                 }
-            };
+            }
             Ok(())
         });
         game_timeout_rx
@@ -232,13 +253,11 @@ impl App {
 
         let start = SystemTime::now();
         let vec_rx = Self::key_vec_thread(msg_rx);
-        let game_timeout_rx = Self::game_timeout_thread(
-            start,
-            self.env.total_time
-        );
+        let game_timeout_rx = Self::game_timeout_thread(start, self.env.total_time);
 
         'measure: for i in 1..self.env.total_iteration {
-            self.next(); println!("{}", self);
+            self.next();
+            println!("{}", self);
 
             let mut chords_unmatched: Vec<Chord> =
                 self.next.chords.clone().into_iter().rev().collect();
@@ -257,15 +276,19 @@ impl App {
                     thread::sleep(Duration::from_millis(10));
 
                     if let Ok(signal) = timeout_rx.try_recv() {
-                        print::measure_timeout(); continue 'measure;
+                        print::measure_timeout();
+                        continue 'measure;
                     }
 
                     if let Ok(signal) = game_timeout_rx.try_recv() {
-                        print::game_timeout(); break 'measure;
+                        print::game_timeout();
+                        break 'measure;
                     }
 
                     if let Ok(signal) = self.input_rx.try_recv() {
-                        if let AppSignal::Quit = signal { break 'measure; }
+                        if let AppSignal::Quit = signal {
+                            break 'measure;
+                        }
                     }
 
                     let any_key_vec = vec_rx.try_recv();
@@ -276,7 +299,9 @@ impl App {
                                 .map(|e| (e - 24 as u8) % 12 + 1)
                                 .collect();
                             debug!("{:?}", key_vec); // debug!("{:?}", target_key_vec);
-                            if key_vec.len() >= 7 {print::kb_check(key_vec.len());}
+                            if key_vec.len() >= 7 {
+                                print::kb_check(key_vec.len());
+                            }
 
                             if key_vec == target_key_vec {
                                 let chord_match_end = SystemTime::now();
@@ -337,10 +362,9 @@ impl App {
                 self.next.key = self.current.key.clone();
                 let detour: DeTour = DeTour::sample(self.difficulty.clone())?;
                 self.next.chords = detour.build_chords(
-                    self.next.key.gen_chord(
-                        self.ss[self.next.ss_idx],
-                        self.difficulty.clone()
-                    )?,
+                    self.next
+                        .key
+                        .gen_chord(self.ss[self.next.ss_idx], self.difficulty.clone())?,
                     self.difficulty.clone(),
                 )?;
             }
@@ -351,14 +375,13 @@ impl App {
 
                 self.next.key = Key::new(
                     self.current.key.tonic.clone(),
-                    KeyType::sample(self.difficulty.clone())?
+                    KeyType::sample(self.difficulty.clone())?,
                 );
                 let detour: DeTour = DeTour::sample(self.difficulty.clone())?;
                 self.next.chords = detour.build_chords(
-                    self.next.key.gen_chord(
-                        self.ss[self.next.ss_idx],
-                        self.difficulty.clone()
-                    )?,
+                    self.next
+                        .key
+                        .gen_chord(self.ss[self.next.ss_idx], self.difficulty.clone())?,
                     self.difficulty.clone(),
                 )?;
             }
@@ -376,10 +399,9 @@ impl App {
 
                 let detour: DeTour = DeTour::sample(self.difficulty.clone())?;
                 self.next.chords = detour.build_chords(
-                    self.next.key.gen_chord(
-                        self.ss[self.next.ss_idx],
-                        self.difficulty.clone()
-                    )?,
+                    self.next
+                        .key
+                        .gen_chord(self.ss[self.next.ss_idx], self.difficulty.clone())?,
                     self.difficulty.clone(),
                 )?;
             }
@@ -419,13 +441,11 @@ impl App {
                 self.next.ss_idx = rand::thread_rng().gen_range(0..40);
 
                 let detour: DeTour = DeTour::sample(self.difficulty.clone())?;
-                self.next.chords =
-                    detour.build_chords(
-                        self.next.key.gen_chord(
-                            self.ss[self.next.ss_idx],
-                            self.difficulty.clone()
-                        )?,
-                        self.difficulty.clone()
+                self.next.chords = detour.build_chords(
+                    self.next
+                        .key
+                        .gen_chord(self.ss[self.next.ss_idx], self.difficulty.clone())?,
+                    self.difficulty.clone(),
                 )?;
             }
         };
