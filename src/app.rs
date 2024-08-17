@@ -315,7 +315,9 @@ impl App {
                                 let secs = (8 - next_duration.as_secs());
                                 new_score = secs.pow(4) as i32;
                             }
-                            if new_score > 4000 {new_score = 0}
+                            if new_score > 4000 {
+                                new_score = 0
+                            }
                             self.score += new_score;
                             print::score(self.score);
                             continue 'measure;
