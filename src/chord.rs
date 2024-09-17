@@ -63,31 +63,31 @@ impl fmt::Display for Inversion {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             Inversion::PianoOriginal => {
-                write!(f, "{}", "piano-org".white().bold())
+                write!(f, "{}", "p/0".white().bold())
             }
             Inversion::PianoFirst => {
-                write!(f, "{}", "piano-1st".green().bold())
+                write!(f, "{}", "p/1".green().bold())
             }
             Inversion::PianoSecond => {
-                write!(f, "{}", "piano-2nd".blue().bold())
+                write!(f, "{}", "p/2".blue().bold())
             }
             Inversion::PianoThird => {
-                write!(f, "{}", "piano-3rd".cyan().bold())
+                write!(f, "{}", "p/3".cyan().bold())
             }
             Inversion::GuitarFirst => {
-                write!(f, "{}", "guitar-1st".green().bold())
+                write!(f, "{}", "g/1".green().bold())
             }
             Inversion::GuitarSecond => {
-                write!(f, "{}", "guitar-2nd".blue().bold())
+                write!(f, "{}", "g/2".blue().bold())
             }
             Inversion::GuitarThird => {
-                write!(f, "{}", "guitar-3rd".cyan().bold())
+                write!(f, "{}", "g/3".cyan().bold())
             }
             Inversion::GuitarFourth => {
-                write!(f, "{}", "guitar-4th".purple().bold())
+                write!(f, "{}", "g/4".purple().bold())
             }
             Inversion::GuitarFifth => {
-                write!(f, "{}", "guitar-5th".yellow().bold())
+                write!(f, "{}", "g/5".yellow().bold())
             }
         }
     }
