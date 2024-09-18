@@ -30,25 +30,25 @@ impl fmt::Display for KeyType {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
             KeyType::Ionian => {
-                write!(f, "{}", "Ionian/1".green().bold().italic())
+                write!(f, "{}", "1/Ionian".green().bold().italic())
             }
             KeyType::Dorian => {
-                write!(f, "{}", "Dorian/2".blue().bold().italic())
+                write!(f, "{}", "2/Dorian".blue().bold().italic())
             }
             KeyType::Phrygian => {
-                write!(f, "{}", "Phrygian/3".cyan().bold().italic())
+                write!(f, "{}", "3/Phrygian".cyan().bold().italic())
             }
             KeyType::Lydian => {
-                write!(f, "{}", "Lydian/4".green().bold().italic())
+                write!(f, "{}", "4/Lydian".green().bold().italic())
             }
             KeyType::Mixolydian => {
-                write!(f, "{}", "Mixolydian/5".yellow().bold().italic())
+                write!(f, "{}", "5/Mixolydian".yellow().bold().italic())
             }
             KeyType::Aeolian => {
-                write!(f, "{}", "Aeolian/6".blue().bold().italic())
+                write!(f, "{}", "6/Aeolian".blue().bold().italic())
             }
             KeyType::Locrian => {
-                write!(f, "{}", "Locrian/7".purple().bold().italic())
+                write!(f, "{}", "7/Locrian".purple().bold().italic())
             }
         }
     }
