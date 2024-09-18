@@ -46,8 +46,7 @@ impl DeTour {
         // let mut rng_seed = ChaCha8Rng::seed_from_u64(42);
         let mut rng_seed = rand::thread_rng();
         let prob = match difficulty {
-            Difficulty::Easy => [1.0, 1.0, 1.0, 1.0, 1.0],
-            Difficulty::Hell => [5.0, 3.0, 3.0, 1.0, 1.0],
+            Difficulty::Piano => [1.0; 5],
             Difficulty::Guitar => [1.0; 5],
         };
 
@@ -141,8 +140,7 @@ impl Modulation {
         let mut rng_seed = rand::thread_rng();
 
         let prob = match difficulty {
-            Difficulty::Easy => [1.0; 5],
-            Difficulty::Hell => [5.0, 3.0, 3.0, 3.0, 1.0],
+            Difficulty::Piano => [1.0; 5],
             Difficulty::Guitar => [1.0; 5],
         };
 

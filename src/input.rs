@@ -30,11 +30,8 @@ pub(super) fn new_input_thread() -> anyhow::Result<Receiver<AppSignal>> {
                     if let KeyCode::Char('q') = key.code {
                         input_tx.send(AppSignal::Quit);
                     }
-                    if let KeyCode::Char('e') = key.code {
-                        input_tx.send(AppSignal::Easy);
-                    }
-                    if let KeyCode::Char('h') = key.code {
-                        input_tx.send(AppSignal::Hell);
+                    if let KeyCode::Char('p') = key.code {
+                        input_tx.send(AppSignal::Piano);
                     }
                     if let KeyCode::Char('g') = key.code {
                         input_tx.send(AppSignal::Guitar);
@@ -111,8 +108,7 @@ impl MIDI {
 
 pub enum AppSignal {
     Quit,
-    Easy,
-    Hell,
+    Piano,
     Guitar,
     Next,
 }

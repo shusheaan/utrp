@@ -64,40 +64,26 @@ pub(super) fn select_difficulty() {
                 {}
                 {}
 
-                {} / {} / {}
+                {} / {}
         ",
-        "----------------------".cyan().bold(),
-        "select mode/difficulty".cyan().bold(),
-        "----------------------".cyan().bold(),
-        "[e]asy".green().bold(),
-        "[h]ell".purple().bold(),
+        "-----------".cyan().bold(),
+        "select mode".cyan().bold(),
+        "-----------".cyan().bold(),
+        "[p]iano".purple().bold(),
         "[g]uitar".yellow().bold(),
     );
 }
 
-pub(super) fn easy_selected() {
+pub(super) fn piano_selected() {
     println!(
         "
                 {}
                 {}
                 {}
         ",
-        "-------------------------------".green().bold(),
-        "[e]asy mode/difficulty selected".green().bold(),
-        "-------------------------------".green().bold(),
-    );
-}
-
-pub(super) fn hell_selected() {
-    println!(
-        "
-                {}
-                {}
-                {}
-    ",
-        "-------------------------------".purple().bold(),
-        "[h]ell mode/difficulty selected".purple().bold(),
-        "-------------------------------".purple().bold(),
+        "----------------".green().bold(),
+        "[p]iano selected".green().bold(),
+        "----------------".green().bold(),
     );
 }
 
@@ -108,9 +94,9 @@ pub(super) fn guitar_selected() {
                 {}
                 {}
     ",
-        "---------------------------------".purple().bold(),
-        "[g]uitar mode/difficulty selected".purple().bold(),
-        "---------------------------------".purple().bold(),
+        "-----------------".purple().bold(),
+        "[g]uitar selected".purple().bold(),
+        "-----------------".purple().bold(),
     );
 }
 
@@ -248,7 +234,7 @@ pub(super) fn summary(duration: u64, difficulty: &Difficulty, score: i32) {
         "-------".cyan().bold(),
         "time(s)".cyan().bold(),
         duration,
-        "mode/difficulty".cyan().bold(),
+        "mode".cyan().bold(),
         difficulty,
         "score".cyan().bold(),
         score,

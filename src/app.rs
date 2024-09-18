@@ -20,19 +20,15 @@ use crate::{
 
 #[derive(Debug, Clone)]
 pub enum Difficulty {
-    Easy,
-    Hell,
+    Piano,
     Guitar,
 }
 
 impl fmt::Display for Difficulty {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         match self {
-            Difficulty::Easy => {
-                write!(f, "{}", "easy".green().bold())
-            }
-            Difficulty::Hell => {
-                write!(f, "{}", "hell".purple().bold())
+            Difficulty::Piano => {
+                write!(f, "{}", "piano".green().bold())
             }
             Difficulty::Guitar => {
                 write!(f, "{}", "guitar".purple().bold())
@@ -60,13 +56,7 @@ struct AppEnv {
 impl AppEnv {
     fn new(difficulty: &Difficulty) -> Self {
         match difficulty {
-            Difficulty::Easy => AppEnv {
-                total_time: 120,
-                sleep_time: 30,
-                total_iteration: 100,
-                modulation_threshold: 10,
-            },
-            Difficulty::Hell => AppEnv {
+            Difficulty::Piano => AppEnv {
                 total_time: 120,
                 sleep_time: 30,
                 total_iteration: 100,
@@ -106,14 +96,9 @@ impl App {
             match any_signal {
                 Ok(signal) => {
                     match signal {
-                        AppSignal::Easy => {
-                            difficulty = Difficulty::Easy;
-                            print::easy_selected();
-                            break 'set_difficulty;
-                        }
-                        AppSignal::Hell => {
-                            difficulty = Difficulty::Hell;
-                            print::hell_selected();
+                        AppSignal::Piano => {
+                            difficulty = Difficulty::Piano;
+                            print::piano_selected();
                             break 'set_difficulty;
                         }
                         AppSignal::Guitar => {

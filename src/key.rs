@@ -59,8 +59,7 @@ impl KeyType {
         // let mut rng_seed = ChaCha8Rng::seed_from_u64(42);
         let mut rng_seed = rand::thread_rng();
         let prob = match difficulty {
-            Difficulty::Easy => [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0],
-            Difficulty::Hell => [1.0; 7],
+            Difficulty::Piano => [1.0; 7],
             Difficulty::Guitar => [1.0; 7],
         };
 
@@ -126,8 +125,7 @@ impl Key {
             key_type: KeyType::Ionian,
         };
         let prob_mode = match difficulty {
-            Difficulty::Easy => [1.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0],
-            Difficulty::Hell => [1.0; 7],
+            Difficulty::Piano => [1.0; 7],
             Difficulty::Guitar => [1.0; 7],
         };
 
