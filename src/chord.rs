@@ -123,7 +123,7 @@ pub struct Chord {
     pub(super) tonic: Tone,
     chord_type: ChordType,
     inversion: Inversion,
-    pub(super) tones: Vec<Tone>,
+    pub(crate) tones: Vec<Tone>,
 }
 
 impl Chord {

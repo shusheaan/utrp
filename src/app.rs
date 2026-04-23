@@ -37,11 +37,26 @@ impl fmt::Display for Difficulty {
     }
 }
 
+#[derive(Debug, Clone)]
+pub(crate) enum GamePhase {
+    Intro,
+    SelectDifficulty,
+    Ready,
+    Playing,
+    MeasureStart { measure: i32 },
+    WaitingForInput { target: Chord },
+    Matched { chord: Chord },
+    Score,
+    MeasureTimeout,
+    GameTimeout,
+    Summary { duration_secs: u64 },
+}
+
 #[derive(Debug)]
-pub(super) struct Status {
+pub(crate) struct Status {
     ss_idx: usize,
-    pub(super) chords: Vec<Chord>,
-    pub(super) key: Key,
+    pub(crate) chords: Vec<Chord>,
+    pub(crate) key: Key,
     key_iteration: i32,
 }
 
@@ -76,18 +91,36 @@ impl AppEnv {
 pub struct App {
     input_rx: Receiver<AppSignal>,
 
-    difficulty: Difficulty,
+    pub(crate) difficulty: Difficulty,
     env: AppEnv,
-    score: i32,
+    pub(crate) score: i32,
     ss: Vec<i8>, // std seq
 
-    pub(super) prevous_key: Key,
-    pub(super) current: Status,
-    pub(super) modulation: Modulation,
-    pub(super) next: Status,
+    pub(crate) prevous_key: Key,
+    pub(crate) current: Status,
+    pub(crate) modulation: Modulation,
+    pub(crate) next: Status,
+
+    pub(crate) phase: GamePhase,
+    pub(crate) measure_num: i32,
+    pub(crate) start_time: Option<SystemTime>,
 }
 
 impl App {
+    pub(crate) fn render(&self, terminal: &mut crate::tui::Tui) -> anyhow::Result<()> {
+        terminal.draw(|frame| {
+            crate::ui::render(frame, self);
+        })?;
+        Ok(())
+    }
+
+    pub(crate) fn elapsed_secs(&self) -> u64 {
+        self.start_time
+            .and_then(|s| SystemTime::now().duration_since(s).ok())
+            .map(|d| d.as_secs())
+            .unwrap_or(0)
+    }
+
     fn select_difficulty(input_rx: &Receiver<AppSignal>) -> Difficulty {
         let mut difficulty: Difficulty;
         'set_difficulty: loop {
@@ -188,6 +221,10 @@ impl App {
                 key: next_key,
                 key_iteration: next_key_iteration,
             },
+
+            phase: GamePhase::SelectDifficulty,
+            measure_num: 0,
+            start_time: None,
         })
     }
 
@@ -246,18 +283,22 @@ impl App {
         timeout_rx
     }
 
-    pub fn run(&mut self, msg_rx: Receiver<u8>) -> anyhow::Result<Duration> {
-        print::get_ready();
+    pub fn run(&mut self, msg_rx: Receiver<u8>, terminal: &mut crate::tui::Tui) -> anyhow::Result<Duration> {
+        self.phase = GamePhase::Ready;
+        self.render(terminal)?;
         thread::sleep(Duration::from_millis(1000));
-        print::start();
-
         let start = SystemTime::now();
+        self.start_time = Some(start);
+        self.phase = GamePhase::Playing;
+        self.render(terminal)?;
         let vec_rx = Self::key_vec_thread(msg_rx);
         let game_timeout_rx = Self::game_timeout_thread(start, self.env.total_time);
 
         'measure: for i in 1..self.env.total_iteration {
             self.next();
-            println!("{}", self);
+            self.measure_num = i;
+            self.phase = GamePhase::MeasureStart { measure: i };
+            self.render(terminal)?;
 
             let mut chords_unmatched: Vec<Chord> =
                 self.next.chords.clone().into_iter().rev().collect();
@@ -269,19 +310,22 @@ impl App {
                 let target_chord = chords_unmatched.remove(0);
                 let target_key_vec: Vec<u8> =
                     target_chord.tones.iter().map(|e| e.idx as u8).collect();
-                print::play(&target_chord);
+                self.phase = GamePhase::WaitingForInput { target: target_chord.clone() };
+                self.render(terminal)?;
 
                 let chord_match_start = SystemTime::now();
                 'match_chord: loop {
                     thread::sleep(Duration::from_millis(10));
 
                     if let Ok(signal) = timeout_rx.try_recv() {
-                        print::measure_timeout();
+                        self.phase = GamePhase::MeasureTimeout;
+                        self.render(terminal)?;
                         continue 'measure;
                     }
 
                     if let Ok(signal) = game_timeout_rx.try_recv() {
-                        print::game_timeout();
+                        self.phase = GamePhase::GameTimeout;
+                        self.render(terminal)?;
                         break 'measure;
                     }
 
@@ -304,7 +348,8 @@ impl App {
                                 new_score = 0
                             }
                             self.score += new_score;
-                            print::score(self.score);
+                            self.phase = GamePhase::Score;
+                            self.render(terminal)?;
                             continue 'measure;
                         }
                     }
@@ -318,7 +363,7 @@ impl App {
                                 .collect();
                             debug!("{:?}", key_vec); // debug!("{:?}", target_key_vec);
                             if key_vec.len() >= 7 {
-                                print::kb_check(key_vec.len());
+                                debug!("kb check: {} keys pressed", key_vec.len());
                             }
 
                             if key_vec == target_key_vec {
@@ -332,8 +377,10 @@ impl App {
                                     let secs = (8 - chord_match_duration.as_secs());
                                     self.score += secs.pow(4) as i32;
                                 }
-                                print::matched(&target_chord);
-                                print::score(self.score);
+                                self.phase = GamePhase::Matched { chord: target_chord.clone() };
+                                self.render(terminal)?;
+                                self.phase = GamePhase::Score;
+                                self.render(terminal)?;
                                 break 'match_chord;
                             }
                         }
@@ -347,7 +394,9 @@ impl App {
 
         let end = SystemTime::now();
         let duration = end.duration_since(start)?;
-        print::summary(duration.as_secs(), &self.difficulty, self.score);
+        self.phase = GamePhase::Summary { duration_secs: duration.as_secs() };
+        self.render(terminal)?;
+        thread::sleep(Duration::from_secs(5));
 
         Ok(duration)
     }

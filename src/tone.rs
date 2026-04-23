@@ -266,7 +266,7 @@ impl fmt::Display for ToneVariant {
 
 #[derive(Clone, PartialEq, Eq)]
 pub struct Tone {
-    pub(super) idx: i8, // 1-12
+    pub(crate) idx: i8, // 1-12
     tone: NeutralTone,
     variant: ToneVariant,
 }

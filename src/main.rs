@@ -16,6 +16,8 @@ mod key;
 mod modulation;
 mod print;
 mod tone;
+mod tui;
+mod ui;
 
 mod exits {
     pub const SUCCESS: i32 = 0;
@@ -31,7 +33,13 @@ fn main() -> Result<(), Box<dyn Error>> {
     let input_rx = new_input_thread()?;
     let (msg_tx, msg_rx) = mpsc::channel();
 
-    match App::new(input_rx, msg_tx)?.run(msg_rx) {
+    let mut app = App::new(input_rx, msg_tx)?;
+    let mut terminal = tui::init()?;
+
+    let result = app.run(msg_rx, &mut terminal);
+    tui::restore()?;
+
+    match result {
         Ok(duration) => {
             info!("run successful in {:?}", duration);
             exit(exits::SUCCESS);
