@@ -11,11 +11,13 @@ use std::{
 };
 
 use crate::{
-    chord::{Chord, ChordType, Inversion},
     input::{AppSignal, MIDI},
-    key::{Key, KeyType},
-    modulation::{DeTour, Modulation},
     print,
+    theory::{
+        chord::{Chord, ChordType, Inversion},
+        key::{Key, KeyType},
+        modulation::{DeTour, Modulation},
+    },
 };
 
 #[derive(Debug, Clone)]

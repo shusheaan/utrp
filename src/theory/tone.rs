@@ -1,10 +1,10 @@
-use crate::{chord::ChordType, key::KeyType};
+use super::{chord::ChordType, key::KeyType};
 use colored::*;
 use log::{debug, info};
 use std::fmt;
 
 #[derive(Debug, Clone)]
-pub(super) enum Interval {
+pub(crate) enum Interval {
     PerfectUnison,
     MinorSecond,
     MajorSecond,
@@ -105,7 +105,7 @@ impl Interval {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub(super) enum NeutralTone {
+pub(crate) enum NeutralTone {
     C,
     D,
     E,
@@ -272,12 +272,12 @@ pub struct Tone {
 }
 
 impl Tone {
-    pub(super) fn new(tone: NeutralTone, variant: ToneVariant) -> Self {
+    pub(crate) fn new(tone: NeutralTone, variant: ToneVariant) -> Self {
         let idx = Self::tone_idx(&tone, &variant);
         Tone { idx, tone, variant }
     }
 
-    pub(super) fn rematch_key(self, key_type: &KeyType) -> Tone {
+    pub(crate) fn rematch_key(self, key_type: &KeyType) -> Tone {
         let tonics = Vec::from([
             Tone::new(NeutralTone::C, ToneVariant::Neutral),
             Tone::new(NeutralTone::D, ToneVariant::Flat),
@@ -321,7 +321,7 @@ impl Tone {
         matched_tonic
     }
 
-    pub(super) fn rematch_interval(self, interval: &Interval) -> Tone {
+    pub(crate) fn rematch_interval(self, interval: &Interval) -> Tone {
         let key_type = match interval {
             Interval::PerfectUnison
             | Interval::MajorSecond
@@ -338,7 +338,7 @@ impl Tone {
         self.rematch_key(&key_type)
     }
 
-    pub(super) fn rematch_diminished(self) -> Tone {
+    pub(crate) fn rematch_diminished(self) -> Tone {
         let tonics = Vec::from([
             Tone::new(NeutralTone::C, ToneVariant::Neutral),
             Tone::new(NeutralTone::C, ToneVariant::Sharp),
@@ -366,7 +366,7 @@ impl Tone {
         matched_tonic
     }
 
-    pub(super) fn rematch_chord(self, chord_type: &ChordType) -> Tone {
+    pub(crate) fn rematch_chord(self, chord_type: &ChordType) -> Tone {
         let key_type = match chord_type {
             ChordType::Major7 => KeyType::Ionian,
             ChordType::Minor7 => KeyType::Dorian,
@@ -417,7 +417,7 @@ impl Tone {
         }
     }
 
-    pub(super) fn add_interval(&self, interval: Interval) -> Tone {
+    pub(crate) fn add_interval(&self, interval: Interval) -> Tone {
         let mut idx = (self.idx + interval.key_diff()) % 12;
         if idx == 0 {
             idx = 12;

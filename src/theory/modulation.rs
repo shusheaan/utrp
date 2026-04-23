@@ -9,9 +9,10 @@ use rand_chacha::ChaCha8Rng;
 use statrs::distribution::Categorical;
 use std::fmt;
 
-use crate::{app::Difficulty, chord::Chord};
+use crate::app::Difficulty;
+use super::chord::Chord;
 
-pub(super) enum DeTour {
+pub(crate) enum DeTour {
     Straight,
     SecondaryDominant,
     SubstituteSD,
@@ -42,7 +43,7 @@ impl fmt::Display for DeTour {
 }
 
 impl DeTour {
-    pub(super) fn sample(difficulty: Difficulty) -> anyhow::Result<Self> {
+    pub(crate) fn sample(difficulty: Difficulty) -> anyhow::Result<Self> {
         // let mut rng_seed = ChaCha8Rng::seed_from_u64(42);
         let mut rng_seed = rand::thread_rng();
         let prob = match difficulty {
@@ -63,7 +64,7 @@ impl DeTour {
         Ok(detour)
     }
 
-    pub(super) fn build_chords(
+    pub(crate) fn build_chords(
         &self,
         chord: Chord,
         difficulty: Difficulty,
@@ -136,7 +137,7 @@ impl fmt::Display for Modulation {
 }
 
 impl Modulation {
-    pub(super) fn sample(difficulty: Difficulty) -> anyhow::Result<Self> {
+    pub(crate) fn sample(difficulty: Difficulty) -> anyhow::Result<Self> {
         let mut rng_seed = rand::thread_rng();
 
         let prob = match difficulty {

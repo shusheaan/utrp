@@ -7,7 +7,7 @@ use ratatui::{
 };
 
 use crate::app::{App, GamePhase};
-use crate::tone::Tone;
+use crate::theory::tone::Tone;
 use crate::ui::strip_ansi;
 
 /// Staff row indices (top to bottom, 0-based):

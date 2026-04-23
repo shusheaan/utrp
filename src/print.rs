@@ -1,6 +1,6 @@
 use crate::{
     app::{App, Difficulty},
-    chord::Chord,
+    theory::chord::Chord,
 };
 use colored::*;
 use std::fmt;

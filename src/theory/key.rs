@@ -9,8 +9,8 @@ use rand_chacha::ChaCha8Rng;
 use statrs::distribution::Categorical;
 use std::fmt;
 
-use crate::{
-    app::Difficulty,
+use crate::app::Difficulty;
+use super::{
     chord::{Chord, ChordType, Inversion},
     tone::{Interval, NeutralTone, Tone, ToneVariant},
 };
@@ -78,8 +78,8 @@ impl KeyType {
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
-pub(super) struct Key {
-    pub(super) tonic: Tone,
+pub(crate) struct Key {
+    pub(crate) tonic: Tone,
     key_type: KeyType,
 }
 
@@ -90,14 +90,14 @@ impl fmt::Display for Key {
 }
 
 impl Key {
-    pub(super) fn new(tonic: Tone, key_type: KeyType) -> Self {
+    pub(crate) fn new(tonic: Tone, key_type: KeyType) -> Self {
         Key {
             tonic: tonic.rematch_key(&key_type),
             key_type,
         }
     }
 
-    pub(super) fn sample(difficulty: Difficulty) -> anyhow::Result<Self> {
+    pub(crate) fn sample(difficulty: Difficulty) -> anyhow::Result<Self> {
         let mut rng_seed = rand::thread_rng(); // no seed
         let prob_tonic = [1.0; 13];
         let mnm_tonic = Categorical::new(&prob_tonic)?;
@@ -135,7 +135,7 @@ impl Key {
         Ok(new_key)
     }
 
-    pub(super) fn log_all_chords(&self, difficulty: Difficulty) -> anyhow::Result<()> {
+    pub(crate) fn log_all_chords(&self, difficulty: Difficulty) -> anyhow::Result<()> {
         for i in 1..=7 {
             info!("{}", self.gen_chord(i, difficulty.clone())?);
         }
@@ -197,7 +197,7 @@ impl Key {
         matched_tonic.add_interval(interval)
     }
 
-    pub(super) fn gen_chord(&self, idx: i8, difficulty: Difficulty) -> anyhow::Result<Chord> {
+    pub(crate) fn gen_chord(&self, idx: i8, difficulty: Difficulty) -> anyhow::Result<Chord> {
         info!("Key::gen_chord(): generate {}th chord for {}", idx, self);
         let chord_type = match self.key_type {
             KeyType::Ionian => match idx {
@@ -257,7 +257,7 @@ impl Key {
         ))
     }
 
-    pub(super) fn change_mode(&self, idx: i8) -> Key {
+    pub(crate) fn change_mode(&self, idx: i8) -> Key {
         let key_type = self.derived_keytype_vec()[idx as usize].clone();
         let tonic = self.gen_tone(idx + 1);
         let new_key = Key { tonic, key_type };

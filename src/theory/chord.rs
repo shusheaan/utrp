@@ -9,14 +9,14 @@ use rand_chacha::ChaCha8Rng;
 use statrs::distribution::Categorical;
 use std::{error::Error, fmt};
 
-use crate::{
-    app::Difficulty,
+use crate::app::Difficulty;
+use super::{
     key::{Key, KeyType},
     tone::{Interval, Tone},
 };
 
 #[derive(Debug, Clone)]
-pub(super) enum ChordType {
+pub(crate) enum ChordType {
     Major7,
     Minor7,
     Dominant7,
@@ -47,7 +47,7 @@ impl fmt::Display for ChordType {
 }
 
 #[derive(Debug, Clone)]
-pub(super) enum Inversion {
+pub(crate) enum Inversion {
     PianoOriginal,
     PianoFirst,
     PianoSecond,
@@ -94,7 +94,7 @@ impl fmt::Display for Inversion {
 }
 
 impl Inversion {
-    pub(super) fn sample(difficulty: Difficulty) -> anyhow::Result<Self> {
+    pub(crate) fn sample(difficulty: Difficulty) -> anyhow::Result<Self> {
         // let mut rng_seed = ChaCha8Rng::seed_from_u64(42);
         let mut rng_seed = rand::thread_rng();
         let prob = match difficulty {
@@ -120,14 +120,14 @@ impl Inversion {
 
 #[derive(Clone)]
 pub struct Chord {
-    pub(super) tonic: Tone,
+    pub(crate) tonic: Tone,
     chord_type: ChordType,
     inversion: Inversion,
     pub(crate) tones: Vec<Tone>,
 }
 
 impl Chord {
-    pub(super) fn new(mut tonic: Tone, chord_type: ChordType, inversion: Inversion) -> Self {
+    pub(crate) fn new(mut tonic: Tone, chord_type: ChordType, inversion: Inversion) -> Self {
         info!("Chord::new(): build {}{}", tonic, chord_type);
         match chord_type {
             ChordType::Diminished7 => {
@@ -225,7 +225,7 @@ impl Chord {
         ))
     }
 
-    pub(super) fn gen_secondary_dominant(&self, difficulty: Difficulty) -> anyhow::Result<Chord> {
+    pub(crate) fn gen_secondary_dominant(&self, difficulty: Difficulty) -> anyhow::Result<Chord> {
         let chord_type = ChordType::Dominant7;
         let matched_tonic = self.tonic.clone().rematch_chord(&chord_type);
         Ok(Chord::new(
@@ -235,7 +235,7 @@ impl Chord {
         ))
     }
 
-    pub(super) fn gen_substitute_sd(&self, difficulty: Difficulty) -> anyhow::Result<Chord> {
+    pub(crate) fn gen_substitute_sd(&self, difficulty: Difficulty) -> anyhow::Result<Chord> {
         let chord_type = ChordType::Dominant7;
         let matched_tonic = self.tonic.clone().rematch_chord(&chord_type);
         Ok(Chord::new(
@@ -245,7 +245,7 @@ impl Chord {
         ))
     }
 
-    pub(super) fn gen_second_minor(&self, difficulty: Difficulty) -> anyhow::Result<Chord> {
+    pub(crate) fn gen_second_minor(&self, difficulty: Difficulty) -> anyhow::Result<Chord> {
         let chord_type = ChordType::Minor7;
         let matched_tonic = self.tonic.clone().rematch_chord(&chord_type);
         Ok(Chord::new(
@@ -255,7 +255,7 @@ impl Chord {
         ))
     }
 
-    pub(super) fn gen_major_keys(&self) -> Vec<Key> {
+    pub(crate) fn gen_major_keys(&self) -> Vec<Key> {
         let int_tonic_vec: Vec<Interval> = match self.chord_type {
             ChordType::Major7 => Vec::from([Interval::PerfectUnison, Interval::PerfectFifth]),
             ChordType::Minor7 => Vec::from([

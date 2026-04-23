@@ -10,12 +10,9 @@ use crate::{
 };
 
 mod app;
-mod chord;
 mod input;
-mod key;
-mod modulation;
 mod print;
-mod tone;
+mod theory;
 mod tui;
 mod ui;
 
