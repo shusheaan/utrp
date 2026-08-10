@@ -23,6 +23,11 @@ patch 即代码。本目录是 utrp 里唯一的音乐资产层,repo 其余部�
   `venv-render`(surgepy + pyyaml)。
 - **和声探索** → `tools/harmony/`:explore.py(键盘手动)、perform.py +
   session.yaml(simulation 表演,YAML 全参数,双种子可复现,`--replay` 回放)。
+- **音色逆向** → `tools/repatch/`:palette.py(歌→N 个音色色块)+
+  soundmatch.py(全库秒级检索,索引在 ~/storage/daw/repatch-index)+
+  refine.py(参数搜索精调)+ reabridge.py/`tools/reaper/`(REAPER 一键桥,
+  link.sh 布链);市场分析见
+  `../docs/2026-08-10-sound-reverse-engineering-market.md`。
 - **和声引擎** → `tools/simulate/`:Rust 胶水 crate,`#[path]` 原样编译
   `../../src/theory`;**仓库根的 `src/` 是只读的,永远不改**,一切扩展走
   lib 侧胶水(含种子:LD_PRELOAD 垫片,见其 README)。
