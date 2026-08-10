@@ -13,8 +13,8 @@ rpp.py         REAPER 工程文本生成(纯字符串函数)
 ## 用法(新专辑五步)
 
 ```sh
-A=.venv/bin/python        # librosa/demucs 环境(Python 3.12)
-S=.venv314/bin/python     # surgepy 环境(Python 3.14,版本必须匹配系统 Surge 插件)
+A=~/.cache/timbre-pipeline/venv-analysis/bin/python  # librosa/demucs(Python 3.12)
+S=~/.cache/timbre-pipeline/venv-render/bin/python    # surgepy(Python 3.14,须匹配系统 Surge)
 
 $A analysis.py specs/x.toml separate   # demucs -> ~/.cache/demucs-stems(可重建缓存)
 $A analysis.py specs/x.toml scan       # 粗扫:每轨频谱图 -> <proj>/scan/,人眼选目标
