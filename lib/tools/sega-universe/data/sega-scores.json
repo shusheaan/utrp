@@ -1,0 +1,105 @@
+[
+ {
+  "cand": "S1a-mks70",
+  "target": "S1",
+  "base": "patches_factory/Pads/MKS-70 Warm Pad.fxp",
+  "dist": 16.35,
+  "tweaks": [
+   "Amp EG Attack=0.45 s"
+  ]
+ },
+ {
+  "cand": "S1b-ooh",
+  "target": "S1",
+  "base": "patches_factory/Pads/Ooh.fxp",
+  "dist": 26.35,
+  "tweaks": [
+   "Amp EG Attack=0.45 s"
+  ]
+ },
+ {
+  "cand": "S1c-stringmachine",
+  "target": "S1",
+  "base": "patches_3rdparty/Jacky Ligon/Pads/String Machine 11.fxp",
+  "dist": 15.12,
+  "tweaks": [
+   "Amp EG Attack=0.45 s"
+  ]
+ },
+ {
+  "cand": "S2a-ghost-swell",
+  "target": "S2",
+  "base": "patches_factory/Pads/Ghost Pad.fxp",
+  "dist": 19.66,
+  "tweaks": [
+   "Amp EG Attack=1.6 s",
+   "Amp EG Release=1.2 s"
+  ]
+ },
+ {
+  "cand": "S2b-newwaves",
+  "target": "S2",
+  "base": "patches_3rdparty/Jacky Ligon/Atmospheres/New Waves.fxp",
+  "dist": 14.2,
+  "tweaks": [
+   "Amp EG Attack=1.6 s",
+   "Amp EG Release=1.2 s"
+  ]
+ },
+ {
+  "cand": "S2c-distant-swell",
+  "target": "S2",
+  "base": "patches_factory/Pads/Distant.fxp",
+  "dist": 18.3,
+  "tweaks": [
+   "Amp EG Attack=1.6 s",
+   "Amp EG Release=1.2 s"
+  ]
+ },
+ {
+  "cand": "S4a-darkpulse",
+  "target": "S4",
+  "base": "patches_3rdparty/Altenberg/Pads/Dark Pulse.fxp",
+  "dist": 18.28,
+  "tweaks": [
+   "Amp EG Attack=0.35 s"
+  ]
+ },
+ {
+  "cand": "S4b-manaquest",
+  "target": "S4",
+  "base": "patches_3rdparty/Altenberg/Pads/Mana Quest.fxp",
+  "dist": 12.85,
+  "tweaks": [
+   "Amp EG Attack=0.35 s"
+  ]
+ },
+ {
+  "cand": "S4c-moire",
+  "target": "S4",
+  "base": "patches_3rdparty/Jacky Ligon/Soundscapes/Moire 1.fxp",
+  "dist": 18.51,
+  "tweaks": []
+ },
+ {
+  "cand": "S3a-clarinet",
+  "target": "S3",
+  "base": "patches_factory/Winds/Clarinet.fxp",
+  "dist": 26.15,
+  "tweaks": []
+ },
+ {
+  "cand": "S3b-cyberflute",
+  "target": "S3",
+  "base": "patches_factory/Winds/Cyber Flute.fxp",
+  "dist": 27.39,
+  "tweaks": []
+ },
+ {
+  "cand": "S3c-dreamyflute",
+  "target": "S3",
+  "base": "patches_factory/Winds/Dreamy Flute.fxp",
+  "dist": 29.05,
+  "tweaks": []
+ }
+]
