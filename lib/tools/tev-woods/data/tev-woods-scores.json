@@ -1,0 +1,86 @@
+[
+ {
+  "cand": "T1a-bright",
+  "target": "T1",
+  "base": "/usr/share/surge-xt/patches_factory/Pads/Bright.fxp",
+  "dist": 18.15,
+  "tweaks": [
+   "Amp EG Attack",
+   "Osc Drift"
+  ]
+ },
+ {
+  "cand": "T1b-stringmachine",
+  "target": "T1",
+  "base": "/usr/share/surge-xt/patches_3rdparty/Jacky Ligon/Pads/String Machine 11.fxp",
+  "dist": 19.37,
+  "tweaks": [
+   "Amp EG Attack",
+   "Osc Drift"
+  ]
+ },
+ {
+  "cand": "T1c-mks70",
+  "target": "T1",
+  "base": "/usr/share/surge-xt/patches_factory/Pads/MKS-70 Warm Pad.fxp",
+  "dist": 28.61,
+  "tweaks": [
+   "Amp EG Attack",
+   "Osc Drift"
+  ]
+ },
+ {
+  "cand": "T2a-classiclead",
+  "target": "T2",
+  "base": "/usr/share/surge-xt/patches_factory/Leads/Classic Lead 1.fxp",
+  "dist": 32.18,
+  "tweaks": [
+   "Amp EG Attack"
+  ]
+ },
+ {
+  "cand": "T2b-cyberflute",
+  "target": "T2",
+  "base": "/usr/share/surge-xt/patches_factory/Winds/Cyber Flute.fxp",
+  "dist": 27.25,
+  "tweaks": [
+   "Amp EG Attack"
+  ]
+ },
+ {
+  "cand": "T2c-low",
+  "target": "T2",
+  "base": "/usr/share/surge-xt/patches_factory/Winds/Low.fxp",
+  "dist": 25.52,
+  "tweaks": [
+   "Amp EG Attack"
+  ]
+ },
+ {
+  "cand": "T3a-deepend",
+  "target": "T3",
+  "base": "/usr/share/surge-xt/patches_factory/Basses/Deep End.fxp",
+  "dist": 23.5,
+  "tweaks": [
+   "Amp EG Attack"
+  ]
+ },
+ {
+  "cand": "T3b-bass1",
+  "target": "T3",
+  "base": "/usr/share/surge-xt/patches_factory/Basses/Bass 1.fxp",
+  "dist": 12.96,
+  "tweaks": [
+   "Amp EG Attack"
+  ]
+ },
+ {
+  "cand": "T3c-ebass",
+  "target": "T3",
+  "base": "/usr/share/surge-xt/patches_factory/Basses/E-Bass.fxp",
+  "dist": 11.2,
+  "tweaks": [
+   "Amp EG Attack"
+  ]
+ }
+]

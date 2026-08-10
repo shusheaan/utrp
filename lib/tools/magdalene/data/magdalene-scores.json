@@ -1,0 +1,113 @@
+[
+ {
+  "cand": "M1a-darkdrone",
+  "target": "M1",
+  "base": "/home/shu/work/utrp/lib/surge/endless/C4-darkdrone.fxp",
+  "dist": 20.87,
+  "tweaks": []
+ },
+ {
+  "cand": "M1b-ghostpad",
+  "target": "M1",
+  "base": "/usr/share/surge-xt/patches_factory/Pads/Ghost Pad.fxp",
+  "dist": 14.01,
+  "tweaks": [
+   "Amp EG Attack"
+  ]
+ },
+ {
+  "cand": "M1c-moody",
+  "target": "M1",
+  "base": "/usr/share/surge-xt/patches_factory/Pads/Moody Statement.fxp",
+  "dist": 21.55,
+  "tweaks": [
+   "Amp EG Attack"
+  ]
+ },
+ {
+  "cand": "M2a-juno60",
+  "target": "M2",
+  "base": "/usr/share/surge-xt/patches_factory/Polysynths/Juno-60 Strings.fxp",
+  "dist": 19.19,
+  "tweaks": [
+   "Amp EG Attack"
+  ]
+ },
+ {
+  "cand": "M2b-stringmachine",
+  "target": "M2",
+  "base": "/usr/share/surge-xt/patches_3rdparty/Jacky Ligon/Pads/String Machine 11.fxp",
+  "dist": 15.24,
+  "tweaks": [
+   "Amp EG Attack"
+  ]
+ },
+ {
+  "cand": "M2c-mks70",
+  "target": "M2",
+  "base": "/usr/share/surge-xt/patches_factory/Pads/MKS-70 Warm Pad.fxp",
+  "dist": 20.59,
+  "tweaks": [
+   "Amp EG Attack"
+  ]
+ },
+ {
+  "cand": "M3a-manaquest",
+  "target": "M3",
+  "base": "/usr/share/surge-xt/patches_3rdparty/Altenberg/Pads/Mana Quest.fxp",
+  "dist": 10.69,
+  "tweaks": [
+   "Amp EG Attack",
+   "Osc Drift"
+  ]
+ },
+ {
+  "cand": "M3b-moire",
+  "target": "M3",
+  "base": "/usr/share/surge-xt/patches_3rdparty/Jacky Ligon/Soundscapes/Moire 1.fxp",
+  "dist": 14.37,
+  "tweaks": [
+   "Osc Drift"
+  ]
+ },
+ {
+  "cand": "M3c-distant",
+  "target": "M3",
+  "base": "/usr/share/surge-xt/patches_factory/Pads/Distant.fxp",
+  "dist": 13.45,
+  "tweaks": [
+   "Amp EG Attack",
+   "Osc Drift"
+  ]
+ },
+ {
+  "cand": "M4a-boss",
+  "target": "M4",
+  "base": "/usr/share/surge-xt/patches_factory/Polysynths/Boss.fxp",
+  "dist": 11.6,
+  "tweaks": [
+   "Amp EG Attack",
+   "Amp EG Release"
+  ]
+ },
+ {
+  "cand": "M4b-1804",
+  "target": "M4",
+  "base": "/usr/share/surge-xt/patches_factory/Polysynths/1804.fxp",
+  "dist": 7.99,
+  "tweaks": [
+   "Amp EG Attack",
+   "Amp EG Release"
+  ]
+ },
+ {
+  "cand": "M4c-doomsday",
+  "target": "M4",
+  "base": "/usr/share/surge-xt/patches_factory/Basses/Doomsday.fxp",
+  "dist": 25.44,
+  "tweaks": [
+   "Amp EG Attack",
+   "Amp EG Release"
+  ]
+ }
+]
