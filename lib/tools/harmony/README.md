@@ -74,8 +74,16 @@ $P perform.py session.yaml --wav     # 离线渲染整段(2-3 分钟)验听
 
 点缀层的随机性三层可调(session.yaml `ornament` 段):euclid 决定"哪里可能
 响"(节奏骨架),density 决定"真的响不响"(呼吸),turing.mutate 决定
-"旋律变不变"(0 = 死循环,1 = 纯随机,0.1–0.2 = 缓慢演化)。和声层随机性
-在原版 Rust 里(thread_rng),每次 simulate 都是新即兴,不可复现是特性。
+"旋律变不变"(0 = 死循环,1 = 纯随机,0.1–0.2 = 缓慢演化)。
+
+可复现:`sim.seed` + `ornament.seed` 双种子 = 整场演出逐字节复现(和声层
+靠 `../simulate/shim/` 的 LD_PRELOAD 垫片,机制与边界见 `../simulate/README`);
+每次 sim 的原始 JSON 自动存 `progressions/<name>-sim.json`,
+`perform.py session.yaml --replay` 直接回放,升级依赖也不丢已发现的进行。
+
+依赖:venv-render 里需 `pip install pyyaml`(一次);测试
+`venv-render python test_perform.py`(含 utrp-sim 输出契约与种子复现检查),
+`python test_theory.py` 任意 python 可跑。
 
 ## voicing 库约定
 
@@ -89,7 +97,7 @@ append——**不改既有条目,名字即 ID**(progressions JSON 里引用的�
 - 渲染非实时:每个 (patch, 和弦) 首次约 0.2s 渲染后进
   `~/storage/daw/harmony/cache/`,重复触发即时;换 voicing 对比是主要动作,
   全部命中缓存。
-- 想要真实时可以后接 MIDI 直通宿主(见 lib/README 路线图),但探索场景下
+- 想要真实时可以后接 MIDI 直通宿主(未做,需 python-rtmidi 或 ALSA 胶水),但探索场景下
   缓存方案零依赖、且听到的就是渲染管线同款声音。
 - 吉他 voicing 是音高层面的(drop2/drop3/shell 本来就来自吉他把位),
   不建模指板可弹性;要指板图回 Rust utrp。

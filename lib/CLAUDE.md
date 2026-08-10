@@ -14,3 +14,16 @@ patch 即代码。本目录是 utrp 里唯一的音乐资产层,repo 其余部�
 
 音色任务(调 patch / 扒音色 / 写歌实验)在 utrp 开 agent 并主要在本目录工作;
 装包/配置/音频栈问题去 gral 开。宿主接入:`./link.sh`(重装后重跑)。
+
+## 工具地图(细节看各自 README,先读再动手)
+
+- **扒音色/扒鼓** → `tools/pipeline/`:spec TOML 驱动,separate/scan/measure/
+  browse(全厂库自动选备选)/drums/drummidi(鼓→MIDI+grid)/render/project。
+  两个 venv:`~/.cache/timbre-pipeline/venv-analysis`(librosa)与
+  `venv-render`(surgepy + pyyaml)。
+- **和声探索** → `tools/harmony/`:explore.py(键盘手动)、perform.py +
+  session.yaml(simulation 表演,YAML 全参数,双种子可复现,`--replay` 回放)。
+- **和声引擎** → `tools/simulate/`:Rust 胶水 crate,`#[path]` 原样编译
+  `../../src/theory`;**仓库根的 `src/` 是只读的,永远不改**,一切扩展走
+  lib 侧胶水(含种子:LD_PRELOAD 垫片,见其 README)。
+  首次构建:`cargo build --release` + `gcc` 编 `shim/seedrandom.c`。

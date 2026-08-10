@@ -40,7 +40,10 @@ $S synth.py    specs/x.toml all        # 渲染打分 -> renders/ + scores.json,
 **60 频段谱距离 + centroid 比值 + attack 比值** 的复合距离排名,直接打印
 top-24 与五行可粘贴的 candidates。逐 patch 进度缓存在
 `<proj>/browse/<target>-scores.json`,中断重跑只补增量;全库约 15–25 分钟,
-先用过滤("Pads/"、"Jacky Ligon")做小时级迭代。
+先用过滤("Pads/"、"Jacky Ligon")做小时级迭代。个别病态 patch 会把渲染
+卡死(已知:`TNMG/Drums/Kick - Bold Sine.fxp`)——进度长时间不动就杀进程,
+在缓存 JSON 里把按路径序下一个未完成的 patch 手动写成 999(= 拉黑),再续跑。
+另注意 top 里的 Sequences/FX 类:频谱像但律动不对,选备选优先同族(pad 配 pad)。
 
 ## measure 输出的音色特征(对应合成器分区)
 
