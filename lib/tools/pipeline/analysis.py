@@ -32,7 +32,8 @@ import soundfile as sf
 
 sys.path.insert(0, str(Path(__file__).parent))
 from albumspec import STEMS_DIR, AlbumSpec, load  # noqa: E402
-from spectral import band_profile, hz_to_note  # noqa: E402
+from spectral import (band_profile, centroid_stats, harmonic_features,  # noqa: E402
+                      hz_to_note, mod_features, stereo_features)
 
 SCAN_SR = 22050
 CLASSES = ("kick", "snare", "hat", "perc")
@@ -154,12 +155,18 @@ def cmd_measure(spec: AlbumSpec) -> None:
                 rises.append((hi - lo) * 512 / sr)
         L, R = y2[0], y2[1]
         cent = librosa.feature.spectral_centroid(y=y, sr=sr, hop_length=2048)[0]
+        flat = librosa.feature.spectral_flatness(y=y)[0]
         results[tg.key] = {
             "track": tg.track, "t0": tg.t0, "t1": tg.t1, "stem": tg.stem,
             "peaks": peaks,
             "attack_med_ms": round(float(np.median(rises)) * 1000) if rises else None,
             "lr_corr": round(float(np.corrcoef(L, R)[0, 1]), 3),
             "centroid_med_hz": round(float(np.median(cent))),
+            "flatness_med": round(float(np.median(flat)), 4),
+            "centroid_traj": centroid_stats(y, sr),
+            "harmonics": harmonic_features(y, sr),
+            "mod": mod_features(y, sr),
+            "stereo": stereo_features(y2, sr),
         }
         sf.write(refs / f"{tg.key}-stem.wav", y2.T, sr)
         orig, osr = sf.read(spec.flac(tg.track), dtype="float32")
@@ -192,7 +199,8 @@ def cmd_drums(spec: AlbumSpec) -> None:
         y2, sr = sf.read(spec.stems(seg.track) / "drums.wav", dtype="float32")
         y2 = y2[int(seg.t0 * sr): int(seg.t1 * sr)].T
         y = y2.mean(axis=0)
-        tempo, _ = librosa.beat.beat_track(y=y, sr=sr, hop_length=256)
+        tempo, beat_fr = librosa.beat.beat_track(y=y, sr=sr, hop_length=256)
+        beats = librosa.frames_to_time(beat_fr, sr=sr, hop_length=256)
 
         M = librosa.feature.melspectrogram(y=y, sr=sr, hop_length=256, n_mels=128)
         hi_rows = librosa.mel_frequencies(128, fmax=sr / 2) > 5000
@@ -269,6 +277,7 @@ def cmd_drums(spec: AlbumSpec) -> None:
         counts = {c: sum(1 for h in hits if h["cls"] == c) for c in CLASSES}
         meta = {"track": seg.track, "t0": seg.t0, "t1": seg.t1,
                 "tempo": round(float(np.atleast_1d(tempo)[0]), 1),
+                "beats": [round(float(b), 4) for b in beats],
                 "hits": hits, "counts": counts, "shots": sorted(shots)}
         (seg_dir / "pattern.json").write_text(json.dumps(meta, indent=1, default=float))
         print(f"{seg.tag:20s} tempo={meta['tempo']} hits={len(hits)} "

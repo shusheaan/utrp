@@ -1,13 +1,19 @@
-"""Synthesis side of the pipeline (surgepy venv): render / score / project.
+"""Synthesis side of the pipeline (surgepy venv): render / score / project / browse.
 
 Usage:
   python synth.py <spec.toml> render    # candidates -> renders/ + scores + fxp into lib
   python synth.py <spec.toml> project   # assemble <name>.rpp (incl. drum groups if any)
   python synth.py <spec.toml> all
+  python synth.py <spec.toml> browse <target> [path-filter ...]
+      # rank the whole factory/3rdparty patch library against the target's ref
+      # stem with a short probe render; prints paste-ready candidate lines.
+      # Incremental: cached per patch in <proj>/browse/. Full scan ~3000
+      # patches; narrow with filters ("Pads", "Jacky Ligon", ...) first.
 """
 from __future__ import annotations
 
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -17,8 +23,8 @@ import surgepy
 
 sys.path.insert(0, str(Path(__file__).parent))
 import rpp  # noqa: E402
-from albumspec import LIB_ROOT, AlbumSpec, TargetSpec, load  # noqa: E402
-from spectral import band_profile, spectral_distance  # noqa: E402
+from albumspec import FACTORY, LIB_ROOT, AlbumSpec, PhraseNote, TargetSpec, load  # noqa: E402
+from spectral import attack_ms, band_profile, centroid_track, spectral_distance  # noqa: E402
 
 SR = 48000
 
@@ -150,6 +156,95 @@ def cmd_install(spec: AlbumSpec) -> None:
         print(f"install blocked ({e}); rerun: synth.py <spec> install")
 
 
+# ------------------------------------------------------------------ browse ---
+PROBE_DUR = 6.0
+
+
+def probe_phrase(tg: TargetSpec) -> tuple[tuple[PhraseNote, ...], float]:
+    """First ~4 s of the target phrase, tails clipped, for cheap scan renders."""
+    notes = tuple(PhraseNote(ev.t, ev.note, ev.vel, min(ev.dur, 4.0 - ev.t))
+                  for ev in tg.phrase if ev.t < 4.0)
+    return notes, min(tg.phrase_dur, PROBE_DUR)
+
+
+def ref_features(spec: AlbumSpec, tg: TargetSpec) -> tuple[np.ndarray, float, float]:
+    ref, sr = sf.read(spec.project_dir / "refs" / f"{tg.key}-stem.wav",
+                      dtype="float32")
+    w0, w1 = tg.score_window
+    cut = ref[int(w0 * sr): int(w1 * sr)]
+    mono = cut.mean(axis=1)
+    cent = float(np.median(centroid_track(mono, sr)))
+    atk = attack_ms(mono[:int(4.0 * sr)], sr) or 200.0
+    return band_profile(cut, sr), cent, atk
+
+
+def probe_distance(y: np.ndarray, dur: float, ref_prof: np.ndarray,
+                   ref_cent: float, ref_atk: float) -> float:
+    body = y[int(0.5 * SR): int((dur - 1.0) * SR)]
+    mono = body.mean(axis=1)
+    if np.abs(mono).max() < 1e-5:
+        return 999.0
+    d = spectral_distance(band_profile(body, SR), ref_prof)
+    cent = float(np.median(centroid_track(mono, SR)))
+    atk = attack_ms(y.mean(axis=1), SR) or 200.0
+    d += 3.0 * abs(np.log2(cent / ref_cent))
+    d += 1.2 * abs(np.log2((atk + 20.0) / (ref_atk + 20.0)))
+    return float(d)
+
+
+def cmd_browse(spec: AlbumSpec, args: list[str]) -> None:
+    if not args:
+        raise SystemExit("browse needs a target key (e.g. M1 or M1-teyes-drone)")
+    want, filters = args[0], args[1:]
+    tg = next(t for t in spec.targets if t.key == want or t.short == want)
+    phrase, dur = probe_phrase(tg)
+    ref_prof, ref_cent, ref_atk = ref_features(spec, tg)
+
+    paths = []
+    for sub in ("patches_factory", "patches_3rdparty"):
+        for p in sorted((FACTORY / sub).rglob("*.fxp")):
+            rel = f"{sub}:{p.relative_to(FACTORY / sub)}"
+            if not filters or any(f.lower() in rel.lower() for f in filters):
+                paths.append((rel, p))
+
+    cache_file = spec.project_dir / "browse" / f"{tg.short}-scores.json"
+    cache_file.parent.mkdir(parents=True, exist_ok=True)
+    scores: dict[str, float] = (json.loads(cache_file.read_text())
+                                if cache_file.exists() else {})
+    todo = [(rel, p) for rel, p in paths if rel not in scores]
+    print(f"{tg.key}: {len(paths)} patches, {len(todo)} to render "
+          f"(ref centroid {ref_cent:.0f}Hz attack {ref_atk:.0f}ms)", flush=True)
+    for i, (rel, p) in enumerate(todo):
+        try:
+            s = surgepy.createSurge(SR)
+            s.loadPatch(str(p))
+            y = render_phrase(s, phrase, dur)
+            y = y * (10 ** (-6 / 20) / (np.abs(y).max() + 1e-9))
+            scores[rel] = round(probe_distance(y, dur, ref_prof,
+                                               ref_cent, ref_atk), 2)
+        except Exception as e:                      # patch zoo: skip corrupt ones
+            print(f"  skip {rel}: {e}", flush=True)
+            scores[rel] = 999.0
+        if (i + 1) % 25 == 0:
+            cache_file.write_text(json.dumps(scores, indent=0))
+            print(f"  {i + 1}/{len(todo)}", flush=True)
+    cache_file.write_text(json.dumps(scores, indent=0))
+
+    ranked = sorted((v, k) for k, v in scores.items()
+                    if v < 999 and (not filters
+                                    or any(f.lower() in k.lower() for f in filters)))
+    print(f"\ntop matches for {tg.key}:")
+    for v, k in ranked[:24]:
+        print(f"  {v:6.2f}  {k}")
+    print("\npaste-ready candidates:")
+    for i, (v, k) in enumerate(ranked[:5]):
+        rel = k.split(":", 1)[1]
+        slugname = re.sub(r"[^A-Za-z0-9]+", "",
+                          Path(rel).stem.lower())[:12]
+        print(f'  {{ key = "{tg.short}{"abcde"[i]}-{slugname}", '
+              f'base = "factory:{rel}", tweaks = [] }},')
+
+
 # ----------------------------------------------------------------- project ---
 def cmd_project(spec: AlbumSpec) -> None:
     scores = json.loads((spec.project_dir / "scores.json").read_text())
@@ -199,8 +294,11 @@ def cmd_project(spec: AlbumSpec) -> None:
 
 def main() -> None:
     spec = load(Path(sys.argv[1]))
-    cmds = {"render": cmd_render, "project": cmd_project, "install": cmd_install}
     what = sys.argv[2] if len(sys.argv) > 2 else "all"
+    if what == "browse":
+        cmd_browse(spec, sys.argv[3:])
+        return
+    cmds = {"render": cmd_render, "project": cmd_project, "install": cmd_install}
     for name in (cmds if what == "all" else {what: cmds[what]}):
         cmds[name](spec)
 

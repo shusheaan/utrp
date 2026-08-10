@@ -1,0 +1,126 @@
+# Voicing 预设库:pattern = [[度数, 八度偏移], ...] 从低到高。
+# 度数 1/3/5/7 查 quality 表,9/11/13 是固定张力(14/17/21 半音)。
+# 自定义追加到本文件末尾,或放 voicings.local.toml(同格式,不进 git 也行)。
+# qualities = ["*"] 表示任何和弦可用;否则只在列出的 quality 上出现。
+
+# ------------------------------------------------------------------ piano ---
+[[voicing]]
+name = "close"
+family = "piano"
+qualities = ["*"]
+pattern = [[1, 0], [3, 0], [5, 0], [7, 0]]
+
+[[voicing]]
+name = "drop2"
+family = "piano"
+qualities = ["*"]
+pattern = [[5, -1], [1, 0], [3, 0], [7, 0]]
+
+[[voicing]]
+name = "drop3"
+family = "piano"
+qualities = ["*"]
+pattern = [[3, -1], [1, 0], [5, 0], [7, 0]]
+
+[[voicing]]
+name = "shell"
+family = "piano"
+qualities = ["*"]
+pattern = [[1, 0], [7, 0], [3, 1]]
+
+[[voicing]]
+name = "rootless-a"          # Bill Evans A: 3 5 7 9
+family = "piano"
+qualities = ["maj7", "m7", "7", "m7b5"]
+pattern = [[3, 0], [5, 0], [7, 0], [9, 0]]
+
+[[voicing]]
+name = "rootless-b"          # Bill Evans B: 7 9 3 5
+family = "piano"
+qualities = ["maj7", "m7", "7"]
+pattern = [[7, -1], [9, -1], [3, 0], [5, 0]]
+
+[[voicing]]
+name = "open-spread"         # 左手 1-5,右手 3-7 上移
+family = "piano"
+qualities = ["*"]
+pattern = [[1, 0], [5, 0], [3, 1], [7, 1]]
+
+[[voicing]]
+name = "pad-add9"            # ambient pad:根五九 + 高三
+family = "piano"
+qualities = ["maj7", "m7", "mMaj7"]
+pattern = [[1, 0], [5, 0], [9, 0], [3, 1]]
+
+[[voicing]]
+name = "pad-wide"            # 双手大开位,pad 长音用
+family = "piano"
+qualities = ["*"]
+pattern = [[1, -1], [5, 0], [1, 1], [3, 1], [7, 1]]
+
+[[voicing]]
+name = "so-what"             # 四度堆叠 + 大三度封顶
+family = "piano"
+qualities = ["m7", "7sus4"]
+pattern = [[1, 0], [11, 0], [7, 0], [3, 1], [5, 1]]
+
+[[voicing]]
+name = "cluster9"            # 密集九音簇,阴暗气氛
+family = "piano"
+qualities = ["maj7", "m7", "mMaj7"]
+pattern = [[7, -1], [1, 0], [9, 0], [3, 0]]
+
+[[voicing]]
+name = "upper-structure"     # 低音根音 + 上层三和弦(9 #11 13 感)
+family = "piano"
+qualities = ["7", "maj7"]
+pattern = [[1, -1], [7, 0], [9, 0], [13, 0]]
+
+# ----------------------------------------------------------------- guitar ---
+[[voicing]]
+name = "g-shell"             # Freddie Green 三音
+family = "guitar"
+qualities = ["*"]
+pattern = [[1, 0], [7, 0], [3, 1]]
+
+[[voicing]]
+name = "g-drop2"             # 4-3-2-1 弦 drop2
+family = "guitar"
+qualities = ["*"]
+pattern = [[1, 0], [5, 0], [7, 0], [3, 1]]
+
+[[voicing]]
+name = "g-drop3"             # 6-4-3-2 弦 drop3
+family = "guitar"
+qualities = ["*"]
+pattern = [[1, 0], [7, 0], [3, 1], [5, 1]]
+
+[[voicing]]
+name = "g-drop2-inv2"        # drop2 第二转位(5 在低音)
+family = "guitar"
+qualities = ["*"]
+pattern = [[5, 0], [1, 1], [3, 1], [7, 1]]
+
+[[voicing]]
+name = "g-barre"             # E 型大横按式六声
+family = "guitar"
+qualities = ["maj7", "7", "m7"]
+pattern = [[1, 0], [5, 0], [7, 0], [3, 1], [5, 1], [1, 2]]
+
+[[voicing]]
+name = "g-top4"              # 高四弦小编制,伴奏切分用
+family = "guitar"
+qualities = ["*"]
+pattern = [[5, 0], [7, 0], [3, 1], [5, 1]]
+
+[[voicing]]
+name = "g-add9-arp"          # 分解感 add9 开位
+family = "guitar"
+qualities = ["maj7", "m7"]
+pattern = [[1, 0], [5, 0], [9, 0], [3, 1], [7, 1]]
+
+[[voicing]]
+name = "g-power7"            # 根五 + 高七,失真也不浑
+family = "guitar"
+qualities = ["*"]
+pattern = [[1, 0], [5, 0], [1, 1], [7, 1]]

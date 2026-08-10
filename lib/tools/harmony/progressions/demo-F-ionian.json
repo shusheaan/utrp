@@ -1,0 +1,51 @@
+[
+ {
+  "label": "II",
+  "symbol": "Gm7",
+  "quality": "m7",
+  "voicing": "drop2",
+  "notes": [
+   50,
+   55,
+   58,
+   65
+  ]
+ },
+ {
+  "label": "V",
+  "symbol": "C7",
+  "quality": "7",
+  "voicing": "rootless-b",
+  "notes": [
+   46,
+   50,
+   52,
+   55
+  ]
+ },
+ {
+  "label": "I",
+  "symbol": "Fmaj7",
+  "quality": "maj7",
+  "voicing": "pad-wide",
+  "notes": [
+   41,
+   60,
+   65,
+   69,
+   76
+  ]
+ },
+ {
+  "label": "bVI",
+  "symbol": "C#maj7",
+  "quality": "maj7",
+  "voicing": "close",
+  "notes": [
+   49,
+   53,
+   56,
+   60
+  ]
+ }
+]
