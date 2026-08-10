@@ -1,0 +1,812 @@
+[
+ {
+  "measure": 0,
+  "key": "F 6/Aeolian",
+  "modulation": "SameKey",
+  "degree": 3,
+  "scale": [
+   5,
+   7,
+   8,
+   10,
+   0,
+   1,
+   3
+  ],
+  "chords": [
+   {
+    "role": "approach",
+    "symbol": "Fm7-p/2: [C, Eb, F, Ab]",
+    "notes": [
+     48,
+     51,
+     53,
+     56
+    ]
+   },
+   {
+    "role": "approach",
+    "symbol": "Bb7-p/3: [Ab, Bb, D, F]",
+    "notes": [
+     44,
+     46,
+     50,
+     53
+    ]
+   },
+   {
+    "role": "target",
+    "symbol": "AbM7-p/0: [Ab, C, Eb, G]",
+    "notes": [
+     44,
+     48,
+     51,
+     55
+    ]
+   }
+  ]
+ },
+ {
+  "measure": 1,
+  "key": "F 6/Aeolian",
+  "modulation": "SameKey",
+  "degree": 1,
+  "scale": [
+   5,
+   7,
+   8,
+   10,
+   0,
+   1,
+   3
+  ],
+  "chords": [
+   {
+    "role": "approach",
+    "symbol": "Dm7-p/2: [A, C, D, F]",
+    "notes": [
+     45,
+     48,
+     50,
+     53
+    ]
+   },
+   {
+    "role": "approach",
+    "symbol": "G7-p/3: [F, G, B, D]",
+    "notes": [
+     53,
+     55,
+     59,
+     62
+    ]
+   },
+   {
+    "role": "target",
+    "symbol": "Fm7-p/3: [Eb, F, Ab, C]",
+    "notes": [
+     51,
+     53,
+     56,
+     60
+    ]
+   }
+  ]
+ },
+ {
+  "measure": 2,
+  "key": "F 6/Aeolian",
+  "modulation": "SameKey",
+  "degree": 4,
+  "scale": [
+   5,
+   7,
+   8,
+   10,
+   0,
+   1,
+   3
+  ],
+  "chords": [
+   {
+    "role": "target",
+    "symbol": "Bbm7-p/2: [F, Ab, Bb, Db]",
+    "notes": [
+     53,
+     56,
+     58,
+     61
+    ]
+   }
+  ]
+ },
+ {
+  "measure": 3,
+  "key": "F 6/Aeolian",
+  "modulation": "SameKey",
+  "degree": 2,
+  "scale": [
+   5,
+   7,
+   8,
+   10,
+   0,
+   1,
+   3
+  ],
+  "chords": [
+   {
+    "role": "approach",
+    "symbol": "A7-p/1: [C#, E, G, A]",
+    "notes": [
+     49,
+     52,
+     55,
+     57
+    ]
+   },
+   {
+    "role": "target",
+    "symbol": "Gm7b5-p/2: [Db, F, G, Bb]",
+    "notes": [
+     49,
+     53,
+     55,
+     58
+    ]
+   }
+  ]
+ },
+ {
+  "measure": 4,
+  "key": "F 6/Aeolian",
+  "modulation": "Back",
+  "degree": 4,
+  "scale": [
+   5,
+   7,
+   8,
+   10,
+   0,
+   1,
+   3
+  ],
+  "chords": [
+   {
+    "role": "approach",
+    "symbol": "Cm7-p/1: [Eb, G, Bb, C]",
+    "notes": [
+     51,
+     55,
+     58,
+     60
+    ]
+   },
+   {
+    "role": "approach",
+    "symbol": "F7-p/0: [F, A, C, Eb]",
+    "notes": [
+     53,
+     57,
+     60,
+     63
+    ]
+   },
+   {
+    "role": "target",
+    "symbol": "Bbm7-p/0: [Bb, Db, F, Ab]",
+    "notes": [
+     46,
+     49,
+     53,
+     56
+    ]
+   }
+  ]
+ },
+ {
+  "measure": 5,
+  "key": "F 6/Aeolian",
+  "modulation": "SameKey",
+  "degree": 7,
+  "scale": [
+   5,
+   7,
+   8,
+   10,
+   0,
+   1,
+   3
+  ],
+  "chords": [
+   {
+    "role": "approach",
+    "symbol": "Cm7-p/3: [Bb, C, Eb, G]",
+    "notes": [
+     46,
+     48,
+     51,
+     55
+    ]
+   },
+   {
+    "role": "approach",
+    "symbol": "F7-p/0: [F, A, C, Eb]",
+    "notes": [
+     53,
+     57,
+     60,
+     63
+    ]
+   },
+   {
+    "role": "target",
+    "symbol": "Eb7-p/1: [G, Bb, Db, Eb]",
+    "notes": [
+     43,
+     46,
+     49,
+     51
+    ]
+   }
+  ]
+ },
+ {
+  "measure": 6,
+  "key": "F 6/Aeolian",
+  "modulation": "SameKey",
+  "degree": 6,
+  "scale": [
+   5,
+   7,
+   8,
+   10,
+   0,
+   1,
+   3
+  ],
+  "chords": [
+   {
+    "role": "approach",
+    "symbol": "Bbm7-p/0: [Bb, Db, F, Ab]",
+    "notes": [
+     46,
+     49,
+     53,
+     56
+    ]
+   },
+   {
+    "role": "approach",
+    "symbol": "Eb7-p/2: [Bb, Db, Eb, G]",
+    "notes": [
+     46,
+     49,
+     51,
+     55
+    ]
+   },
+   {
+    "role": "target",
+    "symbol": "DbM7-p/3: [C, Db, F, Ab]",
+    "notes": [
+     48,
+     49,
+     53,
+     56
+    ]
+   }
+  ]
+ },
+ {
+  "measure": 7,
+  "key": "F 6/Aeolian",
+  "modulation": "SameKey",
+  "degree": 5,
+  "scale": [
+   5,
+   7,
+   8,
+   10,
+   0,
+   1,
+   3
+  ],
+  "chords": [
+   {
+    "role": "approach",
+    "symbol": "G7-p/0: [G, B, D, F]",
+    "notes": [
+     43,
+     47,
+     50,
+     53
+    ]
+   },
+   {
+    "role": "target",
+    "symbol": "Cm7-p/3: [Bb, C, Eb, G]",
+    "notes": [
+     46,
+     48,
+     51,
+     55
+    ]
+   }
+  ]
+ },
+ {
+  "measure": 8,
+  "key": "F 6/Aeolian",
+  "modulation": "ViaTonic",
+  "degree": 6,
+  "scale": [
+   5,
+   7,
+   8,
+   10,
+   0,
+   1,
+   3
+  ],
+  "chords": [
+   {
+    "role": "approach",
+    "symbol": "Ab7-p/3: [Gb, Ab, C, Eb]",
+    "notes": [
+     42,
+     44,
+     48,
+     51
+    ]
+   },
+   {
+    "role": "target",
+    "symbol": "DbM7-p/2: [Ab, C, Db, F]",
+    "notes": [
+     44,
+     48,
+     49,
+     53
+    ]
+   }
+  ]
+ },
+ {
+  "measure": 9,
+  "key": "F 6/Aeolian",
+  "modulation": "SameKey",
+  "degree": 7,
+  "scale": [
+   5,
+   7,
+   8,
+   10,
+   0,
+   1,
+   3
+  ],
+  "chords": [
+   {
+    "role": "approach",
+    "symbol": "Cm7-p/2: [G, Bb, C, Eb]",
+    "notes": [
+     43,
+     46,
+     48,
+     51
+    ]
+   },
+   {
+    "role": "approach",
+    "symbol": "F7-p/1: [A, C, Eb, F]",
+    "notes": [
+     45,
+     48,
+     51,
+     53
+    ]
+   },
+   {
+    "role": "target",
+    "symbol": "Eb7-p/0: [Eb, G, Bb, Db]",
+    "notes": [
+     51,
+     55,
+     58,
+     61
+    ]
+   }
+  ]
+ },
+ {
+  "measure": 10,
+  "key": "F 6/Aeolian",
+  "modulation": "SameKey",
+  "degree": 3,
+  "scale": [
+   5,
+   7,
+   8,
+   10,
+   0,
+   1,
+   3
+  ],
+  "chords": [
+   {
+    "role": "approach",
+    "symbol": "Bbm7-p/3: [Ab, Bb, Db, F]",
+    "notes": [
+     44,
+     46,
+     49,
+     53
+    ]
+   },
+   {
+    "role": "approach",
+    "symbol": "Eb7-p/3: [Db, Eb, G, Bb]",
+    "notes": [
+     49,
+     51,
+     55,
+     58
+    ]
+   },
+   {
+    "role": "target",
+    "symbol": "AbM7-p/2: [Eb, G, Ab, C]",
+    "notes": [
+     51,
+     55,
+     56,
+     60
+    ]
+   }
+  ]
+ },
+ {
+  "measure": 11,
+  "key": "F 6/Aeolian",
+  "modulation": "SameKey",
+  "degree": 4,
+  "scale": [
+   5,
+   7,
+   8,
+   10,
+   0,
+   1,
+   3
+  ],
+  "chords": [
+   {
+    "role": "approach",
+    "symbol": "F7-p/0: [F, A, C, Eb]",
+    "notes": [
+     53,
+     57,
+     60,
+     63
+    ]
+   },
+   {
+    "role": "target",
+    "symbol": "Bbm7-p/3: [Ab, Bb, Db, F]",
+    "notes": [
+     44,
+     46,
+     49,
+     53
+    ]
+   }
+  ]
+ },
+ {
+  "measure": 12,
+  "key": "D# 3/Phrygian",
+  "modulation": "ViaDiminished",
+  "degree": 1,
+  "scale": [
+   3,
+   4,
+   6,
+   8,
+   10,
+   11,
+   1
+  ],
+  "chords": [
+   {
+    "role": "pivot",
+    "symbol": "Bbdim7-p/3: [G, Bb, Db, Fb]",
+    "notes": [
+     43,
+     46,
+     49,
+     52
+    ]
+   },
+   {
+    "role": "approach",
+    "symbol": "A#m7b5-p/3: [G#, A#, C#, E]",
+    "notes": [
+     44,
+     46,
+     49,
+     52
+    ]
+   },
+   {
+    "role": "target",
+    "symbol": "Ebm7-p/3: [Db, Eb, Gb, Bb]",
+    "notes": [
+     49,
+     51,
+     54,
+     58
+    ]
+   }
+  ]
+ },
+ {
+  "measure": 13,
+  "key": "D# 3/Phrygian",
+  "modulation": "SameKey",
+  "degree": 3,
+  "scale": [
+   3,
+   4,
+   6,
+   8,
+   10,
+   11,
+   1
+  ],
+  "chords": [
+   {
+    "role": "approach",
+    "symbol": "Ab7-p/0: [Ab, C, Eb, Gb]",
+    "notes": [
+     44,
+     48,
+     51,
+     54
+    ]
+   },
+   {
+    "role": "target",
+    "symbol": "F#7-p/3: [E, F#, A#, C#]",
+    "notes": [
+     52,
+     54,
+     58,
+     61
+    ]
+   }
+  ]
+ },
+ {
+  "measure": 14,
+  "key": "D# 3/Phrygian",
+  "modulation": "SameKey",
+  "degree": 1,
+  "scale": [
+   3,
+   4,
+   6,
+   8,
+   10,
+   11,
+   1
+  ],
+  "chords": [
+   {
+    "role": "approach",
+    "symbol": "Fm7-p/3: [Eb, F, Ab, C]",
+    "notes": [
+     51,
+     53,
+     56,
+     60
+    ]
+   },
+   {
+    "role": "approach",
+    "symbol": "Bb7-p/1: [D, F, Ab, Bb]",
+    "notes": [
+     50,
+     53,
+     56,
+     58
+    ]
+   },
+   {
+    "role": "target",
+    "symbol": "Ebm7-p/2: [Bb, Db, Eb, Gb]",
+    "notes": [
+     46,
+     49,
+     51,
+     54
+    ]
+   }
+  ]
+ },
+ {
+  "measure": 15,
+  "key": "D# 3/Phrygian",
+  "modulation": "SameKey",
+  "degree": 4,
+  "scale": [
+   3,
+   4,
+   6,
+   8,
+   10,
+   11,
+   1
+  ],
+  "chords": [
+   {
+    "role": "target",
+    "symbol": "G#m7-p/1: [B, D#, F#, G#]",
+    "notes": [
+     47,
+     51,
+     54,
+     56
+    ]
+   }
+  ]
+ },
+ {
+  "measure": 16,
+  "key": "D# 3/Phrygian",
+  "modulation": "SameKey",
+  "degree": 2,
+  "scale": [
+   3,
+   4,
+   6,
+   8,
+   10,
+   11,
+   1
+  ],
+  "chords": [
+   {
+    "role": "approach",
+    "symbol": "F#7-p/2: [C#, E, F#, A#]",
+    "notes": [
+     49,
+     52,
+     54,
+     58
+    ]
+   },
+   {
+    "role": "target",
+    "symbol": "EM7-p/3: [D#, E, G#, B]",
+    "notes": [
+     51,
+     52,
+     56,
+     59
+    ]
+   }
+  ]
+ },
+ {
+  "measure": 17,
+  "key": "F# 5/Mixolydian",
+  "modulation": "ViaDiminished",
+  "degree": 1,
+  "scale": [
+   6,
+   8,
+   10,
+   11,
+   1,
+   3,
+   4
+  ],
+  "chords": [
+   {
+    "role": "pivot",
+    "symbol": "Edim7-p/2: [Bb, C#, E, G]",
+    "notes": [
+     46,
+     49,
+     52,
+     55
+    ]
+   },
+   {
+    "role": "approach",
+    "symbol": "C#m7-p/3: [B, C#, E, G#]",
+    "notes": [
+     47,
+     49,
+     52,
+     56
+    ]
+   },
+   {
+    "role": "target",
+    "symbol": "F#7-p/3: [E, F#, A#, C#]",
+    "notes": [
+     52,
+     54,
+     58,
+     61
+    ]
+   }
+  ]
+ },
+ {
+  "measure": 18,
+  "key": "F# 5/Mixolydian",
+  "modulation": "SameKey",
+  "degree": 3,
+  "scale": [
+   6,
+   8,
+   10,
+   11,
+   1,
+   3,
+   4
+  ],
+  "chords": [
+   {
+    "role": "approach",
+    "symbol": "C7-p/3: [Bb, C, E, G]",
+    "notes": [
+     46,
+     48,
+     52,
+     55
+    ]
+   },
+   {
+    "role": "target",
+    "symbol": "A#m7b5-p/2: [E, G#, A#, C#]",
+    "notes": [
+     52,
+     56,
+     58,
+     61
+    ]
+   }
+  ]
+ },
+ {
+  "measure": 19,
+  "key": "F# 5/Mixolydian",
+  "modulation": "SameKey",
+  "degree": 1,
+  "scale": [
+   6,
+   8,
+   10,
+   11,
+   1,
+   3,
+   4
+  ],
+  "chords": [
+   {
+    "role": "target",
+    "symbol": "F#7-p/1: [A#, C#, E, F#]",
+    "notes": [
+     46,
+     49,
+     52,
+     54
+    ]
+   }
+  ]
+ }
+]

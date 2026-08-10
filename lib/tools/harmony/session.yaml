@@ -1,0 +1,40 @@
+# perform.py 的完整参数面。sim 段透传给 utrp-sim(原版 Rust theory 代码),
+# perform/ornament 段是表演层。复制改名即一个新"作曲会话"。
+
+sim:
+  key: F              # 删掉 key/mode = 原版 Key::sample 随机选调
+  mode: aeolian       # ionian dorian phrygian lydian mixolydian aeolian locrian
+  measures: 20        # 总时长 ~= measures * step_s(20 x 8s ~= 2.7 分钟)
+  threshold: 4        # 同一调内待几个小节后才掷转调骰子(app.rs 同名语义)
+  difficulty: piano   # piano | guitar:决定原版 Inversion 采样池(voicing 形态)
+  base: 48            # voicing 基准八度(MIDI,48 = C3 附近)
+  seed: 42            # 和声层种子:LD_PRELOAD 垫片喂确定字节流给 thread_rng,
+                      # Rust 零改动即可复现;null/删掉 = 每次新即兴。
+                      # 另:每次 sim 的原始 JSON 存 progressions/<name>-sim.json,
+                      # `--replay` 直接回放(跨版本升级也稳)。
+
+perform:
+  step_s: 8.0                          # 每小节秒数;绕行和弦均分小节
+  pad_patch: magdalene/M1b-ghostpad.fxp  # 厚 pad,流动朦胧;lib/surge 相对路径
+  pad_vel: [66, 90]                    # 力度随机范围
+  strum_s: [0.015, 0.06]               # 声部错开(humanize)
+  overlap: [1.05, 1.30]                # 音符释放 = overlap * 槽长 -> 交叠糊边
+
+ornament:
+  enabled: true
+  patch: endless/D2-dxep.fxp   # 点缀音色(电钢;换 pluck/bell 都行)
+  steps_per_beat: 2            # 时钟分辨率,小节固定 4 拍
+  euclid: [5, 16, 0]           # 欧几里得节奏 E(k, n) + 旋转:16 步里均匀撒 5 个脉冲
+  density: 0.75                # 每个脉冲实际触发的概率(< 1 = 呼吸感)
+  pool: chord+9                # 音高池:chord | scale | chord+9(和弦音 + 九音)
+  register: [72, 93]           # 点缀音区(C5..A6)
+  turing:                      # 图灵机移位寄存器(Music Thing Turing Machine 思路)
+    length: 8                  # 循环长度:8 步旋律反复
+    mutate: 0.15               # 每步突变概率:0 = 永远循环,1 = 纯随机,中间 = 缓慢演化
+  gate: 0.5                    # 音长 = gate * 步长
+  vel: [38, 74]
+  octave_leap: 0.08            # 偶发八度跳跃概率
+  seed: 7                      # 点缀层可复现(和声层由 Rust thread_rng,天然不可复现)
+
+out:
+  name: session                # 产物名:<name>.wav/.mid/.json

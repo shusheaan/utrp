@@ -23,7 +23,9 @@ lib/
     magdalene/     # FKA twigs《MAGDALENE》
   tools/
     pipeline/      # 支柱 1+2:spec TOML -> 分析/browse/渲染/评分/鼓 MIDI/RPP
-    harmony/       # 支柱 3:和弦 voicing 键盘探索器(theory/voicings/explore)
+    harmony/       # 支柱 3:voicing 键盘探索 + simulation 表演层(YAML 驱动)
+    simulate/      # Rust 胶水 crate:#[path] 原样编译 ../../src/theory,
+                   # headless 输出进行 JSON(utrp 本体一行不动)
     <collection>/  # 各专辑的提取数据(data/)+ 未泛化的特例脚本(存档)
   link.sh          # 布链:Surge 浏览器 User 区出现 utrp/ 目录
 ```
@@ -72,12 +74,18 @@ grid.html 做成可编辑回写 MIDI。
 
 ### 3. 和声探索:键盘即和弦实验台
 
-`tools/harmony/`(用法见其 README):Rust utrp 的 theory 思路 +
-素材库音色。选调选调式后 `a–j` 七键 = 七级顺阶七和弦,大写 = 副属,
-`v` 轮换 voicing(piano 12 种 + guitar 8 种预设,TOML 可追加自定义),
-`m` 换调式、`k` 移调、`p` 换 lib 里任意 patch 出声;`r/x` 录下进行导出
-JSON(进 git)+ MIDI(进 storage)。demo 子命令一行渲染整条进行。
-Voicing 是音高层面的抽象;指板/键位图与练习打分仍归 Rust utrp TUI。
+`tools/harmony/`(用法见其 README)两条线,音色都来自本库 patch:
+
+- **手动探索** `explore.py`:选调选调式后 `a–j` 七键 = 七级顺阶七和弦,
+  大写 = 副属,`v` 轮换 voicing(piano 12 种 + guitar 8 种预设,TOML 可
+  追加),`m` 换调式、`k` 移调、`p` 换 patch;`r/x` 录进行导出 JSON+MIDI。
+- **simulation 表演** `perform.py` + `session.yaml`:参数进 →
+  `tools/simulate`(**原版 Rust theory 代码**,`#[path]` 胶水编译,utrp
+  本体不动)simulate 出 2–3 分钟进行 → 厚 pad 走和声 + euclidean×Turing
+  机点缀层(modular 生成器思路,量化到当前和弦)→ 实时播放或离线 wav,
+  同时落两轨 MIDI 进 DAW 随便改。辅助意识流作曲的张力/进行探索。
+
+指板/键位图与练习打分仍归 Rust utrp TUI 本体。
 
 ## 接入宿主
 

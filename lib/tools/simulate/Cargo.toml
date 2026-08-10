@@ -1,0 +1,19 @@
+[package]
+name = "utrp-sim"
+version = "0.1.0"
+edition = "2021"
+
+# Glue crate: compiles the ORIGINAL ../../src/theory sources via #[path].
+# Only deps the theory modules themselves pull in (subset of utrp's).
+
+[dependencies]
+rand = "0.8"
+rand_chacha = "0.3.1"
+statrs = "0.16.0"
+log = "0.4.0"
+colored = "2.0.0"
+anyhow = "1.0"
+
+[[bin]]
+name = "utrp-sim"
+path = "src/main.rs"
