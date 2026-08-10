@@ -1,0 +1,65 @@
+[album]
+name = "magdalene"
+dir = "/home/shu/storage/music/FKA twigs/MAGDALENE"
+
+[[targets]]
+key = "M1-teyes-drone"
+title = "thousand eyes drone"
+track = "01 thousand eyes"
+t0 = 100.0
+t1 = 170.0
+score_window = [2.0, 68.0]
+phrase = { dur = 17.0, hold = { notes = [38, 46, 53, 60, 65], t0 = 0.2, len = 13.0, vel = 88 } }
+candidates = [
+  { key = "M1a-darkdrone", base = "lib:endless/C4-darkdrone.fxp", tweaks = [] },
+  { key = "M1b-ghostpad", base = "factory:Pads/Ghost Pad.fxp", tweaks = [["Amp EG Attack", "0.75 s"]] },
+  { key = "M1c-moody", base = "factory:Pads/Moody Statement.fxp", tweaks = [["Amp EG Attack", "0.75 s"]] },
+]
+
+[[targets]]
+key = "M2-hwy-wash"
+title = "home with you wash"
+track = "02 home with you"
+t0 = 165.0
+t1 = 215.0
+score_window = [2.0, 48.0]
+phrase = { dur = 14.0, hold = { notes = [41, 55, 60, 64, 69, 74], t0 = 0.2, len = 10.0, vel = 86 } }
+candidates = [
+  { key = "M2a-juno60", base = "factory:Polysynths/Juno-60 Strings.fxp", tweaks = [["Amp EG Attack", "0.40 s"]] },
+  { key = "M2b-stringmachine", base = "factory:Jacky Ligon/Pads/String Machine 11.fxp", tweaks = [["Amp EG Attack", "0.40 s"]] },
+  { key = "M2c-mks70", base = "factory:Pads/MKS-70 Warm Pad.fxp", tweaks = [["Amp EG Attack", "0.40 s"]] },
+]
+
+[[targets]]
+key = "M3-daybed-haze"
+title = "daybed haze"
+track = "08 daybed"
+t0 = 200.0
+t1 = 260.0
+score_window = [2.0, 58.0]
+phrase = { dur = 16.0, hold = { notes = [40, 48, 55, 59, 62, 67, 71], t0 = 0.2, len = 12.0, vel = 84 } }
+candidates = [
+  { key = "M3a-manaquest", base = "factory:Altenberg/Pads/Mana Quest.fxp", tweaks = [["Amp EG Attack", "0.50 s"], ["Osc Drift", "45.00 %"]] },
+  { key = "M3b-moire", base = "factory:Jacky Ligon/Soundscapes/Moire 1.fxp", tweaks = [["Osc Drift", "45.00 %"]] },
+  { key = "M3c-distant", base = "factory:Pads/Distant.fxp", tweaks = [["Amp EG Attack", "0.50 s"], ["Osc Drift", "45.00 %"]] },
+]
+
+[[targets]]
+key = "M4-falien-stab"
+title = "fallen alien stab"
+track = "06 fallen alien"
+t0 = 35.0
+t1 = 65.0
+score_window = [2.0, 28.0]
+phrase = { dur = 12.0, pulses = { notes = [50, 57, 64, 66, 71], t0 = 0.3, until = 7.4, period = 1.2, gate = 0.32, vel = 112 } }
+candidates = [
+  { key = "M4a-boss", base = "factory:Polysynths/Boss.fxp", tweaks = [["Amp EG Attack", "5.0 ms"], ["Amp EG Release", "0.40 s"]] },
+  { key = "M4b-1804", base = "factory:Polysynths/1804.fxp", tweaks = [["Amp EG Attack", "5.0 ms"], ["Amp EG Release", "0.40 s"]] },
+  { key = "M4c-doomsday", base = "factory:Basses/Doomsday.fxp", tweaks = [["Amp EG Attack", "5.0 ms"], ["Amp EG Release", "0.40 s"]] },
+]
+
+[[drums]]
+tag = "falien"
+track = "06 fallen alien"
+t0 = 30.0
+t1 = 90.0

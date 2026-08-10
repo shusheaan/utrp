@@ -1,0 +1,67 @@
+[album]
+name = "tev-woods"
+dir = "/home/shu/storage/music/Tev Woods/Far from Home"
+
+[album.track_dirs]
+"01 Lost in Time (feat. Sofia Louise)" = "/home/shu/storage/music/Tev Woods/Lost in Time (feat. Sofia Louise)"
+
+[[targets]]
+key = "T1-ffh-pad"
+title = "Far from Home pad"
+track = "02 Far from Home"
+t0 = 44.0
+t1 = 80.0
+score_window = [2.0, 34.0]
+phrase = { dur = 14.0, hold = { notes = [48, 55, 60, 64, 69, 74], t0 = 0.2, len = 10.0, vel = 86 } }
+candidates = [
+  { key = "T1a-bright", base = "factory:Pads/Bright.fxp", tweaks = [["Amp EG Attack", "0.90 s"], ["Osc Drift", "40.00 %"]] },
+  { key = "T1b-stringmachine", base = "factory:Jacky Ligon/Pads/String Machine 11.fxp", tweaks = [["Amp EG Attack", "0.90 s"], ["Osc Drift", "40.00 %"]] },
+  { key = "T1c-mks70", base = "factory:Pads/MKS-70 Warm Pad.fxp", tweaks = [["Amp EG Attack", "0.90 s"], ["Osc Drift", "40.00 %"]] },
+]
+
+[[targets]]
+key = "T2-bts-lead"
+title = "Back to See lead"
+track = "01 Back to See"
+t0 = 44.0
+t1 = 90.0
+score_window = [2.0, 44.0]
+phrase = { dur = 14.0, notes = [
+  [0.3, 65, 84, 2.2], [2.8, 72, 88, 2.2], [5.4, 77, 92, 3.2],
+  [9.0, 75, 86, 1.8], [11.0, 72, 84, 2.0],
+] }
+candidates = [
+  { key = "T2a-classiclead", base = "factory:Leads/Classic Lead 1.fxp", tweaks = [["Amp EG Attack", "0.70 s"]] },
+  { key = "T2b-cyberflute", base = "factory:Winds/Cyber Flute.fxp", tweaks = [["Amp EG Attack", "0.70 s"]] },
+  { key = "T2c-low", base = "factory:Winds/Low.fxp", tweaks = [["Amp EG Attack", "0.70 s"]] },
+]
+
+[[targets]]
+key = "T3-bts-sub"
+title = "Back to See sub"
+track = "01 Back to See"
+t0 = 44.0
+t1 = 90.0
+stem = "bass"
+score_window = [2.0, 44.0]
+phrase = { dur = 12.0, notes = [
+  [0.2, 31, 110, 2.0], [2.4, 31, 110, 1.4], [4.0, 34, 106, 1.8],
+  [6.0, 29, 108, 1.8], [8.0, 31, 110, 3.0],
+] }
+candidates = [
+  { key = "T3a-deepend", base = "factory:Basses/Deep End.fxp", tweaks = [["Amp EG Attack", "0.12 s"]] },
+  { key = "T3b-bass1", base = "factory:Basses/Bass 1.fxp", tweaks = [["Amp EG Attack", "0.12 s"]] },
+  { key = "T3c-ebass", base = "factory:Basses/E-Bass.fxp", tweaks = [["Amp EG Attack", "0.12 s"]] },
+]
+
+[[drums]]
+tag = "walls"
+track = "03 Walls"
+t0 = 22.0
+t1 = 82.0
+
+[[drums]]
+tag = "lostintime"
+track = "01 Lost in Time (feat. Sofia Louise)"
+t0 = 30.0
+t1 = 90.0

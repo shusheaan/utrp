@@ -1,0 +1,66 @@
+[album]
+name = "sega-universe"
+dir = "/home/shu/storage/music/Sega Bodega/I Created The Universe So That Life Could Create a Language So Complex, Just To Say How Much I Love You"
+
+[[targets]]
+key = "S1-pipe-wall"
+title = "Pipe warm wall"
+track = "01 Pipe"
+t0 = 40.0
+t1 = 80.0
+score_window = [2.0, 38.0]
+phrase = { dur = 15.0, hold = { notes = [47, 54, 59, 63, 66, 71, 73], t0 = 0.2, len = 11.0, vel = 84 } }
+candidates = [
+  { key = "S1a-mks70", base = "factory:Pads/MKS-70 Warm Pad.fxp", tweaks = [["Amp EG Attack", "0.45 s"]] },
+  { key = "S1b-ooh", base = "factory:Pads/Ooh.fxp", tweaks = [["Amp EG Attack", "0.45 s"]] },
+  { key = "S1c-stringmachine", base = "factory:Jacky Ligon/Pads/String Machine 11.fxp", tweaks = [["Amp EG Attack", "0.45 s"]] },
+]
+
+[[targets]]
+key = "S2-cradle-swell"
+title = "Cradle swell"
+track = "03 Cradle"
+t0 = 88.0
+t1 = 132.0
+score_window = [2.0, 42.0]
+phrase = { dur = 17.0, notes = [
+  [0.3, 47, 96, 3.6], [0.3, 54, 96, 3.6], [0.3, 58, 96, 3.6], [0.3, 63, 96, 3.6], [0.3, 66, 96, 3.6],
+  [4.5, 47, 96, 3.6], [4.5, 54, 96, 3.6], [4.5, 58, 96, 3.6], [4.5, 63, 96, 3.6], [4.5, 66, 96, 3.6],
+  [8.7, 47, 96, 3.6], [8.7, 54, 96, 3.6], [8.7, 58, 96, 3.6], [8.7, 63, 96, 3.6], [8.7, 66, 96, 3.6],
+] }
+candidates = [
+  { key = "S2a-ghost-swell", base = "factory:Pads/Ghost Pad.fxp", tweaks = [["Amp EG Attack", "1.6 s"], ["Amp EG Release", "1.2 s"]] },
+  { key = "S2b-newwaves", base = "factory:Jacky Ligon/Atmospheres/New Waves.fxp", tweaks = [["Amp EG Attack", "1.6 s"], ["Amp EG Release", "1.2 s"]] },
+  { key = "S2c-distant-swell", base = "factory:Pads/Distant.fxp", tweaks = [["Amp EG Attack", "1.6 s"], ["Amp EG Release", "1.2 s"]] },
+]
+
+[[targets]]
+key = "S3-cradle-lead"
+title = "Cradle soft lead (layer over S1 pad!)"
+track = "03 Cradle"
+t0 = 18.0
+t1 = 60.0
+score_window = [2.0, 40.0]
+phrase = { dur = 16.0, notes = [
+  [0.3, 64, 78, 1.6], [2.0, 66, 80, 1.6], [3.8, 68, 82, 1.8],
+  [5.8, 71, 86, 2.2], [8.2, 73, 84, 1.8], [10.2, 75, 82, 2.6],
+] }
+candidates = [
+  { key = "S3a-clarinet", base = "factory:Winds/Clarinet.fxp", tweaks = [] },
+  { key = "S3b-cyberflute", base = "factory:Winds/Cyber Flute.fxp", tweaks = [] },
+  { key = "S3c-dreamyflute", base = "factory:Winds/Dreamy Flute.fxp", tweaks = [] },
+]
+
+[[targets]]
+key = "S4-universe-shimmer"
+title = "Universe shimmer wall"
+track = "05 I Created The Universe So That Life Could Create a Language So Complex, Just To Say How Much I Love You"
+t0 = 150.0
+t1 = 225.0
+score_window = [2.0, 70.0]
+phrase = { dur = 18.0, hold = { notes = [46, 53, 58, 62, 65, 70, 72], t0 = 0.2, len = 13.0, vel = 90 } }
+candidates = [
+  { key = "S4a-darkpulse", base = "factory:Altenberg/Pads/Dark Pulse.fxp", tweaks = [["Amp EG Attack", "0.35 s"]] },
+  { key = "S4b-manaquest", base = "factory:Altenberg/Pads/Mana Quest.fxp", tweaks = [["Amp EG Attack", "0.35 s"]] },
+  { key = "S4c-moire", base = "factory:Jacky Ligon/Soundscapes/Moire 1.fxp", tweaks = [] },
+]

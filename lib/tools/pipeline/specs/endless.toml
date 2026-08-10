@@ -1,0 +1,98 @@
+[album]
+name = "endless-ref"
+collection = "endless"
+dir = "/home/shu/storage/music/Frank Ocean/Endless"
+
+[[targets]]
+key = "A-atyourbest-outro"
+title = "At Your Best pad"
+track = "01 At Your Best (You Are Love)"
+t0 = 282.0
+t1 = 308.0
+score_window = [2.0, 22.0]
+phrase = { dur = 13.0, hold = { notes = [45, 57, 60, 62, 64, 69], t0 = 0.2, len = 9.0, vel = 88 } }
+candidates = [
+  { key = "A1-bellpad", base = "factory:Pads/Bell Pad.fxp", tweaks = [["Amp EG Attack", "0.55 s"], ["Amp EG Release", "2.5 s"]] },
+  { key = "A2-fmpad", base = "factory:Pads/FM Pad.fxp", tweaks = [["Amp EG Attack", "0.55 s"]] },
+  { key = "A2c-fmpad-darker", base = "factory:Pads/FM Pad.fxp", tweaks = [["Amp EG Attack", "0.55 s"], ["Filter 1 Cutoff", "1000.0 Hz"]] },
+  { key = "A3-mks70", base = "factory:Pads/MKS-70 Warm Pad.fxp", tweaks = [["Amp EG Attack", "0.55 s"]] },
+]
+
+[[targets]]
+key = "B-mitsubushi-chords"
+title = "Mitsubushi saw chords"
+track = "19 Mitsubushi Sony"
+t0 = 82.0
+t1 = 123.0
+score_window = [12.0, 38.0]
+phrase = { dur = 13.0, pulses = { notes = [43, 58, 62, 67, 72], t0 = 0.2, until = 6.2, period = 0.25, gate = 0.17, vel = 105 }, hold = { notes = [43, 58, 62, 67, 72], t0 = 6.45, len = 3.0, vel = 105 } }
+candidates = [
+  { key = "B1-jupiter8", base = "factory:Polysynths/Jupiter-8.fxp", tweaks = [["Amp EG Attack", "5.0 ms"], ["Amp EG Release", "0.30 s"]] },
+  { key = "B2-juno60", base = "factory:Polysynths/Juno-60 Strings.fxp", tweaks = [["Amp EG Attack", "10.0 ms"], ["Amp EG Release", "0.30 s"]] },
+  { key = "B3-anthemish", base = "factory:Polysynths/Anthemish 1.fxp", tweaks = [["Amp EG Attack", "5.0 ms"], ["Amp EG Release", "0.30 s"]] },
+]
+
+[[targets]]
+key = "C-impietas-drone"
+title = "Impietas drone"
+track = "15 Impietas + Deathwish"
+t0 = 3.0
+t1 = 35.0
+score_window = [2.0, 30.0]
+phrase = { dur = 17.0, hold = { notes = [35, 54, 59, 64], t0 = 0.2, len = 12.0, vel = 92 } }
+candidates = [
+  { key = "C1-ghostpad", base = "factory:Pads/Ghost Pad.fxp", tweaks = [["Amp EG Attack", "0.70 s"]] },
+  { key = "C2-distant", base = "factory:Pads/Distant.fxp", tweaks = [["Amp EG Attack", "0.70 s"]] },
+  { key = "C3-choirpad", base = "factory:Pads/Choir Pad Thing.fxp", tweaks = [["Amp EG Attack", "0.70 s"]] },
+  { key = "C4-darkdrone", base = "lib:endless/C4-darkdrone.fxp", tweaks = [] },
+]
+
+[[targets]]
+key = "D-hublots-lead"
+title = "Hublots keys"
+track = "10 Hublots"
+t0 = 20.0
+t1 = 80.0
+score_window = [2.0, 55.0]
+phrase = { dur = 11.0, pulses = { notes = [48, 55, 60, 63, 67, 70], t0 = 0.2, until = 6.2, period = 0.75, gate = 0.55, vel = 96 } }
+candidates = [
+  { key = "D1-suitcase", base = "factory:Keys/Soft Suitcase.fxp", tweaks = [] },
+  { key = "D2-dxep", base = "factory:Keys/DX EP.fxp", tweaks = [] },
+  { key = "D3-houseorgan", base = "factory:Keys/House Organ.fxp", tweaks = [] },
+]
+
+[[drums]]
+tag = "mitsu-funk"
+track = "19 Mitsubushi Sony"
+t0 = 0.0
+t1 = 60.0
+
+[[drums]]
+tag = "mitsu-house"
+track = "19 Mitsubushi Sony"
+t0 = 82.0
+t1 = 124.0
+
+[[drums]]
+tag = "unity"
+track = "04 Unity"
+t0 = 0.0
+t1 = 60.0
+
+[[drums]]
+tag = "cdg"
+track = "06 Comme Des Garçons"
+t0 = 0.0
+t1 = 56.0
+
+[[drums]]
+tag = "sideways"
+track = "13 Sideways"
+t0 = 20.0
+t1 = 80.0
+
+[[drums]]
+tag = "slideonme"
+track = "12 Slide on Me"
+t0 = 40.0
+t1 = 100.0

@@ -7,8 +7,14 @@ utrp 的声音资产层:合成器 patch 全部以文本/小文件形式进 git,�
 
 ```
 lib/
-  surge/           # Surge XT patch(.fxp,内容为 XML)
-    endless/       # collection:Frank Ocean《Endless》复刻实验(2026-08-09 起)
+  surge/           # Surge XT patch(.fxp,内容为 XML),按 collection 分子目录
+    endless/       # Frank Ocean《Endless》复刻实验(2026-08-09 起)
+    sega-universe/ # Sega Bodega《I Created The Universe…》
+    tev-woods/     # Tev Woods
+    magdalene/     # FKA twigs《MAGDALENE》
+  tools/
+    pipeline/      # 统一管线框架:spec TOML -> 分析/渲染/评分/RPP(见其 README)
+    <collection>/  # 各专辑首轮的原始脚本与提取数据(已被 pipeline 泛化,留档)
   link.sh          # 布链:Surge 浏览器 User 区出现 utrp/ 目录
 ```
 
@@ -36,7 +42,13 @@ save patch 时选 utrp/ 下的目录 = 自动落进本仓库。
 - 体检:`gral/arch/scripts/61-audio-stack doctor`
 - A/B 参考工程与渲染管线:`~/storage/daw/endless-ref/`(scripts/ 内有完整分析代码)
 
-## endless collection
+## 管线:从一张专辑到一组候选 patch
 
-首批 14 个候选,A/B 工程与渲染对比在 `~/storage/daw/endless-ref/`(REAPER
-工程 + demucs 参考 + 渲染管线脚本)。目标与配方见该工程的 README。
+统一框架在 `tools/pipeline/`(用法见其 README)。一张专辑 = 一个
+`tools/pipeline/specs/<album>.toml`,声明目标片段、试奏乐句、候选 patch 配方、
+鼓段;分析侧(demucs/测量/鼓提取)和合成侧(surgepy 渲染/评分/RPP 组装)各一条
+命令。产物分流:fxp 进本仓库 `surge/<collection>/`,音频与 REAPER 工程进
+`~/storage/daw/<name>/`。
+
+现有四个 collection(共 47 个候选)的 A/B 工程分别在 `~/storage/daw/` 的
+endless-ref、sega-universe、tev-woods、magdalene,目标与配方见各工程 README。
