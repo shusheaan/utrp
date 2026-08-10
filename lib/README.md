@@ -14,7 +14,7 @@ lib/
     magdalene/     # FKA twigs《MAGDALENE》
   tools/
     pipeline/      # 统一管线框架:spec TOML -> 分析/渲染/评分/RPP(见其 README)
-    <collection>/  # 各专辑首轮的原始脚本与提取数据(已被 pipeline 泛化,留档)
+    <collection>/  # 各专辑的提取数据(data/)+ 未泛化的特例脚本(remake 线等)
   link.sh          # 布链:Surge 浏览器 User 区出现 utrp/ 目录
 ```
 
