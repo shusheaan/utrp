@@ -10,7 +10,7 @@ import tomllib
 from dataclasses import dataclass, field
 from pathlib import Path
 
-STORAGE_DAW = Path.home() / "storage/daw"
+STORAGE_DAW = Path(os.environ.get("DAW_DIR", str(Path.home() / "storage/daw")))
 LIB_ROOT = Path(__file__).resolve().parents[2]          # .../utrp/lib
 FACTORY = Path("/usr/share/surge-xt")
 STEMS_DIR = Path(os.environ.get("STEMS_DIR", str(Path.home() / ".cache/demucs-stems")))

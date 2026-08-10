@@ -10,10 +10,17 @@ Usage:
 from __future__ import annotations
 
 import json
+import os
 import re
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
+
+# numba (librosa) and matplotlib need writable cache dirs; the venv lives in a
+# read-only location under sandboxed runs, so point both at tmp before import.
+os.environ.setdefault("NUMBA_CACHE_DIR", tempfile.gettempdir())
+os.environ.setdefault("MPLCONFIGDIR", tempfile.mkdtemp(prefix="mpl-"))
 
 import matplotlib
 matplotlib.use("Agg")
@@ -237,6 +244,7 @@ def cmd_drums(spec: AlbumSpec) -> None:
                         continue
                     fade = np.linspace(1, 0, int(0.02 * sr))
                     cut[:, -len(fade):] *= fade
+                    cut[:, :int(0.002 * sr)] *= np.linspace(0, 1, int(0.002 * sr))
                     shots[cls] = cut
                     break
 
@@ -258,8 +266,10 @@ def cmd_drums(spec: AlbumSpec) -> None:
                  (mix * 0.5 / (np.abs(mix).max() + 1e-9)).T, sr)
         sf.write(seg_dir / "ref-stem.wav",
                  (y2 * 0.5 / (np.abs(y2).max() + 1e-9)).T, sr)
+        counts = {c: sum(1 for h in hits if h["cls"] == c) for c in CLASSES}
         meta = {"track": seg.track, "t0": seg.t0, "t1": seg.t1,
-                "tempo": round(float(np.atleast_1d(tempo)[0]), 1), "hits": hits}
+                "tempo": round(float(np.atleast_1d(tempo)[0]), 1),
+                "hits": hits, "counts": counts, "shots": sorted(shots)}
         (seg_dir / "pattern.json").write_text(json.dumps(meta, indent=1, default=float))
         print(f"{seg.tag:20s} tempo={meta['tempo']} hits={len(hits)} "
               f"shots={sorted(shots)}", flush=True)
