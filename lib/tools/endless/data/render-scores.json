@@ -1,0 +1,146 @@
+[
+ {
+  "cand": "A1-bellpad",
+  "target": "A",
+  "base": "Pads/Bell Pad.fxp",
+  "dist": 24.91,
+  "tweaks": [
+   "A Amp EG Attack=0.55 s",
+   "A Amp EG Release=2.5 s"
+  ]
+ },
+ {
+  "cand": "A2-fmpad",
+  "target": "A",
+  "base": "Pads/FM Pad.fxp",
+  "dist": 11.84,
+  "tweaks": [
+   "A Amp EG Attack=0.55 s"
+  ]
+ },
+ {
+  "cand": "A3-mks70",
+  "target": "A",
+  "base": "Pads/MKS-70 Warm Pad.fxp",
+  "dist": 28.8,
+  "tweaks": [
+   "A Amp EG Attack=0.55 s"
+  ]
+ },
+ {
+  "cand": "B1-jupiter8",
+  "target": "B",
+  "base": "Polysynths/Jupiter-8.fxp",
+  "dist": 9.75,
+  "tweaks": [
+   "A Amp EG Attack=5.0 ms",
+   "A Amp EG Release=0.30 s"
+  ]
+ },
+ {
+  "cand": "B2-juno60",
+  "target": "B",
+  "base": "Polysynths/Juno-60 Strings.fxp",
+  "dist": 9.62,
+  "tweaks": [
+   "A Amp EG Attack=10.0 ms",
+   "A Amp EG Release=0.30 s"
+  ]
+ },
+ {
+  "cand": "B3-anthemish",
+  "target": "B",
+  "base": "Polysynths/Anthemish 1.fxp",
+  "dist": 9.86,
+  "tweaks": [
+   "A Amp EG Attack=5.0 ms",
+   "A Amp EG Release=0.30 s"
+  ]
+ },
+ {
+  "cand": "C1-ghostpad",
+  "target": "C",
+  "base": "Pads/Ghost Pad.fxp",
+  "dist": 22.41,
+  "tweaks": [
+   "A Amp EG Attack=0.70 s"
+  ]
+ },
+ {
+  "cand": "C2-distant",
+  "target": "C",
+  "base": "Pads/Distant.fxp",
+  "dist": 23.12,
+  "tweaks": [
+   "A Amp EG Attack=0.70 s"
+  ]
+ },
+ {
+  "cand": "C3-choirpad",
+  "target": "C",
+  "base": "Pads/Choir Pad Thing.fxp",
+  "dist": 26.1,
+  "tweaks": [
+   "A Amp EG Attack=0.70 s"
+  ]
+ },
+ {
+  "cand": "D1-suitcase",
+  "target": "D",
+  "base": "Keys/Soft Suitcase.fxp",
+  "dist": 17.63,
+  "tweaks": []
+ },
+ {
+  "cand": "D2-dxep",
+  "target": "D",
+  "base": "Keys/DX EP.fxp",
+  "dist": 16.79,
+  "tweaks": []
+ },
+ {
+  "cand": "D3-houseorgan",
+  "target": "D",
+  "base": "Keys/House Organ.fxp",
+  "dist": 19.76,
+  "tweaks": []
+ },
+ {
+  "cand": "A2b-fmpad-dark",
+  "target": "A",
+  "base": "Pads/FM Pad.fxp",
+  "dist": 21.56,
+  "tweaks": [
+   "A Amp EG Attack=0.55 s",
+   "A Filter 1 Cutoff=1800.0 Hz"
+  ]
+ },
+ {
+  "cand": "A2c-fmpad-darker",
+  "target": "A",
+  "base": "Pads/FM Pad.fxp",
+  "dist": 18.62,
+  "tweaks": [
+   "A Amp EG Attack=0.55 s",
+   "A Filter 1 Cutoff=1000.0 Hz"
+  ]
+ },
+ {
+  "cand": "D2b-dxep-dark",
+  "target": "D",
+  "base": "Keys/DX EP.fxp",
+  "dist": 16.79,
+  "tweaks": [
+   "A Filter 1 Cutoff=3000.0 Hz"
+  ]
+ },
+ {
+  "cand": "C4-darkdrone",
+  "target": "C",
+  "base": "custom-init",
+  "dist": 25.09,
+  "tweaks": [
+   "builder"
+  ]
+ }
+]
