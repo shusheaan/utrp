@@ -15,6 +15,13 @@ patch 即代码。本目录是 utrp 里唯一的音乐资产层,repo 其余部�
 音色任务(调 patch / 扒音色 / 写歌实验)在 utrp 开 agent 并主要在本目录工作;
 装包/配置/音频栈问题去 gral 开。宿主接入:`./link.sh`(重装后重跑)。
 
+## 项目方向(2026-08 定)
+
+主攻**工程化/批量化/音乐逆向/音色发现**。用户极少直接操作 DAW——一切走
+工程化自动化(agent 生成工程/渲染/MIDI,人只做试听与决策)。DAW 只用
+REAPER(纯文本 .rpp + ReaScript + 命令行渲染是选它的全部理由;Bitwig
+评估过,因脚本化弱而不用)。做新功能优先考虑"能否无 GUI 批量跑"。
+
 ## 工具地图(细节看各自 README,先读再动手)
 
 - **扒音色/扒鼓** → `tools/pipeline/`:spec TOML 驱动,separate/scan/measure/

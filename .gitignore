@@ -1,2 +1,15 @@
 /target
 /Cargo.lock
+
+# sandbox-generated read-only placeholder files (0-byte, recreated per session)
+/.bash_profile
+/.bashrc
+/.gitconfig
+/.gitmodules
+/.idea
+/.mcp.json
+/.profile
+/.ripgreprc
+/.vscode
+/.zprofile
+/.zshrc
