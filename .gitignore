@@ -2,6 +2,7 @@
 /Cargo.lock
 
 # sandbox-generated read-only placeholder files (0-byte, recreated per session)
+/.claude/
 /.bash_profile
 /.bashrc
 /.gitconfig
