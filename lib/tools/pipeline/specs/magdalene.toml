@@ -58,6 +58,78 @@ candidates = [
   { key = "M4c-doomsday", base = "factory:Basses/Doomsday.fxp", tweaks = [["Amp EG Attack", "5.0 ms"], ["Amp EG Release", "0.40 s"]] },
 ]
 
+[[targets]]
+key = "M5-sadday-wash"
+title = "sad day chorus wash"
+track = "03 sad day"
+t0 = 100.0
+t1 = 140.0
+score_window = [2.0, 38.0]
+phrase = { dur = 14.0, hold = { notes = [44, 51, 56, 60, 63, 67], t0 = 0.2, len = 10.0, vel = 88 } }
+candidates = [
+  { key = "M5a-choirpad", base = "factory:Pads/Choir Pad Thing.fxp", tweaks = [["Amp EG Attack", "0.70 s"]] },
+  { key = "M5b-stringmachine", base = "factory:Jacky Ligon/Pads/String Machine 11.fxp", tweaks = [["Amp EG Attack", "0.70 s"]] },
+  { key = "M5c-deepnote", base = "factory:Rare Earth/FX/Deep Note.fxp", tweaks = [] },
+]
+
+[[targets]]
+key = "M6-marymag-pulse"
+title = "mary magdalene outro arp"
+track = "05 mary magdalene"
+t0 = 245.0
+t1 = 290.0
+score_window = [2.0, 43.0]
+phrase = { dur = 12.0, pulses = { notes = [49, 57, 61, 64, 68], t0 = 0.2, until = 7.4, period = 0.25, gate = 0.18, vel = 98 } }
+candidates = [
+  { key = "M6a-metallicarp", base = "factory:Damon Armani/Arps/Metallic Arp.fxp", tweaks = [] },
+  { key = "M6b-hybridpluck", base = "factory:Plucks/Hybrid 1.fxp", tweaks = [["Amp EG Release", "0.35 s"]] },
+  { key = "M6c-brainout", base = "factory:Nick Moritz/Sequences/Brain Out.fxp", tweaks = [] },
+]
+
+[[targets]]
+key = "M7-cellophane-keys"
+title = "cellophane warped keys"
+track = "09 cellophane"
+t0 = 10.0
+t1 = 50.0
+score_window = [2.0, 38.0]
+phrase = { dur = 13.0, notes = [[0.3, 43, 88, 2.2], [0.65, 54, 88, 2.0], [1.0, 59, 88, 2.0], [1.35, 62, 88, 2.0], [3.4, 43, 88, 2.2], [3.75, 54, 84, 2.0], [4.1, 61, 84, 2.0], [4.45, 66, 84, 2.4], [6.6, 43, 90, 2.6], [6.95, 55, 86, 2.4], [7.3, 59, 86, 2.4], [7.65, 64, 86, 2.6]] }
+candidates = [
+  { key = "M7a-suitcase", base = "factory:Keys/Soft Suitcase.fxp", tweaks = [["Osc Drift", "40.00 %"]] },
+  { key = "M7b-dxep", base = "factory:Keys/DX EP.fxp", tweaks = [["Osc Drift", "40.00 %"]] },
+  { key = "M7c-pianobass", base = "factory:Basses/Piano Bass.fxp", tweaks = [["Osc Drift", "30.00 %"]] },
+]
+
+[[targets]]
+key = "M8-marymag-grind"
+title = "mary magdalene grinding bass"
+track = "05 mary magdalene"
+t0 = 100.0
+t1 = 160.0
+stem = "bass"
+score_window = [2.0, 58.0]
+phrase = { dur = 12.0, pulses = { notes = [30], t0 = 0.2, until = 7.4, period = 0.5, gate = 0.42, vel = 106 } }
+candidates = [
+  { key = "M8a-doomsday", base = "factory:Basses/Doomsday.fxp", tweaks = [] },
+  { key = "M8b-808er", base = "factory:A.Liv/Basses/808er Than 808.fxp", tweaks = [] },
+  { key = "M8c-lowproblems", base = "factory:Vospi/Basses/Low Problems.fxp", tweaks = [] },
+  { key = "M8d-lowproblems-tuned", base = "lib:magdalene/M8d-lowproblems-tuned.fxp", tweaks = [] },
+]
+
+[[targets]]
+key = "M9-sadday-lead"
+title = "sad day glass lead"
+track = "03 sad day"
+t0 = 200.0
+t1 = 245.0
+score_window = [2.0, 43.0]
+phrase = { dur = 12.0, notes = [[0.3, 70, 102, 0.6], [1.1, 72, 102, 0.6], [1.9, 74, 104, 1.0], [3.2, 77, 104, 0.8], [4.2, 74, 102, 0.7], [5.1, 72, 100, 0.7], [6.0, 70, 100, 1.4]] }
+candidates = [
+  { key = "M9a-cloudhorn", base = "factory:Xenofish/Brass/Cloud Horn.fxp", tweaks = [] },
+  { key = "M9b-giallo", base = "factory:Kuniklo/Pads/Giallo.fxp", tweaks = [] },
+  { key = "M9c-nova", base = "factory:Inigo Kennedy/Leads/Nova 1.fxp", tweaks = [] },
+]
+
 [[drums]]
 tag = "falien"
 track = "06 fallen alien"

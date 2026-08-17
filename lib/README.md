@@ -109,5 +109,9 @@ save patch 时选 utrp/ 下的目录 = 自动落进本仓库。
 
 一张专辑 = 一个 `tools/pipeline/specs/<album>.toml`。产物分流:fxp 与
 进行 JSON 进本仓库,音频/MIDI/REAPER 工程进 `~/storage/daw/<name>/`。
-现有四个 collection(共 47 个候选)的 A/B 工程分别在 `~/storage/daw/` 的
+现有四个 collection(共 85 个 patch)的 A/B 工程分别在 `~/storage/daw/` 的
 endless-ref、sega-universe、tev-woods、magdalene,目标与配方见各工程 README。
+2026-08-17 第二轮:endless 加 E–K 六目标(Alabama/Unity/CDG bass/In Here
+Somewhere/Florida/Higgs),magdalene 加 M5–M9 五目标(sad day wash+lead/
+mary magdalene arp+grind/cellophane),含 refine 精调版与 varispeed 发现
+(Endless 全轨 ±40–50c 磁带漂移),细节见两工程 README「第二轮目标」。

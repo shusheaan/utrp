@@ -61,6 +61,92 @@ candidates = [
   { key = "D3-houseorgan", base = "factory:Keys/House Organ.fxp", tweaks = [] },
 ]
 
+[[targets]]
+key = "E-alabama-keys"
+title = "Alabama keys"
+track = "02 Alabama"
+t0 = 20.0
+t1 = 60.0
+score_window = [2.0, 38.0]
+phrase = { dur = 13.0, hold = { notes = [50, 55, 62, 65, 67, 70], t0 = 0.2, len = 9.0, vel = 84 } }
+candidates = [
+  { key = "E1-suitcase", base = "factory:Keys/Soft Suitcase.fxp", tweaks = [] },
+  { key = "E2-dxep", base = "factory:Keys/DX EP.fxp", tweaks = [] },
+  { key = "E3-analogmagic", base = "factory:Damon Armani/Basses/Analog Magic.fxp", tweaks = [["Amp EG Release", "0.60 s"]] },
+  { key = "E3b-analogmagic-tuned", base = "lib:endless/E3b-analogmagic-tuned.fxp", tweaks = [] },
+]
+
+[[targets]]
+key = "F-unity-keys"
+title = "Unity keys stab"
+track = "04 Unity"
+t0 = 8.0
+t1 = 48.0
+score_window = [2.0, 38.0]
+phrase = { dur = 11.0, pulses = { notes = [59, 64, 66, 69, 71], t0 = 0.2, until = 6.2, period = 0.5, gate = 0.3, vel = 100 } }
+candidates = [
+  { key = "F1-houseorgan", base = "factory:Keys/House Organ.fxp", tweaks = [] },
+  { key = "F2-dxep", base = "factory:Keys/DX EP.fxp", tweaks = [] },
+  { key = "F3-tekstab", base = "factory:Chords/Tek Stab.fxp", tweaks = [["Amp EG Release", "0.35 s"]] },
+]
+
+[[targets]]
+key = "G-cdg-bass"
+title = "Comme Des Garcons bass"
+track = "06 Comme Des Garçons"
+t0 = 15.0
+t1 = 55.0
+stem = "bass"
+score_window = [2.0, 38.0]
+phrase = { dur = 11.0, notes = [[0.2, 46, 104, 0.38], [0.7, 46, 100, 0.38], [1.2, 44, 102, 0.38], [1.7, 46, 100, 0.38], [2.2, 41, 104, 0.38], [2.7, 41, 100, 0.38], [3.2, 39, 102, 0.38], [3.7, 41, 100, 0.38], [4.2, 46, 104, 0.38], [4.7, 46, 100, 0.38], [5.2, 44, 102, 0.38], [5.7, 46, 100, 0.38]] }
+candidates = [
+  { key = "G1-electronic", base = "factory:Psiome Send Sound/Basses/Electronic.fxp", tweaks = [] },
+  { key = "G2-bass5", base = "factory:Bluelight/Basses/Bass 5.fxp", tweaks = [] },
+  { key = "G3-bassguitar4", base = "factory:Slowboat/Basses/Bass Guitar 4.fxp", tweaks = [] },
+]
+
+[[targets]]
+key = "H-inhere-pad"
+title = "In Here Somewhere pad"
+track = "11 In Here Somewhere"
+t0 = 40.0
+t1 = 100.0
+score_window = [2.0, 58.0]
+phrase = { dur = 16.0, hold = { notes = [29, 56, 60, 63, 68, 70, 72], t0 = 0.2, len = 12.0, vel = 88 } }
+candidates = [
+  { key = "H1-lighthouse", base = "factory:Inigo Kennedy/Atmospheres/Something At The Lighthouse.fxp", tweaks = [["Amp EG Attack", "0.60 s"]] },
+  { key = "H2-distant", base = "factory:Pads/Distant.fxp", tweaks = [["Amp EG Attack", "0.60 s"]] },
+  { key = "H3-journey", base = "factory:Altenberg/Pads/Journey.fxp", tweaks = [["Amp EG Attack", "0.60 s"]] },
+]
+
+[[targets]]
+key = "J-florida-pad"
+title = "Florida pad"
+track = "14 Florida"
+t0 = 10.0
+t1 = 60.0
+score_window = [2.0, 48.0]
+phrase = { dur = 15.0, hold = { notes = [42, 54, 58, 61, 66, 68], t0 = 0.2, len = 11.0, vel = 86 } }
+candidates = [
+  { key = "J1-hauntology", base = "factory:Jacky Ligon/Soundscapes/Hauntology.fxp", tweaks = [] },
+  { key = "J2-manaquest", base = "factory:Altenberg/Pads/Mana Quest.fxp", tweaks = [["Amp EG Attack", "0.70 s"], ["Osc Drift", "45.00 %"]] },
+  { key = "J3-mks70", base = "factory:Pads/MKS-70 Warm Pad.fxp", tweaks = [["Amp EG Attack", "0.70 s"]] },
+]
+
+[[targets]]
+key = "K-higgs-synth"
+title = "Higgs synth riff"
+track = "18 Higgs"
+t0 = 30.0
+t1 = 90.0
+score_window = [2.0, 58.0]
+phrase = { dur = 12.0, pulses = { notes = [47, 60, 64, 67], t0 = 0.2, until = 7.0, period = 0.5, gate = 0.4, vel = 96 } }
+candidates = [
+  { key = "K1-houseorgan", base = "factory:Keys/House Organ.fxp", tweaks = [] },
+  { key = "K2-jupiter8", base = "factory:Polysynths/Jupiter-8.fxp", tweaks = [["Amp EG Attack", "5.0 ms"], ["Amp EG Release", "0.30 s"]] },
+  { key = "K3-hybridpluck", base = "factory:Plucks/Hybrid 1.fxp", tweaks = [["Amp EG Release", "0.40 s"]] },
+]
+
 [[drums]]
 tag = "mitsu-funk"
 track = "19 Mitsubushi Sony"
