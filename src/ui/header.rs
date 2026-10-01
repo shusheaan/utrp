@@ -6,10 +6,10 @@ use ratatui::{
     widgets::{Block, Borders, Paragraph},
     Frame,
 };
-pub fn render(frame: &mut Frame, app: &App, area: Rect) {
+pub(super) fn line(app: &App) -> Line<'static> {
     let s = app.session.summary(app.now);
     let secs = s.elapsed_ms / 1000;
-    let line = Line::from(vec![
+    Line::from(vec![
         Span::styled(
             " U-TR-P ",
             Style::default()
@@ -47,9 +47,12 @@ pub fn render(frame: &mut Frame, app: &App, area: Rect) {
             ),
             Style::default().fg(Color::Yellow),
         ),
-    ]);
+    ])
+}
+
+pub fn render(frame: &mut Frame, app: &App, area: Rect) {
     frame.render_widget(
-        Paragraph::new(line).block(
+        Paragraph::new(line(app)).block(
             Block::default()
                 .borders(Borders::BOTTOM)
                 .border_style(Style::default().fg(Color::DarkGray)),

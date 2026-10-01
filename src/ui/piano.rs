@@ -63,10 +63,10 @@ fn get_tone_names(app: &App) -> String {
 /// straddling the boundary between two white keys — specifically in the
 /// 4-char slot that starts 2 chars before the boundary.  Gaps (no black
 /// key) are filled with spaces.
-fn build_black_row(active: &[i8], hi_color: Color) -> Vec<Span<'static>> {
+fn build_black_row(active: &[i8], hi_color: Color, octaves: usize) -> Vec<Span<'static>> {
     let mut spans: Vec<Span<'static>> = Vec::new();
 
-    for oct in 0..NUM_OCTAVES {
+    for oct in 0..octaves {
         // Leading 2-char pad (left half of the first white key)
         spans.push(Span::raw("  ".to_string()));
 
@@ -93,7 +93,7 @@ fn build_black_row(active: &[i8], hi_color: Color) -> Vec<Span<'static>> {
 
         // Trailing 2-char pad (right half of last white key)
         spans.push(Span::raw("  ".to_string()));
-        if oct < NUM_OCTAVES - 1 {
+        if oct < octaves - 1 {
             spans.push(Span::raw(" "));
         }
     }
@@ -102,10 +102,10 @@ fn build_black_row(active: &[i8], hi_color: Color) -> Vec<Span<'static>> {
 }
 
 /// Build the block-graphic row for black keys (solid blocks or stars).
-fn build_black_block_row(active: &[i8], hi_color: Color) -> Vec<Span<'static>> {
+fn build_black_block_row(active: &[i8], hi_color: Color, octaves: usize) -> Vec<Span<'static>> {
     let mut spans: Vec<Span<'static>> = Vec::new();
 
-    for oct in 0..NUM_OCTAVES {
+    for oct in 0..octaves {
         spans.push(Span::raw("  ".to_string()));
 
         for slot in &BLACK_KEY_SLOTS[..6] {
@@ -130,7 +130,7 @@ fn build_black_block_row(active: &[i8], hi_color: Color) -> Vec<Span<'static>> {
         }
 
         spans.push(Span::raw("  ".to_string()));
-        if oct < NUM_OCTAVES - 1 {
+        if oct < octaves - 1 {
             spans.push(Span::raw(" "));
         }
     }
@@ -139,10 +139,10 @@ fn build_black_block_row(active: &[i8], hi_color: Color) -> Vec<Span<'static>> {
 }
 
 /// Build the white-key label row across all octaves.
-fn build_white_row(active: &[i8], hi_color: Color) -> Vec<Span<'static>> {
+fn build_white_row(active: &[i8], hi_color: Color, octaves: usize) -> Vec<Span<'static>> {
     let mut spans: Vec<Span<'static>> = Vec::new();
 
-    for oct in 0..NUM_OCTAVES {
+    for oct in 0..octaves {
         for &(idx, label) in &WHITE_KEYS {
             if active.contains(&idx) {
                 spans.push(Span::styled(
@@ -158,7 +158,7 @@ fn build_white_row(active: &[i8], hi_color: Color) -> Vec<Span<'static>> {
         }
 
         // Octave separator
-        if oct < NUM_OCTAVES - 1 {
+        if oct < octaves - 1 {
             spans.push(Span::styled(
                 "\u{2502}".to_string(),
                 Style::default().fg(Color::DarkGray),
@@ -170,9 +170,9 @@ fn build_white_row(active: &[i8], hi_color: Color) -> Vec<Span<'static>> {
 }
 
 /// Build a separator line that sits between the black and white key areas.
-fn build_separator_row() -> Vec<Span<'static>> {
+fn build_separator_row(octaves: usize) -> Vec<Span<'static>> {
     let octave_width = WHITE_KEYS.len() * 4; // 28 chars per octave
-    let total = octave_width * NUM_OCTAVES + (NUM_OCTAVES - 1); // separators
+    let total = octave_width * octaves + (octaves - 1); // separators
     vec![Span::styled(
         "\u{2500}".repeat(total),
         Style::default().fg(Color::DarkGray),
@@ -180,17 +180,17 @@ fn build_separator_row() -> Vec<Span<'static>> {
 }
 
 /// Build a bottom border row for the white keys.
-fn build_bottom_row() -> Vec<Span<'static>> {
+fn build_bottom_row(octaves: usize) -> Vec<Span<'static>> {
     let mut spans: Vec<Span<'static>> = Vec::new();
 
-    for oct in 0..NUM_OCTAVES {
+    for oct in 0..octaves {
         for _i in 0..WHITE_KEYS.len() {
             spans.push(Span::styled(
                 "\u{2584}\u{2584}\u{2584}\u{2584}".to_string(),
                 Style::default().fg(Color::DarkGray),
             ));
         }
-        if oct < NUM_OCTAVES - 1 {
+        if oct < octaves - 1 {
             spans.push(Span::styled(
                 "\u{2534}".to_string(),
                 Style::default().fg(Color::DarkGray),
@@ -201,6 +201,35 @@ fn build_bottom_row() -> Vec<Span<'static>> {
     spans
 }
 
+pub(super) fn compact_lines(app: &App, width: u16) -> Vec<Line<'static>> {
+    let active = active_indices(app);
+    let color = active_color(app);
+    let mut lines = vec![Line::from("Piano | PC map / exact MIDI below")];
+    if width >= 28 {
+        lines.extend([
+            Line::from(build_black_row(&active, color, 1)),
+            Line::from(build_black_block_row(&active, color, 1)),
+            Line::from(build_separator_row(1)),
+            Line::from(build_white_row(&active, color, 1)),
+            Line::from(build_bottom_row(1)),
+        ]);
+    } else {
+        for pc in 0..12 {
+            lines.push(Line::from(format!(
+                "{} {}",
+                if active.contains(&(pc + 1)) {
+                    "★"
+                } else {
+                    " "
+                },
+                midi_name(60 + pc as u8)
+            )));
+        }
+    }
+    lines.push(Line::from(format!("Play MIDI: {}", get_tone_names(app))));
+    lines
+}
+
 pub fn render(frame: &mut Frame, app: &App, area: Rect) {
     let active = active_indices(app);
     let hi_color = active_color(app);
@@ -208,11 +237,11 @@ pub fn render(frame: &mut Frame, app: &App, area: Rect) {
 
     let mut lines: Vec<Line<'static>> = vec![
         Line::from(""),
-        Line::from(build_black_row(&active, hi_color)),
-        Line::from(build_black_block_row(&active, hi_color)),
-        Line::from(build_separator_row()),
-        Line::from(build_white_row(&active, hi_color)),
-        Line::from(build_bottom_row()),
+        Line::from(build_black_row(&active, hi_color, NUM_OCTAVES)),
+        Line::from(build_black_block_row(&active, hi_color, NUM_OCTAVES)),
+        Line::from(build_separator_row(NUM_OCTAVES)),
+        Line::from(build_white_row(&active, hi_color, NUM_OCTAVES)),
+        Line::from(build_bottom_row(NUM_OCTAVES)),
         Line::from(""),
     ];
 
@@ -244,9 +273,9 @@ mod tests {
     }
     #[test]
     fn black_white_rows_share_octave_stride_and_total_width() {
-        let black = row(build_black_row(&[], Color::Yellow));
-        let white = row(build_white_row(&[], Color::Yellow));
-        let blocks = row(build_black_block_row(&[], Color::Yellow));
+        let black = row(build_black_row(&[], Color::Yellow, NUM_OCTAVES));
+        let white = row(build_white_row(&[], Color::Yellow, NUM_OCTAVES));
+        let blocks = row(build_black_block_row(&[], Color::Yellow, NUM_OCTAVES));
         assert_eq!(black.chars().count(), 57);
         assert_eq!(white.chars().count(), 57);
         assert_eq!(blocks.chars().count(), 57);

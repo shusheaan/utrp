@@ -6,7 +6,7 @@ use ratatui::{
     widgets::{Block, Borders, Paragraph},
     Frame,
 };
-pub fn render(frame: &mut Frame, app: &App, area: Rect) {
+pub(super) fn lines(app: &App) -> Vec<Line<'static>> {
     let target = app.session.target();
     let remaining = app
         .session
@@ -34,7 +34,7 @@ pub fn render(frame: &mut Frame, app: &App, area: Rect) {
         .map(|(i, tone)| format!("{}:{}", chord.degree_label(i), tone.name))
         .collect::<Vec<_>>()
         .join("  ");
-    let lines = vec![
+    vec![
         Line::from(vec![
             Span::styled(
                 "  >> PLAY ",
@@ -54,9 +54,12 @@ pub fn render(frame: &mut Frame, app: &App, area: Rect) {
             format!("  Chord tones: {tones}"),
             Style::default().fg(Color::Green),
         )),
-    ];
+    ]
+}
+
+pub fn render(frame: &mut Frame, app: &App, area: Rect) {
     frame.render_widget(
-        Paragraph::new(lines).block(
+        Paragraph::new(lines(app)).block(
             Block::default()
                 .borders(Borders::TOP | Borders::BOTTOM)
                 .border_style(Style::default().fg(Color::DarkGray)),

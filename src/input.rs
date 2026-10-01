@@ -8,6 +8,31 @@ use std::{
 };
 use utrp::session::Action;
 
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub enum Scroll {
+    Up,
+    Down,
+    PageUp,
+    PageDown,
+    Top,
+    Bottom,
+}
+
+pub fn scroll(key: KeyEvent) -> Option<Scroll> {
+    if key.kind == KeyEventKind::Release || key.modifiers != KeyModifiers::NONE {
+        return None;
+    }
+    match key.code {
+        KeyCode::Up | KeyCode::Char('k') => Some(Scroll::Up),
+        KeyCode::Down | KeyCode::Char('j') => Some(Scroll::Down),
+        KeyCode::PageUp => Some(Scroll::PageUp),
+        KeyCode::PageDown => Some(Scroll::PageDown),
+        KeyCode::Home => Some(Scroll::Top),
+        KeyCode::End => Some(Scroll::Bottom),
+        _ => None,
+    }
+}
+
 pub fn action(key: KeyEvent) -> Option<Action> {
     if key.kind != KeyEventKind::Press {
         return None;
@@ -130,6 +155,33 @@ impl Midi {
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn scrolling_never_triggers_training_actions() {
+        for (code, expected) in [
+            (KeyCode::Char('j'), Scroll::Down),
+            (KeyCode::Char('k'), Scroll::Up),
+            (KeyCode::Down, Scroll::Down),
+            (KeyCode::Up, Scroll::Up),
+            (KeyCode::PageDown, Scroll::PageDown),
+            (KeyCode::PageUp, Scroll::PageUp),
+            (KeyCode::Home, Scroll::Top),
+            (KeyCode::End, Scroll::Bottom),
+        ] {
+            for kind in [KeyEventKind::Press, KeyEventKind::Repeat] {
+                let key = KeyEvent::new_with_kind(code, KeyModifiers::NONE, kind);
+                assert_eq!(scroll(key), Some(expected));
+                assert_eq!(action(key), None);
+            }
+            assert_eq!(
+                scroll(KeyEvent::new_with_kind(
+                    code,
+                    KeyModifiers::NONE,
+                    KeyEventKind::Release
+                )),
+                None
+            );
+        }
+    }
     #[test]
     fn controls_and_repeat() {
         for (key, expected) in [

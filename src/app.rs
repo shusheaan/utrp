@@ -32,6 +32,9 @@ pub struct App {
     pub instrument: String,
     pub now: u64,
     pub notice: String,
+    pub view_scroll: u16,
+    pub view_max_scroll: u16,
+    pub view_height: u16,
     log: Option<Log>,
     midi: Option<Midi>,
     held: Held,
@@ -44,6 +47,9 @@ impl App {
             instrument,
             now: 0,
             notice: "Space = found (self-reported) | Tab toggles timed auto".into(),
+            view_scroll: 0,
+            view_max_scroll: 0,
+            view_height: 0,
             log,
             midi,
             held: Held::default(),
@@ -99,12 +105,27 @@ impl App {
     fn keyboard(&mut self, id: usize) -> Result<()> {
         while event::poll(Duration::ZERO)? {
             if let Event::Key(key) = event::read()? {
-                if let Some(action) = input::action(key) {
+                if let Some(scroll) = input::scroll(key) {
+                    self.scroll_view(scroll);
+                } else if let Some(action) = input::action(key) {
                     self.act(action, id)?;
                 }
             }
         }
         Ok(())
+    }
+    fn scroll_view(&mut self, scroll: input::Scroll) {
+        use input::Scroll;
+        let page = self.view_height.saturating_sub(1).max(1);
+        self.view_scroll = match scroll {
+            Scroll::Up => self.view_scroll.saturating_sub(1),
+            Scroll::Down => self.view_scroll.saturating_add(1),
+            Scroll::PageUp => self.view_scroll.saturating_sub(page),
+            Scroll::PageDown => self.view_scroll.saturating_add(page),
+            Scroll::Top => 0,
+            Scroll::Bottom => self.view_max_scroll,
+        }
+        .min(self.view_max_scroll);
     }
     fn midi(&mut self, id: usize) -> Result<()> {
         let events: Vec<MidiEvent> = self
@@ -200,6 +221,28 @@ mod tests {
             None,
             None,
         )
+    }
+    #[test]
+    fn scrolling_clamps_without_changing_practice() {
+        use input::Scroll;
+        let mut app = app();
+        app.view_max_scroll = 30;
+        app.view_height = 10;
+        for (action, expected) in [
+            (Scroll::Up, 0),
+            (Scroll::PageDown, 9),
+            (Scroll::Down, 10),
+            (Scroll::Bottom, 30),
+            (Scroll::Down, 30),
+            (Scroll::PageUp, 21),
+            (Scroll::Top, 0),
+        ] {
+            app.scroll_view(action);
+            assert_eq!(app.view_scroll, expected);
+            assert_eq!(app.session.index, 0);
+            assert_eq!(app.session.summary(0).score, 0);
+            assert_eq!(app.session.summary(0).presented, 1);
+        }
     }
     fn play(app: &mut App, id: usize, notes: &[u8]) {
         for note in notes {

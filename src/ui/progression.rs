@@ -126,7 +126,7 @@ fn phrase_window(
     visible
 }
 
-pub fn render(frame: &mut Frame, app: &App, area: Rect) {
+fn route_and_scale(app: &App) -> (String, String) {
     let event = &app.session.target().music;
     let phrase = app.session.phrase_events();
     let transition = phrase.iter().find_map(|e| e.previous_key.as_ref());
@@ -148,6 +148,40 @@ pub fn render(frame: &mut Frame, app: &App, area: Rect) {
         .map(|(i, tone)| format!("{}:{}", i + 1, tone.name))
         .collect::<Vec<_>>()
         .join("  ");
+    (route, scale)
+}
+
+pub(super) fn compact_lines(app: &App) -> Vec<Line<'static>> {
+    let event = &app.session.target().music;
+    let (route, scale) = route_and_scale(app);
+    let mut lines = vec![
+        Line::from(format!(
+            "Progression | phrase {} | [current] -> next",
+            event.phrase + 1
+        )),
+        Line::styled(route, Style::default().fg(Color::Cyan)),
+        Line::from(format!("Scale: {scale}")),
+        phrase_line(&app.session.phrase_events(), event.id),
+        Line::styled(
+            role_description(event).to_owned(),
+            Style::default().fg(Color::Green),
+        ),
+    ];
+    let status = app
+        .session
+        .pending_manual_label()
+        .unwrap_or_else(|| app.session.manual_notice().into());
+    if !status.is_empty() {
+        lines.push(Line::styled(status, Style::default().fg(Color::Cyan)));
+    }
+    lines.push(Line::from(app.notice.clone()));
+    lines
+}
+
+pub fn render(frame: &mut Frame, app: &App, area: Rect) {
+    let event = &app.session.target().music;
+    let phrase = app.session.phrase_events();
+    let (route, scale) = route_and_scale(app);
     let block = Block::default()
         .title(format!(
             " Progression | phrase {} | [current] -> next ",

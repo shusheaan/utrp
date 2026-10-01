@@ -120,10 +120,10 @@ fn arpeggio_lines(chord: &Chord, target: &GuitarTarget) -> Vec<Line<'static>> {
     lines
 }
 
-pub fn render(frame: &mut Frame, app: &App, area: Rect) {
+pub(super) fn lines(app: &App) -> Vec<Line<'static>> {
     let target = &app.session.target().guitar;
     let chord = &app.session.target().music.chord;
-    let lines = if target.task == "arpeggio_detached" {
+    if target.task == "arpeggio_detached" {
         arpeggio_lines(chord, target)
     } else if let Some(shape) = &target.shape {
         chord_lines(chord, shape, target.region)
@@ -135,9 +135,12 @@ pub fn render(frame: &mut Frame, app: &App, area: Rect) {
             )),
             Line::from(" Widen the region/string sets; do not force a grip."),
         ]
-    };
+    }
+}
+
+pub fn render(frame: &mut Frame, app: &App, area: Rect) {
     frame.render_widget(
-        Paragraph::new(lines).block(
+        Paragraph::new(lines(app)).block(
             Block::default()
                 .title(" Guitar | string 1=highest, 6=lowest ")
                 .borders(Borders::ALL)

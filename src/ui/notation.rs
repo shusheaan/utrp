@@ -102,6 +102,51 @@ pub fn required_height(app: &App) -> u16 {
     (high - low + 1) as u16 + HEADER_ROWS + 2
 }
 
+pub(super) fn panel_width(app: &App) -> u16 {
+    required_width(&target_notes(app).unwrap_or_default())
+}
+
+/// Narrow screens use successive staff systems, never drop note columns.
+pub(super) fn compact_lines(app: &App, width: u16) -> Vec<Line<'static>> {
+    let mut rows = vec![
+        Line::from("Staff | concert pitch"),
+        Line::from("Treble upper / Bass lower; no key signature"),
+        Line::from("● note; ♮/♯/♭ per note"),
+    ];
+    let notes = match target_notes(app) {
+        Ok(notes) if !notes.is_empty() => notes,
+        Ok(_) => {
+            rows.push(Line::from("No notes: no playable target"));
+            return rows;
+        }
+        Err(reason) => {
+            rows.push(Line::from(format!("No notes: {reason}")));
+            return rows;
+        }
+    };
+    let column = column_width(&notes);
+    let per_system = (usize::from(width).saturating_sub(LABEL_WIDTH) / column).max(1);
+    let detached =
+        app.instrument == "guitar" && app.session.target().guitar.task == "arpeggio_detached";
+    rows.push(Line::from(if detached {
+        "Arpeggio L->R; continue on next staff"
+    } else {
+        "Simultaneous (all staff groups together)"
+    }));
+    for (group, notes) in notes.chunks(per_system).enumerate() {
+        let column = column_width(notes);
+        rows.push(Line::from(format!(
+            "{}{}",
+            " ".repeat(LABEL_WIDTH),
+            (0..notes.len())
+                .map(|i| format!("{:^column$}", format!("[{}]", group * per_system + i + 1)))
+                .collect::<String>()
+        )));
+        rows.extend(staff_rows(notes, usize::from(width)));
+    }
+    rows
+}
+
 fn column_width(notes: &[WrittenNote]) -> usize {
     notes
         .iter()
@@ -495,6 +540,30 @@ mod tests {
             "piano",
             &[(61, "B##"), (58, "Cbb"), (67, "F##"), (69, "Bbb")],
         )
+    }
+
+    #[test]
+    fn mobile_staff_groups_preserve_every_pitch_and_note_number() {
+        let app = app("piano", &[(40, "E"), (58, "Cbb"), (61, "B##"), (86, "D")]);
+        for width in [20, 28, 32, 40, 48, 72] {
+            let rows = compact_lines(&app, width);
+            // Explanatory text wraps separately; notation rows must fit intact.
+            for row in rows.iter().skip(4) {
+                assert!(row.width() <= usize::from(width), "{width}: {row:?}");
+            }
+            let text = rows
+                .iter()
+                .map(ToString::to_string)
+                .collect::<Vec<_>>()
+                .join("\n");
+            for note in target_notes(&app).unwrap() {
+                assert_eq!(text.matches(&note.marker).count(), 1, "{width}: {text}");
+            }
+            for i in 1..=4 {
+                assert_eq!(text.matches(&format!("[{i}]")).count(), 1);
+            }
+            assert!(text.contains("Simultaneous"));
+        }
     }
 
     #[test]
