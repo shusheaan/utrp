@@ -1,0 +1,138 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="620" viewBox="0 0 1440 620" role="img" aria-labelledby="title desc">
+<title id="title">00  /  E minor：先看地图，不急着走路线</title>
+<desc id="desc">E–F#–G–A–B–C–D = 1–2–b3–4–5–b6–b7。高音 e 在上，低音 E 在下；品数向右增加。. 完整音集参考 · 红 E / 金 G / 蓝 B 组成 Em；青色是其余调内音。此图不是 solo 的逐音转录。</desc>
+<rect width="1440" height="620" rx="22" fill="#F8F6F0"/>
+<g font-family="Noto Sans CJK SC, WenQuanYi Zen Hei, sans-serif">
+<defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+<path d="M0 0 L7 3.5 L0 7 Z" fill="#AA7833"/></marker></defs>
+<text x="56.00" y="42.00" font-size="12" fill="#60777B" text-anchor="start" font-weight="600">UTRP  /  PHRASE ATLAS</text>
+<text x="1384.00" y="42.00" font-size="12" fill="#60777B" text-anchor="end" font-weight="400">音名 / 参照级数 · 箭头只表示走向</text>
+<text x="56.00" y="86.00" font-size="30" fill="#183B45" text-anchor="start" font-weight="700">00  /  E minor：先看地图，不急着走路线</text>
+<text x="56.00" y="119.00" font-size="16" fill="#60777B" text-anchor="start" font-weight="400">E–F#–G–A–B–C–D = 1–2–b3–4–5–b6–b7。高音 e 在上，低音 E 在下；品数向右增加。</text>
+<text x="216.25" y="164.00" font-size="17" fill="#60777B" text-anchor="middle" font-weight="600">9</text>
+<circle cx="216.25" cy="494" r="3" fill="#60777B"/>
+<text x="368.75" y="164.00" font-size="17" fill="#60777B" text-anchor="middle" font-weight="600">10</text>
+<text x="521.25" y="164.00" font-size="17" fill="#60777B" text-anchor="middle" font-weight="600">11</text>
+<rect x="597.50" y="180" width="152.50" height="295" rx="8" fill="#C8D2D0" opacity="0.24"/>
+<text x="673.75" y="164.00" font-size="17" fill="#60777B" text-anchor="middle" font-weight="600">12</text>
+<circle cx="668.75" cy="494" r="3" fill="#60777B"/>
+<circle cx="678.75" cy="494" r="3" fill="#60777B"/>
+<text x="826.25" y="164.00" font-size="17" fill="#60777B" text-anchor="middle" font-weight="600">13</text>
+<text x="978.75" y="164.00" font-size="17" fill="#60777B" text-anchor="middle" font-weight="600">14</text>
+<text x="1131.25" y="164.00" font-size="17" fill="#60777B" text-anchor="middle" font-weight="600">15</text>
+<circle cx="1131.25" cy="494" r="3" fill="#60777B"/>
+<text x="1283.75" y="164.00" font-size="17" fill="#60777B" text-anchor="middle" font-weight="600">16</text>
+<text x="108.00" y="211.00" font-size="18" fill="#183B45" text-anchor="middle" font-weight="600">e</text>
+<path d="M140 205 H1360" stroke="#C8D2D0" stroke-width="1.0"/>
+<text x="108.00" y="260.00" font-size="18" fill="#183B45" text-anchor="middle" font-weight="600">B</text>
+<path d="M140 254 H1360" stroke="#C8D2D0" stroke-width="1.23"/>
+<text x="108.00" y="309.00" font-size="18" fill="#183B45" text-anchor="middle" font-weight="600">G</text>
+<path d="M140 303 H1360" stroke="#C8D2D0" stroke-width="1.46"/>
+<text x="108.00" y="358.00" font-size="18" fill="#183B45" text-anchor="middle" font-weight="600">D</text>
+<path d="M140 352 H1360" stroke="#C8D2D0" stroke-width="1.69"/>
+<text x="108.00" y="407.00" font-size="18" fill="#183B45" text-anchor="middle" font-weight="600">A</text>
+<path d="M140 401 H1360" stroke="#C8D2D0" stroke-width="1.92"/>
+<text x="108.00" y="456.00" font-size="18" fill="#183B45" text-anchor="middle" font-weight="600">E</text>
+<path d="M140 450 H1360" stroke="#C8D2D0" stroke-width="2.1500000000000004"/>
+<path d="M140.00 180 V475" stroke="#C8D2D0" stroke-width="1"/>
+<path d="M292.50 180 V475" stroke="#C8D2D0" stroke-width="1"/>
+<path d="M445.00 180 V475" stroke="#C8D2D0" stroke-width="1"/>
+<path d="M597.50 180 V475" stroke="#C8D2D0" stroke-width="1"/>
+<path d="M750.00 180 V475" stroke="#C8D2D0" stroke-width="1"/>
+<path d="M902.50 180 V475" stroke="#C8D2D0" stroke-width="1"/>
+<path d="M1055.00 180 V475" stroke="#C8D2D0" stroke-width="1"/>
+<path d="M1207.50 180 V475" stroke="#C8D2D0" stroke-width="1"/>
+<path d="M1360.00 180 V475" stroke="#C8D2D0" stroke-width="1"/>
+<circle cx="368.75" cy="205.00" r="23" fill="#237D83" stroke="#F8F6F0" stroke-width="2"/>
+<text x="368.75" y="204.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">D</text>
+<text x="368.75" y="219.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">b7</text>
+<circle cx="673.75" cy="205.00" r="23" fill="#C85D45" stroke="#F8F6F0" stroke-width="2"/>
+<text x="673.75" y="204.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">E</text>
+<text x="673.75" y="219.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">1</text>
+<circle cx="978.75" cy="205.00" r="23" fill="#237D83" stroke="#F8F6F0" stroke-width="2"/>
+<text x="978.75" y="204.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">F#</text>
+<text x="978.75" y="219.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">2</text>
+<circle cx="1131.25" cy="205.00" r="23" fill="#967125" stroke="#F8F6F0" stroke-width="2"/>
+<text x="1131.25" y="204.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">G</text>
+<text x="1131.25" y="219.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">b3</text>
+<circle cx="368.75" cy="254.00" r="23" fill="#237D83" stroke="#F8F6F0" stroke-width="2"/>
+<text x="368.75" y="253.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">A</text>
+<text x="368.75" y="268.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">4</text>
+<circle cx="673.75" cy="254.00" r="23" fill="#526AA2" stroke="#F8F6F0" stroke-width="2"/>
+<text x="673.75" y="253.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">B</text>
+<text x="673.75" y="268.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">5</text>
+<circle cx="826.25" cy="254.00" r="23" fill="#237D83" stroke="#F8F6F0" stroke-width="2"/>
+<text x="826.25" y="253.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">C</text>
+<text x="826.25" y="268.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">b6</text>
+<circle cx="1131.25" cy="254.00" r="23" fill="#237D83" stroke="#F8F6F0" stroke-width="2"/>
+<text x="1131.25" y="253.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">D</text>
+<text x="1131.25" y="268.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">b7</text>
+<circle cx="216.25" cy="303.00" r="23" fill="#C85D45" stroke="#F8F6F0" stroke-width="2"/>
+<text x="216.25" y="302.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">E</text>
+<text x="216.25" y="317.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">1</text>
+<circle cx="521.25" cy="303.00" r="23" fill="#237D83" stroke="#F8F6F0" stroke-width="2"/>
+<text x="521.25" y="302.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">F#</text>
+<text x="521.25" y="317.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">2</text>
+<circle cx="673.75" cy="303.00" r="23" fill="#967125" stroke="#F8F6F0" stroke-width="2"/>
+<text x="673.75" y="302.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">G</text>
+<text x="673.75" y="317.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">b3</text>
+<circle cx="978.75" cy="303.00" r="23" fill="#237D83" stroke="#F8F6F0" stroke-width="2"/>
+<text x="978.75" y="302.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">A</text>
+<text x="978.75" y="317.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">4</text>
+<circle cx="1283.75" cy="303.00" r="23" fill="#526AA2" stroke="#F8F6F0" stroke-width="2"/>
+<text x="1283.75" y="302.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">B</text>
+<text x="1283.75" y="317.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">5</text>
+<circle cx="216.25" cy="352.00" r="23" fill="#526AA2" stroke="#F8F6F0" stroke-width="2"/>
+<text x="216.25" y="351.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">B</text>
+<text x="216.25" y="366.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">5</text>
+<circle cx="368.75" cy="352.00" r="23" fill="#237D83" stroke="#F8F6F0" stroke-width="2"/>
+<text x="368.75" y="351.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">C</text>
+<text x="368.75" y="366.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">b6</text>
+<circle cx="673.75" cy="352.00" r="23" fill="#237D83" stroke="#F8F6F0" stroke-width="2"/>
+<text x="673.75" y="351.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">D</text>
+<text x="673.75" y="366.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">b7</text>
+<circle cx="978.75" cy="352.00" r="23" fill="#C85D45" stroke="#F8F6F0" stroke-width="2"/>
+<text x="978.75" y="351.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">E</text>
+<text x="978.75" y="366.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">1</text>
+<circle cx="1283.75" cy="352.00" r="23" fill="#237D83" stroke="#F8F6F0" stroke-width="2"/>
+<text x="1283.75" y="351.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">F#</text>
+<text x="1283.75" y="366.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">2</text>
+<circle cx="216.25" cy="401.00" r="23" fill="#237D83" stroke="#F8F6F0" stroke-width="2"/>
+<text x="216.25" y="400.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">F#</text>
+<text x="216.25" y="415.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">2</text>
+<circle cx="368.75" cy="401.00" r="23" fill="#967125" stroke="#F8F6F0" stroke-width="2"/>
+<text x="368.75" y="400.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">G</text>
+<text x="368.75" y="415.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">b3</text>
+<circle cx="673.75" cy="401.00" r="23" fill="#237D83" stroke="#F8F6F0" stroke-width="2"/>
+<text x="673.75" y="400.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">A</text>
+<text x="673.75" y="415.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">4</text>
+<circle cx="978.75" cy="401.00" r="23" fill="#526AA2" stroke="#F8F6F0" stroke-width="2"/>
+<text x="978.75" y="400.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">B</text>
+<text x="978.75" y="415.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">5</text>
+<circle cx="1131.25" cy="401.00" r="23" fill="#237D83" stroke="#F8F6F0" stroke-width="2"/>
+<text x="1131.25" y="400.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">C</text>
+<text x="1131.25" y="415.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">b6</text>
+<circle cx="368.75" cy="450.00" r="23" fill="#237D83" stroke="#F8F6F0" stroke-width="2"/>
+<text x="368.75" y="449.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">D</text>
+<text x="368.75" y="464.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">b7</text>
+<circle cx="673.75" cy="450.00" r="23" fill="#C85D45" stroke="#F8F6F0" stroke-width="2"/>
+<text x="673.75" y="449.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">E</text>
+<text x="673.75" y="464.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">1</text>
+<circle cx="978.75" cy="450.00" r="23" fill="#237D83" stroke="#F8F6F0" stroke-width="2"/>
+<text x="978.75" y="449.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">F#</text>
+<text x="978.75" y="464.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">2</text>
+<circle cx="1131.25" cy="450.00" r="23" fill="#967125" stroke="#F8F6F0" stroke-width="2"/>
+<text x="1131.25" y="449.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">G</text>
+<text x="1131.25" y="464.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">b3</text>
+<circle cx="62" cy="541" r="6" fill="#C85D45"/>
+<text x="77.00" y="546.00" font-size="14" fill="#60777B" text-anchor="start" font-weight="400">1 · 参照主音</text>
+<circle cx="300" cy="541" r="6" fill="#967125"/>
+<text x="315.00" y="546.00" font-size="14" fill="#60777B" text-anchor="start" font-weight="400">b3 / 3 · 三度</text>
+<circle cx="540" cy="541" r="6" fill="#526AA2"/>
+<text x="555.00" y="546.00" font-size="14" fill="#60777B" text-anchor="start" font-weight="400">5 · 五度</text>
+<circle cx="790" cy="541" r="6" fill="#237D83"/>
+<text x="805.00" y="546.00" font-size="14" fill="#60777B" text-anchor="start" font-weight="400">其他选中音</text>
+<circle cx="1080" cy="541" r="6" fill="#A7B6B4"/>
+<text x="1095.00" y="546.00" font-size="14" fill="#60777B" text-anchor="start" font-weight="400">背景位置 · 非指令</text>
+<text x="56.00" y="586.00" font-size="16" fill="#183B45" text-anchor="start" font-weight="400">完整音集参考 · 红 E / 金 G / 蓝 B 组成 Em；青色是其余调内音。此图不是 solo 的逐音转录。</text>
+</g></svg>

@@ -14,3 +14,6 @@
 /.vscode
 /.zprofile
 /.zshrc
+
+# Purchased scores remain local; analysis notes and checksums can be versioned.
+/sheets/NLND_TABS/*.pdf

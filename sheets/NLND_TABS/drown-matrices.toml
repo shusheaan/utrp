@@ -1,0 +1,76 @@
+# Display order is high e to low E. MIDI values determine pitch, not labels.
+strings = ["e", "B", "G", "D", "A", "E"]
+tuning = [64, 59, 55, 50, 45, 40]
+pitch_names = ["C", "C#", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"]
+degrees = ["1", "b2", "2", "b3", "3", "4", "b5", "5", "b6", "6", "b7", "7"]
+
+[theme]
+paper = "#F8F6F0"
+ink = "#183B45"
+muted = "#60777B"
+grid = "#C8D2D0"
+context = "#A7B6B4"
+anchor = "#237D83"
+root = "#C85D45"
+third = "#967125"
+fifth = "#526AA2"
+route = "#AA7833"
+font = "Noto Sans CJK SC, WenQuanYi Zen Hei, sans-serif"
+
+[[diagrams]]
+slug = "drown-scale"
+title = "00  /  E minor：先看地图，不急着走路线"
+subtitle = "E–F#–G–A–B–C–D = 1–2–b3–4–5–b6–b7。高音 e 在上，低音 E 在下；品数向右增加。"
+footer = "完整音集参考 · 红 E / 金 G / 蓝 B 组成 Em；青色是其余调内音。此图不是 solo 的逐音转录。"
+first = 9
+last = 16
+tonic = 4
+context = [4, 6, 7, 9, 11, 0, 2]
+auto_scale = true
+
+[[diagrams]]
+slug = "drown-em-map"
+title = "01  /  Em：高把位的三个落脚点"
+subtitle = "参照 E：E = 1，G = b3，B = 5。高音 e 在上；横轴为品数。"
+footer = "教学地图 · 实心点是 Em 定位音，不是同时弹的完整和弦；灰点只显示 E minor pentatonic 背景。"
+first = 9
+last = 17
+tonic = 4
+context = [4, 7, 9, 11, 2]
+anchors = ["e12", "B12", "G12", "D14", "A14", "E12"]
+
+[[diagrams]]
+slug = "drown-fourths"
+title = "02  /  106 小节：沿同一弦组，四度双音上楼"
+subtitle = "参照 E 的级数。每一列 D/G 两点同时发声；两条箭头分别跟随上下声部。"
+footer = "谱面路线 · A–D → B–E → D–G → E–A。音对可关联和弦碎片，但不等于已确认的伴奏和弦。"
+first = 6
+last = 15
+tonic = 4
+context = []
+anchors = ["D7", "G7", "D9", "G9", "D12", "G12", "D14", "G14"]
+paths = [["D7", "D9", "D12", "D14"], ["G7", "G9", "G12", "G14"]]
+
+[[diagrams]]
+slug = "drown-octaves"
+title = "03  /  117 小节：F# → E，是八度，不是换和弦"
+subtitle = "参照 E：F# = 2，E = 1。G11/A9 为 F# 八度，滑到 G9/A7 的 E 八度。"
+footer = "谱面骨架 · 两条箭头同步向左；中间 D 弦要制音。先滑准，再恢复原谱长音与摇把。"
+first = 5
+last = 12
+tonic = 4
+context = []
+anchors = ["G11", "A9", "G9", "A7"]
+paths = [["G11", "G9"], ["A9", "A7"]]
+
+[[diagrams]]
+slug = "drown-am6-route"
+title = "04  /  119 小节：Am 三和弦，加一颗 6"
+subtitle = "本图改用 A 作参照：A = 1，C = b3，E = 5，F# = 6。不是宣布伴奏根音为 A。"
+footer = "上行路线 · A–C–E–F# 也可命名 F#m7b5；省略末尾回落，五连音时值仍须回原谱核对。"
+first = 6
+last = 13
+tonic = 9
+context = []
+anchors = ["A7", "A9", "A12", "D10", "G9", "G11", "B10", "e8", "e12"]
+paths = [["A7", "A9", "A12", "D10", "G9", "G11", "B10", "e8", "e12"]]

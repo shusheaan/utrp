@@ -1,0 +1,92 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="620" viewBox="0 0 1440 620" role="img" aria-labelledby="title desc">
+<title id="title">04  /  119 小节：Am 三和弦，加一颗 6</title>
+<desc id="desc">本图改用 A 作参照：A = 1，C = b3，E = 5，F# = 6。不是宣布伴奏根音为 A。. 上行路线 · A–C–E–F# 也可命名 F#m7b5；省略末尾回落，五连音时值仍须回原谱核对。</desc>
+<rect width="1440" height="620" rx="22" fill="#F8F6F0"/>
+<g font-family="Noto Sans CJK SC, WenQuanYi Zen Hei, sans-serif">
+<defs><marker id="arrow" markerWidth="7" markerHeight="7" refX="6" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+<path d="M0 0 L7 3.5 L0 7 Z" fill="#AA7833"/></marker></defs>
+<text x="56.00" y="42.00" font-size="12" fill="#60777B" text-anchor="start" font-weight="600">UTRP  /  PHRASE ATLAS</text>
+<text x="1384.00" y="42.00" font-size="12" fill="#60777B" text-anchor="end" font-weight="400">音名 / 参照级数 · 箭头只表示走向</text>
+<text x="56.00" y="86.00" font-size="30" fill="#183B45" text-anchor="start" font-weight="700">04  /  119 小节：Am 三和弦，加一颗 6</text>
+<text x="56.00" y="119.00" font-size="16" fill="#60777B" text-anchor="start" font-weight="400">本图改用 A 作参照：A = 1，C = b3，E = 5，F# = 6。不是宣布伴奏根音为 A。</text>
+<text x="216.25" y="164.00" font-size="17" fill="#60777B" text-anchor="middle" font-weight="600">6</text>
+<text x="368.75" y="164.00" font-size="17" fill="#60777B" text-anchor="middle" font-weight="600">7</text>
+<circle cx="368.75" cy="494" r="3" fill="#60777B"/>
+<text x="521.25" y="164.00" font-size="17" fill="#60777B" text-anchor="middle" font-weight="600">8</text>
+<text x="673.75" y="164.00" font-size="17" fill="#60777B" text-anchor="middle" font-weight="600">9</text>
+<circle cx="673.75" cy="494" r="3" fill="#60777B"/>
+<text x="826.25" y="164.00" font-size="17" fill="#60777B" text-anchor="middle" font-weight="600">10</text>
+<text x="978.75" y="164.00" font-size="17" fill="#60777B" text-anchor="middle" font-weight="600">11</text>
+<rect x="1055.00" y="180" width="152.50" height="295" rx="8" fill="#C8D2D0" opacity="0.24"/>
+<text x="1131.25" y="164.00" font-size="17" fill="#60777B" text-anchor="middle" font-weight="600">12</text>
+<circle cx="1126.25" cy="494" r="3" fill="#60777B"/>
+<circle cx="1136.25" cy="494" r="3" fill="#60777B"/>
+<text x="1283.75" y="164.00" font-size="17" fill="#60777B" text-anchor="middle" font-weight="600">13</text>
+<text x="108.00" y="211.00" font-size="18" fill="#183B45" text-anchor="middle" font-weight="600">e</text>
+<path d="M140 205 H1360" stroke="#C8D2D0" stroke-width="1.0"/>
+<text x="108.00" y="260.00" font-size="18" fill="#183B45" text-anchor="middle" font-weight="600">B</text>
+<path d="M140 254 H1360" stroke="#C8D2D0" stroke-width="1.23"/>
+<text x="108.00" y="309.00" font-size="18" fill="#183B45" text-anchor="middle" font-weight="600">G</text>
+<path d="M140 303 H1360" stroke="#C8D2D0" stroke-width="1.46"/>
+<text x="108.00" y="358.00" font-size="18" fill="#183B45" text-anchor="middle" font-weight="600">D</text>
+<path d="M140 352 H1360" stroke="#C8D2D0" stroke-width="1.69"/>
+<text x="108.00" y="407.00" font-size="18" fill="#183B45" text-anchor="middle" font-weight="600">A</text>
+<path d="M140 401 H1360" stroke="#C8D2D0" stroke-width="1.92"/>
+<text x="108.00" y="456.00" font-size="18" fill="#183B45" text-anchor="middle" font-weight="600">E</text>
+<path d="M140 450 H1360" stroke="#C8D2D0" stroke-width="2.1500000000000004"/>
+<path d="M140.00 180 V475" stroke="#C8D2D0" stroke-width="1"/>
+<path d="M292.50 180 V475" stroke="#C8D2D0" stroke-width="1"/>
+<path d="M445.00 180 V475" stroke="#C8D2D0" stroke-width="1"/>
+<path d="M597.50 180 V475" stroke="#C8D2D0" stroke-width="1"/>
+<path d="M750.00 180 V475" stroke="#C8D2D0" stroke-width="1"/>
+<path d="M902.50 180 V475" stroke="#C8D2D0" stroke-width="1"/>
+<path d="M1055.00 180 V475" stroke="#C8D2D0" stroke-width="1"/>
+<path d="M1207.50 180 V475" stroke="#C8D2D0" stroke-width="1"/>
+<path d="M1360.00 180 V475" stroke="#C8D2D0" stroke-width="1"/>
+<path d="M394.75 401.00 L644.75 401.00" fill="none" stroke="#AA7833" stroke-width="2.4" marker-end="url(#arrow)"/>
+<path d="M699.75 401.00 L1102.25 401.00" fill="none" stroke="#AA7833" stroke-width="2.4" marker-end="url(#arrow)"/>
+<path d="M1105.58 396.88 L854.88 356.60" fill="none" stroke="#AA7833" stroke-width="2.4" marker-end="url(#arrow)"/>
+<path d="M801.50 344.05 L701.36 311.87" fill="none" stroke="#AA7833" stroke-width="2.4" marker-end="url(#arrow)"/>
+<path d="M699.75 303.00 L949.75 303.00" fill="none" stroke="#AA7833" stroke-width="2.4" marker-end="url(#arrow)"/>
+<path d="M954.00 295.05 L853.86 262.87" fill="none" stroke="#AA7833" stroke-width="2.4" marker-end="url(#arrow)"/>
+<path d="M800.58 249.88 L549.88 209.60" fill="none" stroke="#AA7833" stroke-width="2.4" marker-end="url(#arrow)"/>
+<path d="M547.25 205.00 L1102.25 205.00" fill="none" stroke="#AA7833" stroke-width="2.4" marker-end="url(#arrow)"/>
+<circle cx="368.75" cy="401.00" r="23" fill="#526AA2" stroke="#F8F6F0" stroke-width="2"/>
+<text x="368.75" y="400.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">E</text>
+<text x="368.75" y="415.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">5</text>
+<circle cx="673.75" cy="401.00" r="23" fill="#237D83" stroke="#F8F6F0" stroke-width="2"/>
+<text x="673.75" y="400.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">F#</text>
+<text x="673.75" y="415.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">6</text>
+<circle cx="1131.25" cy="401.00" r="23" fill="#C85D45" stroke="#F8F6F0" stroke-width="2"/>
+<text x="1131.25" y="400.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">A</text>
+<text x="1131.25" y="415.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">1</text>
+<circle cx="826.25" cy="352.00" r="23" fill="#967125" stroke="#F8F6F0" stroke-width="2"/>
+<text x="826.25" y="351.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">C</text>
+<text x="826.25" y="366.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">b3</text>
+<circle cx="673.75" cy="303.00" r="23" fill="#526AA2" stroke="#F8F6F0" stroke-width="2"/>
+<text x="673.75" y="302.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">E</text>
+<text x="673.75" y="317.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">5</text>
+<circle cx="978.75" cy="303.00" r="23" fill="#237D83" stroke="#F8F6F0" stroke-width="2"/>
+<text x="978.75" y="302.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">F#</text>
+<text x="978.75" y="317.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">6</text>
+<circle cx="826.25" cy="254.00" r="23" fill="#C85D45" stroke="#F8F6F0" stroke-width="2"/>
+<text x="826.25" y="253.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">A</text>
+<text x="826.25" y="268.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">1</text>
+<circle cx="521.25" cy="205.00" r="23" fill="#967125" stroke="#F8F6F0" stroke-width="2"/>
+<text x="521.25" y="204.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">C</text>
+<text x="521.25" y="219.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">b3</text>
+<circle cx="1131.25" cy="205.00" r="23" fill="#526AA2" stroke="#F8F6F0" stroke-width="2"/>
+<text x="1131.25" y="204.00" font-size="17" fill="#F8F6F0" text-anchor="middle" font-weight="700">E</text>
+<text x="1131.25" y="219.00" font-size="11" fill="#F8F6F0" text-anchor="middle" font-weight="500">5</text>
+<circle cx="62" cy="541" r="6" fill="#C85D45"/>
+<text x="77.00" y="546.00" font-size="14" fill="#60777B" text-anchor="start" font-weight="400">1 · 参照主音</text>
+<circle cx="300" cy="541" r="6" fill="#967125"/>
+<text x="315.00" y="546.00" font-size="14" fill="#60777B" text-anchor="start" font-weight="400">b3 / 3 · 三度</text>
+<circle cx="540" cy="541" r="6" fill="#526AA2"/>
+<text x="555.00" y="546.00" font-size="14" fill="#60777B" text-anchor="start" font-weight="400">5 · 五度</text>
+<circle cx="790" cy="541" r="6" fill="#237D83"/>
+<text x="805.00" y="546.00" font-size="14" fill="#60777B" text-anchor="start" font-weight="400">其他选中音</text>
+<circle cx="1080" cy="541" r="6" fill="#A7B6B4"/>
+<text x="1095.00" y="546.00" font-size="14" fill="#60777B" text-anchor="start" font-weight="400">背景位置 · 非指令</text>
+<text x="56.00" y="586.00" font-size="16" fill="#183B45" text-anchor="start" font-weight="400">上行路线 · A–C–E–F# 也可命名 F#m7b5；省略末尾回落，五连音时值仍须回原谱核对。</text>
+</g></svg>

@@ -1,0 +1,57 @@
+{
+  "copied_on": "2026-10-01",
+  "source_directory": "/home/shu/storage/documents/media/NLND_TABS",
+  "provenance": "Existing user library; purchase receipt not verified",
+  "files": [
+    {
+      "file": "Bad.pdf",
+      "bytes": 1856853,
+      "sha256": "205942203f04042d48e06e916325ba60e90175f6990275415a9a005ba232dfb1"
+    },
+    {
+      "file": "Death Note feat. Ichika.pdf",
+      "bytes": 1907860,
+      "sha256": "93d0212168bb71cd71b55b135da0b73dbfe21e44c5b6a5f862618ada9c21740a"
+    },
+    {
+      "file": "Drown feat. Mateus Asato.pdf",
+      "bytes": 1796626,
+      "sha256": "6178eb2cb76d606fe40d7b0fb2f932fdbe1674131c9fa8e2acdc7bf91ba5fc91"
+    },
+    {
+      "file": "G.O.A.T..pdf",
+      "bytes": 2380216,
+      "sha256": "a25c83b4f96b5bb9ab19a1214f844d7358d71dd1a9002d48d4ca257ca0eaf55c"
+    },
+    {
+      "file": "Nasty feat. Jason Richardson.pdf",
+      "bytes": 2088864,
+      "sha256": "70286c06c4ffd9729b96a41105b25afd5e067a978e55fcdab9fd1e308609dd83"
+    },
+    {
+      "file": "O.D..pdf",
+      "bytes": 2636347,
+      "sha256": "0b1ad6c62c109aaca50241c27140611f7e7a1958324a053a8b4a266fc7744685"
+    },
+    {
+      "file": "Rich Kids feat. Yvette Young.pdf",
+      "bytes": 1965184,
+      "sha256": "63799595dd1926489f74da9373baa9faf7a870ffd6aea612d0cb0044f80243ca"
+    },
+    {
+      "file": "Saucy.pdf",
+      "bytes": 2294706,
+      "sha256": "89b3b2005b1ec197d2960e317c3cc3c7a334d833c291ad2839a6c1e6c3ae728c"
+    },
+    {
+      "file": "So Strange feat. Cuco.pdf",
+      "bytes": 1756147,
+      "sha256": "7031470d906bd78eaf9e0a9c7e461264badd52fec83d28e362ff316223117a2e"
+    },
+    {
+      "file": "Yas feat. Mario Camarena and Erick Hansel.pdf",
+      "bytes": 2548200,
+      "sha256": "f71b171f6b01e4b9c685ac15ceaa97843ea4076c23499c39c51265318628069a"
+    }
+  ]
+}
