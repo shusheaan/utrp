@@ -14,7 +14,7 @@ perform.py      simulation 表演层:session.yaml -> utrp-sim -> pad+点缀 -> �
 session.yaml    一次作曲会话的全部参数(复制改名即新会话)
 test_theory.py  理论不变量;test_perform.py 点缀引擎 + utrp-sim 输出契约
 progressions/   导出的进行(JSON,文本进 git;.mid/.wav 落 ~/storage/daw/harmony)
-../simulate/    Rust 胶水 crate:#[path] 原样编译 ../../src/theory(见其 README)
+../simulate/    共享 Rust library 的 headless 适配器(见其 README)
 ```
 
 ## 用法
@@ -51,11 +51,11 @@ $P explore.py demo F ionian magdalene/M1b-ghostpad.fxp \
 
 ## simulate + perform:原版 Rust simulation 的声音化
 
-意识流作曲的探索链,**Rust 逻辑一行未改未复制**(机制见 `../simulate/README.md`):
+独立于指板训练 TUI 的声音制作链。2026-09-30 起 sim 与 TUI 使用共享 Rust library、原生 seed；旧输出数据可 replay，新版参数语义见 `../simulate/README.md`：
 
 ```
-session.yaml ──sim段──> utrp-sim(原版 theory:40 步 ss 序列 + DeTour 绕行
-                         + 转位采样 + via-tonic/共享和弦/dim7/back 转调)
+session.yaml ──sim段──> utrp-sim(共享引擎:调内短句 + 合法转调
+                         + 可配置副属/替代/ambient 色彩)
        │                      │ JSON(逐小节:调、和弦、MIDI 音、音阶)
        │ perform/ornament 段  v
        └──────────> perform.py:pad 长音(strum/交叠糊边)
@@ -77,7 +77,7 @@ $P perform.py session.yaml --wav     # 离线渲染整段(2-3 分钟)验听
 "旋律变不变"(0 = 死循环,1 = 纯随机,0.1–0.2 = 缓慢演化)。
 
 可复现:`sim.seed` + `ornament.seed` 双种子 = 整场演出逐字节复现(和声层
-靠 `../simulate/shim/` 的 LD_PRELOAD 垫片,机制与边界见 `../simulate/README`);
+使用原生 `--seed`，机制与边界见 `../simulate/README.md`);
 每次 sim 的原始 JSON 自动存 `progressions/<name>-sim.json`,
 `perform.py session.yaml --replay` 直接回放,升级依赖也不丢已发现的进行。
 

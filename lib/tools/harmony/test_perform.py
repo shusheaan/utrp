@@ -47,12 +47,11 @@ def test_pitch_pool_registers_and_kinds() -> None:
 
 
 def test_sim_seed_reproducible() -> None:
-    from perform import SEED_SHIM
-    if not (SIM_BIN.exists() and SEED_SHIM.exists()):
-        print("  (utrp-sim or seed shim not built, skipped)")
-        return
+    if not SIM_BIN.exists():
+        from unittest import SkipTest
+        raise SkipTest("utrp-sim binary not built")
     import os
-    env = dict(os.environ, UTRP_SIM_SEED="42", LD_PRELOAD=str(SEED_SHIM))
+    env = dict(os.environ, UTRP_SIM_SEED="42")
     runs = [subprocess.run([str(SIM_BIN), "--measures", "10", "--key", "F",
                             "--mode", "aeolian"], capture_output=True,
                            text=True, check=True, env=env).stdout
@@ -67,8 +66,8 @@ def test_sim_seed_reproducible() -> None:
 
 def test_sim_binary_contract() -> None:
     if not SIM_BIN.exists():
-        print("  (utrp-sim not built, skipped)")
-        return
+        from unittest import SkipTest
+        raise SkipTest("utrp-sim binary not built")
     out = subprocess.run(
         [str(SIM_BIN), "--measures", "30", "--key", "F", "--mode", "aeolian"],
         capture_output=True, text=True, check=True)
@@ -83,6 +82,21 @@ def test_sim_binary_contract() -> None:
             assert all(b > a for a, b in zip(notes, notes[1:])), notes  # ascending
     # threshold semantics: first measures stay in the starting key
     assert measures[0]["key"].startswith("F"), measures[0]["key"]
+
+
+
+def test_chord_ninth_uses_root_not_inverted_bass() -> None:
+    cfg = {"register": [48, 84], "pool": "chord+9"}
+    pcs = {n % 12 for n in pitch_pool(cfg, [52, 55, 59, 60], [0, 2, 4, 5, 7, 9, 11], 0)}
+    assert 2 in pcs and 6 not in pcs
+
+
+def test_octave_leap_keeps_pitch_class() -> None:
+    from perform import octave_up_in_register
+    for note in range(24, 97):
+        for upper in range(note, 108):
+            shifted = octave_up_in_register(note, upper)
+            assert shifted <= upper and shifted % 12 == note % 12
 
 
 if __name__ == "__main__":

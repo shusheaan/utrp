@@ -1,20 +1,20 @@
-# perform.py 的完整参数面。sim 段透传给 utrp-sim(原版 Rust theory 代码),
+# perform.py 的完整参数面。sim 段透传给 utrp-sim(与 TUI 共享的 Rust simulation 引擎),
 # perform/ornament 段是表演层。复制改名即一个新"作曲会话"。
 
 sim:
-  key: F              # 删掉 key/mode = 原版 Key::sample 随机选调
+  key: F              # key/mode 限制整局调性池；删掉则使用默认候选池
   mode: aeolian       # ionian dorian phrygian lydian mixolydian aeolian locrian
   measures: 20        # 总时长 ~= measures * step_s(20 x 8s ~= 2.7 分钟)
-  threshold: 4        # 同一调内待几个小节后才掷转调骰子(app.rs 同名语义)
-  difficulty: piano   # piano | guitar:决定原版 Inversion 采样池(voicing 形态)
+  threshold: 4        # 最少停留段数；默认还须完成原闭环才能概率转调
+  difficulty: piano   # piano | guitar：导出钢琴音高或真实吉他结构
   base: 48            # voicing 基准八度(MIDI,48 = C3 附近)
-  seed: 42            # 和声层种子:LD_PRELOAD 垫片喂确定字节流给 thread_rng,
-                      # Rust 零改动即可复现;null/删掉 = 每次新即兴。
+  seed: 42            # 和声层原生 ChaCha8 seed；无需 LD_PRELOAD，
+                      # 同版本/配置/seed 可复现；null/删掉 = 随机 seed。
                       # 另:每次 sim 的原始 JSON 存 progressions/<name>-sim.json,
                       # `--replay` 直接回放(跨版本升级也稳)。
 
 perform:
-  step_s: 8.0                          # 每小节秒数;绕行和弦均分小节
+  step_s: 8.0                          # 每个导出事件的秒数；bridge 也占一个事件
   pad_patch: magdalene/M1b-ghostpad.fxp  # 厚 pad,流动朦胧;lib/surge 相对路径
   pad_vel: [66, 90]                    # 力度随机范围
   strum_s: [0.015, 0.06]               # 声部错开(humanize)
@@ -34,7 +34,7 @@ ornament:
   gate: 0.5                    # 音长 = gate * 步长
   vel: [38, 74]
   octave_leap: 0.08            # 偶发八度跳跃概率
-  seed: 7                      # 点缀层可复现(和声层由 Rust thread_rng,天然不可复现)
+  seed: 7                      # 点缀层 seed；与和声层 seed 独立，分别可复现
 
 out:
   name: session                # 产物名:<name>.wav/.mid/.json

@@ -36,7 +36,7 @@ REAPER(纯文本 .rpp + ReaScript + 命令行渲染是选它的全部理由;Bitw
   refine.py(参数搜索精调)+ reabridge.py/`tools/reaper/`(REAPER 一键桥,
   link.sh 布链);市场分析见
   `../docs/2026-08-10-sound-reverse-engineering-market.md`。
-- **和声引擎** → `tools/simulate/`:Rust 胶水 crate,`#[path]` 原样编译
-  `../../src/theory`;**仓库根的 `src/` 是只读的,永远不改**,一切扩展走
-  lib 侧胶水(含种子:LD_PRELOAD 垫片,见其 README)。
-  首次构建:`cargo build --release` + `gcc` 编 `shim/seedrandom.c`。
+- **和声引擎** → 根 `src/lib.rs` 的 theory/progression/guitar/session；
+  `tools/simulate/` 是依赖共享 library 的薄适配器，不复制 TUI driver。
+  用户已授权实现核心指板训练：原“根 src 永远只读”约定撤销，允许改共享引擎与 TUI。
+  随机数使用原生 seed；无需 LD_PRELOAD shim。首次构建 `cargo build --release`。

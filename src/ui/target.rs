@@ -1,3 +1,4 @@
+use crate::app::App;
 use ratatui::{
     layout::Rect,
     style::{Color, Modifier, Style},
@@ -5,52 +6,61 @@ use ratatui::{
     widgets::{Block, Borders, Paragraph},
     Frame,
 };
-use crate::app::{App, GamePhase};
-use super::strip_ansi;
-
 pub fn render(frame: &mut Frame, app: &App, area: Rect) {
-    let (label, label_color, chord_str) = match &app.phase {
-        GamePhase::WaitingForInput { target } => {
-            (">> PLAY", Color::Yellow, strip_ansi(&format!("{}", target)))
-        }
-        GamePhase::Matched { chord } => {
-            ("** MATCHED", Color::Green, strip_ansi(&format!("{}", chord)))
-        }
-        GamePhase::MeasureTimeout => ("!! TIMEOUT", Color::Red, String::new()),
-        GamePhase::GameTimeout => ("!! GAME OVER", Color::Red, String::new()),
-        GamePhase::Score => ("   SCORE", Color::Blue, format!("{}", app.score)),
-        GamePhase::Summary { duration_secs } => {
-            let m = duration_secs / 60;
-            let s = duration_secs % 60;
-            (
-                "== SUMMARY",
-                Color::Cyan,
-                format!("Time: {:02}:{:02}  Score: {}", m, s, app.score),
-            )
-        }
-        GamePhase::Ready => ("-- GET READY", Color::Cyan, String::new()),
-        GamePhase::Playing => (">> START", Color::Blue, String::new()),
-        _ => ("", Color::White, String::new()),
+    let target = app.session.target();
+    let remaining = app
+        .session
+        .remaining_ms(app.now)
+        .map_or("unlimited".into(), |n| {
+            format!("{:.1}s left", n as f64 / 1000.0)
+        });
+    let history = if app.session.attempts[app.session.index].is_some() {
+        " | REVIEW (no credit)"
+    } else {
+        ""
     };
-
-    let line = Line::from(vec![
-        Span::styled(
-            format!("  {} ", label),
-            Style::default()
-                .fg(label_color)
-                .add_modifier(Modifier::BOLD),
+    let task = if app.instrument != "guitar" {
+        "MIDI exact notes"
+    } else if target.guitar.task == "arpeggio_detached" {
+        "DETACHED"
+    } else {
+        "CHORD"
+    };
+    let chord = &target.music.chord;
+    let tones = chord
+        .tones
+        .iter()
+        .enumerate()
+        .map(|(i, tone)| format!("{}:{}", chord.degree_label(i), tone.name))
+        .collect::<Vec<_>>()
+        .join("  ");
+    let lines = vec![
+        Line::from(vec![
+            Span::styled(
+                "  >> PLAY ",
+                Style::default()
+                    .fg(Color::Yellow)
+                    .add_modifier(Modifier::BOLD),
+            ),
+            Span::styled(
+                chord.symbol(),
+                Style::default()
+                    .fg(Color::White)
+                    .add_modifier(Modifier::BOLD),
+            ),
+            Span::raw(format!(" | {remaining} | {task}{history}")),
+        ]),
+        Line::from(Span::styled(
+            format!("  Chord tones: {tones}"),
+            Style::default().fg(Color::Green),
+        )),
+    ];
+    frame.render_widget(
+        Paragraph::new(lines).block(
+            Block::default()
+                .borders(Borders::TOP | Borders::BOTTOM)
+                .border_style(Style::default().fg(Color::DarkGray)),
         ),
-        Span::styled(
-            chord_str,
-            Style::default()
-                .fg(Color::White)
-                .add_modifier(Modifier::BOLD),
-        ),
-    ]);
-
-    let block = Block::default()
-        .borders(Borders::TOP | Borders::BOTTOM)
-        .border_style(Style::default().fg(Color::DarkGray));
-    let paragraph = Paragraph::new(line).block(block);
-    frame.render_widget(paragraph, area);
+        area,
+    );
 }

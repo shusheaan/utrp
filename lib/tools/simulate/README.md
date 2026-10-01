@@ -1,35 +1,24 @@
-# simulate — utrp 原版 Rust theory 的 headless 胶水
+# simulate — shared utrp headless entry
 
-**不改不复制原代码**:`src/main.rs` 用 `#[path = "../../../../src/theory/mod.rs"]`
-把仓库根部 Rust TUI 的 theory 源码(tone/key/chord/modulation)原样编译进本
-crate,唯一的桥接是一个两行的 `app::Difficulty` shim(theory 引用的唯一外部
-符号)。本 crate 自己只写 driver:照 `app.rs` 的 `Iterator::next` +
-`App::modulate` 调度语义逐小节推进,每个音乐决策(选调、级数和弦、转位采样、
-DeTour、四种转调)都调用原函数,输出 JSON 到 stdout。
+薄适配器，通过 path dependency 调用根 package 的 `utrp::simulator`。
+**不再通过 `#[path]` 编译旧 theory，不再复制 TUI driver，不需要 LD_PRELOAD。**
 
 ```sh
-cargo build --release            # 一次;依赖是 utrp 本体依赖的子集
-./target/release/utrp-sim --measures 20 --key F --mode aeolian \
-    --threshold 4 --difficulty piano --base 48
+cargo build --release --manifest-path lib/tools/simulate/Cargo.toml
+lib/tools/simulate/target/release/utrp-sim --events 24 --seed 42
+lib/tools/simulate/target/release/utrp-sim --measures 24 --key F --mode aeolian --difficulty piano --base 48
 ```
 
-输出:每小节 `{measure, key, modulation, degree, scale(pc), chords[{role:
-pivot|approach|target, symbol, notes(MIDI 升序堆叠)}]}`。消费者是
-`../harmony/perform.py`(YAML 参数 → 本二进制 → pad + 点缀 → 声音/MIDI)。
+命令从仓库根运行；在本目录可直接 `cargo build --release`。
 
-## 随机性与种子复现
+- `--events` / `--measures`：实际和弦事件数，bridge 也占一项；不再是旧版一项包含多个经过和弦。
+- `--seed` 或 `UTRP_SIM_SEED`：原生 ChaCha8 seed；未给时随机。
+- `--key` / `--mode`：限制整局候选池，不只是设置初始调；两者都指定时固定该调/mode。
+- `--threshold`：转调前最少完整段数；默认原闭环还必须走完才能转调，不是旧版 iteration。
+- 默认为十二主音 × 大 / 小调，原 40 项闭环为底座；开启副属 / 替代 / SD25 / SSD25 接近链，ambient / 借用关闭。每个接近和弦单独占一个事件；指板区域停留由 `guitar.phrases_per_region` 控制。
+- `--config` / `--templates`：同 TUI 的 TOML 配置。
+- 默认导出 piano notes；`--difficulty guitar` 或 `--instrument guitar` 导出真实指板音高，无解时明确 `notes=[]`。
 
-原代码内部全部走 `rand::thread_rng()`(TUI 同款),源码层无法传种子。复现
-通过 `shim/seedrandom.c` 实现:`LD_PRELOAD` 拦截 `getrandom()/getentropy()/
-syscall(SYS_getrandom)`,设了 `UTRP_SIM_SEED` 就喂 splitmix64 确定字节流,
-`thread_rng` 在不知情的情况下变成确定性的——**Rust 仍零改动**。未设环境
-变量时垫片直通系统随机,行为与原版一致。
+JSON 向旧 perform 保留 `measure/key/modulation/degree/scale/chords`；一条记录只有一个 `role=target` chord，真实作用见 `kind`。增加 `root_pc` 与完整 `event`，不再从最低音猜根音。旧导出 JSON 仍可 replay，但 `chord+9` 必须有明确 `root_pc`，旧数据缺失则报错要求迁移。
 
-```sh
-gcc -shared -fPIC -O2 -o shim/libseedrandom.so shim/seedrandom.c -ldl  # 一次
-UTRP_SIM_SEED=42 LD_PRELOAD=$PWD/shim/libseedrandom.so ./target/release/utrp-sim ...
-```
-
-perform.py 会在 `sim.seed` 非空时自动挂垫片;同种子逐字节一致(有测试)。
-注意跨机器/升级 rand 版本后种子流会变,长期保真靠 `--replay`(每次 sim 的
-原始 JSON 自动存 progressions/,回放不再经过随机)。
+`shim/` 留作历史文件，不再作为构建或测试前提。随机序列与旧版不相同；长期回放保留导出 JSON。同版本、配置与 seed 的 TUI/headless 音乐事件和吉他目标一致。

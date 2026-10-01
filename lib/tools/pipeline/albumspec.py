@@ -7,7 +7,9 @@ from __future__ import annotations
 
 import os
 import tomllib
+from collections.abc import Sequence
 from dataclasses import dataclass, field
+from math import isfinite
 from pathlib import Path
 
 STORAGE_DAW = Path(os.environ.get("DAW_DIR", str(Path.home() / "storage/daw")))
@@ -86,8 +88,22 @@ class AlbumSpec:
         return STEMS_DIR / "htdemucs" / track
 
 
+def validate_phrase(notes: Sequence[PhraseNote], dur: float) -> None:
+    if not isfinite(dur) or dur <= 0 or not notes:
+        raise ValueError("phrase requires notes and a finite positive duration")
+    for ev in notes:
+        if not all(isfinite(value) for value in (ev.t, ev.dur)):
+            raise ValueError("note timing must be finite")
+        if ev.t < 0 or ev.dur <= 0 or ev.t + ev.dur > dur:
+            raise ValueError("note must start and end within phrase duration")
+        if not 0 <= ev.note <= 127 or not 1 <= ev.vel <= 127:
+            raise ValueError("invalid MIDI note or velocity")
+
+
 def _phrase(raw: dict) -> tuple[tuple[PhraseNote, ...], float]:
     dur = float(raw["dur"])
+    if not isfinite(dur) or dur <= 0:
+        raise ValueError("phrase duration must be finite and positive")
     notes: list[PhraseNote] = []
     if "hold" in raw:
         h = raw["hold"]
@@ -98,12 +114,19 @@ def _phrase(raw: dict) -> tuple[tuple[PhraseNote, ...], float]:
     if "pulses" in raw:
         p = raw["pulses"]
         t = float(p.get("t0", 0.2))
-        while t < float(p["until"]):
+        until, period = float(p["until"]), float(p["period"])
+        if not all(isfinite(value) for value in (t, until, period)) or period <= 0:
+            raise ValueError("pulse times must be finite and period must be positive")
+        if t < 0 or until > dur:
+            raise ValueError("pulse range must be within phrase duration")
+        while t < until:
             notes += [PhraseNote(t, int(n), int(p.get("vel", 100)), float(p["gate"]))
                       for n in p["notes"]]
-            t += float(p["period"])
-    if not notes:
-        raise ValueError("phrase has no notes")
+            next_t = t + period
+            if next_t <= t:
+                raise ValueError("pulse period is below timing resolution")
+            t = next_t
+    validate_phrase(notes, dur)
     return tuple(notes), dur
 
 

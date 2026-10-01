@@ -1,3 +1,4 @@
+use crate::app::App;
 use ratatui::{
     layout::Rect,
     style::{Color, Modifier, Style},
@@ -5,8 +6,7 @@ use ratatui::{
     widgets::{Block, Borders, Paragraph},
     Frame,
 };
-use crate::app::{App, GamePhase};
-use crate::ui::strip_ansi;
+use utrp::theory::tone::midi_name;
 
 /// White keys: (pitch class index, label)
 const WHITE_KEYS: [(i8, &str); 7] = [
@@ -21,7 +21,7 @@ const WHITE_KEYS: [(i8, &str); 7] = [
 
 /// Black keys in order, with their position as the index of the white key
 /// to their LEFT (0-based).  E.g. C# sits between C(0) and D(1) -> left=0.
-const BLACK_KEY_SLOTS: [(Option<(i8, &str)>, ); 7] = [
+const BLACK_KEY_SLOTS: [(Option<(i8, &str)>,); 7] = [
     (Some((2, "C#")),),  // between C and D
     (Some((4, "D#")),),  // between D and E
     (None,),             // between E and F  (no black key)
@@ -31,42 +31,30 @@ const BLACK_KEY_SLOTS: [(Option<(i8, &str)>, ); 7] = [
     (None,),             // after B (gap to next octave)
 ];
 
-const NUM_OCTAVES: usize = 3;
+const NUM_OCTAVES: usize = 2;
 
 /// Collect the active pitch-class indices from the current game phase.
 fn active_indices(app: &App) -> Vec<i8> {
-    match &app.phase {
-        GamePhase::WaitingForInput { target } => target.tones.iter().map(|t| t.idx).collect(),
-        GamePhase::Matched { chord } => chord.tones.iter().map(|t| t.idx).collect(),
-        _ => Vec::new(),
-    }
+    app.session
+        .target()
+        .piano_notes
+        .iter()
+        .map(|n| (n % 12 + 1) as i8)
+        .collect()
 }
 
-/// Pick the highlight colour based on game phase.
-fn active_color(app: &App) -> Color {
-    match &app.phase {
-        GamePhase::Matched { .. } => Color::Green,
-        _ => Color::Yellow,
-    }
+fn active_color(_app: &App) -> Color {
+    Color::Yellow
 }
 
-/// Get a human-readable list of the chord's tone names.
 fn get_tone_names(app: &App) -> String {
-    match &app.phase {
-        GamePhase::WaitingForInput { target } => target
-            .tones
-            .iter()
-            .map(|t| strip_ansi(&format!("{}", t)))
-            .collect::<Vec<_>>()
-            .join(" "),
-        GamePhase::Matched { chord } => chord
-            .tones
-            .iter()
-            .map(|t| strip_ansi(&format!("{}", t)))
-            .collect::<Vec<_>>()
-            .join(" "),
-        _ => String::new(),
-    }
+    app.session
+        .target()
+        .piano_notes
+        .iter()
+        .map(|n| midi_name(*n))
+        .collect::<Vec<_>>()
+        .join(" ")
 }
 
 /// Build the spans for the black-key row (one line) across all octaves.
@@ -82,15 +70,13 @@ fn build_black_row(active: &[i8], hi_color: Color) -> Vec<Span<'static>> {
         // Leading 2-char pad (left half of the first white key)
         spans.push(Span::raw("  ".to_string()));
 
-        for slot in &BLACK_KEY_SLOTS {
+        for slot in &BLACK_KEY_SLOTS[..6] {
             match slot.0 {
                 Some((idx, label)) => {
                     if active.contains(&idx) {
                         spans.push(Span::styled(
                             " \u{2605}  ".to_string(),
-                            Style::default()
-                                .fg(hi_color)
-                                .add_modifier(Modifier::BOLD),
+                            Style::default().fg(hi_color).add_modifier(Modifier::BOLD),
                         ));
                     } else {
                         spans.push(Span::styled(
@@ -107,6 +93,9 @@ fn build_black_row(active: &[i8], hi_color: Color) -> Vec<Span<'static>> {
 
         // Trailing 2-char pad (right half of last white key)
         spans.push(Span::raw("  ".to_string()));
+        if oct < NUM_OCTAVES - 1 {
+            spans.push(Span::raw(" "));
+        }
     }
 
     spans
@@ -116,18 +105,16 @@ fn build_black_row(active: &[i8], hi_color: Color) -> Vec<Span<'static>> {
 fn build_black_block_row(active: &[i8], hi_color: Color) -> Vec<Span<'static>> {
     let mut spans: Vec<Span<'static>> = Vec::new();
 
-    for _oct in 0..NUM_OCTAVES {
+    for oct in 0..NUM_OCTAVES {
         spans.push(Span::raw("  ".to_string()));
 
-        for slot in &BLACK_KEY_SLOTS {
+        for slot in &BLACK_KEY_SLOTS[..6] {
             match slot.0 {
                 Some((idx, _label)) => {
                     if active.contains(&idx) {
                         spans.push(Span::styled(
                             "\u{2588}\u{2605}\u{2605}\u{2588}".to_string(),
-                            Style::default()
-                                .fg(hi_color)
-                                .add_modifier(Modifier::BOLD),
+                            Style::default().fg(hi_color).add_modifier(Modifier::BOLD),
                         ));
                     } else {
                         spans.push(Span::styled(
@@ -143,6 +130,9 @@ fn build_black_block_row(active: &[i8], hi_color: Color) -> Vec<Span<'static>> {
         }
 
         spans.push(Span::raw("  ".to_string()));
+        if oct < NUM_OCTAVES - 1 {
+            spans.push(Span::raw(" "));
+        }
     }
 
     spans
@@ -153,13 +143,11 @@ fn build_white_row(active: &[i8], hi_color: Color) -> Vec<Span<'static>> {
     let mut spans: Vec<Span<'static>> = Vec::new();
 
     for oct in 0..NUM_OCTAVES {
-        for (i, &(idx, label)) in WHITE_KEYS.iter().enumerate() {
+        for &(idx, label) in &WHITE_KEYS {
             if active.contains(&idx) {
                 spans.push(Span::styled(
-                    format!(" \u{2605}  "),
-                    Style::default()
-                        .fg(hi_color)
-                        .add_modifier(Modifier::BOLD),
+                    " \u{2605}  ".to_string(),
+                    Style::default().fg(hi_color).add_modifier(Modifier::BOLD),
                 ));
             } else {
                 spans.push(Span::styled(
@@ -218,47 +206,58 @@ pub fn render(frame: &mut Frame, app: &App, area: Rect) {
     let hi_color = active_color(app);
     let tone_names = get_tone_names(app);
 
-    let mut lines: Vec<Line<'static>> = Vec::new();
-
-    // Line 0: empty top padding
-    lines.push(Line::from(""));
-
-    // Line 1: black key labels
-    lines.push(Line::from(build_black_row(&active, hi_color)));
-
-    // Line 2: black key blocks
-    lines.push(Line::from(build_black_block_row(&active, hi_color)));
-
-    // Line 3: separator
-    lines.push(Line::from(build_separator_row()));
-
-    // Line 4: white key labels
-    lines.push(Line::from(build_white_row(&active, hi_color)));
-
-    // Line 5: bottom edge
-    lines.push(Line::from(build_bottom_row()));
-
-    // Line 6: empty
-    lines.push(Line::from(""));
+    let mut lines: Vec<Line<'static>> = vec![
+        Line::from(""),
+        Line::from(build_black_row(&active, hi_color)),
+        Line::from(build_black_block_row(&active, hi_color)),
+        Line::from(build_separator_row()),
+        Line::from(build_white_row(&active, hi_color)),
+        Line::from(build_bottom_row()),
+        Line::from(""),
+    ];
 
     // Line 7: tone names below the keyboard
     if !tone_names.is_empty() {
         lines.push(Line::from(vec![
-            Span::styled("  Tones: ", Style::default().fg(Color::DarkGray)),
+            Span::styled("  Play MIDI: ", Style::default().fg(Color::DarkGray)),
             Span::styled(
                 tone_names,
-                Style::default()
-                    .fg(hi_color)
-                    .add_modifier(Modifier::BOLD),
+                Style::default().fg(hi_color).add_modifier(Modifier::BOLD),
             ),
         ]));
     }
 
     let block = Block::default()
-        .title(" Piano ")
+        .title(" Piano | PC map / exact MIDI below ")
         .borders(Borders::ALL)
         .border_style(Style::default().fg(Color::DarkGray));
 
     let paragraph = Paragraph::new(lines).block(block);
     frame.render_widget(paragraph, area);
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    fn row(spans: Vec<Span<'static>>) -> String {
+        spans.iter().map(|span| span.content.as_ref()).collect()
+    }
+    #[test]
+    fn black_white_rows_share_octave_stride_and_total_width() {
+        let black = row(build_black_row(&[], Color::Yellow));
+        let white = row(build_white_row(&[], Color::Yellow));
+        let blocks = row(build_black_block_row(&[], Color::Yellow));
+        assert_eq!(black.chars().count(), 57);
+        assert_eq!(white.chars().count(), 57);
+        assert_eq!(blocks.chars().count(), 57);
+        let black_positions: Vec<_> = black.match_indices("C#").map(|(i, _)| i).collect();
+        assert_eq!(black_positions, [3, 32]);
+        let white_positions: Vec<_> = white
+            .chars()
+            .enumerate()
+            .filter(|(_, c)| *c == 'C')
+            .map(|(i, _)| i)
+            .collect();
+        assert_eq!(white_positions, [1, 30]);
+    }
 }

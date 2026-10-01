@@ -1,7 +1,7 @@
 """Perform a utrp-simulated progression through lib timbres (surgepy venv).
 
-End-to-end chain: session.yaml -> utrp-sim binary (the ORIGINAL Rust theory
-code, glue-built in lib/tools/simulate) -> pad chords + a modular-style
+End-to-end chain: session.yaml -> utrp-sim binary (the shared Rust progression
+engine, exposed through lib/tools/simulate) -> pad chords + a modular-style
 ornament layer (euclidean clock x Turing-machine shift register, quantized to
 the sounding chord) -> one continuous 2-instrument Surge stream -> speakers
 (paplay) or offline wav, plus a 2-track MIDI + JSON log for the DAW.
@@ -13,7 +13,6 @@ Usage:
 from __future__ import annotations
 
 import json
-import os
 import random
 import subprocess
 import sys
@@ -29,7 +28,6 @@ import smf  # noqa: E402
 from explore import HARMONY_DIR, LIB, SR, Sound  # noqa: E402
 
 SIM_BIN = Path(__file__).parents[1] / "simulate/target/release/utrp-sim"
-SEED_SHIM = Path(__file__).parents[1] / "simulate/shim/libseedrandom.so"
 PPQ = 480
 
 
@@ -43,18 +41,9 @@ def run_sim(cfg: dict) -> list[dict]:
     for k in ("measures", "threshold", "difficulty", "base", "key", "mode"):
         if k in cfg:
             cmd += [f"--{k}", str(cfg[k])]
-    env = dict(os.environ)
     if cfg.get("seed") is not None:
-        # determinism from outside: LD_PRELOAD feeds thread_rng a seeded
-        # stream; the untouched Rust code becomes reproducible unknowingly
-        if not SEED_SHIM.exists():
-            raise SystemExit(
-                f"{SEED_SHIM} missing — build it once:\n"
-                f"  gcc -shared -fPIC -O2 -o {SEED_SHIM} "
-                f"{SEED_SHIM.parent}/seedrandom.c -ldl")
-        env["UTRP_SIM_SEED"] = str(cfg["seed"])
-        env["LD_PRELOAD"] = str(SEED_SHIM)
-    out = subprocess.run(cmd, capture_output=True, text=True, check=True, env=env)
+        cmd += ["--seed", str(cfg["seed"])]
+    out = subprocess.run(cmd, capture_output=True, text=True, check=True)
     return json.loads(out.stdout)
 
 
@@ -84,15 +73,23 @@ class Turing:
         return self.register[i]
 
 
-def pitch_pool(cfg: dict, chord_notes: list[int], scale: list[int]) -> list[int]:
+def pitch_pool(cfg: dict, chord_notes: list[int], scale: list[int],
+               root_pc: int | None = None) -> list[int]:
     lo, hi = cfg["register"]
     kind = cfg.get("pool", "chord")
     pcs = sorted({n % 12 for n in chord_notes})
     if kind == "scale":
         pcs = sorted(set(scale))
     elif kind == "chord+9":
-        pcs = sorted(set(pcs) | {(chord_notes[0] + 2) % 12})
+        if root_pc is None or not 0 <= root_pc < 12:
+            raise ValueError("chord+9 requires explicit root_pc (legacy replay needs migration)")
+        pcs = sorted(set(pcs) | {(root_pc + 2) % 12})
     return [n for n in range(lo, hi + 1) if n % 12 in pcs]
+
+
+def octave_up_in_register(note: int, upper: int) -> int:
+    """Never clamp to a different pitch class at the register boundary."""
+    return note + 12 if note + 12 <= upper else note
 
 
 # ------------------------------------------------------------------ player ---
@@ -168,7 +165,9 @@ def schedule_session(cfg: dict, measures: list[dict], player: Player,
                         "role": chord["role"], "symbol": chord["symbol"],
                         "notes": notes})
             if orn.get("enabled"):
-                pool = pitch_pool(orn, notes, meas["scale"])
+                pool = pitch_pool(orn, notes, meas["scale"], chord.get("root_pc"))
+                if not pool:
+                    raise ValueError("ornament register contains no allowed notes")
                 n_steps = max(1, int(slot_s / beat_s * orn.get("steps_per_beat", 2)))
                 sub = slot_s / n_steps
                 for i in range(n_steps):
@@ -178,7 +177,7 @@ def schedule_session(cfg: dict, measures: list[dict], player: Player,
                         continue
                     p = turing.step(pool)
                     if rng.random() < orn.get("octave_leap", 0.08):
-                        p = min(orn["register"][1], p + 12)
+                        p = octave_up_in_register(p, orn["register"][1])
                     vel = rng.randrange(*orn.get("vel", [38, 74]))
                     t0 = t + i * sub
                     dur = sub * float(orn.get("gate", 0.5))

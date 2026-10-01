@@ -15,6 +15,7 @@ from __future__ import annotations
 import json
 import re
 import sys
+from collections.abc import Sequence
 from pathlib import Path
 
 import numpy as np
@@ -23,7 +24,7 @@ import surgepy
 
 sys.path.insert(0, str(Path(__file__).parent))
 import rpp  # noqa: E402
-from albumspec import FACTORY, LIB_ROOT, AlbumSpec, PhraseNote, TargetSpec, load  # noqa: E402
+from albumspec import FACTORY, LIB_ROOT, AlbumSpec, PhraseNote, TargetSpec, load, validate_phrase  # noqa: E402
 from spectral import attack_ms, band_profile, centroid_track, spectral_distance  # noqa: E402
 
 SR = 48000
@@ -79,9 +80,12 @@ def set_by_display(s, param, target_txt: str) -> bool:
     return False
 
 
-def render_phrase(s, phrase, dur: float) -> np.ndarray:
+def render_phrase(s: surgepy.SurgeSynthesizer, phrase: Sequence[PhraseNote], dur: float) -> np.ndarray:
+    validate_phrase(phrase, dur)
     bs = s.getBlockSize()
     nblocks = int(dur * SR / bs)
+    if nblocks < 1:
+        raise ValueError("phrase duration must span at least one synthesis block")
     buf = s.createMultiBlock(nblocks)
     events = []
     for ev in phrase:

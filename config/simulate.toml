@@ -1,0 +1,45 @@
+# 核心 simulate 配置；没有总时长。Enter 结束，Space 确认。
+[session]
+seconds_per_chord = 10.0
+speed_step = 1.0
+min_seconds = 1.0
+max_seconds = 60.0
+automatic = true
+
+[simulation]
+# seed 留空则随机；可添加 seed = 42 复现
+keys = ["C", "Db", "D", "Eb", "E", "F", "F#", "G", "Ab", "A", "Bb", "B"]
+# 日常主线：大调 / 小调；其他 modes 可手动加入，使用各自 modal 短句。
+modes = ["ionian", "aeolian"]
+progression = "original_cycle" # original_cycle | modal_phrases
+cycle_chunk_size = 5 # 每屏/每个把位任务预览几项；分块不打断闭环
+minor_dominant_probability = 0.7 # Aeolian 骨架 5->1 使用 V7->i 的概率
+seventh_probability = 0.5
+modulation_probability = 0.5 # 自动：闭环完成后抽取；0 关闭自动但仍可 E/Q 手动转调
+modulation_methods = ["dominant", "shared_chord", "diminished"] # 先选欠练可达调，再随机选可用路线
+modulation_return_probability = 0.2 # 转调时20%优先返回上一次的调；返回后下一次优先恢复探索
+key_balance_tolerance = 40 # 本次每调新题量容差；超出欠练调40题时圈末优先转出，自动 Back 也受此约束；手动 Q 例外
+minimum_phrases_in_key = 2
+extensions = false # 日常聚焦三和弦/七和弦；可选扩展保留但默认关闭
+approaches = true # 在原闭环目标之间插入接近链；不启用借用或ambient
+secondary_probability = 0.1
+substitution_probability = 0.05
+sd25_probability = 0.1 # 目标局部 ii7/iiø7 -> V7 -> 目标
+ssd25_probability = 0.05 # 替代属七的相关 ii7 -> subV7 -> 目标
+borrow_probability = 0.05
+ambient = false # 不用颜色和弦替换基础成员
+ambient_probability = 0.1
+
+[guitar]
+tuning = [40,45,50,55,59,64] # 从第6弦到第1弦
+max_fret = 22
+max_span = 4
+regions = [[0,5], [4,9], [8,13], [12,17], [16,22]]
+triad_strings = [[3,2,1], [4,3,2], [5,4,3], [6,5,4]]
+seventh_strings = [[4,3,2,1], [5,4,3,2], [6,5,4,3], [6,4,3,2], [5,3,2,1]]
+phrases_per_region = 2 # 同类任务在一个区域练2段，再换区；约10个骨架和弦
+arpeggio_every = 5 # 每5个短句训练分解路径；0=只练同时和弦
+
+[storage]
+enabled = true
+# directory 可指定；未指定使用 $XDG_DATA_HOME/utrp/practice 或 ~/.local/share/utrp/practice

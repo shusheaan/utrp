@@ -1,4 +1,3 @@
-pub(crate) mod chord;
-pub(crate) mod key;
-pub(crate) mod modulation;
-pub(crate) mod tone;
+pub mod chord;
+pub mod key;
+pub mod tone;

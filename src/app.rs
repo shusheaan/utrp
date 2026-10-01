@@ -1,539 +1,279 @@
-use colored::*;
-use log::debug;
-use rand::Rng;
-use std::{
-    error::Error,
-    fmt,
-    io::{stdin, stdout, Write},
-    sync::mpsc::{self, Receiver, Sender},
-    thread,
-    time::{Duration, SystemTime},
-};
-
 use crate::{
-    input::{AppSignal, MIDI},
-    print,
-    theory::{
-        chord::{Chord, ChordType, Inversion},
-        key::{Key, KeyType},
-        modulation::{DeTour, Modulation},
-    },
+    input::{self, Held, Midi, MidiEvent},
+    tui,
+};
+use anyhow::Result;
+use crossterm::event::{self, Event};
+use std::time::{Duration, Instant};
+use utrp::{
+    session::{Action, Session, Target},
+    storage::Log,
 };
 
-#[derive(Debug, Clone)]
-pub enum Difficulty {
-    Piano,
-    Guitar,
-}
-
-impl fmt::Display for Difficulty {
-    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        match self {
-            Difficulty::Piano => {
-                write!(f, "{}", "piano".green().bold())
-            }
-            Difficulty::Guitar => {
-                write!(f, "{}", "guitar".purple().bold())
-            }
-        }
-    }
-}
-
-#[derive(Debug, Clone)]
-pub(crate) enum GamePhase {
-    Intro,
-    SelectDifficulty,
-    Ready,
-    Playing,
-    MeasureStart { measure: i32 },
-    WaitingForInput { target: Chord },
-    Matched { chord: Chord },
-    Score,
-    MeasureTimeout,
-    GameTimeout,
-    Summary { duration_secs: u64 },
-}
-
-#[derive(Debug)]
-pub(crate) struct Status {
-    ss_idx: usize,
-    pub(crate) chords: Vec<Chord>,
-    pub(crate) key: Key,
-    key_iteration: i32,
-}
-
-#[derive(Debug)]
-struct AppEnv {
-    total_time: u64,
-    sleep_time: u64,
-    total_iteration: i32,
-    modulation_threshold: i32,
-}
-
-impl AppEnv {
-    fn new(difficulty: &Difficulty) -> Self {
-        match difficulty {
-            Difficulty::Piano => AppEnv {
-                total_time: 120,
-                sleep_time: 30,
-                total_iteration: 100,
-                modulation_threshold: 4,
-            },
-            Difficulty::Guitar => AppEnv {
-                total_time: 120,
-                sleep_time: 30,
-                total_iteration: 100,
-                modulation_threshold: 4,
-            },
-        }
-    }
-}
-
-#[derive(Debug)]
-pub struct App {
-    input_rx: Receiver<AppSignal>,
-
-    pub(crate) difficulty: Difficulty,
-    env: AppEnv,
-    pub(crate) score: i32,
-    ss: Vec<i8>, // std seq
-
-    pub(crate) prevous_key: Key,
-    pub(crate) current: Status,
-    pub(crate) modulation: Modulation,
-    pub(crate) next: Status,
-
-    pub(crate) phase: GamePhase,
-    pub(crate) measure_num: i32,
-    pub(crate) start_time: Option<SystemTime>,
-}
-
-impl App {
-    pub(crate) fn render(&self, terminal: &mut crate::tui::Tui) -> anyhow::Result<()> {
-        terminal.draw(|frame| {
-            crate::ui::render(frame, self);
-        })?;
-        Ok(())
-    }
-
-    pub(crate) fn elapsed_secs(&self) -> u64 {
-        self.start_time
-            .and_then(|s| SystemTime::now().duration_since(s).ok())
-            .map(|d| d.as_secs())
-            .unwrap_or(0)
-    }
-
-    fn select_difficulty(input_rx: &Receiver<AppSignal>) -> Difficulty {
-        let mut difficulty: Difficulty;
-        'set_difficulty: loop {
-            thread::sleep(Duration::from_millis(500));
-            let any_signal = input_rx.try_recv();
-            match any_signal {
-                Ok(signal) => {
-                    match signal {
-                        AppSignal::Piano => {
-                            difficulty = Difficulty::Piano;
-                            print::piano_selected();
-                            break 'set_difficulty;
-                        }
-                        AppSignal::Guitar => {
-                            difficulty = Difficulty::Guitar;
-                            print::guitar_selected();
-                            break 'set_difficulty;
-                        }
-                        _ => {
-                            continue;
-                        }
-                    };
-                }
-                Err(e) => {
-                    continue;
-                }
-            }
-        }
-        difficulty
-    }
-
-    fn init_midi(input_rx: &Receiver<AppSignal>, msg_tx: Sender<u8>) -> Result<(), Box<dyn Error>> {
-        let midi = MIDI::new()?;
-        let mut conn_out = midi.output.connect(&midi.output_port, "")?;
-        let _conn_in = midi.input.connect(
-            &midi.input_port,
-            "",
-            move |_, message, _| {
-                msg_tx.send(message[1]).unwrap();
-            },
-            (),
-        )?;
-        Ok(())
-    }
-
-    pub fn new(input_rx: Receiver<AppSignal>, msg_tx: Sender<u8>) -> Result<App, Box<dyn Error>> {
-        Self::init_midi(&input_rx, msg_tx);
-
-        print::select_difficulty();
-        let difficulty = Self::select_difficulty(&input_rx);
-        let env = AppEnv::new(&difficulty);
-
-        let ss = vec![
-            1, 3, 1, 4, 2, 5, 6, 3, 7, 1, 4, 5, 3, 2, 4, 7, 6, 5, 6, 1, 7, 6, 2, 4, 5, 1, 5, 3, 6,
-            7, 3, 4, 2, 1, 6, 2, 7, 3, 5, 1,
-        ];
-
-        let current_key = Key::sample(difficulty.clone())?;
-        let prevous_key = current_key.clone();
-        // current_key.log_all_chords();
-
-        let mut current_ss_idx = rand::thread_rng().gen_range(0..40);
-        let current_chord = current_key.gen_chord(ss[current_ss_idx], difficulty.clone())?;
-        let current_key_iteration = 1;
-
-        let modulation = Modulation::SameKey;
-        let mut next_ss_idx = current_ss_idx + 1;
-        if next_ss_idx > (ss.len() - 1) {
-            next_ss_idx %= (ss.len() - 1);
-        }
-        let next_key = current_key.clone();
-        let next_key_iteration = current_key_iteration + 1;
-
-        let detour: DeTour = DeTour::sample(difficulty.clone())?;
-        let next_chords = detour.build_chords(
-            current_key.gen_chord(ss[next_ss_idx], difficulty.clone())?,
-            difficulty.clone(),
-        )?;
-
-        Ok(App {
-            input_rx,
-            difficulty,
-            env,
-            score: 0,
-            ss,
-            prevous_key,
-
-            current: Status {
-                ss_idx: current_ss_idx,
-                chords: Vec::from([current_chord]),
-                key: current_key,
-                key_iteration: current_key_iteration,
-            },
-            modulation,
-            next: Status {
-                ss_idx: next_ss_idx,
-                chords: next_chords,
-                key: next_key,
-                key_iteration: next_key_iteration,
-            },
-
-            phase: GamePhase::SelectDifficulty,
-            measure_num: 0,
-            start_time: None,
+fn guitar_coverage(history: &[Target]) -> (usize, usize) {
+    let regions: std::collections::BTreeSet<_> =
+        history.iter().map(|target| target.guitar.region).collect();
+    let shapes: std::collections::BTreeSet<_> = history
+        .iter()
+        .filter(|target| target.guitar.task == "chord")
+        .filter_map(|target| target.guitar.shape.as_ref())
+        .map(|shape| {
+            (
+                shape.positions.iter().map(|p| p.string).collect::<Vec<_>>(),
+                shape.inversion,
+            )
         })
-    }
+        .collect();
+    (regions.len(), shapes.len())
+}
 
-    fn key_vec_thread(msg_rx: Receiver<u8>) -> Receiver<Vec<u8>> {
-        let (vec_tx, vec_rx) = mpsc::channel();
-        let mut sorted_keys: Vec<u8> = Vec::new();
-        thread::spawn(move || -> anyhow::Result<()> {
-            loop {
-                thread::sleep(Duration::from_millis(10));
-                let any_kb_idx = msg_rx.try_recv();
-                match any_kb_idx {
-                    Ok(kb_idx) => {
-                        if sorted_keys.contains(&kb_idx) {
-                            if let Some(idx) = sorted_keys.iter().position(|x| *x == kb_idx) {
-                                sorted_keys.remove(idx);
-                            }
-                        } else {
-                            sorted_keys.push(kb_idx);
-                        }
-                        sorted_keys.sort();
-                        vec_tx.send(sorted_keys.clone())?;
-                    }
-                    Err(e) => {
-                        continue;
-                    }
-                };
+pub struct App {
+    pub session: Session,
+    pub instrument: String,
+    pub now: u64,
+    pub notice: String,
+    log: Option<Log>,
+    midi: Option<Midi>,
+    held: Held,
+    midi_fresh_on: bool,
+}
+impl App {
+    pub fn new(session: Session, instrument: String, log: Option<Log>, midi: Option<Midi>) -> Self {
+        Self {
+            session,
+            instrument,
+            now: 0,
+            notice: "Space = found (self-reported); timeout / D = no credit".into(),
+            log,
+            midi,
+            held: Held::default(),
+            midi_fresh_on: false,
+        }
+    }
+    fn act(&mut self, action: Action, id: usize) -> Result<()> {
+        let before = self.session.summary(self.now);
+        let previous_index = self.session.index;
+        if self.session.apply(action, self.now, id) {
+            if self.session.index != previous_index || self.session.stopped {
+                self.midi_fresh_on = false;
             }
-            Ok(())
-        });
-        vec_rx
-    }
-
-    fn game_timeout_thread(start: SystemTime, total_time: u64) -> Receiver<i32> {
-        let (game_timeout_tx, game_timeout_rx) = mpsc::channel();
-        thread::spawn(move || -> anyhow::Result<()> {
-            loop {
-                thread::sleep(Duration::from_secs(1));
-                let now = SystemTime::now();
-                let duration = now.duration_since(start)?;
-                if duration > Duration::from_secs(total_time) {
-                    game_timeout_tx.send(0);
-                }
+            let after = self.session.summary(self.now);
+            self.notice = if after.timed_out > before.timed_out {
+                "TIMEOUT: no credit".into()
+            } else if after.confirmed > before.confirmed {
+                "FOUND: self-reported +1".into()
+            } else if after.midi_matched > before.midi_matched {
+                "MIDI: exact pitches matched +1".into()
+            } else if matches!(action, Action::Faster | Action::Slower) {
+                format!(
+                    "Next chord: {:.1}s (current deadline unchanged)",
+                    self.session.seconds
+                )
+            } else if matches!(action, Action::Next | Action::Previous) {
+                "Navigation: no credit; history does not reroll targets".into()
+            } else if matches!(action, Action::ModulateBalanced | Action::ModulateBack) {
+                self.session.manual_notice().into()
+            } else {
+                self.notice.clone()
+            };
+            if let Some(log) = &mut self.log {
+                log.update(&self.session, action, self.now)?;
             }
-            Ok(())
-        });
-        game_timeout_rx
+        }
+        Ok(())
     }
-
-    fn measure_timeout_thread(sleep_time: u64) -> Receiver<i32> {
-        let (timeout_tx, timeout_rx) = mpsc::channel();
-        let timeout_limit = sleep_time;
-        thread::spawn(move || {
-            thread::sleep(Duration::from_secs(timeout_limit));
-            timeout_tx.send(0);
-        });
-        timeout_rx
-    }
-
-    pub fn run(&mut self, msg_rx: Receiver<u8>, terminal: &mut crate::tui::Tui) -> anyhow::Result<Duration> {
-        self.phase = GamePhase::Ready;
-        self.render(terminal)?;
-        thread::sleep(Duration::from_millis(1000));
-        let start = SystemTime::now();
-        self.start_time = Some(start);
-        self.phase = GamePhase::Playing;
-        self.render(terminal)?;
-        let vec_rx = Self::key_vec_thread(msg_rx);
-        let game_timeout_rx = Self::game_timeout_thread(start, self.env.total_time);
-
-        'measure: for i in 1..self.env.total_iteration {
-            self.next();
-            self.measure_num = i;
-            self.phase = GamePhase::MeasureStart { measure: i };
-            self.render(terminal)?;
-
-            let mut chords_unmatched: Vec<Chord> =
-                self.next.chords.clone().into_iter().rev().collect();
-            chords_unmatched.remove(chords_unmatched.len() - 1);
-            chords_unmatched.insert(0, self.current.chords[0].clone());
-
-            let timeout_rx = Self::measure_timeout_thread(self.env.sleep_time);
-            while chords_unmatched.len() > 0 {
-                let target_chord = chords_unmatched.remove(0);
-                let target_key_vec: Vec<u8> =
-                    target_chord.tones.iter().map(|e| e.idx as u8).collect();
-                self.phase = GamePhase::WaitingForInput { target: target_chord.clone() };
-                self.render(terminal)?;
-
-                let chord_match_start = SystemTime::now();
-                'match_chord: loop {
-                    thread::sleep(Duration::from_millis(10));
-
-                    if let Ok(signal) = timeout_rx.try_recv() {
-                        self.phase = GamePhase::MeasureTimeout;
-                        self.render(terminal)?;
-                        continue 'measure;
-                    }
-
-                    if let Ok(signal) = game_timeout_rx.try_recv() {
-                        self.phase = GamePhase::GameTimeout;
-                        self.render(terminal)?;
-                        break 'measure;
-                    }
-
-                    if let Ok(signal) = self.input_rx.try_recv() {
-                        if let AppSignal::Quit = signal {
-                            break 'measure;
-                        }
-                        if let AppSignal::Next = signal {
-                            let next_end = SystemTime::now();
-                            let next_duration = next_end.duration_since(chord_match_start)?;
-
-                            let mut new_score = 0;
-                            if next_duration > Duration::from_secs(8) {
-                                new_score = 0;
-                            } else {
-                                let secs = (8 - next_duration.as_secs());
-                                new_score = secs.pow(4) as i32;
-                            }
-                            if new_score > 4000 {
-                                new_score = 0
-                            }
-                            self.score += new_score;
-                            self.phase = GamePhase::Score;
-                            self.render(terminal)?;
-                            continue 'measure;
-                        }
-                    }
-
-                    let any_key_vec = vec_rx.try_recv();
-                    match any_key_vec {
-                        Ok(key_vec) => {
-                            let key_vec: Vec<u8> = key_vec
-                                .into_iter()
-                                .map(|e| (e - 24 as u8) % 12 + 1)
-                                .collect();
-                            debug!("{:?}", key_vec); // debug!("{:?}", target_key_vec);
-                            if key_vec.len() >= 7 {
-                                debug!("kb check: {} keys pressed", key_vec.len());
-                            }
-
-                            if key_vec == target_key_vec {
-                                let chord_match_end = SystemTime::now();
-                                let chord_match_duration =
-                                    chord_match_end.duration_since(chord_match_start)?;
-
-                                if chord_match_duration > Duration::from_secs(8) {
-                                    self.score += 0
-                                } else {
-                                    let secs = (8 - chord_match_duration.as_secs());
-                                    self.score += secs.pow(4) as i32;
-                                }
-                                self.phase = GamePhase::Matched { chord: target_chord.clone() };
-                                self.render(terminal)?;
-                                self.phase = GamePhase::Score;
-                                self.render(terminal)?;
-                                break 'match_chord;
-                            }
-                        }
-                        Err(e) => {
-                            continue;
-                        }
-                    }
+    fn keyboard(&mut self, id: usize) -> Result<()> {
+        while event::poll(Duration::ZERO)? {
+            if let Event::Key(key) = event::read()? {
+                if let Some(action) = input::action(key) {
+                    self.act(action, id)?;
                 }
             }
         }
-
-        let end = SystemTime::now();
-        let duration = end.duration_since(start)?;
-        self.phase = GamePhase::Summary { duration_secs: duration.as_secs() };
-        self.render(terminal)?;
-        thread::sleep(Duration::from_secs(5));
-
-        Ok(duration)
-    }
-
-    fn status_next_to_current(&mut self) {
-        // TODO: use ref instead of clone?
-        self.prevous_key = self.current.key.clone();
-        self.current.key = self.next.key.clone();
-        self.current.chords = Vec::from([self.next.chords[0].clone()]);
-        self.current.key_iteration = self.next.key_iteration;
-        self.next.key_iteration = 1;
-    }
-
-    fn modulate(&mut self) -> anyhow::Result<()> {
-        match self.modulation {
-            Modulation::SameKey => {
-                // previous key not updated
-                self.current.key = self.next.key.clone();
-                self.current.chords = Vec::from([self.next.chords[0].clone()]);
-
-                self.current.key_iteration = self.next.key_iteration;
-                self.next.key_iteration = self.current.key_iteration + 1;
-
-                self.current.ss_idx = self.next.ss_idx;
-                self.next.ss_idx = self.current.ss_idx + 1;
-                if self.next.ss_idx > (self.ss.len() - 1) {
-                    self.next.ss_idx %= (self.ss.len() - 1);
-                }
-
-                self.next.key = self.current.key.clone();
-                let detour: DeTour = DeTour::sample(self.difficulty.clone())?;
-                self.next.chords = detour.build_chords(
-                    self.next
-                        .key
-                        .gen_chord(self.ss[self.next.ss_idx], self.difficulty.clone())?,
-                    self.difficulty.clone(),
-                )?;
-            }
-            Modulation::ViaTonic => {
-                self.status_next_to_current();
-                self.current.ss_idx = self.next.ss_idx;
-                self.next.ss_idx = rand::thread_rng().gen_range(0..40);
-
-                self.next.key = Key::new(
-                    self.current.key.tonic.clone(),
-                    KeyType::sample(self.difficulty.clone())?,
-                );
-                let detour: DeTour = DeTour::sample(self.difficulty.clone())?;
-                self.next.chords = detour.build_chords(
-                    self.next
-                        .key
-                        .gen_chord(self.ss[self.next.ss_idx], self.difficulty.clone())?,
-                    self.difficulty.clone(),
-                )?;
-            }
-            Modulation::ViaSharedChord => {
-                self.status_next_to_current();
-
-                self.current.ss_idx = self.next.ss_idx;
-                self.next.ss_idx = rand::thread_rng().gen_range(0..40);
-
-                let next_keys = self.current.chords[0].gen_major_keys();
-                let next_key_id = rand::thread_rng().gen_range(0..next_keys.len());
-                self.next.key = next_keys[next_key_id]
-                    .clone()
-                    .change_mode(rand::thread_rng().gen_range(0..7));
-
-                let detour: DeTour = DeTour::sample(self.difficulty.clone())?;
-                self.next.chords = detour.build_chords(
-                    self.next
-                        .key
-                        .gen_chord(self.ss[self.next.ss_idx], self.difficulty.clone())?,
-                    self.difficulty.clone(),
-                )?;
-            }
-            Modulation::ViaDiminished => {
-                self.status_next_to_current();
-                self.current.ss_idx = self.next.ss_idx;
-
-                // current chord to a diminished, randomly to another key
-                // add new key's dominant for transition
-                let proxy_diminished = Chord::new(
-                    self.current.chords[0].tonic.clone(),
-                    ChordType::Diminished7,
-                    Inversion::sample(self.difficulty.clone())?,
-                );
-                let next_keys = proxy_diminished.gen_major_keys();
-                let next_key_id = rand::thread_rng().gen_range(0..next_keys.len());
-                self.next.key = next_keys[next_key_id]
-                    .clone()
-                    .change_mode(rand::thread_rng().gen_range(0..7));
-
-                let dominant_next_key = self.next.key.gen_chord(5, self.difficulty.clone())?;
-                let next_chord = self.next.key.gen_chord(1, self.difficulty.clone())?;
-
-                self.next.ss_idx = 1;
-                self.next.chords = Vec::from([
-                    next_chord,        // 1
-                    dominant_next_key, // 5
-                    proxy_diminished,  // sub 5
-                ]);
-            }
-            Modulation::Back => {
-                let prev_key = self.prevous_key.clone();
-                self.status_next_to_current();
-                self.next.key = prev_key;
-
-                self.current.ss_idx = self.next.ss_idx;
-                self.next.ss_idx = rand::thread_rng().gen_range(0..40);
-
-                let detour: DeTour = DeTour::sample(self.difficulty.clone())?;
-                self.next.chords = detour.build_chords(
-                    self.next
-                        .key
-                        .gen_chord(self.ss[self.next.ss_idx], self.difficulty.clone())?,
-                    self.difficulty.clone(),
-                )?;
-            }
-        };
         Ok(())
+    }
+    fn midi(&mut self, id: usize) -> Result<()> {
+        let events: Vec<MidiEvent> = self
+            .midi
+            .as_ref()
+            .map(|m| m.receiver.try_iter().collect())
+            .unwrap_or_default();
+        for event in events {
+            self.midi_event(event, id)?;
+        }
+        Ok(())
+    }
+    fn midi_event(&mut self, event: MidiEvent, id: usize) -> Result<()> {
+        self.held.apply(event);
+        // Stale batch events still update held notes, but cannot arm a successor.
+        if self.session.stopped || self.session.paused || self.session.target().music.id != id {
+            return Ok(());
+        }
+        if matches!(event, MidiEvent::On(..)) {
+            self.midi_fresh_on = true;
+        }
+        // A fresh NoteOn is required on every visit. Once armed, correcting an
+        // extra note or releasing sustain may complete the requested chord.
+        if self.midi_fresh_on && self.held.matches(&self.session.target().piano_notes) {
+            self.act(Action::MidiMatch, id)?;
+        }
+        Ok(())
+    }
+    pub fn run(&mut self, terminal: &mut tui::Tui) -> Result<()> {
+        let start = Instant::now();
+        if let Some(log) = &mut self.log {
+            log.update(&self.session, Action::Tick, 0)?;
+        }
+        while !self.session.stopped {
+            self.now = start.elapsed().as_millis() as u64;
+            let id = self.session.target().music.id;
+            self.keyboard(id)?;
+            self.midi(id)?;
+            self.act(Action::Tick, id)?;
+            terminal.draw(|frame| crate::ui::render(frame, self))?;
+            std::thread::sleep(Duration::from_millis(16));
+        }
+        Ok(())
+    }
+    pub fn print_summary(&self) {
+        let s = self.session.summary(self.now);
+        println!("\nU-TR-P | SUMMARY | {}\nScore: {}/100  Found: {}  MIDI matched: {}\nTimeout: {}  Skipped: {}  Unfinished: {}\nPresented: {}  Active time: {:.1}s  Final speed: {:.1}s/chord",
+            self.instrument,s.score,s.confirmed,s.midi_matched,s.timed_out,s.skipped,s.stopped,s.presented,s.elapsed_ms as f64/1000.0,self.session.seconds);
+        println!("Score = (Space + MIDI matched) / (Space + MIDI matched + timeout + skipped); unfinished excluded.\nSpace confirmations are self-reported, not automatic correctness judgments.");
+        println!("Per-key targets (this run; includes skipped/timeouts, not mastery):");
+        let counts: Vec<_> = self
+            .session
+            .key_practice()
+            .iter()
+            .map(|(key, count)| format!("{key}: {count}"))
+            .collect();
+        for row in counts.chunks(4) {
+            println!("  {}", row.join(" | "));
+        }
+        let mut keys = std::collections::BTreeSet::new();
+        for target in &self.session.history {
+            keys.insert(target.music.key.label());
+        }
+        if self.instrument == "guitar" {
+            let (regions, shapes) = guitar_coverage(&self.session.history);
+            println!("Presented coverage: {} key/modes, {} regions, {} CHORD string-set/inversion pairs (not mastery)", keys.len(), regions, shapes);
+        } else {
+            println!(
+                "Presented coverage: {} key/modes (piano targets only; not mastery)",
+                keys.len()
+            );
+        }
+        if let Some(log) = &self.log {
+            println!("Record: {}", log.path.display());
+        }
     }
 }
 
-impl Iterator for App {
-    type Item = Chord;
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use utrp::{
+        config::{Config, Templates},
+        simulator,
+    };
 
-    fn next(&mut self) -> Option<Chord> {
-        let modulation: Modulation;
-        if self.current.key_iteration >= self.env.modulation_threshold {
-            modulation = Modulation::sample(self.difficulty.clone()).unwrap();
-        } else {
-            modulation = Modulation::SameKey;
+    fn app() -> App {
+        let config = Config::load(None).unwrap();
+        let stream = simulator::stream(&config, Templates::load(None).unwrap(), 42, 48).unwrap();
+        App::new(
+            Session::new(stream, config.session, 0),
+            "piano".into(),
+            None,
+            None,
+        )
+    }
+    fn play(app: &mut App, id: usize, notes: &[u8]) {
+        for note in notes {
+            app.midi_event(MidiEvent::On(0, *note), id).unwrap();
         }
-        self.modulation = modulation;
-        self.modulate();
-        Some(self.current.chords[0].clone())
+    }
+    #[test]
+    fn summary_coverage_excludes_hidden_detached_grips() {
+        let mut config = Config::load(None).unwrap();
+        config.guitar.arpeggio_every = 1;
+        let mut stream =
+            simulator::stream(&config, Templates::load(None).unwrap(), 42, 48).unwrap();
+        let mut targets: Vec<_> = (0..100).map(|_| stream.next_target()).collect();
+        assert!(targets.iter().any(|target| target.guitar.shape.is_some()));
+        assert_eq!(guitar_coverage(&targets), (5, 0));
+        targets[0].guitar.task = "chord".into();
+        assert_eq!(guitar_coverage(&targets), (5, 1));
+    }
+    #[test]
+    fn midi_correcting_extra_note_matches_current_target() {
+        let mut a = app();
+        let notes = a.session.target().piano_notes.clone();
+        a.midi_event(MidiEvent::On(0, 1), 0).unwrap();
+        play(&mut a, 0, &notes);
+        assert_eq!(a.session.index, 0);
+        a.midi_event(MidiEvent::Off(0, 1), 0).unwrap();
+        assert_eq!(a.session.summary(0).midi_matched, 1);
+        assert_eq!(a.session.index, 1);
+        assert!(!a.midi_fresh_on);
+    }
+    #[test]
+    fn midi_releasing_sustain_can_complete_target() {
+        let mut a = app();
+        let notes = a.session.target().piano_notes.clone();
+        a.midi_event(MidiEvent::On(0, 1), 0).unwrap();
+        a.midi_event(MidiEvent::Sustain(0, true), 0).unwrap();
+        a.midi_event(MidiEvent::Off(0, 1), 0).unwrap();
+        play(&mut a, 0, &notes);
+        assert_eq!(a.session.index, 0);
+        a.midi_event(MidiEvent::Sustain(0, false), 0).unwrap();
+        assert_eq!(a.session.summary(0).midi_matched, 1);
+    }
+    #[test]
+    fn midi_history_navigation_resets_fresh_note_gate_on_every_visit() {
+        let mut a = app();
+        let notes = a.session.target().piano_notes.clone();
+        a.midi_event(MidiEvent::On(0, 1), 0).unwrap();
+        play(&mut a, 0, &notes);
+        assert!(a.midi_fresh_on);
+        a.act(Action::Next, 0).unwrap();
+        a.act(Action::Previous, 1).unwrap();
+        assert_eq!(a.session.index, 0);
+        assert!(!a.midi_fresh_on);
+        a.midi_event(MidiEvent::Off(0, 1), 0).unwrap();
+        assert!(a.held.matches(&notes));
+        assert_eq!(a.session.index, 0);
+        assert_eq!(a.session.summary(0).midi_matched, 0);
+    }
+    #[test]
+    fn midi_poll_batch_cannot_credit_or_arm_successor() {
+        let mut a = app();
+        let notes = a.session.target().piano_notes.clone();
+        play(&mut a, 0, &notes);
+        assert_eq!(a.session.index, 1);
+        a.midi_event(MidiEvent::Reset(0), 0).unwrap();
+        let successor = a.session.target().piano_notes.clone();
+        play(&mut a, 0, &successor);
+        assert_eq!(a.session.index, 1);
+        assert!(!a.midi_fresh_on);
+        a.midi_event(MidiEvent::Sustain(0, false), 1).unwrap();
+        assert_eq!(a.session.index, 1);
+        assert_eq!(a.session.summary(0).midi_matched, 1);
+        a.midi_event(MidiEvent::On(0, successor[0]), 1).unwrap();
+        assert_eq!(a.session.summary(0).midi_matched, 2);
+    }
+    #[test]
+    fn midi_correction_at_deadline_is_timeout_and_paused_notes_do_not_arm() {
+        let mut a = app();
+        let notes = a.session.target().piano_notes.clone();
+        a.act(Action::Pause, 0).unwrap();
+        play(&mut a, 0, &notes);
+        assert!(!a.midi_fresh_on);
+        a.act(Action::Pause, 0).unwrap();
+        a.midi_event(MidiEvent::On(0, 1), 0).unwrap();
+        a.now = 10000;
+        a.midi_event(MidiEvent::Off(0, 1), 0).unwrap();
+        assert_eq!(a.session.summary(a.now).timed_out, 1);
+        assert_eq!(a.session.summary(a.now).midi_matched, 0);
+        assert!(!a.midi_fresh_on);
     }
 }

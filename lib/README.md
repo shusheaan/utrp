@@ -24,8 +24,8 @@ lib/
   tools/
     pipeline/      # 支柱 1+2:spec TOML -> 分析/browse/渲染/评分/鼓 MIDI/RPP
     harmony/       # 支柱 3:voicing 键盘探索 + simulation 表演层(YAML 驱动)
-    simulate/      # Rust 胶水 crate:#[path] 原样编译 ../../src/theory,
-                   # headless 输出进行 JSON(utrp 本体一行不动)
+    simulate/      # Rust 薄适配器:path dependency 复用根 utrp::simulator,
+                   # 与 TUI 共享进行/指板引擎，headless 输出事件 JSON
     <collection>/  # 各专辑的提取数据(data/)+ 未泛化的特例脚本(存档)
   link.sh          # 布链:Surge 浏览器 User 区出现 utrp/ 目录
 ```
@@ -80,8 +80,7 @@ grid.html 做成可编辑回写 MIDI。
   大写 = 副属,`v` 轮换 voicing(piano 12 种 + guitar 8 种预设,TOML 可
   追加),`m` 换调式、`k` 移调、`p` 换 patch;`r/x` 录进行导出 JSON+MIDI。
 - **simulation 表演** `perform.py` + `session.yaml`:参数进 →
-  `tools/simulate`(**原版 Rust theory 代码**,`#[path]` 胶水编译,utrp
-  本体不动)simulate 出 2–3 分钟进行 → 厚 pad 走和声 + euclidean×Turing
+  `tools/simulate`(**与 TUI 共享的 Rust simulation 引擎**,原生 seed)simulate 出 2–3 分钟进行 → 厚 pad 走和声 + euclidean×Turing
   机点缀层(modular 生成器思路,量化到当前和弦)→ 实时播放或离线 wav,
   同时落两轨 MIDI 进 DAW 随便改。辅助意识流作曲的张力/进行探索。
 
