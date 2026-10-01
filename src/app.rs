@@ -43,7 +43,7 @@ impl App {
             session,
             instrument,
             now: 0,
-            notice: "Space = found (self-reported); timeout / D = no credit".into(),
+            notice: "Space = found (self-reported) | Tab toggles timed auto".into(),
             log,
             midi,
             held: Held::default(),
@@ -69,6 +69,20 @@ impl App {
                     "Next chord: {:.1}s (current deadline unchanged)",
                     self.session.seconds
                 )
+            } else if action == Action::ToggleAuto {
+                if self.session.automatic {
+                    format!(
+                        "AUTO: {:.1}s/chord{}",
+                        self.session.seconds,
+                        if self.session.paused {
+                            " (paused)"
+                        } else {
+                            " from now"
+                        }
+                    )
+                } else {
+                    "MANUAL: no timer; Space found + next, A/D no credit".into()
+                }
             } else if matches!(action, Action::Next | Action::Previous) {
                 "Navigation: no credit; history does not reroll targets".into()
             } else if matches!(action, Action::ModulateBalanced | Action::ModulateBack) {
@@ -264,6 +278,7 @@ mod tests {
     #[test]
     fn midi_correction_at_deadline_is_timeout_and_paused_notes_do_not_arm() {
         let mut a = app();
+        a.act(Action::ToggleAuto, 0).unwrap();
         let notes = a.session.target().piano_notes.clone();
         a.act(Action::Pause, 0).unwrap();
         play(&mut a, 0, &notes);

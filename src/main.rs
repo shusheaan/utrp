@@ -13,7 +13,7 @@ use utrp::{
 fn main() -> Result<()> {
     let args: Vec<String> = std::env::args().skip(1).collect();
     if args.iter().any(|s| s == "--help" || s == "-h") {
-        println!("utrp [--instrument guitar|piano] [--config PATH] [--templates PATH] [--seed N]\nutrp simulate [--events N] [--key C] [--mode ionian] [--seed N]\nW faster | S slower | A previous | D next (no credit)\nE balanced random | Q previous key: after NEXT chord (finish any approach/bridge)\nSpace found + next | Enter/Ctrl-C stop + summary | P pause | M auto/manual\nNo total time limit. --key/--mode restrict scope. --threshold sets minimum phrases per key.");
+        println!("utrp [--instrument guitar|piano] [--config PATH] [--templates PATH] [--seed N]\nutrp simulate [--events N] [--key C] [--mode ionian] [--seed N]\nW faster | S slower | A previous | D next (no credit)\nE balanced random | Q previous key: after NEXT chord (finish any approach/bridge)\nSpace found + next | Enter/Ctrl-C stop + summary | P pause | Tab auto/manual\nStarts untimed; Tab enables 10s/chord by default. No total time limit. --key/--mode restrict scope. --threshold sets minimum phrases per key.");
         return Ok(());
     }
     let options = Options::parse(&args)?;

@@ -36,7 +36,8 @@ fn counts_track_consumed_targets_not_planned_phrases_and_reset_per_run() {
 
 #[test]
 fn preview_history_pause_speed_and_stop_do_not_inflate_key_amounts() {
-    let config = Config::load(None).unwrap();
+    let mut config = Config::load(None).unwrap();
+    config.session.automatic = true; // Explicit timed-session regression.
     let stream = simulator::stream(&config, Templates::load(None).unwrap(), 42, 48).unwrap();
     let mut session = Session::new(stream, config.session, 0);
     let original = session.key_practice().clone();

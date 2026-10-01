@@ -60,7 +60,7 @@ pub fn render(frame: &mut Frame, app: &App) {
         frame.render_widget(Clear, hint);
         frame.render_widget(
             Paragraph::new(format!(
-                " P pause  M auto/manual | Full staff needs {}x{}; text view active",
+                " P pause  Tab auto/manual | Full staff needs {}x{}; text view active",
                 notation::MIN_WIDTH + instrument_width,
                 staff_height + 16,
             ))
@@ -102,6 +102,9 @@ mod tests {
             "Guitar",
             "Chord tones",
             "Space found",
+            "Tab auto/manual",
+            "MANUAL",
+            "unlimited",
             "Enter stop",
             "[current] -> next",
         ] {
@@ -179,6 +182,7 @@ mod tests {
                 .map(|cell| cell.symbol())
                 .collect();
             for label in [
+                "Tab auto/manual",
                 "E random",
                 "Q back",
                 "Enter stop",

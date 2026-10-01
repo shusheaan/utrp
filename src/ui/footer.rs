@@ -17,7 +17,7 @@ pub fn render(frame: &mut Frame, _app: &App, area: Rect) {
                 Span::styled(" Enter stop ", Style::default().fg(Color::Red)),
             ]),
             Line::from(Span::styled(
-                " P pause  M auto/manual | Found=self-report; skipped/timeout=no credit",
+                " P pause  Tab auto/manual | Found=self-report; skipped/timeout=no credit",
                 Style::default().fg(Color::DarkGray),
             )),
         ]),

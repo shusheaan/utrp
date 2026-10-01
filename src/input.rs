@@ -25,7 +25,7 @@ pub fn action(key: KeyEvent) -> Option<Action> {
         KeyCode::Char('a' | 'A') => Some(Action::Previous),
         KeyCode::Char('d' | 'D') => Some(Action::Next),
         KeyCode::Char('p' | 'P') => Some(Action::Pause),
-        KeyCode::Char('m' | 'M') => Some(Action::ToggleAuto),
+        KeyCode::Tab | KeyCode::Char('m' | 'M') => Some(Action::ToggleAuto),
         _ => None,
     }
 }
@@ -162,6 +162,23 @@ mod tests {
             action(KeyEvent::new(KeyCode::Enter, KeyModifiers::NONE)),
             Some(Action::Stop)
         );
+    }
+    #[test]
+    fn tab_toggles_timer_only_on_press() {
+        for (kind, expected) in [
+            (KeyEventKind::Press, Some(Action::ToggleAuto)),
+            (KeyEventKind::Repeat, None),
+            (KeyEventKind::Release, None),
+        ] {
+            assert_eq!(
+                action(KeyEvent::new_with_kind(
+                    KeyCode::Tab,
+                    KeyModifiers::NONE,
+                    kind
+                )),
+                expected
+            );
+        }
     }
     #[test]
     fn control_c_still_stops() {

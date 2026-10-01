@@ -228,7 +228,8 @@ fn same_tonic_major_minor_are_reachable_and_single_key_fails_explicitly() {
 
 #[test]
 fn pause_stale_batch_deadline_and_stop_preserve_scoring_semantics() {
-    let c = config();
+    let mut c = config();
+    c.session.automatic = true; // This test exercises deadline precedence.
     let mut s = session(&c);
     apply(&mut s, Action::ModulateBack);
     assert!(!s.stopped);
