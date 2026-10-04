@@ -27,9 +27,10 @@ upper_string = 3
 first_fret = 7
 
 [theme]
-paper = "#F7F5F0"
+paper = "#FFFFFF"
 panel = "#FFFFFF"
 ink = "#24323D"
 muted = "#70808B"
-line = "#CCD4D7"
+line = "#000000"
+inlay_radius = 4
 black_key = "#26313B"

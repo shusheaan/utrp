@@ -128,16 +128,33 @@ def test_requested_shared_color_groups() -> None:
     assert len(set(colors)) == 4
 
 
+def test_backgrounds_are_uniform_white_in_all_layouts() -> None:
+    config = settings()
+    assert config.theme.paper == config.theme.panel == '#FFFFFF'
+    clefs = ('M0 0', 'M0 0')
+    for svg in (render_svg(config, clefs), render_overview(config, clefs),
+                render_overview(config, clefs, stacked=True)):
+        root = ET.fromstring(svg)
+        background = root.find('{*}rect')
+        assert background is not None
+        assert background.attrib['fill'] == '#FFFFFF'
+        for card in root.findall('.//{*}rect[@rx="10"]'):
+            assert card.attrib['fill'] == '#FFFFFF'
+            assert 'stroke' not in card.attrib
+
+
 @pytest.mark.parametrize("fret,count", [
     (0, 0), (1, 0), (2, 0), (3, 1), (4, 0), (5, 1), (6, 0),
     (7, 1), (8, 0), (9, 1), (10, 0), (11, 0), (12, 2),
-    (13, 0), (15, 0), (17, 0), (19, 0), (21, 0), (24, 0),
+    (13, 0), (14, 0), (15, 1), (16, 0), (17, 1), (18, 0),
+    (19, 1), (20, 0), (21, 1), (22, 0), (23, 0), (24, 0),
 ])
 def test_standard_fret_inlays(fret: int, count: int) -> None:
-    marks = [ET.fromstring(part) for part in fret_inlays(100, 200, 30, fret, "#70808B")]
+    marks = [ET.fromstring(part) for part in fret_inlays(100, 200, 30, fret, "#000000", 4)]
     assert len(marks) == count
     assert all(mark.attrib["data-inlay-fret"] == str(fret) for mark in marks)
     assert all(float(mark.attrib["cy"]) == 200 for mark in marks)
+    assert all(mark.attrib["fill"] == "#000000" and mark.attrib["r"] == "4" for mark in marks)
     if count == 2:
         assert [float(mark.attrib["cx"]) for mark in marks] == [70, 130]
 
@@ -147,9 +164,23 @@ def test_inlays_render_in_all_visible_fret_windows() -> None:
     root = ET.fromstring(render_svg(config, ("M0 0", "M0 0")))
     windows = [range(fret - config.frets_before_anchor, fret + config.frets_after_anchor + 1)
                for fret in config.anchor_frets]
-    expected = sum(len(fret_inlays(0, 0, 1, fret, "#70808B"))
+    expected = sum(len(fret_inlays(0, 0, 1, fret, config.theme.line, config.theme.inlay_radius))
                    for window in windows for fret in window)
     assert len(root.findall('.//*[@data-inlay-fret]')) == expected
+
+
+def test_staff_and_guitar_background_lines_and_inlays_are_black() -> None:
+    config = settings()
+    staff = ET.fromstring('<svg>' + ''.join(staff_svg(config, ('M0 0', 'M0 0'))) + '</svg>')
+    assert all(node.attrib['stroke'] == '#000000' for node in staff.iter('line'))
+    for key in config.overview.keys:
+        transposed = transpose_settings(config, key)
+        for panel, string in enumerate((5, 4, 3, 2, 1, 0)):
+            root = ET.fromstring('<svg>' + ''.join(guitar_svg(transposed, panel, string)) + '</svg>')
+            assert all(node.attrib['stroke'] == '#000000' for node in root.iter('line'))
+            for mark in root.findall('.//*[@data-inlay-fret]'):
+                assert mark.attrib['fill'] == '#000000'
+                assert float(mark.attrib['r']) == 4
 
 
 def test_inlays_only_appear_in_six_guitar_panels_not_blocks() -> None:
@@ -369,7 +400,7 @@ def test_overview_is_four_by_three_with_unique_ids_and_g_flat() -> None:
     assert [node.attrib['data-key'] for node in keys] == [
         'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B',
     ]
-    assert root.attrib['viewBox'] == '0 0 6480 2284'
+    assert root.attrib['viewBox'] == '0 0 6480 2152'
     ids = [node.attrib['id'] for node in root.iter() if 'id' in node.attrib]
     assert len(ids) == len(set(ids))
     assert len(root.findall('.//*[@data-anchor="true"]')) == 72
@@ -407,17 +438,24 @@ def test_mobile_has_same_twelve_tiles_stacked_without_footer() -> None:
     base = settings()
     grid = ET.fromstring(render_overview(base, ('M0 0', 'M0 0')))
     mobile = ET.fromstring(render_overview(base, ('M0 0', 'M0 0'), stacked=True))
-    assert mobile.attrib['viewBox'] == '0 0 1632 9088'
+    assert mobile.attrib['viewBox'] == '0 0 1632 8560'
     grid_tiles = grid.findall('.//{*}g[@data-key]')
     mobile_tiles = mobile.findall('.//{*}g[@data-key]')
     assert len(grid_tiles) == len(mobile_tiles) == 12
     for index, (grid_tile, mobile_tile) in enumerate(zip(grid_tiles, mobile_tiles)):
-        assert mobile_tile.attrib['transform'] == f'translate(16 {16 + index * 756})'
+        assert mobile_tile.attrib['transform'] == f'translate(16 {16 + index * 712})'
         assert grid_tile.attrib['data-key'] == mobile_tile.attrib['data-key']
         assert [ET.tostring(child) for child in grid_tile] == [
             ET.tostring(child) for child in mobile_tile
         ]
     for root in (grid, mobile):
+        for tile in root.findall('.//{*}g[@data-key]'):
+            assert tile.findall('{*}text') == []
+            assert tile.findall('{*}circle') == []
+            content = tile.find('{*}g')
+            assert content is not None
+            assert content.attrib['transform'] == 'translate(0 -52)'
+            assert content.findall('.//*[@data-degree]')
         outer_group = root.find('{*}g')
         assert outer_group is not None
         assert outer_group.findall('{*}text') == []

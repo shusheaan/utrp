@@ -26,6 +26,7 @@ class Theme:
     muted: str
     line: str
     black_key: str
+    inlay_radius: int
 
 
 @dataclass(frozen=True)
@@ -179,7 +180,8 @@ def parse_settings(raw: dict[str, object], base: Path) -> Settings:
                     colors, font if font.is_absolute() else base / font,
                     nonempty_text(raw["text_font"]),
                     Theme(*(color(table[key]) for key in
-                            ("paper", "panel", "ink", "muted", "line", "black_key"))),
+                            ("paper", "panel", "ink", "muted", "line", "black_key")),
+                          inlay_radius=bounded_integer(table["inlay_radius"], 1, 4)),
                     tuning, anchors, before, after, first, last,
                     parse_blocks(raw["blocks"], tuning, key), key,
                     parse_overview(raw["overview"]))
@@ -393,12 +395,12 @@ def staff_svg(settings: Settings, clefs: tuple[str, str]) -> list[str]:
             parts.append(f'<g id="note-{note.midi}" data-midi="{note.midi}" '
                          f'data-degree="{note.degree + 1}" data-color="{fill}">'
                          f'<title>{note.name()} / degree {note.degree + 1}</title>')
-            parts.extend(line(x - 15, ledger, x + 15, ledger, t.muted, 1.2)
+            parts.extend(line(x - 15, ledger, x + 15, ledger, t.line, 1.2)
                          for ledger in ledger_lines(y, bottom, 14))
             parts.append(f'<circle cx="{x:g}" cy="{y:g}" r="10.5" fill="{fill}"/>')
             parts.append(pitch_label(x, y + 4, note.letter, note.accidental, 12))
             parts.append('</g>')
-    parts.extend([line(1032, 122, 1032, 262, t.muted, 1.5),
+    parts.extend([line(1032, 122, 1032, 262, t.line, 1.5),
                   '<path d="M1023 122 C1010 133 1028 180 1016 192 '
                   'C1028 205 1010 252 1023 262" fill="none" '
                   f'stroke="{t.ink}" stroke-width="2.5"/>'])
@@ -415,16 +417,16 @@ def guitar_positions(settings: Settings, anchor_string: int) -> tuple[tuple[int,
 
 
 def fret_inlays(x: float, side_y: float, double_offset: float,
-                fret: int, fill: str) -> list[str]:
+                fret: int, fill: str, radius: int) -> list[str]:
     """Side dots below the fretboard; the two dots at 12 are horizontal."""
     if fret == 12:
         xs = (x - double_offset, x + double_offset)
-    elif fret in (3, 5, 7, 9):
+    elif fret in (3, 5, 7, 9, 15, 17, 19, 21):
         xs = (x,)
     else:
         return []
     return [f'<circle data-inlay-fret="{fret}" cx="{cx:g}" cy="{side_y:g}" '
-            f'r="3" fill="{fill}"/>' for cx in xs]
+            f'r="{radius}" fill="{fill}"/>' for cx in xs]
 
 
 def guitar_svg(settings: Settings, panel: int, anchor_string: int) -> list[str]:
@@ -440,7 +442,8 @@ def guitar_svg(settings: Settings, panel: int, anchor_string: int) -> list[str]:
     for fret in range(first, last + 1):
         x = grid_x + (fret - first + 0.5) * width
         parts.append(text(x, grid_y - 19, str(fret), 12, t.muted, "middle"))
-        parts.extend(fret_inlays(x, grid_y + 172, 5, fret, t.muted))
+        parts.extend(fret_inlays(x, grid_y + 172, t.inlay_radius * 1.5,
+                                 fret, t.line, t.inlay_radius))
     for column in range(columns + 1):
         x = grid_x + column * width
         parts.append(line(x, grid_y, x, grid_y + 150, t.line))
@@ -534,20 +537,9 @@ def render_svg(settings: Settings, clefs: tuple[str, str]) -> str:
     return '\n'.join(parts + ['</svg>']) + '\n'
 
 
-def overview_heading(settings: Settings) -> list[str]:
-    key = settings.key
-    name = key.name.replace('b', '♭').replace('#', '♯')
-    parts = [text(16, 29, name, 28, settings.theme.ink, weight=600)]
-    for degree, (letter, accidental) in enumerate(zip(key.letters, key.accidentals)):
-        x = 164 + degree * 42
-        parts.append(f'<circle cx="{x}" cy="21" r="13" fill="{settings.colors[degree]}"/>')
-        parts.append(pitch_label(x, 26, letter, accidental, 15))
-    return parts
-
-
 def render_overview(settings: Settings, clefs: tuple[str, str], *, stacked: bool = False) -> str:
     overview = replace(settings.overview, columns=1, rows=12) if stacked else settings.overview
-    tile_width, tile_height = 1600, 740
+    tile_width, tile_height = 1600, 696
     width = overview.columns * tile_width + (overview.columns + 1) * overview.gap
     height = overview.rows * tile_height + (overview.rows + 1) * overview.gap
     parts = svg_start(width, height, '十二大调 · 钢琴 / 五线谱 / 吉他', settings.theme.paper)
@@ -557,10 +549,9 @@ def render_overview(settings: Settings, clefs: tuple[str, str], *, stacked: bool
         x = overview.gap + (index % overview.columns) * (tile_width + overview.gap)
         y = overview.gap + (index // overview.columns) * (tile_height + overview.gap)
         parts.append(f'<g data-key="{key.name}" transform="translate({x} {y})">')
-        parts.extend(overview_heading(config))
         markup = '\n'.join(tile_parts(config, clefs))
         markup = re.sub(r'\bid="([^"]+)"', lambda match: f'id="key{index}-{match[1]}"', markup)
-        parts.extend(['<g transform="translate(0 44)">', markup, '</g></g>'])
+        parts.extend([markup, '</g>'])
     return '\n'.join(parts + ['</g></svg>']) + '\n'
 
 
