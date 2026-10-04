@@ -1,0 +1,97 @@
+# Reference-based study draft; see same-name MD for evidence limits.
+title = "Frank Ocean — Higgs"
+info = "Endless · C# minor · 标准定弦实音移植，无 capo"
+status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
+structure = "Intro → Verse 1 → Verse 2 → Bridge → Outro"
+progression = "主段: C#m → G#/B# → B → F#/A# → A → G#7 → F#"
+timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+
+[library]
+group = "E"
+rank = 1
+artist = "Frank Ocean"
+song = "Higgs"
+key = "C# minor"
+original = "B / G#m · B major"
+why = "半音下行 bass 与借用大 IV"
+melody_status = "pending"
+evidence_status = "draft"
+caveat = "原表 B 改为 C#m；参考谱 G#/C 规范为 G#/B#。卡片个别采用等音拼写避免双升号。"
+sources = ["https://www.e-chords.com/chords/frank-ocean/higgs"]
+
+[[cards]]
+kind = "chord"
+title = "C#m · 核心和弦音"
+subtitle = "C# – E – G#；完整音位地图，不是指定 voicing"
+scale = ["E", "F#", "G#", "A", "B", "C#", "D#"]
+notes = ["C#", "E", "G#"]
+anchor_frets = [9, 14, 6, 11, 4, 9]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.e-chords.com/chords/frank-ocean/higgs"
+
+[[cards]]
+kind = "chord"
+title = "G# · 核心和弦音"
+subtitle = "G# – B# – D#；完整音位地图，不是指定 voicing"
+scale = ["C#", "D#", "E#", "F#", "G#", "A#", "B#"]
+notes = ["G#", "B#", "D#"]
+anchor_frets = [4, 9, 13, 6, 11, 4]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.e-chords.com/chords/frank-ocean/higgs"
+
+[[cards]]
+kind = "chord"
+title = "B · 核心和弦音"
+subtitle = "B – D# – F#；完整音位地图，不是指定 voicing"
+scale = ["E", "F#", "G#", "A", "B", "C#", "D#"]
+notes = ["B", "D#", "F#"]
+anchor_frets = [7, 12, 4, 9, 2, 7]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.e-chords.com/chords/frank-ocean/higgs"
+
+[[cards]]
+kind = "chord"
+title = "F# · 核心和弦音"
+subtitle = "F# – A# – C#；完整音位地图，不是指定 voicing"
+scale = ["B", "C#", "D#", "E", "F#", "G#", "A#"]
+notes = ["F#", "A#", "C#"]
+anchor_frets = [2, 7, 11, 4, 9, 2]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.e-chords.com/chords/frank-ocean/higgs"
+
+[[cards]]
+kind = "chord"
+title = "A · 核心和弦音"
+subtitle = "A – C# – E；完整音位地图，不是指定 voicing"
+scale = ["E", "F#", "G#", "A", "B", "C#", "D#"]
+notes = ["A", "C#", "E"]
+anchor_frets = [5, 10, 2, 7, 12, 5]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.e-chords.com/chords/frank-ocean/higgs"
+
+[[cards]]
+kind = "chord"
+title = "G#7 · 核心和弦音"
+subtitle = "G# – B# – D# – F#；完整音位地图，不是指定 voicing"
+scale = ["C#", "D#", "E#", "F#", "G#", "A#", "B#"]
+notes = ["G#", "B#", "D#", "F#"]
+anchor_frets = [4, 9, 13, 6, 11, 4]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.e-chords.com/chords/frank-ocean/higgs"
+
+[[cards]]
+kind = "melody"
+title = "自编连接 · 核心和弦的共同音 / 最近音"
+subtitle = "G#4 → G#4 → F#4 → F#4 → E4 → D#4"
+scale = ["E", "F#", "G#", "A", "B", "C#", "D#"]
+notes = ["G#4", "G#4", "F#4", "F#4", "E4", "D#4"]
+positions = ["B9", "B9", "B7", "B7", "B5", "G8"]
+anchor_frets = [4, 9, 13, 6, 11, 4]
+footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+evidence = "arrangement"

@@ -1,0 +1,86 @@
+# Reference-based study draft; see same-name MD for evidence limits.
+title = "Beach House — Wild"
+info = "Bloom · D major · 标准定弦实音移植，无 capo"
+status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
+structure = "Intro riff → 主循环；精确段落边界待核"
+progression = "骨架: D → F#m → G → A"
+timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+
+[library]
+group = "D"
+rank = 5
+artist = "Beach House"
+song = "Wild"
+key = "D major"
+original = ""
+why = "大调 iii 的暗色与吉他 hook"
+melody_status = "pending"
+evidence_status = "draft"
+caveat = "和声为候选骨架；吉他线请对照原 TAB，不把整曲简化为均分四和弦。"
+sources = ["https://www.guitartabsexplorer.com/beach-house/wild-tab", "https://chordify.net/chords/beach-house-wild-beachhousevideozone"]
+
+[[cards]]
+kind = "chord"
+title = "D · 核心和弦音"
+subtitle = "D – F# – A；完整音位地图，不是指定 voicing"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["D", "F#", "A"]
+anchor_frets = [10, 15, 7, 12, 5, 10]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.guitartabsexplorer.com/beach-house/wild-tab"
+
+[[cards]]
+kind = "chord"
+title = "F#m · 核心和弦音"
+subtitle = "F# – A – C#；完整音位地图，不是指定 voicing"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["F#", "A", "C#"]
+anchor_frets = [2, 7, 11, 4, 9, 2]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.guitartabsexplorer.com/beach-house/wild-tab"
+
+[[cards]]
+kind = "chord"
+title = "G · 核心和弦音"
+subtitle = "G – B – D；完整音位地图，不是指定 voicing"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["G", "B", "D"]
+anchor_frets = [3, 8, 12, 5, 10, 3]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.guitartabsexplorer.com/beach-house/wild-tab"
+
+[[cards]]
+kind = "chord"
+title = "A · 核心和弦音"
+subtitle = "A – C# – E；完整音位地图，不是指定 voicing"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["A", "C#", "E"]
+anchor_frets = [5, 10, 2, 7, 12, 5]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.guitartabsexplorer.com/beach-house/wild-tab"
+
+[[cards]]
+kind = "melody"
+title = "自编连接 · 核心和弦的共同音 / 最近音"
+subtitle = "F#4 → F#4 → G4 → A4"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["F#4", "F#4", "G4", "A4"]
+positions = ["B7", "B7", "B8", "e5"]
+anchor_frets = [2, 7, 11, 4, 9, 2]
+footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+evidence = "arrangement"
+
+[[cards]]
+kind = "melody"
+title = "自编练习 · D 上行拆分"
+subtitle = "D4 → F#4 → A4"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["D4", "F#4", "A4"]
+positions = ["G7", "B7", "e5"]
+anchor_frets = [10, 15, 7, 12, 5, 10]
+footer = "自编和弦音练习，不是原唱或原 riff；等距仅表示音序，不代表节奏。"
+evidence = "arrangement"

@@ -1,0 +1,97 @@
+# Reference-based study draft; see same-name MD for evidence limits.
+title = "Michael Jackson — Human Nature"
+info = "Thriller · D major · 标准定弦实音移植，无 capo"
+status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
+structure = "Intro → Verse → Chorus → 间奏 → 后续循环"
+progression = "Intro: G → A → Fmaj7 → Em7；Chorus: G → A → D → D/C# → Bm7"
+timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+
+[library]
+group = "D"
+rank = 1
+artist = "Michael Jackson"
+song = "Human Nature"
+key = "D major"
+original = "D / Bm · D major"
+why = "借用 bIII 与下行低音"
+melody_status = "pending"
+evidence_status = "draft"
+caveat = "Chorus 后续 A → G → F#m7 → Em7；卡片不是原录音 voicing 的逐音转录。"
+sources = ["https://www.8notes.com/video_chords/michael_jackson_human_nature.asp?instrument=harpsichord", "https://arthurgeurts.com/wp-content/uploads/2020/03/michael-jackson-human-nature-notation.pdf"]
+
+[[cards]]
+kind = "chord"
+title = "G · 核心和弦音"
+subtitle = "G – B – D；完整音位地图，不是指定 voicing"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["G", "B", "D"]
+anchor_frets = [3, 8, 12, 5, 10, 3]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.8notes.com/video_chords/michael_jackson_human_nature.asp?instrument=harpsichord"
+
+[[cards]]
+kind = "chord"
+title = "A · 核心和弦音"
+subtitle = "A – C# – E；完整音位地图，不是指定 voicing"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["A", "C#", "E"]
+anchor_frets = [5, 10, 2, 7, 12, 5]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.8notes.com/video_chords/michael_jackson_human_nature.asp?instrument=harpsichord"
+
+[[cards]]
+kind = "chord"
+title = "Fmaj7 · 核心和弦音"
+subtitle = "F – A – C – E；完整音位地图，不是指定 voicing"
+scale = ["C", "D", "E", "F", "G", "A", "B"]
+notes = ["F", "A", "C", "E"]
+anchor_frets = [13, 18, 10, 15, 8, 13]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.8notes.com/video_chords/michael_jackson_human_nature.asp?instrument=harpsichord"
+
+[[cards]]
+kind = "chord"
+title = "Em7 · 核心和弦音"
+subtitle = "E – G – B – D；完整音位地图，不是指定 voicing"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["E", "G", "B", "D"]
+anchor_frets = [12, 17, 9, 14, 7, 12]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.8notes.com/video_chords/michael_jackson_human_nature.asp?instrument=harpsichord"
+
+[[cards]]
+kind = "chord"
+title = "D · 核心和弦音"
+subtitle = "D – F# – A；完整音位地图，不是指定 voicing"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["D", "F#", "A"]
+anchor_frets = [10, 15, 7, 12, 5, 10]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.8notes.com/video_chords/michael_jackson_human_nature.asp?instrument=harpsichord"
+
+[[cards]]
+kind = "chord"
+title = "Bm7 · 核心和弦音"
+subtitle = "B – D – F# – A；完整音位地图，不是指定 voicing"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["B", "D", "F#", "A"]
+anchor_frets = [7, 12, 4, 9, 2, 7]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.8notes.com/video_chords/michael_jackson_human_nature.asp?instrument=harpsichord"
+
+[[cards]]
+kind = "melody"
+title = "自编连接 · 核心和弦的共同音 / 最近音"
+subtitle = "G4 → A4 → A4 → G4 → F#4 → F#4"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["G4", "A4", "A4", "G4", "F#4", "F#4"]
+positions = ["B8", "e5", "e5", "B8", "B7", "B7"]
+anchor_frets = [3, 8, 12, 5, 10, 3]
+footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+evidence = "arrangement"

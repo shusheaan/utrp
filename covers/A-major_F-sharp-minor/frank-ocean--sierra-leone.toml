@@ -1,0 +1,97 @@
+# Reference-based study draft; see same-name MD for evidence limits.
+title = "Frank Ocean — Sierra Leone"
+info = "Channel Orange · A Mixolydian / 多调待核 · 标准定弦实音移植，无 capo"
+status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
+structure = "开头 → 混合调式主段 → 不同音集 Outro"
+progression = "主段材料: Am → Gmaj7；Amaj7 → G；Outro: D9 → F# → C#maj7 → F#maj7"
+timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+
+[library]
+group = "A"
+rank = 0
+artist = "Frank Ocean"
+song = "Sierra Leone"
+key = "A Mixolydian / 多调待核"
+original = "G / Em · G major"
+why = "平行大小色彩与 Outro 调域改变"
+melody_status = "pending"
+evidence_status = "draft"
+caveat = "原表 G 不等于实际 A 中心；Mixolydian 的音集也不等于 D major 的功能。暂存 A 目录但不上榜，避免硬塞进相对调组。"
+sources = ["https://www.e-chords.com/chords/frank-ocean/sierra-leone", "https://www.hooktheory.com/theorytab/view/frank-ocean/sierra-leone"]
+
+[[cards]]
+kind = "chord"
+title = "Am · 核心和弦音"
+subtitle = "A – C – E；完整音位地图，不是指定 voicing"
+scale = ["C", "D", "E", "F", "G", "A", "B"]
+notes = ["A", "C", "E"]
+anchor_frets = [5, 10, 2, 7, 12, 5]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.e-chords.com/chords/frank-ocean/sierra-leone"
+
+[[cards]]
+kind = "chord"
+title = "Gmaj7 · 核心和弦音"
+subtitle = "G – B – D – F#；完整音位地图，不是指定 voicing"
+scale = ["G", "A", "B", "C", "D", "E", "F#"]
+notes = ["G", "B", "D", "F#"]
+anchor_frets = [3, 8, 12, 5, 10, 3]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.e-chords.com/chords/frank-ocean/sierra-leone"
+
+[[cards]]
+kind = "chord"
+title = "Fmaj7 · 核心和弦音"
+subtitle = "F – A – C – E；完整音位地图，不是指定 voicing"
+scale = ["C", "D", "E", "F", "G", "A", "B"]
+notes = ["F", "A", "C", "E"]
+anchor_frets = [13, 18, 10, 15, 8, 13]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.e-chords.com/chords/frank-ocean/sierra-leone"
+
+[[cards]]
+kind = "chord"
+title = "Amaj7 · 核心和弦音"
+subtitle = "A – C# – E – G#；完整音位地图，不是指定 voicing"
+scale = ["A", "B", "C#", "D", "E", "F#", "G#"]
+notes = ["A", "C#", "E", "G#"]
+anchor_frets = [5, 10, 2, 7, 12, 5]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.e-chords.com/chords/frank-ocean/sierra-leone"
+
+[[cards]]
+kind = "chord"
+title = "C#maj7 · 核心和弦音"
+subtitle = "C# – E# – G# – B#；完整音位地图，不是指定 voicing"
+scale = ["C#", "D#", "E#", "F#", "G#", "A#", "B#"]
+notes = ["C#", "E#", "G#", "B#"]
+anchor_frets = [9, 14, 6, 11, 4, 9]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.e-chords.com/chords/frank-ocean/sierra-leone"
+
+[[cards]]
+kind = "chord"
+title = "F#maj7 · 核心和弦音"
+subtitle = "F# – A# – C# – E#；完整音位地图，不是指定 voicing"
+scale = ["F#", "G#", "A#", "B", "C#", "D#", "E#"]
+notes = ["F#", "A#", "C#", "E#"]
+anchor_frets = [2, 7, 11, 4, 9, 2]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.e-chords.com/chords/frank-ocean/sierra-leone"
+
+[[cards]]
+kind = "melody"
+title = "自编连接 · 核心和弦的共同音 / 最近音"
+subtitle = "A4 → B4 → A4 → A4 → G#4 → F#4"
+scale = ["A", "B", "C#", "D", "E", "F#", "G#"]
+notes = ["A4", "B4", "A4", "A4", "G#4", "F#4"]
+positions = ["e5", "e7", "e5", "e5", "B9", "B7"]
+anchor_frets = [5, 10, 2, 7, 12, 5]
+footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+evidence = "arrangement"

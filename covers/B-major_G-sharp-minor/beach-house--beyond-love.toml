@@ -1,0 +1,97 @@
+# Reference-based study draft; see same-name MD for evidence limits.
+title = "Beach House — Beyond Love"
+info = "Depression Cherry · B major · 标准定弦实音移植，无 capo"
+status = "和声研究初稿；短 riff 据公开 TAB，尚未逐音听核。"
+structure = "Intro → Verse → Refrain → Outro"
+progression = "主段: Emaj7 → Amaj7 → F# → F#7 → B → E；接 C#m → B → F#7"
+timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+
+[library]
+group = "B"
+rank = 3
+artist = "Beach House"
+song = "Beyond Love"
+key = "B major"
+original = ""
+why = "借用 bVIImaj7 与吉他半音 hook"
+melody_status = "excerpt"
+evidence_status = "draft"
+caveat = "采用 Cifra Club 的较细和声谱；早期简化 TAB 省略若干色彩和弦，hook 摘录单独标源。"
+sources = ["https://www.cifraclub.com/beach-house/beyond-love/", "https://www.chordlines.com/beach-house/beyond-love"]
+
+[[cards]]
+kind = "chord"
+title = "Emaj7 · 核心和弦音"
+subtitle = "E – G# – B – D#；完整音位地图，不是指定 voicing"
+scale = ["B", "C#", "D#", "E", "F#", "G#", "A#"]
+notes = ["E", "G#", "B", "D#"]
+anchor_frets = [12, 17, 9, 14, 7, 12]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.cifraclub.com/beach-house/beyond-love/"
+
+[[cards]]
+kind = "chord"
+title = "Amaj7 · 核心和弦音"
+subtitle = "A – C# – E – G#；完整音位地图，不是指定 voicing"
+scale = ["A", "B", "C#", "D", "E", "F#", "G#"]
+notes = ["A", "C#", "E", "G#"]
+anchor_frets = [5, 10, 2, 7, 12, 5]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.cifraclub.com/beach-house/beyond-love/"
+
+[[cards]]
+kind = "chord"
+title = "F#7 · 核心和弦音"
+subtitle = "F# – A# – C# – E；完整音位地图，不是指定 voicing"
+scale = ["B", "C#", "D#", "E", "F#", "G#", "A#"]
+notes = ["F#", "A#", "C#", "E"]
+anchor_frets = [2, 7, 11, 4, 9, 2]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.cifraclub.com/beach-house/beyond-love/"
+
+[[cards]]
+kind = "chord"
+title = "B · 核心和弦音"
+subtitle = "B – D# – F#；完整音位地图，不是指定 voicing"
+scale = ["B", "C#", "D#", "E", "F#", "G#", "A#"]
+notes = ["B", "D#", "F#"]
+anchor_frets = [7, 12, 4, 9, 2, 7]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.cifraclub.com/beach-house/beyond-love/"
+
+[[cards]]
+kind = "chord"
+title = "C#m · 核心和弦音"
+subtitle = "C# – E – G#；完整音位地图，不是指定 voicing"
+scale = ["B", "C#", "D#", "E", "F#", "G#", "A#"]
+notes = ["C#", "E", "G#"]
+anchor_frets = [9, 14, 6, 11, 4, 9]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.cifraclub.com/beach-house/beyond-love/"
+
+[[cards]]
+kind = "melody"
+title = "吉他 hook · TAB 首四音"
+subtitle = "E5 → D#5 → E5 → D#5"
+scale = ["B", "C#", "D#", "E", "F#", "G#", "A#"]
+notes = ["E5", "D#5", "E5", "D#5"]
+positions = ["e12", "e11", "e12", "e11"]
+anchor_frets = [12, 17, 9, 14, 7, 12]
+footer = "据早期 TAB 高音 e 弦 12–11–12–11；此处保留实音，未复刻节奏。"
+evidence = "source_excerpt"
+
+[[cards]]
+kind = "melody"
+title = "自编连接 · 核心和弦的共同音 / 最近音"
+subtitle = "G#4 → G#4 → A#4 → B4 → G#4"
+scale = ["B", "C#", "D#", "E", "F#", "G#", "A#"]
+notes = ["G#4", "G#4", "A#4", "B4", "G#4"]
+positions = ["B9", "B9", "e6", "e7", "B9"]
+anchor_frets = [4, 9, 13, 6, 11, 4]
+footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+evidence = "arrangement"

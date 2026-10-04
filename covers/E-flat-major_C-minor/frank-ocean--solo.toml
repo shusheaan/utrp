@@ -1,0 +1,86 @@
+# Reference-based study draft; see same-name MD for evidence limits.
+title = "Frank Ocean — Solo"
+info = "Blonde · Eb major · 标准定弦实音移植，无 capo"
+status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
+structure = "Verse → Chorus → Bridge → Outro"
+progression = "Verse: Eb → Eb/D → Cm7 → Eb/Bb → Ab → Eb/G → Fm7 → Abm"
+timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+
+[library]
+group = "Eb"
+rank = 1
+artist = "Frank Ocean"
+song = "Solo"
+key = "Eb major"
+original = "Ab / Fm · F minor"
+why = "下行 bass 与借用小 iv"
+melody_status = "pending"
+evidence_status = "draft"
+caveat = "capo 3 的 C 指型已换算 Eb 实音；原表 Fm 是把局部和弦当成主调。"
+sources = ["https://www.chords-and-tabs.net/song/name/frank-ocean-solo"]
+
+[[cards]]
+kind = "chord"
+title = "Eb · 核心和弦音"
+subtitle = "Eb – G – Bb；完整音位地图，不是指定 voicing"
+scale = ["Eb", "F", "G", "Ab", "Bb", "C", "D"]
+notes = ["Eb", "G", "Bb"]
+anchor_frets = [11, 16, 8, 13, 6, 11]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.chords-and-tabs.net/song/name/frank-ocean-solo"
+
+[[cards]]
+kind = "chord"
+title = "Cm7 · 核心和弦音"
+subtitle = "C – Eb – G – Bb；完整音位地图，不是指定 voicing"
+scale = ["Eb", "F", "G", "Ab", "Bb", "C", "D"]
+notes = ["C", "Eb", "G", "Bb"]
+anchor_frets = [8, 13, 5, 10, 3, 8]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.chords-and-tabs.net/song/name/frank-ocean-solo"
+
+[[cards]]
+kind = "chord"
+title = "Ab · 核心和弦音"
+subtitle = "Ab – C – Eb；完整音位地图，不是指定 voicing"
+scale = ["Eb", "F", "G", "Ab", "Bb", "C", "D"]
+notes = ["Ab", "C", "Eb"]
+anchor_frets = [4, 9, 13, 6, 11, 4]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.chords-and-tabs.net/song/name/frank-ocean-solo"
+
+[[cards]]
+kind = "chord"
+title = "Fm7 · 核心和弦音"
+subtitle = "F – Ab – C – Eb；完整音位地图，不是指定 voicing"
+scale = ["Eb", "F", "G", "Ab", "Bb", "C", "D"]
+notes = ["F", "Ab", "C", "Eb"]
+anchor_frets = [13, 18, 10, 15, 8, 13]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.chords-and-tabs.net/song/name/frank-ocean-solo"
+
+[[cards]]
+kind = "chord"
+title = "Abm · 核心和弦音"
+subtitle = "Ab – Cb – Eb；完整音位地图，不是指定 voicing"
+scale = ["Gb", "Ab", "Bb", "Cb", "Db", "Eb", "F"]
+notes = ["Ab", "Cb", "Eb"]
+anchor_frets = [4, 9, 13, 6, 11, 4]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.chords-and-tabs.net/song/name/frank-ocean-solo"
+
+[[cards]]
+kind = "melody"
+title = "自编连接 · 核心和弦的共同音 / 最近音"
+subtitle = "G4 → G4 → Ab4 → Ab4 → Ab4"
+scale = ["Eb", "F", "G", "Ab", "Bb", "C", "D"]
+notes = ["G4", "G4", "Ab4", "Ab4", "Ab4"]
+positions = ["B8", "B8", "B9", "B9", "B9"]
+anchor_frets = [3, 8, 12, 5, 10, 3]
+footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+evidence = "arrangement"

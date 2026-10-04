@@ -1,0 +1,16 @@
+# Reuse the existing keyboard, grand staff, seven-fret windows and inlay renderer.
+atlas_config = "c-major-atlas.toml"
+paper = "#F3F5F7"
+panel = "#FFFFFF"
+ink = "#24323D"
+muted = "#647383"
+grid = "#CED6DE"
+scale = "#82909C" # White note labels remain readable on inactive scale tones.
+root = "#C63D48"
+third = "#268369"
+fifth = "#B5682B"
+seventh = "#3865BB"
+melody = "#7954AD"
+
+[library]
+slots_per_group = 5

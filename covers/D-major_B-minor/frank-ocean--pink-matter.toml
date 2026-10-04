@@ -1,0 +1,86 @@
+# Reference-based study draft; see same-name MD for evidence limits.
+title = "Frank Ocean — Pink Matter"
+info = "Channel Orange · B minor · 标准定弦实音移植，无 capo"
+status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
+structure = "人声段 / André 3000 段；段落边界待录音核对"
+progression = "主循环: Em7 → A/C# → Bm7 → Bm7"
+timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+
+[library]
+group = "D"
+rank = 2
+artist = "Frank Ocean"
+song = "Pink Matter"
+key = "B minor"
+original = "D / Bm · B minor"
+why = "ii–V 色彩与小调落点"
+melody_status = "pending"
+evidence_status = "draft"
+caveat = "采用翻弹者的 A/C# 版本；图中 A 卡不表示根音低音，请另保留 C# bass。"
+sources = ["https://www.reddit.com/r/FrankOcean/comments/1750oas", "https://www.chords-and-tabs.net/song/name/frank-ocean-pink-matter"]
+
+[[cards]]
+kind = "chord"
+title = "Em7 · 核心和弦音"
+subtitle = "E – G – B – D；完整音位地图，不是指定 voicing"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["E", "G", "B", "D"]
+anchor_frets = [12, 17, 9, 14, 7, 12]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.reddit.com/r/FrankOcean/comments/1750oas"
+
+[[cards]]
+kind = "chord"
+title = "A · 核心和弦音"
+subtitle = "A – C# – E；完整音位地图，不是指定 voicing"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["A", "C#", "E"]
+anchor_frets = [5, 10, 2, 7, 12, 5]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.reddit.com/r/FrankOcean/comments/1750oas"
+
+[[cards]]
+kind = "chord"
+title = "Bm7 · 核心和弦音"
+subtitle = "B – D – F# – A；完整音位地图，不是指定 voicing"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["B", "D", "F#", "A"]
+anchor_frets = [7, 12, 4, 9, 2, 7]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.reddit.com/r/FrankOcean/comments/1750oas"
+
+[[cards]]
+kind = "melody"
+title = "自编连接 · 核心和弦的共同音 / 最近音"
+subtitle = "G4 → A4 → A4"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["G4", "A4", "A4"]
+positions = ["B8", "e5", "e5"]
+anchor_frets = [3, 8, 12, 5, 10, 3]
+footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+evidence = "arrangement"
+
+[[cards]]
+kind = "melody"
+title = "自编练习 · Em7 上行拆分"
+subtitle = "E4 → G4 → B4"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["E4", "G4", "B4"]
+positions = ["B5", "B8", "e7"]
+anchor_frets = [12, 17, 9, 14, 7, 12]
+footer = "自编和弦音练习，不是原唱或原 riff；等距仅表示音序，不代表节奏。"
+evidence = "arrangement"
+
+[[cards]]
+kind = "melody"
+title = "自编练习 · A 上行拆分"
+subtitle = "A4 → C#5 → E5"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["A4", "C#5", "E5"]
+positions = ["e5", "e9", "e12"]
+anchor_frets = [5, 10, 2, 7, 12, 5]
+footer = "自编和弦音练习，不是原唱或原 riff；等距仅表示音序，不代表节奏。"
+evidence = "arrangement"

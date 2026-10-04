@@ -1,0 +1,86 @@
+# Reference-based study draft; see same-name MD for evidence limits.
+title = "FKA twigs — cellophane"
+info = "MAGDALENE · D major · 标准定弦实音移植，无 capo"
+status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
+structure = "Verse → Refrain → Verse → Refrain → Outro"
+progression = "骨架: Dmaj7 → Gmaj7"
+timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+
+[library]
+group = "D"
+rank = 3
+artist = "FKA twigs"
+song = "cellophane"
+key = "D major"
+original = "D / Bm · D major"
+why = "少量和弦下的七度与旋律张力"
+melody_status = "pending"
+evidence_status = "draft"
+caveat = "所引谱是两和弦伴奏简化，不声称涵盖原录音所有转位；四个补充卡是自编编配练习，不是原唱。"
+sources = ["https://www.e-chords.com/chords/fka-twigs/cellophane"]
+
+[[cards]]
+kind = "chord"
+title = "Dmaj7 · 核心和弦音"
+subtitle = "D – F# – A – C#；完整音位地图，不是指定 voicing"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["D", "F#", "A", "C#"]
+anchor_frets = [10, 15, 7, 12, 5, 10]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.e-chords.com/chords/fka-twigs/cellophane"
+
+[[cards]]
+kind = "chord"
+title = "Gmaj7 · 核心和弦音"
+subtitle = "G – B – D – F#；完整音位地图，不是指定 voicing"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["G", "B", "D", "F#"]
+anchor_frets = [3, 8, 12, 5, 10, 3]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.e-chords.com/chords/fka-twigs/cellophane"
+
+[[cards]]
+kind = "melody"
+title = "自编连接 · 核心和弦的共同音 / 最近音"
+subtitle = "F#4 → F#4"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["F#4", "F#4"]
+positions = ["B7", "B7"]
+anchor_frets = [2, 7, 11, 4, 9, 2]
+footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+evidence = "arrangement"
+
+[[cards]]
+kind = "melody"
+title = "自编练习 · Dmaj7 上行拆分"
+subtitle = "D4 → F#4 → A4"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["D4", "F#4", "A4"]
+positions = ["G7", "B7", "e5"]
+anchor_frets = [10, 15, 7, 12, 5, 10]
+footer = "自编和弦音练习，不是原唱或原 riff；等距仅表示音序，不代表节奏。"
+evidence = "arrangement"
+
+[[cards]]
+kind = "melody"
+title = "自编练习 · Gmaj7 上行拆分"
+subtitle = "G4 → B4 → D5"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["G4", "B4", "D5"]
+positions = ["B8", "e7", "e10"]
+anchor_frets = [3, 8, 12, 5, 10, 3]
+footer = "自编和弦音练习，不是原唱或原 riff；等距仅表示音序，不代表节奏。"
+evidence = "arrangement"
+
+[[cards]]
+kind = "melody"
+title = "自编练习 · Dmaj7 下行拆分"
+subtitle = "A4 → F#4 → D4"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["A4", "F#4", "D4"]
+positions = ["e5", "B7", "G7"]
+anchor_frets = [5, 10, 2, 7, 12, 5]
+footer = "自编和弦音练习，不是原唱或原 riff；等距仅表示音序，不代表节奏。"
+evidence = "arrangement"

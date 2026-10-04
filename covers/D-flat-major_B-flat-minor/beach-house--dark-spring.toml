@@ -1,0 +1,108 @@
+# Reference-based study draft; see same-name MD for evidence limits.
+title = "Beach House — Dark Spring"
+info = "7 · Db major / 多调段落 · 标准定弦实音移植，无 capo"
+status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
+structure = "Verse（Db）→ Chorus（转入不同音集）"
+progression = "Verse: Db → Fm（含 Bbm）；Chorus: Amaj7 → Dmaj7 → Gmaj7 → B7"
+timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+
+[library]
+group = "Db"
+rank = 3
+artist = "Beach House"
+song = "Dark Spring"
+key = "Db major / 多调段落"
+original = "Gb / Ebm · Eb minor"
+why = "强烈调域对比"
+melody_status = "pending"
+evidence_status = "draft"
+caveat = "原表 Ebm 不符合所引 Verse 谱；依 Verse 归 Db 组，不把 Chorus 的外来和弦误写成调内和弦。"
+sources = ["https://flypaper.soundfly.com/produce/beach-house-dark-spring-analysis/", "https://www.hooktheory.com/theorytab/view/beach-house/dark-spring"]
+
+[[cards]]
+kind = "chord"
+title = "Db · 核心和弦音"
+subtitle = "Db – F – Ab；完整音位地图，不是指定 voicing"
+scale = ["Db", "Eb", "F", "Gb", "Ab", "Bb", "C"]
+notes = ["Db", "F", "Ab"]
+anchor_frets = [9, 14, 6, 11, 4, 9]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://flypaper.soundfly.com/produce/beach-house-dark-spring-analysis/"
+
+[[cards]]
+kind = "chord"
+title = "Fm · 核心和弦音"
+subtitle = "F – Ab – C；完整音位地图，不是指定 voicing"
+scale = ["Db", "Eb", "F", "Gb", "Ab", "Bb", "C"]
+notes = ["F", "Ab", "C"]
+anchor_frets = [13, 18, 10, 15, 8, 13]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://flypaper.soundfly.com/produce/beach-house-dark-spring-analysis/"
+
+[[cards]]
+kind = "chord"
+title = "Bbm · 核心和弦音"
+subtitle = "Bb – Db – F；完整音位地图，不是指定 voicing"
+scale = ["Db", "Eb", "F", "Gb", "Ab", "Bb", "C"]
+notes = ["Bb", "Db", "F"]
+anchor_frets = [6, 11, 3, 8, 13, 6]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://flypaper.soundfly.com/produce/beach-house-dark-spring-analysis/"
+
+[[cards]]
+kind = "chord"
+title = "Amaj7 · 核心和弦音"
+subtitle = "A – C# – E – G#；完整音位地图，不是指定 voicing"
+scale = ["A", "B", "C#", "D", "E", "F#", "G#"]
+notes = ["A", "C#", "E", "G#"]
+anchor_frets = [5, 10, 2, 7, 12, 5]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://flypaper.soundfly.com/produce/beach-house-dark-spring-analysis/"
+
+[[cards]]
+kind = "chord"
+title = "Dmaj7 · 核心和弦音"
+subtitle = "D – F# – A – C#；完整音位地图，不是指定 voicing"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["D", "F#", "A", "C#"]
+anchor_frets = [10, 15, 7, 12, 5, 10]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://flypaper.soundfly.com/produce/beach-house-dark-spring-analysis/"
+
+[[cards]]
+kind = "chord"
+title = "Gmaj7 · 核心和弦音"
+subtitle = "G – B – D – F#；完整音位地图，不是指定 voicing"
+scale = ["G", "A", "B", "C", "D", "E", "F#"]
+notes = ["G", "B", "D", "F#"]
+anchor_frets = [3, 8, 12, 5, 10, 3]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://flypaper.soundfly.com/produce/beach-house-dark-spring-analysis/"
+
+[[cards]]
+kind = "chord"
+title = "B7 · 核心和弦音"
+subtitle = "B – D# – F# – A；完整音位地图，不是指定 voicing"
+scale = ["E", "F#", "G#", "A", "B", "C#", "D#"]
+notes = ["B", "D#", "F#", "A"]
+anchor_frets = [7, 12, 4, 9, 2, 7]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://flypaper.soundfly.com/produce/beach-house-dark-spring-analysis/"
+
+[[cards]]
+kind = "melody"
+title = "自编连接 · 核心和弦的共同音 / 最近音"
+subtitle = "Ab4 → Ab4 → Bb4 → Ab4 → Gb4 → Gb4 → Gb4"
+scale = ["Db", "Eb", "F", "Gb", "Ab", "Bb", "C"]
+notes = ["Ab4", "Ab4", "Bb4", "Ab4", "Gb4", "Gb4", "Gb4"]
+positions = ["B9", "B9", "e6", "B9", "B7", "B7", "B7"]
+anchor_frets = [4, 9, 13, 6, 11, 4]
+footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+evidence = "arrangement"

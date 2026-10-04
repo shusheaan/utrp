@@ -1,0 +1,97 @@
+# Reference-based study draft; see same-name MD for evidence limits.
+title = "Beach House — Drunk in LA"
+info = "7 · C minor 待核 · 标准定弦实音移植，无 capo"
+status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
+structure = "Intro → 主循环与对比段交替 → Outro；小节长度待核"
+progression = "主循环: Cm → Gm → Fm → Cm；对比: Eb → G → Ab → Cm"
+timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+
+[library]
+group = "Eb"
+rank = 4
+artist = "Beach House"
+song = "Drunk in LA"
+key = "C minor 待核"
+original = "Eb / Cm · C minor"
+why = "小调和弦之间的共通音"
+melody_status = "pending"
+evidence_status = "draft"
+caveat = "依 GuitarTuna 所列 Cm 简化谱；页面同时标 Capo 3，实音/指型语义需对录音复核。本图先按所写和弦作无 capo 实音探索，不再叠加移调；G major 的 B 是小调借用音。"
+sources = ["https://guitartuna.com/chords/drunk-in-la-beach-house-easy-guitar-chords-6739aaa709eeaaddce2ef6b0", "https://chordu.com/chords-tabs-beach-house-drunk-in-la--id_M0vMIQLXxqQ"]
+
+[[cards]]
+kind = "chord"
+title = "Cm · 核心和弦音"
+subtitle = "C – Eb – G；完整音位地图，不是指定 voicing"
+scale = ["Eb", "F", "G", "Ab", "Bb", "C", "D"]
+notes = ["C", "Eb", "G"]
+anchor_frets = [8, 13, 5, 10, 3, 8]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://guitartuna.com/chords/drunk-in-la-beach-house-easy-guitar-chords-6739aaa709eeaaddce2ef6b0"
+
+[[cards]]
+kind = "chord"
+title = "Gm · 核心和弦音"
+subtitle = "G – Bb – D；完整音位地图，不是指定 voicing"
+scale = ["Eb", "F", "G", "Ab", "Bb", "C", "D"]
+notes = ["G", "Bb", "D"]
+anchor_frets = [3, 8, 12, 5, 10, 3]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://guitartuna.com/chords/drunk-in-la-beach-house-easy-guitar-chords-6739aaa709eeaaddce2ef6b0"
+
+[[cards]]
+kind = "chord"
+title = "Fm · 核心和弦音"
+subtitle = "F – Ab – C；完整音位地图，不是指定 voicing"
+scale = ["Eb", "F", "G", "Ab", "Bb", "C", "D"]
+notes = ["F", "Ab", "C"]
+anchor_frets = [13, 18, 10, 15, 8, 13]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://guitartuna.com/chords/drunk-in-la-beach-house-easy-guitar-chords-6739aaa709eeaaddce2ef6b0"
+
+[[cards]]
+kind = "chord"
+title = "Eb · 核心和弦音"
+subtitle = "Eb – G – Bb；完整音位地图，不是指定 voicing"
+scale = ["Eb", "F", "G", "Ab", "Bb", "C", "D"]
+notes = ["Eb", "G", "Bb"]
+anchor_frets = [11, 16, 8, 13, 6, 11]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://guitartuna.com/chords/drunk-in-la-beach-house-easy-guitar-chords-6739aaa709eeaaddce2ef6b0"
+
+[[cards]]
+kind = "chord"
+title = "G · 核心和弦音"
+subtitle = "G – B – D；完整音位地图，不是指定 voicing"
+scale = ["C", "D", "E", "F", "G", "A", "B"]
+notes = ["G", "B", "D"]
+anchor_frets = [3, 8, 12, 5, 10, 3]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://guitartuna.com/chords/drunk-in-la-beach-house-easy-guitar-chords-6739aaa709eeaaddce2ef6b0"
+
+[[cards]]
+kind = "chord"
+title = "Ab · 核心和弦音"
+subtitle = "Ab – C – Eb；完整音位地图，不是指定 voicing"
+scale = ["Eb", "F", "G", "Ab", "Bb", "C", "D"]
+notes = ["Ab", "C", "Eb"]
+anchor_frets = [4, 9, 13, 6, 11, 4]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://guitartuna.com/chords/drunk-in-la-beach-house-easy-guitar-chords-6739aaa709eeaaddce2ef6b0"
+
+[[cards]]
+kind = "melody"
+title = "自编连接 · 核心和弦的共同音 / 最近音"
+subtitle = "G4 → G4 → Ab4 → G4 → G4 → Ab4"
+scale = ["Eb", "F", "G", "Ab", "Bb", "C", "D"]
+notes = ["G4", "G4", "Ab4", "G4", "G4", "Ab4"]
+positions = ["B8", "B8", "B9", "B8", "B8", "B9"]
+anchor_frets = [3, 8, 12, 5, 10, 3]
+footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+evidence = "arrangement"

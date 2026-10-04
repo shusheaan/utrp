@@ -1,0 +1,97 @@
+# Reference-based study draft; see same-name MD for evidence limits.
+title = "Beach House — Elegy to the Void"
+info = "Thank Your Lucky Stars · B major / 混合音集 · 标准定弦实音移植，无 capo"
+status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
+structure = "Verse → Chorus → 延长 Outro"
+progression = "Verse: B → D#m → A → E → B；Chorus: E → B → F# → A → G#m → D#m"
+timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+
+[library]
+group = "B"
+rank = 4
+artist = "Beach House"
+song = "Elegy to the Void"
+key = "B major / 混合音集"
+original = ""
+why = "借用 bVII 与 iii–vi 的暗色"
+melody_status = "pending"
+evidence_status = "draft"
+caveat = "capo 2 的 A 指型已换算 B 实音；Chorus 尾部另有 D# / G# 大和弦，未在六个核心卡展开。"
+sources = ["https://www.e-chords.com/chords/beach-house/elegy-to-the-void"]
+
+[[cards]]
+kind = "chord"
+title = "B · 核心和弦音"
+subtitle = "B – D# – F#；完整音位地图，不是指定 voicing"
+scale = ["B", "C#", "D#", "E", "F#", "G#", "A#"]
+notes = ["B", "D#", "F#"]
+anchor_frets = [7, 12, 4, 9, 2, 7]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.e-chords.com/chords/beach-house/elegy-to-the-void"
+
+[[cards]]
+kind = "chord"
+title = "D#m · 核心和弦音"
+subtitle = "D# – F# – A#；完整音位地图，不是指定 voicing"
+scale = ["B", "C#", "D#", "E", "F#", "G#", "A#"]
+notes = ["D#", "F#", "A#"]
+anchor_frets = [11, 16, 8, 13, 6, 11]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.e-chords.com/chords/beach-house/elegy-to-the-void"
+
+[[cards]]
+kind = "chord"
+title = "A · 核心和弦音"
+subtitle = "A – C# – E；完整音位地图，不是指定 voicing"
+scale = ["D", "E", "F#", "G", "A", "B", "C#"]
+notes = ["A", "C#", "E"]
+anchor_frets = [5, 10, 2, 7, 12, 5]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.e-chords.com/chords/beach-house/elegy-to-the-void"
+
+[[cards]]
+kind = "chord"
+title = "E · 核心和弦音"
+subtitle = "E – G# – B；完整音位地图，不是指定 voicing"
+scale = ["B", "C#", "D#", "E", "F#", "G#", "A#"]
+notes = ["E", "G#", "B"]
+anchor_frets = [12, 17, 9, 14, 7, 12]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.e-chords.com/chords/beach-house/elegy-to-the-void"
+
+[[cards]]
+kind = "chord"
+title = "F# · 核心和弦音"
+subtitle = "F# – A# – C#；完整音位地图，不是指定 voicing"
+scale = ["B", "C#", "D#", "E", "F#", "G#", "A#"]
+notes = ["F#", "A#", "C#"]
+anchor_frets = [2, 7, 11, 4, 9, 2]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.e-chords.com/chords/beach-house/elegy-to-the-void"
+
+[[cards]]
+kind = "chord"
+title = "G#m · 核心和弦音"
+subtitle = "G# – B – D#；完整音位地图，不是指定 voicing"
+scale = ["B", "C#", "D#", "E", "F#", "G#", "A#"]
+notes = ["G#", "B", "D#"]
+anchor_frets = [4, 9, 13, 6, 11, 4]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.e-chords.com/chords/beach-house/elegy-to-the-void"
+
+[[cards]]
+kind = "melody"
+title = "自编连接 · 核心和弦的共同音 / 最近音"
+subtitle = "F#4 → F#4 → E4 → E4 → F#4 → G#4"
+scale = ["B", "C#", "D#", "E", "F#", "G#", "A#"]
+notes = ["F#4", "F#4", "E4", "E4", "F#4", "G#4"]
+positions = ["B7", "B7", "B5", "B5", "B7", "B9"]
+anchor_frets = [2, 7, 11, 4, 9, 2]
+footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+evidence = "arrangement"

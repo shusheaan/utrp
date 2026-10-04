@@ -1,0 +1,86 @@
+# Reference-based study draft; see same-name MD for evidence limits.
+title = "Michael Jackson — Liberian Girl"
+info = "Bad · G# minor · 标准定弦实音移植，无 capo"
+status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
+structure = "Intro → Verse → Chorus → Outro"
+progression = "Verse: G#m → C#m7 → D#sus4；Chorus: E → G#m → C#m → D#sus4 → D#"
+timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+
+[library]
+group = "B"
+rank = 2
+artist = "Michael Jackson"
+song = "Liberian Girl"
+key = "G# minor"
+original = "B / G#m · G# minor"
+why = "小调属和弦的 sus4 解决"
+melody_status = "pending"
+evidence_status = "draft"
+caveat = "图中 D# 大和弦按 Eb 等音拼写，以便避免双升号；声音不移调。"
+sources = ["https://www.gotabs.com/michael-jackson/liberian-girl-chords"]
+
+[[cards]]
+kind = "chord"
+title = "G#m · 核心和弦音"
+subtitle = "G# – B – D#；完整音位地图，不是指定 voicing"
+scale = ["B", "C#", "D#", "E", "F#", "G#", "A#"]
+notes = ["G#", "B", "D#"]
+anchor_frets = [4, 9, 13, 6, 11, 4]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.gotabs.com/michael-jackson/liberian-girl-chords"
+
+[[cards]]
+kind = "chord"
+title = "C#m7 · 核心和弦音"
+subtitle = "C# – E – G# – B；完整音位地图，不是指定 voicing"
+scale = ["B", "C#", "D#", "E", "F#", "G#", "A#"]
+notes = ["C#", "E", "G#", "B"]
+anchor_frets = [9, 14, 6, 11, 4, 9]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.gotabs.com/michael-jackson/liberian-girl-chords"
+
+[[cards]]
+kind = "chord"
+title = "D#sus4 · 核心和弦音"
+subtitle = "D# – G# – A#；完整音位地图，不是指定 voicing"
+scale = ["B", "C#", "D#", "E", "F#", "G#", "A#"]
+notes = ["D#", "G#", "A#"]
+anchor_frets = [11, 16, 8, 13, 6, 11]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.gotabs.com/michael-jackson/liberian-girl-chords"
+
+[[cards]]
+kind = "chord"
+title = "E · 核心和弦音"
+subtitle = "E – G# – B；完整音位地图，不是指定 voicing"
+scale = ["B", "C#", "D#", "E", "F#", "G#", "A#"]
+notes = ["E", "G#", "B"]
+anchor_frets = [12, 17, 9, 14, 7, 12]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.gotabs.com/michael-jackson/liberian-girl-chords"
+
+[[cards]]
+kind = "chord"
+title = "D# · 核心和弦音"
+subtitle = "Eb – G – Bb；等音重拼；完整音位地图，不是指定 voicing"
+scale = ["Bb", "C", "D", "Eb", "F", "G", "A"]
+notes = ["Eb", "G", "Bb"]
+anchor_frets = [11, 16, 8, 13, 6, 11]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.gotabs.com/michael-jackson/liberian-girl-chords"
+
+[[cards]]
+kind = "melody"
+title = "自编连接 · 核心和弦的共同音 / 最近音"
+subtitle = "G#4 → G#4 → G#4 → G#4 → A#4"
+scale = ["B", "C#", "D#", "E", "F#", "G#", "A#"]
+notes = ["G#4", "G#4", "G#4", "G#4", "A#4"]
+positions = ["B9", "B9", "B9", "B9", "e6"]
+anchor_frets = [4, 9, 13, 6, 11, 4]
+footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+evidence = "arrangement"

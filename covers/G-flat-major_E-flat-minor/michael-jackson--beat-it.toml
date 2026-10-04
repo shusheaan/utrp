@@ -1,0 +1,86 @@
+# Reference-based study draft; see same-name MD for evidence limits.
+title = "Michael Jackson — Beat It"
+info = "Thriller · Eb minor · 标准定弦实音移植，无 capo"
+status = "和声研究初稿；短 riff 据公开 TAB，尚未逐音听核。"
+structure = "Intro riff → Verse → Chorus → Solo → Chorus"
+progression = "Verse / Chorus 核心: Ebm → Db；段尾: Cb → Db → Ebm"
+timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+
+[library]
+group = "Gb"
+rank = 4
+artist = "Michael Jackson"
+song = "Beat It"
+key = "Eb minor"
+original = "Gb / Ebm · Eb minor"
+why = "riff 的小调骨架与节奏张力"
+melody_status = "excerpt"
+evidence_status = "draft"
+caveat = "原谱吉他降半音定弦、Em 指型；本页换算 Ebm 实音并移植标准定弦。和弦卡是和声补全，原吉他多为 power chord。"
+sources = ["https://www.cifraclub.com/michael-jackson/beat-it/"]
+
+[[cards]]
+kind = "chord"
+title = "Ebm · 核心和弦音"
+subtitle = "Eb – Gb – Bb；完整音位地图，不是指定 voicing"
+scale = ["Gb", "Ab", "Bb", "Cb", "Db", "Eb", "F"]
+notes = ["Eb", "Gb", "Bb"]
+anchor_frets = [11, 16, 8, 13, 6, 11]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.cifraclub.com/michael-jackson/beat-it/"
+
+[[cards]]
+kind = "chord"
+title = "Db · 核心和弦音"
+subtitle = "Db – F – Ab；完整音位地图，不是指定 voicing"
+scale = ["Gb", "Ab", "Bb", "Cb", "Db", "Eb", "F"]
+notes = ["Db", "F", "Ab"]
+anchor_frets = [9, 14, 6, 11, 4, 9]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.cifraclub.com/michael-jackson/beat-it/"
+
+[[cards]]
+kind = "chord"
+title = "Cb · 核心和弦音"
+subtitle = "Cb – Eb – Gb；完整音位地图，不是指定 voicing"
+scale = ["Gb", "Ab", "Bb", "Cb", "Db", "Eb", "F"]
+notes = ["Cb", "Eb", "Gb"]
+anchor_frets = [7, 12, 4, 9, 2, 7]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.cifraclub.com/michael-jackson/beat-it/"
+
+[[cards]]
+kind = "melody"
+title = "吉他 riff · 前六次起音"
+subtitle = "Eb3 → Gb3 → Bb3 → Gb4 → Eb4 → Eb4"
+scale = ["Gb", "Ab", "Bb", "Cb", "Db", "Eb", "F"]
+notes = ["Eb3", "Gb3", "Bb3", "Gb4", "Eb4", "Eb4"]
+positions = ["A6", "A9", "D8", "B7", "G8", "G8"]
+anchor_frets = [11, 16, 8, 13, 6, 11]
+footer = "降半音 TAB E0–E3–A2–D5–D2–D2，移高八度至本图；不含后续 hammer-on。"
+evidence = "source_excerpt"
+
+[[cards]]
+kind = "melody"
+title = "自编连接 · 核心和弦的共同音 / 最近音"
+subtitle = "Gb4 → F4 → Gb4"
+scale = ["Gb", "Ab", "Bb", "Cb", "Db", "Eb", "F"]
+notes = ["Gb4", "F4", "Gb4"]
+positions = ["B7", "B6", "B7"]
+anchor_frets = [2, 7, 11, 4, 9, 2]
+footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+evidence = "arrangement"
+
+[[cards]]
+kind = "melody"
+title = "自编练习 · Ebm 上行拆分"
+subtitle = "Eb4 → Gb4 → Bb4"
+scale = ["Gb", "Ab", "Bb", "Cb", "Db", "Eb", "F"]
+notes = ["Eb4", "Gb4", "Bb4"]
+positions = ["G8", "B7", "e6"]
+anchor_frets = [11, 16, 8, 13, 6, 11]
+footer = "自编和弦音练习，不是原唱或原 riff；等距仅表示音序，不代表节奏。"
+evidence = "arrangement"

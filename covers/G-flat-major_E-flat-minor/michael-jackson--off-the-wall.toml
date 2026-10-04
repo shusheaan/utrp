@@ -1,0 +1,97 @@
+# Reference-based study draft; see same-name MD for evidence limits.
+title = "Michael Jackson — Off the Wall"
+info = "Off the Wall · Eb minor · 标准定弦实音移植，无 capo"
+status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
+structure = "Verse vamp → Chorus / 对比段；转位见来源"
+progression = "Verse: Ebm9；Chorus 核心: Abm7 → Bmaj7 → Bbm7 → Abm7"
+timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+
+[library]
+group = "Gb"
+rank = 2
+artist = "Michael Jackson"
+song = "Off the Wall"
+key = "Eb minor"
+original = ""
+why = "九和弦与半音侧移"
+melody_status = "pending"
+evidence_status = "draft"
+caveat = "参考谱混用 B / Cb、F# / Gb 拼法；此页保留声音对应，卡片按局部音集等音规范化。"
+sources = ["https://www.cifraclub.com/michael-jackson/off-the-wall/"]
+
+[[cards]]
+kind = "chord"
+title = "Ebm9 · 核心和弦音"
+subtitle = "Eb – Gb – Bb – Db – F；完整音位地图，不是指定 voicing"
+scale = ["Gb", "Ab", "Bb", "Cb", "Db", "Eb", "F"]
+notes = ["Eb", "Gb", "Bb", "Db", "F"]
+anchor_frets = [11, 16, 8, 13, 6, 11]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.cifraclub.com/michael-jackson/off-the-wall/"
+
+[[cards]]
+kind = "chord"
+title = "Abm7 · 核心和弦音"
+subtitle = "Ab – Cb – Eb – Gb；完整音位地图，不是指定 voicing"
+scale = ["Gb", "Ab", "Bb", "Cb", "Db", "Eb", "F"]
+notes = ["Ab", "Cb", "Eb", "Gb"]
+anchor_frets = [4, 9, 13, 6, 11, 4]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.cifraclub.com/michael-jackson/off-the-wall/"
+
+[[cards]]
+kind = "chord"
+title = "Bbm7 · 核心和弦音"
+subtitle = "Bb – Db – F – Ab；完整音位地图，不是指定 voicing"
+scale = ["Gb", "Ab", "Bb", "Cb", "Db", "Eb", "F"]
+notes = ["Bb", "Db", "F", "Ab"]
+anchor_frets = [6, 11, 3, 8, 13, 6]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.cifraclub.com/michael-jackson/off-the-wall/"
+
+[[cards]]
+kind = "chord"
+title = "Bmaj7 · 核心和弦音"
+subtitle = "B – D# – F# – A#；完整音位地图，不是指定 voicing"
+scale = ["B", "C#", "D#", "E", "F#", "G#", "A#"]
+notes = ["B", "D#", "F#", "A#"]
+anchor_frets = [7, 12, 4, 9, 2, 7]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.cifraclub.com/michael-jackson/off-the-wall/"
+
+[[cards]]
+kind = "chord"
+title = "Gbmaj7 · 核心和弦音"
+subtitle = "Gb – Bb – Db – F；完整音位地图，不是指定 voicing"
+scale = ["Gb", "Ab", "Bb", "Cb", "Db", "Eb", "F"]
+notes = ["Gb", "Bb", "Db", "F"]
+anchor_frets = [2, 7, 11, 4, 9, 2]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.cifraclub.com/michael-jackson/off-the-wall/"
+
+[[cards]]
+kind = "chord"
+title = "Emaj7 · 核心和弦音"
+subtitle = "E – G# – B – D#；完整音位地图，不是指定 voicing"
+scale = ["E", "F#", "G#", "A", "B", "C#", "D#"]
+notes = ["E", "G#", "B", "D#"]
+anchor_frets = [12, 17, 9, 14, 7, 12]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.cifraclub.com/michael-jackson/off-the-wall/"
+
+[[cards]]
+kind = "melody"
+title = "自编连接 · 核心和弦的共同音 / 最近音"
+subtitle = "Gb4 → Gb4 → F4 → Gb4 → Gb4 → Ab4"
+scale = ["Gb", "Ab", "Bb", "Cb", "Db", "Eb", "F"]
+notes = ["Gb4", "Gb4", "F4", "Gb4", "Gb4", "Ab4"]
+positions = ["B7", "B7", "B6", "B7", "B7", "B9"]
+anchor_frets = [2, 7, 11, 4, 9, 2]
+footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+evidence = "arrangement"

@@ -1,0 +1,86 @@
+# Reference-based study draft; see same-name MD for evidence limits.
+title = "Frank Ocean — Godspeed"
+info = "Blonde · Db major 待核 · 标准定弦实音移植，无 capo"
+status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
+structure = "Intro → Verse → Chorus → Outro"
+progression = "Intro: Db → Cb → Gb；Chorus: Db → Ab/C → Cb → Gb → Bbm"
+timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+
+[library]
+group = "Db"
+rank = 1
+artist = "Frank Ocean"
+song = "Godspeed"
+key = "Db major 待核"
+original = "Db / Bbm · Db major"
+why = "福音终止与借用 bVII"
+melody_status = "pending"
+evidence_status = "draft"
+caveat = "capo 1 的 C/Bb/F 谱已换算实音；部分出版谱标 Gb，工作中心 Db 依据终止分析，不能称已无争议。"
+sources = ["https://www.guitartabsexplorer.com/ocean-frank/godspeed-chords", "https://podscripts.co/podcasts/dissect/s3e17-godspeed-futura-free-by-frank-ocean", "https://www.musicnotes.com/sheetmusic/frank-ocean/godspeed/MN0210504"]
+
+[[cards]]
+kind = "chord"
+title = "Db · 核心和弦音"
+subtitle = "Db – F – Ab；完整音位地图，不是指定 voicing"
+scale = ["Db", "Eb", "F", "Gb", "Ab", "Bb", "C"]
+notes = ["Db", "F", "Ab"]
+anchor_frets = [9, 14, 6, 11, 4, 9]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.guitartabsexplorer.com/ocean-frank/godspeed-chords"
+
+[[cards]]
+kind = "chord"
+title = "Cb · 核心和弦音"
+subtitle = "Cb – Eb – Gb；完整音位地图，不是指定 voicing"
+scale = ["Gb", "Ab", "Bb", "Cb", "Db", "Eb", "F"]
+notes = ["Cb", "Eb", "Gb"]
+anchor_frets = [7, 12, 4, 9, 2, 7]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.guitartabsexplorer.com/ocean-frank/godspeed-chords"
+
+[[cards]]
+kind = "chord"
+title = "Gb · 核心和弦音"
+subtitle = "Gb – Bb – Db；完整音位地图，不是指定 voicing"
+scale = ["Db", "Eb", "F", "Gb", "Ab", "Bb", "C"]
+notes = ["Gb", "Bb", "Db"]
+anchor_frets = [2, 7, 11, 4, 9, 2]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.guitartabsexplorer.com/ocean-frank/godspeed-chords"
+
+[[cards]]
+kind = "chord"
+title = "Ab · 核心和弦音"
+subtitle = "Ab – C – Eb；完整音位地图，不是指定 voicing"
+scale = ["Db", "Eb", "F", "Gb", "Ab", "Bb", "C"]
+notes = ["Ab", "C", "Eb"]
+anchor_frets = [4, 9, 13, 6, 11, 4]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.guitartabsexplorer.com/ocean-frank/godspeed-chords"
+
+[[cards]]
+kind = "chord"
+title = "Bbm · 核心和弦音"
+subtitle = "Bb – Db – F；完整音位地图，不是指定 voicing"
+scale = ["Db", "Eb", "F", "Gb", "Ab", "Bb", "C"]
+notes = ["Bb", "Db", "F"]
+anchor_frets = [6, 11, 3, 8, 13, 6]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.guitartabsexplorer.com/ocean-frank/godspeed-chords"
+
+[[cards]]
+kind = "melody"
+title = "自编连接 · 核心和弦的共同音 / 最近音"
+subtitle = "Ab4 → Gb4 → Gb4 → Ab4 → Bb4"
+scale = ["Db", "Eb", "F", "Gb", "Ab", "Bb", "C"]
+notes = ["Ab4", "Gb4", "Gb4", "Ab4", "Bb4"]
+positions = ["B9", "B7", "B7", "B9", "e6"]
+anchor_frets = [4, 9, 13, 6, 11, 4]
+footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+evidence = "arrangement"

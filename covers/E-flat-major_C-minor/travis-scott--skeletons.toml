@@ -1,0 +1,97 @@
+# Reference-based study draft; see same-name MD for evidence limits.
+title = "Travis Scott — SKELETONS"
+info = "ASTROWORLD · C minor 待核 · 标准定弦实音移植，无 capo"
+status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
+structure = "两个循环变体；段落边界待核"
+progression = "循环: Gm → Ab → Fm → Bb；G7 → Cm → Fm → Bb"
+timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+
+[library]
+group = "Eb"
+rank = 2
+artist = "Travis Scott"
+song = "SKELETONS"
+key = "C minor 待核"
+original = "Eb / Cm · C minor"
+why = "自然小调与属七的对比"
+melody_status = "pending"
+evidence_status = "draft"
+caveat = "参考谱对 C7 / Cm 存在差异；此版用 Cm 候选，不称已完整核对录音。"
+sources = ["https://www.chords-and-tabs.net/song/name/travis-scott-skeletons", "https://www.youtube.com/watch?v=LVzth3e53Io"]
+
+[[cards]]
+kind = "chord"
+title = "Gm · 核心和弦音"
+subtitle = "G – Bb – D；完整音位地图，不是指定 voicing"
+scale = ["Eb", "F", "G", "Ab", "Bb", "C", "D"]
+notes = ["G", "Bb", "D"]
+anchor_frets = [3, 8, 12, 5, 10, 3]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.chords-and-tabs.net/song/name/travis-scott-skeletons"
+
+[[cards]]
+kind = "chord"
+title = "Ab · 核心和弦音"
+subtitle = "Ab – C – Eb；完整音位地图，不是指定 voicing"
+scale = ["Eb", "F", "G", "Ab", "Bb", "C", "D"]
+notes = ["Ab", "C", "Eb"]
+anchor_frets = [4, 9, 13, 6, 11, 4]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.chords-and-tabs.net/song/name/travis-scott-skeletons"
+
+[[cards]]
+kind = "chord"
+title = "Fm · 核心和弦音"
+subtitle = "F – Ab – C；完整音位地图，不是指定 voicing"
+scale = ["Eb", "F", "G", "Ab", "Bb", "C", "D"]
+notes = ["F", "Ab", "C"]
+anchor_frets = [13, 18, 10, 15, 8, 13]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.chords-and-tabs.net/song/name/travis-scott-skeletons"
+
+[[cards]]
+kind = "chord"
+title = "Bb · 核心和弦音"
+subtitle = "Bb – D – F；完整音位地图，不是指定 voicing"
+scale = ["Eb", "F", "G", "Ab", "Bb", "C", "D"]
+notes = ["Bb", "D", "F"]
+anchor_frets = [6, 11, 3, 8, 13, 6]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.chords-and-tabs.net/song/name/travis-scott-skeletons"
+
+[[cards]]
+kind = "chord"
+title = "G7 · 核心和弦音"
+subtitle = "G – B – D – F；完整音位地图，不是指定 voicing"
+scale = ["C", "D", "E", "F", "G", "A", "B"]
+notes = ["G", "B", "D", "F"]
+anchor_frets = [3, 8, 12, 5, 10, 3]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.chords-and-tabs.net/song/name/travis-scott-skeletons"
+
+[[cards]]
+kind = "chord"
+title = "Cm · 核心和弦音"
+subtitle = "C – Eb – G；完整音位地图，不是指定 voicing"
+scale = ["Eb", "F", "G", "Ab", "Bb", "C", "D"]
+notes = ["C", "Eb", "G"]
+anchor_frets = [8, 13, 5, 10, 3, 8]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://www.chords-and-tabs.net/song/name/travis-scott-skeletons"
+
+[[cards]]
+kind = "melody"
+title = "自编连接 · 核心和弦的共同音 / 最近音"
+subtitle = "G4 → Ab4 → Ab4 → Bb4 → G4 → G4"
+scale = ["Eb", "F", "G", "Ab", "Bb", "C", "D"]
+notes = ["G4", "Ab4", "Ab4", "Bb4", "G4", "G4"]
+positions = ["B8", "B9", "B9", "e6", "B8", "B8"]
+anchor_frets = [3, 8, 12, 5, 10, 3]
+footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+evidence = "arrangement"
