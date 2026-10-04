@@ -1,0 +1,35 @@
+title = "C major"
+key = "C"
+# Relative degrees 1 through 7, transposed with each key (C D E F G A B in C).
+# 1 red; 2/3 green; 4/5 salmon; 6/7 blue. Piano key bodies stay black/white.
+colors = ["#CE303A", "#258448", "#258448", "#E86568", "#E86568", "#1649E8", "#1649E8"]
+# Keyboard and colored circles use white note names, with no degree digits.
+# Uppercase note letters with explicit flat/sharp signs; uniform font weight.
+music_font = "/usr/share/fonts/gnu-free/FreeSerif.otf"
+text_font = "Noto Sans CJK SC, sans-serif"
+first_midi = 41 # F2
+last_midi = 84 # C6: three octaves plus a perfect fifth above F2.
+tuning = [64, 59, 55, 50, 45, 40] # High e to low E, sounding MIDI.
+anchor_frets = [8, 13, 5, 10, 3, 8] # A C on each corresponding string.
+frets_before_anchor = 2
+frets_after_anchor = 4
+
+[overview]
+keys = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
+columns = 4
+rows = 3
+gap = 16
+
+[blocks]
+# Adjacent strings: upper string 3 (G3), lower string 4 (D3).
+# D/E over A/B, then F/G over C/D: fret offsets 0, 2, 3, 5.
+upper_string = 3
+first_fret = 7
+
+[theme]
+paper = "#F7F5F0"
+panel = "#FFFFFF"
+ink = "#24323D"
+muted = "#70808B"
+line = "#CCD4D7"
+black_key = "#26313B"
