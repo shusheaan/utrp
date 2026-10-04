@@ -340,6 +340,33 @@ def pitch_label(x: float, y: float, letter: str, accidental: int, size: int) -> 
                 "#FFFFFF", "middle")
 
 
+def key_signature_svg(key: MajorKey, clef: str, fill: str) -> list[str]:
+    """Conventional signature order and staff positions, with font-free signs."""
+    if clef not in ("treble", "bass"):
+        raise ValueError("Unknown clef")
+    accidentals = dict(zip(key.letters, key.accidentals))
+    sharp = 1 in key.accidentals
+    order = "FCGDAEB" if sharp else "BEADGCF"
+    # Diatonic steps above the bottom line; bass signatures sit two steps lower.
+    steps = (8, 5, 9, 6, 3, 7, 4) if sharp else (4, 7, 3, 6, 2, 5, 1)
+    bottom = 178 if clef == "treble" else 262
+    path = ("M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" if sharp else
+            "M-3 -22 V5 C10 -1 7 -13 -3 -4")
+    parts: list[str] = []
+    for letter, step in zip(order, steps):
+        if accidentals[letter] == 0:
+            continue
+        x = 1078 + len(parts) * 14
+        y = bottom - (step - (2 if clef == "bass" else 0)) * 7
+        sign = "♯" if sharp else "♭"
+        parts.append(f'<g data-key-signature="{clef}" data-letter="{letter}" '
+                     f'data-accidental="{accidentals[letter]}" '
+                     f'transform="translate({x} {y})"><title>{letter}{sign}</title>'
+                     f'<path d="{path}" fill="none" stroke="{fill}" '
+                     f'stroke-width="2" stroke-linecap="round"/></g>')
+    return parts
+
+
 def staff_svg(settings: Settings, clefs: tuple[str, str]) -> list[str]:
     t = settings.theme
     parts: list[str] = []
@@ -356,8 +383,11 @@ def staff_svg(settings: Settings, clefs: tuple[str, str]) -> list[str]:
         parts.append(f'<path id="{clef}-clef" d="{glyph}" fill="{t.ink}" '
                      f'transform="translate(1027 {anchor_y + glyph_anchor * scale:g}) '
                      f'scale({scale:g} {-scale:g})"/>')
+        signature = key_signature_svg(settings.key, clef, t.ink)
+        parts.extend(signature)
+        note_start = 1090 + len(signature) * 14
         for index, note in enumerate(notes):
-            x = 1090 + index * 446 / max(1, len(notes) - 1)
+            x = note_start + index * (1536 - note_start) / max(1, len(notes) - 1)
             y = staff_y(note, clef)
             fill = settings.colors[note.degree]
             parts.append(f'<g id="note-{note.midi}" data-midi="{note.midi}" '

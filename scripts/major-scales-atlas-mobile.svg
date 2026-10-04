@@ -1402,64 +1402,69 @@
 <line x1="1032" y1="136" x2="1552" y2="136" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="122" x2="1552" y2="122" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key1-treble-clef" d="M434 2C506 30 542 82 542 162C542 256 479 332 397 332C389 332 378 331 368 329L342 447C417 516 455 601 455 710C455 831 404 900 379 900C340 900 280 820 280 689C280 641 288 593 303 539C212 449 120 355 120 232C120 99 227 -12 356 -12C373 -12 393 -11 411 -6C430 -91 439 -141 439 -157C439 -250 372 -268 338 -268C311 -268 292 -258 280 -240C327 -240 350 -220 350 -178C350 -143 324 -107 283 -107C242 -107 213 -153 213 -190C213 -247 272 -291 337 -291C406 -291 464 -242 464 -170C464 -109 436 -5 434 2ZM426 746C426 682 371 587 321 557C312 578 308 603 308 630C308 712 343 801 394 801C416 801 426 783 426 746ZM498 128C498 78 474 43 428 23L383 249C450 249 498 203 498 128ZM407 17C379 10 360 6 348 6C259 6 168 77 168 177C168 260 220 342 325 430L343 323C299 307 248 250 248 184C248 113 307 76 340 66L348 71C347 71 289 104 289 158C289 198 326 239 361 247Z" fill="#24323D" transform="translate(1027 176.268) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="treble" data-letter="B" data-accidental="-1" transform="translate(1078 150)"><title>B♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="E" data-accidental="-1" transform="translate(1092 129)"><title>E♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="A" data-accidental="-1" transform="translate(1106 157)"><title>A♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="D" data-accidental="-1" transform="translate(1120 136)"><title>D♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="G" data-accidental="-1" transform="translate(1134 164)"><title>G♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key1-note-60" data-midi="60" data-degree="7" data-color="#1649E8"><title>C4 / degree 7</title>
-<line x1="1075" y1="192" x2="1105" y2="192" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1090" cy="192" r="10.5" fill="#1649E8"/>
-<text x="1090" y="196" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
+<line x1="1145" y1="192" x2="1175" y2="192" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1160" cy="192" r="10.5" fill="#1649E8"/>
+<text x="1160" y="196" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
 </g>
 <g id="key1-note-61" data-midi="61" data-degree="1" data-color="#CE303A"><title>D♭4 / degree 1</title>
-<circle cx="1121.86" cy="185" r="10.5" fill="#CE303A"/>
-<text x="1121.86" y="189" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♭</text>
+<circle cx="1186.86" cy="185" r="10.5" fill="#CE303A"/>
+<text x="1186.86" y="189" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♭</text>
 </g>
 <g id="key1-note-63" data-midi="63" data-degree="2" data-color="#258448"><title>E♭4 / degree 2</title>
-<circle cx="1153.71" cy="178" r="10.5" fill="#258448"/>
-<text x="1153.71" y="182" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
+<circle cx="1213.71" cy="178" r="10.5" fill="#258448"/>
+<text x="1213.71" y="182" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
 </g>
 <g id="key1-note-65" data-midi="65" data-degree="3" data-color="#258448"><title>F4 / degree 3</title>
-<circle cx="1185.57" cy="171" r="10.5" fill="#258448"/>
-<text x="1185.57" y="175" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1240.57" cy="171" r="10.5" fill="#258448"/>
+<text x="1240.57" y="175" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key1-note-66" data-midi="66" data-degree="4" data-color="#E86568"><title>G♭4 / degree 4</title>
-<circle cx="1217.43" cy="164" r="10.5" fill="#E86568"/>
-<text x="1217.43" y="168" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♭</text>
+<circle cx="1267.43" cy="164" r="10.5" fill="#E86568"/>
+<text x="1267.43" y="168" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♭</text>
 </g>
 <g id="key1-note-68" data-midi="68" data-degree="5" data-color="#E86568"><title>A♭4 / degree 5</title>
-<circle cx="1249.29" cy="157" r="10.5" fill="#E86568"/>
-<text x="1249.29" y="161" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
+<circle cx="1294.29" cy="157" r="10.5" fill="#E86568"/>
+<text x="1294.29" y="161" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
 </g>
 <g id="key1-note-70" data-midi="70" data-degree="6" data-color="#1649E8"><title>B♭4 / degree 6</title>
-<circle cx="1281.14" cy="150" r="10.5" fill="#1649E8"/>
-<text x="1281.14" y="154" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
+<circle cx="1321.14" cy="150" r="10.5" fill="#1649E8"/>
+<text x="1321.14" y="154" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
 </g>
 <g id="key1-note-72" data-midi="72" data-degree="7" data-color="#1649E8"><title>C5 / degree 7</title>
-<circle cx="1313" cy="143" r="10.5" fill="#1649E8"/>
-<text x="1313" y="147" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
+<circle cx="1348" cy="143" r="10.5" fill="#1649E8"/>
+<text x="1348" y="147" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
 </g>
 <g id="key1-note-73" data-midi="73" data-degree="1" data-color="#CE303A"><title>D♭5 / degree 1</title>
-<circle cx="1344.86" cy="136" r="10.5" fill="#CE303A"/>
-<text x="1344.86" y="140" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♭</text>
+<circle cx="1374.86" cy="136" r="10.5" fill="#CE303A"/>
+<text x="1374.86" y="140" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♭</text>
 </g>
 <g id="key1-note-75" data-midi="75" data-degree="2" data-color="#258448"><title>E♭5 / degree 2</title>
-<circle cx="1376.71" cy="129" r="10.5" fill="#258448"/>
-<text x="1376.71" y="133" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
+<circle cx="1401.71" cy="129" r="10.5" fill="#258448"/>
+<text x="1401.71" y="133" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
 </g>
 <g id="key1-note-77" data-midi="77" data-degree="3" data-color="#258448"><title>F5 / degree 3</title>
-<circle cx="1408.57" cy="122" r="10.5" fill="#258448"/>
-<text x="1408.57" y="126" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1428.57" cy="122" r="10.5" fill="#258448"/>
+<text x="1428.57" y="126" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key1-note-78" data-midi="78" data-degree="4" data-color="#E86568"><title>G♭5 / degree 4</title>
-<circle cx="1440.43" cy="115" r="10.5" fill="#E86568"/>
-<text x="1440.43" y="119" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♭</text>
+<circle cx="1455.43" cy="115" r="10.5" fill="#E86568"/>
+<text x="1455.43" y="119" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♭</text>
 </g>
 <g id="key1-note-80" data-midi="80" data-degree="5" data-color="#E86568"><title>A♭5 / degree 5</title>
-<line x1="1457.29" y1="108" x2="1487.29" y2="108" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1472.29" cy="108" r="10.5" fill="#E86568"/>
-<text x="1472.29" y="112" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
+<line x1="1467.29" y1="108" x2="1497.29" y2="108" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1482.29" cy="108" r="10.5" fill="#E86568"/>
+<text x="1482.29" y="112" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
 </g>
 <g id="key1-note-82" data-midi="82" data-degree="6" data-color="#1649E8"><title>B♭5 / degree 6</title>
-<line x1="1489.14" y1="108" x2="1519.14" y2="108" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1504.14" cy="101" r="10.5" fill="#1649E8"/>
-<text x="1504.14" y="105" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
+<line x1="1494.14" y1="108" x2="1524.14" y2="108" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1509.14" cy="101" r="10.5" fill="#1649E8"/>
+<text x="1509.14" y="105" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
 </g>
 <g id="key1-note-84" data-midi="84" data-degree="7" data-color="#1649E8"><title>C6 / degree 7</title>
 <line x1="1521" y1="108" x2="1551" y2="108" stroke="#70808B" stroke-width="1.2"/>
@@ -1473,45 +1478,50 @@
 <line x1="1032" y1="220" x2="1552" y2="220" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="206" x2="1552" y2="206" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key1-bass-clef" d="M564 704C543 704 521 688 521 663C521 633 535 618 563 618C584 618 607 638 607 661C607 684 588 704 564 704ZM564 511C539 511 521 490 521 469C521 439 535 424 564 424C585 424 607 442 607 469C607 486 589 511 564 511ZM285 757C185 757 94 697 94 607C94 559 131 525 183 525C222 525 257 552 257 592C257 625 230 651 194 651C184 651 174 644 160 644C146 644 140 650 140 659C140 674 157 735 262 735C336 735 373 683 373 578C373 354 127 217 75 182L80 166C211 231 476 360 476 569C476 670 394 757 285 757Z" fill="#24323D" transform="translate(1027 260.845) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="bass" data-letter="B" data-accidental="-1" transform="translate(1078 248)"><title>B♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="E" data-accidental="-1" transform="translate(1092 227)"><title>E♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="A" data-accidental="-1" transform="translate(1106 255)"><title>A♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="D" data-accidental="-1" transform="translate(1120 234)"><title>D♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="G" data-accidental="-1" transform="translate(1134 262)"><title>G♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key1-note-41" data-midi="41" data-degree="3" data-color="#258448"><title>F2 / degree 3</title>
-<circle cx="1090" cy="269" r="10.5" fill="#258448"/>
-<text x="1090" y="273" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1160" cy="269" r="10.5" fill="#258448"/>
+<text x="1160" y="273" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key1-note-42" data-midi="42" data-degree="4" data-color="#E86568"><title>G♭2 / degree 4</title>
-<circle cx="1134.6" cy="262" r="10.5" fill="#E86568"/>
-<text x="1134.6" y="266" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♭</text>
+<circle cx="1197.6" cy="262" r="10.5" fill="#E86568"/>
+<text x="1197.6" y="266" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♭</text>
 </g>
 <g id="key1-note-44" data-midi="44" data-degree="5" data-color="#E86568"><title>A♭2 / degree 5</title>
-<circle cx="1179.2" cy="255" r="10.5" fill="#E86568"/>
-<text x="1179.2" y="259" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
+<circle cx="1235.2" cy="255" r="10.5" fill="#E86568"/>
+<text x="1235.2" y="259" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
 </g>
 <g id="key1-note-46" data-midi="46" data-degree="6" data-color="#1649E8"><title>B♭2 / degree 6</title>
-<circle cx="1223.8" cy="248" r="10.5" fill="#1649E8"/>
-<text x="1223.8" y="252" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
+<circle cx="1272.8" cy="248" r="10.5" fill="#1649E8"/>
+<text x="1272.8" y="252" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
 </g>
 <g id="key1-note-48" data-midi="48" data-degree="7" data-color="#1649E8"><title>C3 / degree 7</title>
-<circle cx="1268.4" cy="241" r="10.5" fill="#1649E8"/>
-<text x="1268.4" y="245" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
+<circle cx="1310.4" cy="241" r="10.5" fill="#1649E8"/>
+<text x="1310.4" y="245" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
 </g>
 <g id="key1-note-49" data-midi="49" data-degree="1" data-color="#CE303A"><title>D♭3 / degree 1</title>
-<circle cx="1313" cy="234" r="10.5" fill="#CE303A"/>
-<text x="1313" y="238" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♭</text>
+<circle cx="1348" cy="234" r="10.5" fill="#CE303A"/>
+<text x="1348" y="238" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♭</text>
 </g>
 <g id="key1-note-51" data-midi="51" data-degree="2" data-color="#258448"><title>E♭3 / degree 2</title>
-<circle cx="1357.6" cy="227" r="10.5" fill="#258448"/>
-<text x="1357.6" y="231" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
+<circle cx="1385.6" cy="227" r="10.5" fill="#258448"/>
+<text x="1385.6" y="231" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
 </g>
 <g id="key1-note-53" data-midi="53" data-degree="3" data-color="#258448"><title>F3 / degree 3</title>
-<circle cx="1402.2" cy="220" r="10.5" fill="#258448"/>
-<text x="1402.2" y="224" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1423.2" cy="220" r="10.5" fill="#258448"/>
+<text x="1423.2" y="224" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key1-note-54" data-midi="54" data-degree="4" data-color="#E86568"><title>G♭3 / degree 4</title>
-<circle cx="1446.8" cy="213" r="10.5" fill="#E86568"/>
-<text x="1446.8" y="217" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♭</text>
+<circle cx="1460.8" cy="213" r="10.5" fill="#E86568"/>
+<text x="1460.8" y="217" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♭</text>
 </g>
 <g id="key1-note-56" data-midi="56" data-degree="5" data-color="#E86568"><title>A♭3 / degree 5</title>
-<circle cx="1491.4" cy="206" r="10.5" fill="#E86568"/>
-<text x="1491.4" y="210" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
+<circle cx="1498.4" cy="206" r="10.5" fill="#E86568"/>
+<text x="1498.4" y="210" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
 </g>
 <g id="key1-note-58" data-midi="58" data-degree="6" data-color="#1649E8"><title>B♭3 / degree 6</title>
 <circle cx="1536" cy="199" r="10.5" fill="#1649E8"/>
@@ -2543,59 +2553,61 @@
 <line x1="1032" y1="136" x2="1552" y2="136" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="122" x2="1552" y2="122" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key2-treble-clef" d="M434 2C506 30 542 82 542 162C542 256 479 332 397 332C389 332 378 331 368 329L342 447C417 516 455 601 455 710C455 831 404 900 379 900C340 900 280 820 280 689C280 641 288 593 303 539C212 449 120 355 120 232C120 99 227 -12 356 -12C373 -12 393 -11 411 -6C430 -91 439 -141 439 -157C439 -250 372 -268 338 -268C311 -268 292 -258 280 -240C327 -240 350 -220 350 -178C350 -143 324 -107 283 -107C242 -107 213 -153 213 -190C213 -247 272 -291 337 -291C406 -291 464 -242 464 -170C464 -109 436 -5 434 2ZM426 746C426 682 371 587 321 557C312 578 308 603 308 630C308 712 343 801 394 801C416 801 426 783 426 746ZM498 128C498 78 474 43 428 23L383 249C450 249 498 203 498 128ZM407 17C379 10 360 6 348 6C259 6 168 77 168 177C168 260 220 342 325 430L343 323C299 307 248 250 248 184C248 113 307 76 340 66L348 71C347 71 289 104 289 158C289 198 326 239 361 247Z" fill="#24323D" transform="translate(1027 176.268) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="treble" data-letter="F" data-accidental="1" transform="translate(1078 122)"><title>F♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="C" data-accidental="1" transform="translate(1092 143)"><title>C♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key2-note-61" data-midi="61" data-degree="7" data-color="#1649E8"><title>C♯4 / degree 7</title>
-<line x1="1075" y1="192" x2="1105" y2="192" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1090" cy="192" r="10.5" fill="#1649E8"/>
-<text x="1090" y="196" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
+<line x1="1103" y1="192" x2="1133" y2="192" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1118" cy="192" r="10.5" fill="#1649E8"/>
+<text x="1118" y="196" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
 </g>
 <g id="key2-note-62" data-midi="62" data-degree="1" data-color="#CE303A"><title>D4 / degree 1</title>
-<circle cx="1124.31" cy="185" r="10.5" fill="#CE303A"/>
-<text x="1124.31" y="189" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
+<circle cx="1150.15" cy="185" r="10.5" fill="#CE303A"/>
+<text x="1150.15" y="189" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
 </g>
 <g id="key2-note-64" data-midi="64" data-degree="2" data-color="#258448"><title>E4 / degree 2</title>
-<circle cx="1158.62" cy="178" r="10.5" fill="#258448"/>
-<text x="1158.62" y="182" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
+<circle cx="1182.31" cy="178" r="10.5" fill="#258448"/>
+<text x="1182.31" y="182" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
 </g>
 <g id="key2-note-66" data-midi="66" data-degree="3" data-color="#258448"><title>F♯4 / degree 3</title>
-<circle cx="1192.92" cy="171" r="10.5" fill="#258448"/>
-<text x="1192.92" y="175" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
+<circle cx="1214.46" cy="171" r="10.5" fill="#258448"/>
+<text x="1214.46" y="175" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
 </g>
 <g id="key2-note-67" data-midi="67" data-degree="4" data-color="#E86568"><title>G4 / degree 4</title>
-<circle cx="1227.23" cy="164" r="10.5" fill="#E86568"/>
-<text x="1227.23" y="168" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1246.62" cy="164" r="10.5" fill="#E86568"/>
+<text x="1246.62" y="168" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key2-note-69" data-midi="69" data-degree="5" data-color="#E86568"><title>A4 / degree 5</title>
-<circle cx="1261.54" cy="157" r="10.5" fill="#E86568"/>
-<text x="1261.54" y="161" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<circle cx="1278.77" cy="157" r="10.5" fill="#E86568"/>
+<text x="1278.77" y="161" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key2-note-71" data-midi="71" data-degree="6" data-color="#1649E8"><title>B4 / degree 6</title>
-<circle cx="1295.85" cy="150" r="10.5" fill="#1649E8"/>
-<text x="1295.85" y="154" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
+<circle cx="1310.92" cy="150" r="10.5" fill="#1649E8"/>
+<text x="1310.92" y="154" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
 </g>
 <g id="key2-note-73" data-midi="73" data-degree="7" data-color="#1649E8"><title>C♯5 / degree 7</title>
-<circle cx="1330.15" cy="143" r="10.5" fill="#1649E8"/>
-<text x="1330.15" y="147" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
+<circle cx="1343.08" cy="143" r="10.5" fill="#1649E8"/>
+<text x="1343.08" y="147" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
 </g>
 <g id="key2-note-74" data-midi="74" data-degree="1" data-color="#CE303A"><title>D5 / degree 1</title>
-<circle cx="1364.46" cy="136" r="10.5" fill="#CE303A"/>
-<text x="1364.46" y="140" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
+<circle cx="1375.23" cy="136" r="10.5" fill="#CE303A"/>
+<text x="1375.23" y="140" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
 </g>
 <g id="key2-note-76" data-midi="76" data-degree="2" data-color="#258448"><title>E5 / degree 2</title>
-<circle cx="1398.77" cy="129" r="10.5" fill="#258448"/>
-<text x="1398.77" y="133" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
+<circle cx="1407.38" cy="129" r="10.5" fill="#258448"/>
+<text x="1407.38" y="133" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
 </g>
 <g id="key2-note-78" data-midi="78" data-degree="3" data-color="#258448"><title>F♯5 / degree 3</title>
-<circle cx="1433.08" cy="122" r="10.5" fill="#258448"/>
-<text x="1433.08" y="126" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
+<circle cx="1439.54" cy="122" r="10.5" fill="#258448"/>
+<text x="1439.54" y="126" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
 </g>
 <g id="key2-note-79" data-midi="79" data-degree="4" data-color="#E86568"><title>G5 / degree 4</title>
-<circle cx="1467.38" cy="115" r="10.5" fill="#E86568"/>
-<text x="1467.38" y="119" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1471.69" cy="115" r="10.5" fill="#E86568"/>
+<text x="1471.69" y="119" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key2-note-81" data-midi="81" data-degree="5" data-color="#E86568"><title>A5 / degree 5</title>
-<line x1="1486.69" y1="108" x2="1516.69" y2="108" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1501.69" cy="108" r="10.5" fill="#E86568"/>
-<text x="1501.69" y="112" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<line x1="1488.85" y1="108" x2="1518.85" y2="108" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1503.85" cy="108" r="10.5" fill="#E86568"/>
+<text x="1503.85" y="112" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key2-note-83" data-midi="83" data-degree="6" data-color="#1649E8"><title>B5 / degree 6</title>
 <line x1="1521" y1="108" x2="1551" y2="108" stroke="#70808B" stroke-width="1.2"/>
@@ -2608,45 +2620,47 @@
 <line x1="1032" y1="220" x2="1552" y2="220" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="206" x2="1552" y2="206" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key2-bass-clef" d="M564 704C543 704 521 688 521 663C521 633 535 618 563 618C584 618 607 638 607 661C607 684 588 704 564 704ZM564 511C539 511 521 490 521 469C521 439 535 424 564 424C585 424 607 442 607 469C607 486 589 511 564 511ZM285 757C185 757 94 697 94 607C94 559 131 525 183 525C222 525 257 552 257 592C257 625 230 651 194 651C184 651 174 644 160 644C146 644 140 650 140 659C140 674 157 735 262 735C336 735 373 683 373 578C373 354 127 217 75 182L80 166C211 231 476 360 476 569C476 670 394 757 285 757Z" fill="#24323D" transform="translate(1027 260.845) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="bass" data-letter="F" data-accidental="1" transform="translate(1078 220)"><title>F♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="C" data-accidental="1" transform="translate(1092 241)"><title>C♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key2-note-42" data-midi="42" data-degree="3" data-color="#258448"><title>F♯2 / degree 3</title>
-<circle cx="1090" cy="269" r="10.5" fill="#258448"/>
-<text x="1090" y="273" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
+<circle cx="1118" cy="269" r="10.5" fill="#258448"/>
+<text x="1118" y="273" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
 </g>
 <g id="key2-note-43" data-midi="43" data-degree="4" data-color="#E86568"><title>G2 / degree 4</title>
-<circle cx="1134.6" cy="262" r="10.5" fill="#E86568"/>
-<text x="1134.6" y="266" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1159.8" cy="262" r="10.5" fill="#E86568"/>
+<text x="1159.8" y="266" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key2-note-45" data-midi="45" data-degree="5" data-color="#E86568"><title>A2 / degree 5</title>
-<circle cx="1179.2" cy="255" r="10.5" fill="#E86568"/>
-<text x="1179.2" y="259" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<circle cx="1201.6" cy="255" r="10.5" fill="#E86568"/>
+<text x="1201.6" y="259" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key2-note-47" data-midi="47" data-degree="6" data-color="#1649E8"><title>B2 / degree 6</title>
-<circle cx="1223.8" cy="248" r="10.5" fill="#1649E8"/>
-<text x="1223.8" y="252" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
+<circle cx="1243.4" cy="248" r="10.5" fill="#1649E8"/>
+<text x="1243.4" y="252" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
 </g>
 <g id="key2-note-49" data-midi="49" data-degree="7" data-color="#1649E8"><title>C♯3 / degree 7</title>
-<circle cx="1268.4" cy="241" r="10.5" fill="#1649E8"/>
-<text x="1268.4" y="245" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
+<circle cx="1285.2" cy="241" r="10.5" fill="#1649E8"/>
+<text x="1285.2" y="245" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
 </g>
 <g id="key2-note-50" data-midi="50" data-degree="1" data-color="#CE303A"><title>D3 / degree 1</title>
-<circle cx="1313" cy="234" r="10.5" fill="#CE303A"/>
-<text x="1313" y="238" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
+<circle cx="1327" cy="234" r="10.5" fill="#CE303A"/>
+<text x="1327" y="238" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
 </g>
 <g id="key2-note-52" data-midi="52" data-degree="2" data-color="#258448"><title>E3 / degree 2</title>
-<circle cx="1357.6" cy="227" r="10.5" fill="#258448"/>
-<text x="1357.6" y="231" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
+<circle cx="1368.8" cy="227" r="10.5" fill="#258448"/>
+<text x="1368.8" y="231" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
 </g>
 <g id="key2-note-54" data-midi="54" data-degree="3" data-color="#258448"><title>F♯3 / degree 3</title>
-<circle cx="1402.2" cy="220" r="10.5" fill="#258448"/>
-<text x="1402.2" y="224" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
+<circle cx="1410.6" cy="220" r="10.5" fill="#258448"/>
+<text x="1410.6" y="224" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
 </g>
 <g id="key2-note-55" data-midi="55" data-degree="4" data-color="#E86568"><title>G3 / degree 4</title>
-<circle cx="1446.8" cy="213" r="10.5" fill="#E86568"/>
-<text x="1446.8" y="217" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1452.4" cy="213" r="10.5" fill="#E86568"/>
+<text x="1452.4" y="217" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key2-note-57" data-midi="57" data-degree="5" data-color="#E86568"><title>A3 / degree 5</title>
-<circle cx="1491.4" cy="206" r="10.5" fill="#E86568"/>
-<text x="1491.4" y="210" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<circle cx="1494.2" cy="206" r="10.5" fill="#E86568"/>
+<text x="1494.2" y="210" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key2-note-59" data-midi="59" data-degree="6" data-color="#1649E8"><title>B3 / degree 6</title>
 <circle cx="1536" cy="199" r="10.5" fill="#1649E8"/>
@@ -3676,64 +3690,67 @@
 <line x1="1032" y1="136" x2="1552" y2="136" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="122" x2="1552" y2="122" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key3-treble-clef" d="M434 2C506 30 542 82 542 162C542 256 479 332 397 332C389 332 378 331 368 329L342 447C417 516 455 601 455 710C455 831 404 900 379 900C340 900 280 820 280 689C280 641 288 593 303 539C212 449 120 355 120 232C120 99 227 -12 356 -12C373 -12 393 -11 411 -6C430 -91 439 -141 439 -157C439 -250 372 -268 338 -268C311 -268 292 -258 280 -240C327 -240 350 -220 350 -178C350 -143 324 -107 283 -107C242 -107 213 -153 213 -190C213 -247 272 -291 337 -291C406 -291 464 -242 464 -170C464 -109 436 -5 434 2ZM426 746C426 682 371 587 321 557C312 578 308 603 308 630C308 712 343 801 394 801C416 801 426 783 426 746ZM498 128C498 78 474 43 428 23L383 249C450 249 498 203 498 128ZM407 17C379 10 360 6 348 6C259 6 168 77 168 177C168 260 220 342 325 430L343 323C299 307 248 250 248 184C248 113 307 76 340 66L348 71C347 71 289 104 289 158C289 198 326 239 361 247Z" fill="#24323D" transform="translate(1027 176.268) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="treble" data-letter="B" data-accidental="-1" transform="translate(1078 150)"><title>B♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="E" data-accidental="-1" transform="translate(1092 129)"><title>E♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="A" data-accidental="-1" transform="translate(1106 157)"><title>A♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key3-note-60" data-midi="60" data-degree="6" data-color="#1649E8"><title>C4 / degree 6</title>
-<line x1="1075" y1="192" x2="1105" y2="192" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1090" cy="192" r="10.5" fill="#1649E8"/>
-<text x="1090" y="196" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
+<line x1="1117" y1="192" x2="1147" y2="192" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1132" cy="192" r="10.5" fill="#1649E8"/>
+<text x="1132" y="196" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
 </g>
 <g id="key3-note-62" data-midi="62" data-degree="7" data-color="#1649E8"><title>D4 / degree 7</title>
-<circle cx="1121.86" cy="185" r="10.5" fill="#1649E8"/>
-<text x="1121.86" y="189" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
+<circle cx="1160.86" cy="185" r="10.5" fill="#1649E8"/>
+<text x="1160.86" y="189" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
 </g>
 <g id="key3-note-63" data-midi="63" data-degree="1" data-color="#CE303A"><title>E♭4 / degree 1</title>
-<circle cx="1153.71" cy="178" r="10.5" fill="#CE303A"/>
-<text x="1153.71" y="182" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
+<circle cx="1189.71" cy="178" r="10.5" fill="#CE303A"/>
+<text x="1189.71" y="182" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
 </g>
 <g id="key3-note-65" data-midi="65" data-degree="2" data-color="#258448"><title>F4 / degree 2</title>
-<circle cx="1185.57" cy="171" r="10.5" fill="#258448"/>
-<text x="1185.57" y="175" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1218.57" cy="171" r="10.5" fill="#258448"/>
+<text x="1218.57" y="175" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key3-note-67" data-midi="67" data-degree="3" data-color="#258448"><title>G4 / degree 3</title>
-<circle cx="1217.43" cy="164" r="10.5" fill="#258448"/>
-<text x="1217.43" y="168" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1247.43" cy="164" r="10.5" fill="#258448"/>
+<text x="1247.43" y="168" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key3-note-68" data-midi="68" data-degree="4" data-color="#E86568"><title>A♭4 / degree 4</title>
-<circle cx="1249.29" cy="157" r="10.5" fill="#E86568"/>
-<text x="1249.29" y="161" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
+<circle cx="1276.29" cy="157" r="10.5" fill="#E86568"/>
+<text x="1276.29" y="161" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
 </g>
 <g id="key3-note-70" data-midi="70" data-degree="5" data-color="#E86568"><title>B♭4 / degree 5</title>
-<circle cx="1281.14" cy="150" r="10.5" fill="#E86568"/>
-<text x="1281.14" y="154" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
+<circle cx="1305.14" cy="150" r="10.5" fill="#E86568"/>
+<text x="1305.14" y="154" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
 </g>
 <g id="key3-note-72" data-midi="72" data-degree="6" data-color="#1649E8"><title>C5 / degree 6</title>
-<circle cx="1313" cy="143" r="10.5" fill="#1649E8"/>
-<text x="1313" y="147" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
+<circle cx="1334" cy="143" r="10.5" fill="#1649E8"/>
+<text x="1334" y="147" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
 </g>
 <g id="key3-note-74" data-midi="74" data-degree="7" data-color="#1649E8"><title>D5 / degree 7</title>
-<circle cx="1344.86" cy="136" r="10.5" fill="#1649E8"/>
-<text x="1344.86" y="140" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
+<circle cx="1362.86" cy="136" r="10.5" fill="#1649E8"/>
+<text x="1362.86" y="140" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
 </g>
 <g id="key3-note-75" data-midi="75" data-degree="1" data-color="#CE303A"><title>E♭5 / degree 1</title>
-<circle cx="1376.71" cy="129" r="10.5" fill="#CE303A"/>
-<text x="1376.71" y="133" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
+<circle cx="1391.71" cy="129" r="10.5" fill="#CE303A"/>
+<text x="1391.71" y="133" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
 </g>
 <g id="key3-note-77" data-midi="77" data-degree="2" data-color="#258448"><title>F5 / degree 2</title>
-<circle cx="1408.57" cy="122" r="10.5" fill="#258448"/>
-<text x="1408.57" y="126" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1420.57" cy="122" r="10.5" fill="#258448"/>
+<text x="1420.57" y="126" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key3-note-79" data-midi="79" data-degree="3" data-color="#258448"><title>G5 / degree 3</title>
-<circle cx="1440.43" cy="115" r="10.5" fill="#258448"/>
-<text x="1440.43" y="119" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1449.43" cy="115" r="10.5" fill="#258448"/>
+<text x="1449.43" y="119" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key3-note-80" data-midi="80" data-degree="4" data-color="#E86568"><title>A♭5 / degree 4</title>
-<line x1="1457.29" y1="108" x2="1487.29" y2="108" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1472.29" cy="108" r="10.5" fill="#E86568"/>
-<text x="1472.29" y="112" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
+<line x1="1463.29" y1="108" x2="1493.29" y2="108" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1478.29" cy="108" r="10.5" fill="#E86568"/>
+<text x="1478.29" y="112" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
 </g>
 <g id="key3-note-82" data-midi="82" data-degree="5" data-color="#E86568"><title>B♭5 / degree 5</title>
-<line x1="1489.14" y1="108" x2="1519.14" y2="108" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1504.14" cy="101" r="10.5" fill="#E86568"/>
-<text x="1504.14" y="105" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
+<line x1="1492.14" y1="108" x2="1522.14" y2="108" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1507.14" cy="101" r="10.5" fill="#E86568"/>
+<text x="1507.14" y="105" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
 </g>
 <g id="key3-note-84" data-midi="84" data-degree="6" data-color="#1649E8"><title>C6 / degree 6</title>
 <line x1="1521" y1="108" x2="1551" y2="108" stroke="#70808B" stroke-width="1.2"/>
@@ -3747,45 +3764,48 @@
 <line x1="1032" y1="220" x2="1552" y2="220" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="206" x2="1552" y2="206" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key3-bass-clef" d="M564 704C543 704 521 688 521 663C521 633 535 618 563 618C584 618 607 638 607 661C607 684 588 704 564 704ZM564 511C539 511 521 490 521 469C521 439 535 424 564 424C585 424 607 442 607 469C607 486 589 511 564 511ZM285 757C185 757 94 697 94 607C94 559 131 525 183 525C222 525 257 552 257 592C257 625 230 651 194 651C184 651 174 644 160 644C146 644 140 650 140 659C140 674 157 735 262 735C336 735 373 683 373 578C373 354 127 217 75 182L80 166C211 231 476 360 476 569C476 670 394 757 285 757Z" fill="#24323D" transform="translate(1027 260.845) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="bass" data-letter="B" data-accidental="-1" transform="translate(1078 248)"><title>B♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="E" data-accidental="-1" transform="translate(1092 227)"><title>E♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="A" data-accidental="-1" transform="translate(1106 255)"><title>A♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key3-note-41" data-midi="41" data-degree="2" data-color="#258448"><title>F2 / degree 2</title>
-<circle cx="1090" cy="269" r="10.5" fill="#258448"/>
-<text x="1090" y="273" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1132" cy="269" r="10.5" fill="#258448"/>
+<text x="1132" y="273" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key3-note-43" data-midi="43" data-degree="3" data-color="#258448"><title>G2 / degree 3</title>
-<circle cx="1134.6" cy="262" r="10.5" fill="#258448"/>
-<text x="1134.6" y="266" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1172.4" cy="262" r="10.5" fill="#258448"/>
+<text x="1172.4" y="266" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key3-note-44" data-midi="44" data-degree="4" data-color="#E86568"><title>A♭2 / degree 4</title>
-<circle cx="1179.2" cy="255" r="10.5" fill="#E86568"/>
-<text x="1179.2" y="259" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
+<circle cx="1212.8" cy="255" r="10.5" fill="#E86568"/>
+<text x="1212.8" y="259" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
 </g>
 <g id="key3-note-46" data-midi="46" data-degree="5" data-color="#E86568"><title>B♭2 / degree 5</title>
-<circle cx="1223.8" cy="248" r="10.5" fill="#E86568"/>
-<text x="1223.8" y="252" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
+<circle cx="1253.2" cy="248" r="10.5" fill="#E86568"/>
+<text x="1253.2" y="252" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
 </g>
 <g id="key3-note-48" data-midi="48" data-degree="6" data-color="#1649E8"><title>C3 / degree 6</title>
-<circle cx="1268.4" cy="241" r="10.5" fill="#1649E8"/>
-<text x="1268.4" y="245" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
+<circle cx="1293.6" cy="241" r="10.5" fill="#1649E8"/>
+<text x="1293.6" y="245" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
 </g>
 <g id="key3-note-50" data-midi="50" data-degree="7" data-color="#1649E8"><title>D3 / degree 7</title>
-<circle cx="1313" cy="234" r="10.5" fill="#1649E8"/>
-<text x="1313" y="238" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
+<circle cx="1334" cy="234" r="10.5" fill="#1649E8"/>
+<text x="1334" y="238" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
 </g>
 <g id="key3-note-51" data-midi="51" data-degree="1" data-color="#CE303A"><title>E♭3 / degree 1</title>
-<circle cx="1357.6" cy="227" r="10.5" fill="#CE303A"/>
-<text x="1357.6" y="231" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
+<circle cx="1374.4" cy="227" r="10.5" fill="#CE303A"/>
+<text x="1374.4" y="231" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
 </g>
 <g id="key3-note-53" data-midi="53" data-degree="2" data-color="#258448"><title>F3 / degree 2</title>
-<circle cx="1402.2" cy="220" r="10.5" fill="#258448"/>
-<text x="1402.2" y="224" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1414.8" cy="220" r="10.5" fill="#258448"/>
+<text x="1414.8" y="224" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key3-note-55" data-midi="55" data-degree="3" data-color="#258448"><title>G3 / degree 3</title>
-<circle cx="1446.8" cy="213" r="10.5" fill="#258448"/>
-<text x="1446.8" y="217" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1455.2" cy="213" r="10.5" fill="#258448"/>
+<text x="1455.2" y="217" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key3-note-56" data-midi="56" data-degree="4" data-color="#E86568"><title>A♭3 / degree 4</title>
-<circle cx="1491.4" cy="206" r="10.5" fill="#E86568"/>
-<text x="1491.4" y="210" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
+<circle cx="1495.6" cy="206" r="10.5" fill="#E86568"/>
+<text x="1495.6" y="210" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
 </g>
 <g id="key3-note-58" data-midi="58" data-degree="5" data-color="#E86568"><title>B♭3 / degree 5</title>
 <circle cx="1536" cy="199" r="10.5" fill="#E86568"/>
@@ -4813,59 +4833,63 @@
 <line x1="1032" y1="136" x2="1552" y2="136" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="122" x2="1552" y2="122" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key4-treble-clef" d="M434 2C506 30 542 82 542 162C542 256 479 332 397 332C389 332 378 331 368 329L342 447C417 516 455 601 455 710C455 831 404 900 379 900C340 900 280 820 280 689C280 641 288 593 303 539C212 449 120 355 120 232C120 99 227 -12 356 -12C373 -12 393 -11 411 -6C430 -91 439 -141 439 -157C439 -250 372 -268 338 -268C311 -268 292 -258 280 -240C327 -240 350 -220 350 -178C350 -143 324 -107 283 -107C242 -107 213 -153 213 -190C213 -247 272 -291 337 -291C406 -291 464 -242 464 -170C464 -109 436 -5 434 2ZM426 746C426 682 371 587 321 557C312 578 308 603 308 630C308 712 343 801 394 801C416 801 426 783 426 746ZM498 128C498 78 474 43 428 23L383 249C450 249 498 203 498 128ZM407 17C379 10 360 6 348 6C259 6 168 77 168 177C168 260 220 342 325 430L343 323C299 307 248 250 248 184C248 113 307 76 340 66L348 71C347 71 289 104 289 158C289 198 326 239 361 247Z" fill="#24323D" transform="translate(1027 176.268) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="treble" data-letter="F" data-accidental="1" transform="translate(1078 122)"><title>F♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="C" data-accidental="1" transform="translate(1092 143)"><title>C♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="G" data-accidental="1" transform="translate(1106 115)"><title>G♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="D" data-accidental="1" transform="translate(1120 136)"><title>D♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key4-note-61" data-midi="61" data-degree="6" data-color="#1649E8"><title>C♯4 / degree 6</title>
-<line x1="1075" y1="192" x2="1105" y2="192" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1090" cy="192" r="10.5" fill="#1649E8"/>
-<text x="1090" y="196" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
+<line x1="1131" y1="192" x2="1161" y2="192" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1146" cy="192" r="10.5" fill="#1649E8"/>
+<text x="1146" y="196" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
 </g>
 <g id="key4-note-63" data-midi="63" data-degree="7" data-color="#1649E8"><title>D♯4 / degree 7</title>
-<circle cx="1124.31" cy="185" r="10.5" fill="#1649E8"/>
-<text x="1124.31" y="189" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♯</text>
+<circle cx="1176" cy="185" r="10.5" fill="#1649E8"/>
+<text x="1176" y="189" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♯</text>
 </g>
 <g id="key4-note-64" data-midi="64" data-degree="1" data-color="#CE303A"><title>E4 / degree 1</title>
-<circle cx="1158.62" cy="178" r="10.5" fill="#CE303A"/>
-<text x="1158.62" y="182" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
+<circle cx="1206" cy="178" r="10.5" fill="#CE303A"/>
+<text x="1206" y="182" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
 </g>
 <g id="key4-note-66" data-midi="66" data-degree="2" data-color="#258448"><title>F♯4 / degree 2</title>
-<circle cx="1192.92" cy="171" r="10.5" fill="#258448"/>
-<text x="1192.92" y="175" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
+<circle cx="1236" cy="171" r="10.5" fill="#258448"/>
+<text x="1236" y="175" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
 </g>
 <g id="key4-note-68" data-midi="68" data-degree="3" data-color="#258448"><title>G♯4 / degree 3</title>
-<circle cx="1227.23" cy="164" r="10.5" fill="#258448"/>
-<text x="1227.23" y="168" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
+<circle cx="1266" cy="164" r="10.5" fill="#258448"/>
+<text x="1266" y="168" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
 </g>
 <g id="key4-note-69" data-midi="69" data-degree="4" data-color="#E86568"><title>A4 / degree 4</title>
-<circle cx="1261.54" cy="157" r="10.5" fill="#E86568"/>
-<text x="1261.54" y="161" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<circle cx="1296" cy="157" r="10.5" fill="#E86568"/>
+<text x="1296" y="161" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key4-note-71" data-midi="71" data-degree="5" data-color="#E86568"><title>B4 / degree 5</title>
-<circle cx="1295.85" cy="150" r="10.5" fill="#E86568"/>
-<text x="1295.85" y="154" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
+<circle cx="1326" cy="150" r="10.5" fill="#E86568"/>
+<text x="1326" y="154" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
 </g>
 <g id="key4-note-73" data-midi="73" data-degree="6" data-color="#1649E8"><title>C♯5 / degree 6</title>
-<circle cx="1330.15" cy="143" r="10.5" fill="#1649E8"/>
-<text x="1330.15" y="147" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
+<circle cx="1356" cy="143" r="10.5" fill="#1649E8"/>
+<text x="1356" y="147" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
 </g>
 <g id="key4-note-75" data-midi="75" data-degree="7" data-color="#1649E8"><title>D♯5 / degree 7</title>
-<circle cx="1364.46" cy="136" r="10.5" fill="#1649E8"/>
-<text x="1364.46" y="140" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♯</text>
+<circle cx="1386" cy="136" r="10.5" fill="#1649E8"/>
+<text x="1386" y="140" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♯</text>
 </g>
 <g id="key4-note-76" data-midi="76" data-degree="1" data-color="#CE303A"><title>E5 / degree 1</title>
-<circle cx="1398.77" cy="129" r="10.5" fill="#CE303A"/>
-<text x="1398.77" y="133" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
+<circle cx="1416" cy="129" r="10.5" fill="#CE303A"/>
+<text x="1416" y="133" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
 </g>
 <g id="key4-note-78" data-midi="78" data-degree="2" data-color="#258448"><title>F♯5 / degree 2</title>
-<circle cx="1433.08" cy="122" r="10.5" fill="#258448"/>
-<text x="1433.08" y="126" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
+<circle cx="1446" cy="122" r="10.5" fill="#258448"/>
+<text x="1446" y="126" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
 </g>
 <g id="key4-note-80" data-midi="80" data-degree="3" data-color="#258448"><title>G♯5 / degree 3</title>
-<circle cx="1467.38" cy="115" r="10.5" fill="#258448"/>
-<text x="1467.38" y="119" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
+<circle cx="1476" cy="115" r="10.5" fill="#258448"/>
+<text x="1476" y="119" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
 </g>
 <g id="key4-note-81" data-midi="81" data-degree="4" data-color="#E86568"><title>A5 / degree 4</title>
-<line x1="1486.69" y1="108" x2="1516.69" y2="108" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1501.69" cy="108" r="10.5" fill="#E86568"/>
-<text x="1501.69" y="112" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<line x1="1491" y1="108" x2="1521" y2="108" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1506" cy="108" r="10.5" fill="#E86568"/>
+<text x="1506" y="112" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key4-note-83" data-midi="83" data-degree="5" data-color="#E86568"><title>B5 / degree 5</title>
 <line x1="1521" y1="108" x2="1551" y2="108" stroke="#70808B" stroke-width="1.2"/>
@@ -4878,45 +4902,49 @@
 <line x1="1032" y1="220" x2="1552" y2="220" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="206" x2="1552" y2="206" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key4-bass-clef" d="M564 704C543 704 521 688 521 663C521 633 535 618 563 618C584 618 607 638 607 661C607 684 588 704 564 704ZM564 511C539 511 521 490 521 469C521 439 535 424 564 424C585 424 607 442 607 469C607 486 589 511 564 511ZM285 757C185 757 94 697 94 607C94 559 131 525 183 525C222 525 257 552 257 592C257 625 230 651 194 651C184 651 174 644 160 644C146 644 140 650 140 659C140 674 157 735 262 735C336 735 373 683 373 578C373 354 127 217 75 182L80 166C211 231 476 360 476 569C476 670 394 757 285 757Z" fill="#24323D" transform="translate(1027 260.845) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="bass" data-letter="F" data-accidental="1" transform="translate(1078 220)"><title>F♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="C" data-accidental="1" transform="translate(1092 241)"><title>C♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="G" data-accidental="1" transform="translate(1106 213)"><title>G♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="D" data-accidental="1" transform="translate(1120 234)"><title>D♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key4-note-42" data-midi="42" data-degree="2" data-color="#258448"><title>F♯2 / degree 2</title>
-<circle cx="1090" cy="269" r="10.5" fill="#258448"/>
-<text x="1090" y="273" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
+<circle cx="1146" cy="269" r="10.5" fill="#258448"/>
+<text x="1146" y="273" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
 </g>
 <g id="key4-note-44" data-midi="44" data-degree="3" data-color="#258448"><title>G♯2 / degree 3</title>
-<circle cx="1134.6" cy="262" r="10.5" fill="#258448"/>
-<text x="1134.6" y="266" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
+<circle cx="1185" cy="262" r="10.5" fill="#258448"/>
+<text x="1185" y="266" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
 </g>
 <g id="key4-note-45" data-midi="45" data-degree="4" data-color="#E86568"><title>A2 / degree 4</title>
-<circle cx="1179.2" cy="255" r="10.5" fill="#E86568"/>
-<text x="1179.2" y="259" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<circle cx="1224" cy="255" r="10.5" fill="#E86568"/>
+<text x="1224" y="259" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key4-note-47" data-midi="47" data-degree="5" data-color="#E86568"><title>B2 / degree 5</title>
-<circle cx="1223.8" cy="248" r="10.5" fill="#E86568"/>
-<text x="1223.8" y="252" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
+<circle cx="1263" cy="248" r="10.5" fill="#E86568"/>
+<text x="1263" y="252" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
 </g>
 <g id="key4-note-49" data-midi="49" data-degree="6" data-color="#1649E8"><title>C♯3 / degree 6</title>
-<circle cx="1268.4" cy="241" r="10.5" fill="#1649E8"/>
-<text x="1268.4" y="245" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
+<circle cx="1302" cy="241" r="10.5" fill="#1649E8"/>
+<text x="1302" y="245" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
 </g>
 <g id="key4-note-51" data-midi="51" data-degree="7" data-color="#1649E8"><title>D♯3 / degree 7</title>
-<circle cx="1313" cy="234" r="10.5" fill="#1649E8"/>
-<text x="1313" y="238" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♯</text>
+<circle cx="1341" cy="234" r="10.5" fill="#1649E8"/>
+<text x="1341" y="238" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♯</text>
 </g>
 <g id="key4-note-52" data-midi="52" data-degree="1" data-color="#CE303A"><title>E3 / degree 1</title>
-<circle cx="1357.6" cy="227" r="10.5" fill="#CE303A"/>
-<text x="1357.6" y="231" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
+<circle cx="1380" cy="227" r="10.5" fill="#CE303A"/>
+<text x="1380" y="231" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
 </g>
 <g id="key4-note-54" data-midi="54" data-degree="2" data-color="#258448"><title>F♯3 / degree 2</title>
-<circle cx="1402.2" cy="220" r="10.5" fill="#258448"/>
-<text x="1402.2" y="224" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
+<circle cx="1419" cy="220" r="10.5" fill="#258448"/>
+<text x="1419" y="224" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
 </g>
 <g id="key4-note-56" data-midi="56" data-degree="3" data-color="#258448"><title>G♯3 / degree 3</title>
-<circle cx="1446.8" cy="213" r="10.5" fill="#258448"/>
-<text x="1446.8" y="217" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
+<circle cx="1458" cy="213" r="10.5" fill="#258448"/>
+<text x="1458" y="217" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
 </g>
 <g id="key4-note-57" data-midi="57" data-degree="4" data-color="#E86568"><title>A3 / degree 4</title>
-<circle cx="1491.4" cy="206" r="10.5" fill="#E86568"/>
-<text x="1491.4" y="210" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<circle cx="1497" cy="206" r="10.5" fill="#E86568"/>
+<text x="1497" y="210" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key4-note-59" data-midi="59" data-degree="5" data-color="#E86568"><title>B3 / degree 5</title>
 <circle cx="1536" cy="199" r="10.5" fill="#E86568"/>
@@ -5944,64 +5972,65 @@
 <line x1="1032" y1="136" x2="1552" y2="136" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="122" x2="1552" y2="122" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key5-treble-clef" d="M434 2C506 30 542 82 542 162C542 256 479 332 397 332C389 332 378 331 368 329L342 447C417 516 455 601 455 710C455 831 404 900 379 900C340 900 280 820 280 689C280 641 288 593 303 539C212 449 120 355 120 232C120 99 227 -12 356 -12C373 -12 393 -11 411 -6C430 -91 439 -141 439 -157C439 -250 372 -268 338 -268C311 -268 292 -258 280 -240C327 -240 350 -220 350 -178C350 -143 324 -107 283 -107C242 -107 213 -153 213 -190C213 -247 272 -291 337 -291C406 -291 464 -242 464 -170C464 -109 436 -5 434 2ZM426 746C426 682 371 587 321 557C312 578 308 603 308 630C308 712 343 801 394 801C416 801 426 783 426 746ZM498 128C498 78 474 43 428 23L383 249C450 249 498 203 498 128ZM407 17C379 10 360 6 348 6C259 6 168 77 168 177C168 260 220 342 325 430L343 323C299 307 248 250 248 184C248 113 307 76 340 66L348 71C347 71 289 104 289 158C289 198 326 239 361 247Z" fill="#24323D" transform="translate(1027 176.268) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="treble" data-letter="B" data-accidental="-1" transform="translate(1078 150)"><title>B♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key5-note-60" data-midi="60" data-degree="5" data-color="#E86568"><title>C4 / degree 5</title>
-<line x1="1075" y1="192" x2="1105" y2="192" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1090" cy="192" r="10.5" fill="#E86568"/>
-<text x="1090" y="196" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
+<line x1="1089" y1="192" x2="1119" y2="192" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1104" cy="192" r="10.5" fill="#E86568"/>
+<text x="1104" y="196" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
 </g>
 <g id="key5-note-62" data-midi="62" data-degree="6" data-color="#1649E8"><title>D4 / degree 6</title>
-<circle cx="1121.86" cy="185" r="10.5" fill="#1649E8"/>
-<text x="1121.86" y="189" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
+<circle cx="1134.86" cy="185" r="10.5" fill="#1649E8"/>
+<text x="1134.86" y="189" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
 </g>
 <g id="key5-note-64" data-midi="64" data-degree="7" data-color="#1649E8"><title>E4 / degree 7</title>
-<circle cx="1153.71" cy="178" r="10.5" fill="#1649E8"/>
-<text x="1153.71" y="182" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
+<circle cx="1165.71" cy="178" r="10.5" fill="#1649E8"/>
+<text x="1165.71" y="182" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
 </g>
 <g id="key5-note-65" data-midi="65" data-degree="1" data-color="#CE303A"><title>F4 / degree 1</title>
-<circle cx="1185.57" cy="171" r="10.5" fill="#CE303A"/>
-<text x="1185.57" y="175" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1196.57" cy="171" r="10.5" fill="#CE303A"/>
+<text x="1196.57" y="175" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key5-note-67" data-midi="67" data-degree="2" data-color="#258448"><title>G4 / degree 2</title>
-<circle cx="1217.43" cy="164" r="10.5" fill="#258448"/>
-<text x="1217.43" y="168" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1227.43" cy="164" r="10.5" fill="#258448"/>
+<text x="1227.43" y="168" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key5-note-69" data-midi="69" data-degree="3" data-color="#258448"><title>A4 / degree 3</title>
-<circle cx="1249.29" cy="157" r="10.5" fill="#258448"/>
-<text x="1249.29" y="161" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<circle cx="1258.29" cy="157" r="10.5" fill="#258448"/>
+<text x="1258.29" y="161" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key5-note-70" data-midi="70" data-degree="4" data-color="#E86568"><title>B♭4 / degree 4</title>
-<circle cx="1281.14" cy="150" r="10.5" fill="#E86568"/>
-<text x="1281.14" y="154" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
+<circle cx="1289.14" cy="150" r="10.5" fill="#E86568"/>
+<text x="1289.14" y="154" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
 </g>
 <g id="key5-note-72" data-midi="72" data-degree="5" data-color="#E86568"><title>C5 / degree 5</title>
-<circle cx="1313" cy="143" r="10.5" fill="#E86568"/>
-<text x="1313" y="147" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
+<circle cx="1320" cy="143" r="10.5" fill="#E86568"/>
+<text x="1320" y="147" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
 </g>
 <g id="key5-note-74" data-midi="74" data-degree="6" data-color="#1649E8"><title>D5 / degree 6</title>
-<circle cx="1344.86" cy="136" r="10.5" fill="#1649E8"/>
-<text x="1344.86" y="140" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
+<circle cx="1350.86" cy="136" r="10.5" fill="#1649E8"/>
+<text x="1350.86" y="140" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
 </g>
 <g id="key5-note-76" data-midi="76" data-degree="7" data-color="#1649E8"><title>E5 / degree 7</title>
-<circle cx="1376.71" cy="129" r="10.5" fill="#1649E8"/>
-<text x="1376.71" y="133" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
+<circle cx="1381.71" cy="129" r="10.5" fill="#1649E8"/>
+<text x="1381.71" y="133" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
 </g>
 <g id="key5-note-77" data-midi="77" data-degree="1" data-color="#CE303A"><title>F5 / degree 1</title>
-<circle cx="1408.57" cy="122" r="10.5" fill="#CE303A"/>
-<text x="1408.57" y="126" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1412.57" cy="122" r="10.5" fill="#CE303A"/>
+<text x="1412.57" y="126" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key5-note-79" data-midi="79" data-degree="2" data-color="#258448"><title>G5 / degree 2</title>
-<circle cx="1440.43" cy="115" r="10.5" fill="#258448"/>
-<text x="1440.43" y="119" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1443.43" cy="115" r="10.5" fill="#258448"/>
+<text x="1443.43" y="119" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key5-note-81" data-midi="81" data-degree="3" data-color="#258448"><title>A5 / degree 3</title>
-<line x1="1457.29" y1="108" x2="1487.29" y2="108" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1472.29" cy="108" r="10.5" fill="#258448"/>
-<text x="1472.29" y="112" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<line x1="1459.29" y1="108" x2="1489.29" y2="108" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1474.29" cy="108" r="10.5" fill="#258448"/>
+<text x="1474.29" y="112" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key5-note-82" data-midi="82" data-degree="4" data-color="#E86568"><title>B♭5 / degree 4</title>
-<line x1="1489.14" y1="108" x2="1519.14" y2="108" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1504.14" cy="101" r="10.5" fill="#E86568"/>
-<text x="1504.14" y="105" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
+<line x1="1490.14" y1="108" x2="1520.14" y2="108" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1505.14" cy="101" r="10.5" fill="#E86568"/>
+<text x="1505.14" y="105" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
 </g>
 <g id="key5-note-84" data-midi="84" data-degree="5" data-color="#E86568"><title>C6 / degree 5</title>
 <line x1="1521" y1="108" x2="1551" y2="108" stroke="#70808B" stroke-width="1.2"/>
@@ -6015,45 +6044,46 @@
 <line x1="1032" y1="220" x2="1552" y2="220" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="206" x2="1552" y2="206" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key5-bass-clef" d="M564 704C543 704 521 688 521 663C521 633 535 618 563 618C584 618 607 638 607 661C607 684 588 704 564 704ZM564 511C539 511 521 490 521 469C521 439 535 424 564 424C585 424 607 442 607 469C607 486 589 511 564 511ZM285 757C185 757 94 697 94 607C94 559 131 525 183 525C222 525 257 552 257 592C257 625 230 651 194 651C184 651 174 644 160 644C146 644 140 650 140 659C140 674 157 735 262 735C336 735 373 683 373 578C373 354 127 217 75 182L80 166C211 231 476 360 476 569C476 670 394 757 285 757Z" fill="#24323D" transform="translate(1027 260.845) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="bass" data-letter="B" data-accidental="-1" transform="translate(1078 248)"><title>B♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key5-note-41" data-midi="41" data-degree="1" data-color="#CE303A"><title>F2 / degree 1</title>
-<circle cx="1090" cy="269" r="10.5" fill="#CE303A"/>
-<text x="1090" y="273" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1104" cy="269" r="10.5" fill="#CE303A"/>
+<text x="1104" y="273" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key5-note-43" data-midi="43" data-degree="2" data-color="#258448"><title>G2 / degree 2</title>
-<circle cx="1134.6" cy="262" r="10.5" fill="#258448"/>
-<text x="1134.6" y="266" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1147.2" cy="262" r="10.5" fill="#258448"/>
+<text x="1147.2" y="266" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key5-note-45" data-midi="45" data-degree="3" data-color="#258448"><title>A2 / degree 3</title>
-<circle cx="1179.2" cy="255" r="10.5" fill="#258448"/>
-<text x="1179.2" y="259" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<circle cx="1190.4" cy="255" r="10.5" fill="#258448"/>
+<text x="1190.4" y="259" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key5-note-46" data-midi="46" data-degree="4" data-color="#E86568"><title>B♭2 / degree 4</title>
-<circle cx="1223.8" cy="248" r="10.5" fill="#E86568"/>
-<text x="1223.8" y="252" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
+<circle cx="1233.6" cy="248" r="10.5" fill="#E86568"/>
+<text x="1233.6" y="252" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
 </g>
 <g id="key5-note-48" data-midi="48" data-degree="5" data-color="#E86568"><title>C3 / degree 5</title>
-<circle cx="1268.4" cy="241" r="10.5" fill="#E86568"/>
-<text x="1268.4" y="245" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
+<circle cx="1276.8" cy="241" r="10.5" fill="#E86568"/>
+<text x="1276.8" y="245" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
 </g>
 <g id="key5-note-50" data-midi="50" data-degree="6" data-color="#1649E8"><title>D3 / degree 6</title>
-<circle cx="1313" cy="234" r="10.5" fill="#1649E8"/>
-<text x="1313" y="238" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
+<circle cx="1320" cy="234" r="10.5" fill="#1649E8"/>
+<text x="1320" y="238" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
 </g>
 <g id="key5-note-52" data-midi="52" data-degree="7" data-color="#1649E8"><title>E3 / degree 7</title>
-<circle cx="1357.6" cy="227" r="10.5" fill="#1649E8"/>
-<text x="1357.6" y="231" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
+<circle cx="1363.2" cy="227" r="10.5" fill="#1649E8"/>
+<text x="1363.2" y="231" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
 </g>
 <g id="key5-note-53" data-midi="53" data-degree="1" data-color="#CE303A"><title>F3 / degree 1</title>
-<circle cx="1402.2" cy="220" r="10.5" fill="#CE303A"/>
-<text x="1402.2" y="224" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1406.4" cy="220" r="10.5" fill="#CE303A"/>
+<text x="1406.4" y="224" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key5-note-55" data-midi="55" data-degree="2" data-color="#258448"><title>G3 / degree 2</title>
-<circle cx="1446.8" cy="213" r="10.5" fill="#258448"/>
-<text x="1446.8" y="217" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1449.6" cy="213" r="10.5" fill="#258448"/>
+<text x="1449.6" y="217" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key5-note-57" data-midi="57" data-degree="3" data-color="#258448"><title>A3 / degree 3</title>
-<circle cx="1491.4" cy="206" r="10.5" fill="#258448"/>
-<text x="1491.4" y="210" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<circle cx="1492.8" cy="206" r="10.5" fill="#258448"/>
+<text x="1492.8" y="210" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key5-note-58" data-midi="58" data-degree="4" data-color="#E86568"><title>B♭3 / degree 4</title>
 <circle cx="1536" cy="199" r="10.5" fill="#E86568"/>
@@ -7079,59 +7109,65 @@
 <line x1="1032" y1="136" x2="1552" y2="136" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="122" x2="1552" y2="122" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key6-treble-clef" d="M434 2C506 30 542 82 542 162C542 256 479 332 397 332C389 332 378 331 368 329L342 447C417 516 455 601 455 710C455 831 404 900 379 900C340 900 280 820 280 689C280 641 288 593 303 539C212 449 120 355 120 232C120 99 227 -12 356 -12C373 -12 393 -11 411 -6C430 -91 439 -141 439 -157C439 -250 372 -268 338 -268C311 -268 292 -258 280 -240C327 -240 350 -220 350 -178C350 -143 324 -107 283 -107C242 -107 213 -153 213 -190C213 -247 272 -291 337 -291C406 -291 464 -242 464 -170C464 -109 436 -5 434 2ZM426 746C426 682 371 587 321 557C312 578 308 603 308 630C308 712 343 801 394 801C416 801 426 783 426 746ZM498 128C498 78 474 43 428 23L383 249C450 249 498 203 498 128ZM407 17C379 10 360 6 348 6C259 6 168 77 168 177C168 260 220 342 325 430L343 323C299 307 248 250 248 184C248 113 307 76 340 66L348 71C347 71 289 104 289 158C289 198 326 239 361 247Z" fill="#24323D" transform="translate(1027 176.268) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="treble" data-letter="B" data-accidental="-1" transform="translate(1078 150)"><title>B♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="E" data-accidental="-1" transform="translate(1092 129)"><title>E♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="A" data-accidental="-1" transform="translate(1106 157)"><title>A♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="D" data-accidental="-1" transform="translate(1120 136)"><title>D♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="G" data-accidental="-1" transform="translate(1134 164)"><title>G♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="C" data-accidental="-1" transform="translate(1148 143)"><title>C♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key6-note-61" data-midi="61" data-degree="5" data-color="#E86568"><title>D♭4 / degree 5</title>
-<circle cx="1090" cy="185" r="10.5" fill="#E86568"/>
-<text x="1090" y="189" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♭</text>
+<circle cx="1174" cy="185" r="10.5" fill="#E86568"/>
+<text x="1174" y="189" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♭</text>
 </g>
 <g id="key6-note-63" data-midi="63" data-degree="6" data-color="#1649E8"><title>E♭4 / degree 6</title>
-<circle cx="1124.31" cy="178" r="10.5" fill="#1649E8"/>
-<text x="1124.31" y="182" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
+<circle cx="1201.85" cy="178" r="10.5" fill="#1649E8"/>
+<text x="1201.85" y="182" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
 </g>
 <g id="key6-note-65" data-midi="65" data-degree="7" data-color="#1649E8"><title>F4 / degree 7</title>
-<circle cx="1158.62" cy="171" r="10.5" fill="#1649E8"/>
-<text x="1158.62" y="175" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1229.69" cy="171" r="10.5" fill="#1649E8"/>
+<text x="1229.69" y="175" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key6-note-66" data-midi="66" data-degree="1" data-color="#CE303A"><title>G♭4 / degree 1</title>
-<circle cx="1192.92" cy="164" r="10.5" fill="#CE303A"/>
-<text x="1192.92" y="168" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♭</text>
+<circle cx="1257.54" cy="164" r="10.5" fill="#CE303A"/>
+<text x="1257.54" y="168" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♭</text>
 </g>
 <g id="key6-note-68" data-midi="68" data-degree="2" data-color="#258448"><title>A♭4 / degree 2</title>
-<circle cx="1227.23" cy="157" r="10.5" fill="#258448"/>
-<text x="1227.23" y="161" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
+<circle cx="1285.38" cy="157" r="10.5" fill="#258448"/>
+<text x="1285.38" y="161" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
 </g>
 <g id="key6-note-70" data-midi="70" data-degree="3" data-color="#258448"><title>B♭4 / degree 3</title>
-<circle cx="1261.54" cy="150" r="10.5" fill="#258448"/>
-<text x="1261.54" y="154" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
+<circle cx="1313.23" cy="150" r="10.5" fill="#258448"/>
+<text x="1313.23" y="154" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
 </g>
 <g id="key6-note-71" data-midi="71" data-degree="4" data-color="#E86568"><title>C♭5 / degree 4</title>
-<circle cx="1295.85" cy="143" r="10.5" fill="#E86568"/>
-<text x="1295.85" y="147" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♭</text>
+<circle cx="1341.08" cy="143" r="10.5" fill="#E86568"/>
+<text x="1341.08" y="147" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♭</text>
 </g>
 <g id="key6-note-73" data-midi="73" data-degree="5" data-color="#E86568"><title>D♭5 / degree 5</title>
-<circle cx="1330.15" cy="136" r="10.5" fill="#E86568"/>
-<text x="1330.15" y="140" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♭</text>
+<circle cx="1368.92" cy="136" r="10.5" fill="#E86568"/>
+<text x="1368.92" y="140" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♭</text>
 </g>
 <g id="key6-note-75" data-midi="75" data-degree="6" data-color="#1649E8"><title>E♭5 / degree 6</title>
-<circle cx="1364.46" cy="129" r="10.5" fill="#1649E8"/>
-<text x="1364.46" y="133" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
+<circle cx="1396.77" cy="129" r="10.5" fill="#1649E8"/>
+<text x="1396.77" y="133" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
 </g>
 <g id="key6-note-77" data-midi="77" data-degree="7" data-color="#1649E8"><title>F5 / degree 7</title>
-<circle cx="1398.77" cy="122" r="10.5" fill="#1649E8"/>
-<text x="1398.77" y="126" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1424.62" cy="122" r="10.5" fill="#1649E8"/>
+<text x="1424.62" y="126" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key6-note-78" data-midi="78" data-degree="1" data-color="#CE303A"><title>G♭5 / degree 1</title>
-<circle cx="1433.08" cy="115" r="10.5" fill="#CE303A"/>
-<text x="1433.08" y="119" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♭</text>
+<circle cx="1452.46" cy="115" r="10.5" fill="#CE303A"/>
+<text x="1452.46" y="119" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♭</text>
 </g>
 <g id="key6-note-80" data-midi="80" data-degree="2" data-color="#258448"><title>A♭5 / degree 2</title>
-<line x1="1452.38" y1="108" x2="1482.38" y2="108" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1467.38" cy="108" r="10.5" fill="#258448"/>
-<text x="1467.38" y="112" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
+<line x1="1465.31" y1="108" x2="1495.31" y2="108" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1480.31" cy="108" r="10.5" fill="#258448"/>
+<text x="1480.31" y="112" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
 </g>
 <g id="key6-note-82" data-midi="82" data-degree="3" data-color="#258448"><title>B♭5 / degree 3</title>
-<line x1="1486.69" y1="108" x2="1516.69" y2="108" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1501.69" cy="101" r="10.5" fill="#258448"/>
-<text x="1501.69" y="105" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
+<line x1="1493.15" y1="108" x2="1523.15" y2="108" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1508.15" cy="101" r="10.5" fill="#258448"/>
+<text x="1508.15" y="105" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
 </g>
 <g id="key6-note-83" data-midi="83" data-degree="4" data-color="#E86568"><title>C♭6 / degree 4</title>
 <line x1="1521" y1="108" x2="1551" y2="108" stroke="#70808B" stroke-width="1.2"/>
@@ -7145,49 +7181,55 @@
 <line x1="1032" y1="220" x2="1552" y2="220" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="206" x2="1552" y2="206" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key6-bass-clef" d="M564 704C543 704 521 688 521 663C521 633 535 618 563 618C584 618 607 638 607 661C607 684 588 704 564 704ZM564 511C539 511 521 490 521 469C521 439 535 424 564 424C585 424 607 442 607 469C607 486 589 511 564 511ZM285 757C185 757 94 697 94 607C94 559 131 525 183 525C222 525 257 552 257 592C257 625 230 651 194 651C184 651 174 644 160 644C146 644 140 650 140 659C140 674 157 735 262 735C336 735 373 683 373 578C373 354 127 217 75 182L80 166C211 231 476 360 476 569C476 670 394 757 285 757Z" fill="#24323D" transform="translate(1027 260.845) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="bass" data-letter="B" data-accidental="-1" transform="translate(1078 248)"><title>B♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="E" data-accidental="-1" transform="translate(1092 227)"><title>E♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="A" data-accidental="-1" transform="translate(1106 255)"><title>A♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="D" data-accidental="-1" transform="translate(1120 234)"><title>D♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="G" data-accidental="-1" transform="translate(1134 262)"><title>G♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="C" data-accidental="-1" transform="translate(1148 241)"><title>C♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key6-note-41" data-midi="41" data-degree="7" data-color="#1649E8"><title>F2 / degree 7</title>
-<circle cx="1090" cy="269" r="10.5" fill="#1649E8"/>
-<text x="1090" y="273" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1174" cy="269" r="10.5" fill="#1649E8"/>
+<text x="1174" y="273" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key6-note-42" data-midi="42" data-degree="1" data-color="#CE303A"><title>G♭2 / degree 1</title>
-<circle cx="1130.55" cy="262" r="10.5" fill="#CE303A"/>
-<text x="1130.55" y="266" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♭</text>
+<circle cx="1206.91" cy="262" r="10.5" fill="#CE303A"/>
+<text x="1206.91" y="266" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♭</text>
 </g>
 <g id="key6-note-44" data-midi="44" data-degree="2" data-color="#258448"><title>A♭2 / degree 2</title>
-<circle cx="1171.09" cy="255" r="10.5" fill="#258448"/>
-<text x="1171.09" y="259" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
+<circle cx="1239.82" cy="255" r="10.5" fill="#258448"/>
+<text x="1239.82" y="259" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
 </g>
 <g id="key6-note-46" data-midi="46" data-degree="3" data-color="#258448"><title>B♭2 / degree 3</title>
-<circle cx="1211.64" cy="248" r="10.5" fill="#258448"/>
-<text x="1211.64" y="252" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
+<circle cx="1272.73" cy="248" r="10.5" fill="#258448"/>
+<text x="1272.73" y="252" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
 </g>
 <g id="key6-note-47" data-midi="47" data-degree="4" data-color="#E86568"><title>C♭3 / degree 4</title>
-<circle cx="1252.18" cy="241" r="10.5" fill="#E86568"/>
-<text x="1252.18" y="245" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♭</text>
+<circle cx="1305.64" cy="241" r="10.5" fill="#E86568"/>
+<text x="1305.64" y="245" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♭</text>
 </g>
 <g id="key6-note-49" data-midi="49" data-degree="5" data-color="#E86568"><title>D♭3 / degree 5</title>
-<circle cx="1292.73" cy="234" r="10.5" fill="#E86568"/>
-<text x="1292.73" y="238" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♭</text>
+<circle cx="1338.55" cy="234" r="10.5" fill="#E86568"/>
+<text x="1338.55" y="238" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♭</text>
 </g>
 <g id="key6-note-51" data-midi="51" data-degree="6" data-color="#1649E8"><title>E♭3 / degree 6</title>
-<circle cx="1333.27" cy="227" r="10.5" fill="#1649E8"/>
-<text x="1333.27" y="231" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
+<circle cx="1371.45" cy="227" r="10.5" fill="#1649E8"/>
+<text x="1371.45" y="231" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
 </g>
 <g id="key6-note-53" data-midi="53" data-degree="7" data-color="#1649E8"><title>F3 / degree 7</title>
-<circle cx="1373.82" cy="220" r="10.5" fill="#1649E8"/>
-<text x="1373.82" y="224" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1404.36" cy="220" r="10.5" fill="#1649E8"/>
+<text x="1404.36" y="224" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key6-note-54" data-midi="54" data-degree="1" data-color="#CE303A"><title>G♭3 / degree 1</title>
-<circle cx="1414.36" cy="213" r="10.5" fill="#CE303A"/>
-<text x="1414.36" y="217" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♭</text>
+<circle cx="1437.27" cy="213" r="10.5" fill="#CE303A"/>
+<text x="1437.27" y="217" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♭</text>
 </g>
 <g id="key6-note-56" data-midi="56" data-degree="2" data-color="#258448"><title>A♭3 / degree 2</title>
-<circle cx="1454.91" cy="206" r="10.5" fill="#258448"/>
-<text x="1454.91" y="210" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
+<circle cx="1470.18" cy="206" r="10.5" fill="#258448"/>
+<text x="1470.18" y="210" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
 </g>
 <g id="key6-note-58" data-midi="58" data-degree="3" data-color="#258448"><title>B♭3 / degree 3</title>
-<circle cx="1495.45" cy="199" r="10.5" fill="#258448"/>
-<text x="1495.45" y="203" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
+<circle cx="1503.09" cy="199" r="10.5" fill="#258448"/>
+<text x="1503.09" y="203" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
 </g>
 <g id="key6-note-59" data-midi="59" data-degree="4" data-color="#E86568"><title>C♭4 / degree 4</title>
 <line x1="1521" y1="192" x2="1551" y2="192" stroke="#70808B" stroke-width="1.2"/>
@@ -8220,64 +8262,65 @@
 <line x1="1032" y1="136" x2="1552" y2="136" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="122" x2="1552" y2="122" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key7-treble-clef" d="M434 2C506 30 542 82 542 162C542 256 479 332 397 332C389 332 378 331 368 329L342 447C417 516 455 601 455 710C455 831 404 900 379 900C340 900 280 820 280 689C280 641 288 593 303 539C212 449 120 355 120 232C120 99 227 -12 356 -12C373 -12 393 -11 411 -6C430 -91 439 -141 439 -157C439 -250 372 -268 338 -268C311 -268 292 -258 280 -240C327 -240 350 -220 350 -178C350 -143 324 -107 283 -107C242 -107 213 -153 213 -190C213 -247 272 -291 337 -291C406 -291 464 -242 464 -170C464 -109 436 -5 434 2ZM426 746C426 682 371 587 321 557C312 578 308 603 308 630C308 712 343 801 394 801C416 801 426 783 426 746ZM498 128C498 78 474 43 428 23L383 249C450 249 498 203 498 128ZM407 17C379 10 360 6 348 6C259 6 168 77 168 177C168 260 220 342 325 430L343 323C299 307 248 250 248 184C248 113 307 76 340 66L348 71C347 71 289 104 289 158C289 198 326 239 361 247Z" fill="#24323D" transform="translate(1027 176.268) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="treble" data-letter="F" data-accidental="1" transform="translate(1078 122)"><title>F♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key7-note-60" data-midi="60" data-degree="4" data-color="#E86568"><title>C4 / degree 4</title>
-<line x1="1075" y1="192" x2="1105" y2="192" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1090" cy="192" r="10.5" fill="#E86568"/>
-<text x="1090" y="196" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
+<line x1="1089" y1="192" x2="1119" y2="192" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1104" cy="192" r="10.5" fill="#E86568"/>
+<text x="1104" y="196" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
 </g>
 <g id="key7-note-62" data-midi="62" data-degree="5" data-color="#E86568"><title>D4 / degree 5</title>
-<circle cx="1121.86" cy="185" r="10.5" fill="#E86568"/>
-<text x="1121.86" y="189" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
+<circle cx="1134.86" cy="185" r="10.5" fill="#E86568"/>
+<text x="1134.86" y="189" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
 </g>
 <g id="key7-note-64" data-midi="64" data-degree="6" data-color="#1649E8"><title>E4 / degree 6</title>
-<circle cx="1153.71" cy="178" r="10.5" fill="#1649E8"/>
-<text x="1153.71" y="182" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
+<circle cx="1165.71" cy="178" r="10.5" fill="#1649E8"/>
+<text x="1165.71" y="182" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
 </g>
 <g id="key7-note-66" data-midi="66" data-degree="7" data-color="#1649E8"><title>F♯4 / degree 7</title>
-<circle cx="1185.57" cy="171" r="10.5" fill="#1649E8"/>
-<text x="1185.57" y="175" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
+<circle cx="1196.57" cy="171" r="10.5" fill="#1649E8"/>
+<text x="1196.57" y="175" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
 </g>
 <g id="key7-note-67" data-midi="67" data-degree="1" data-color="#CE303A"><title>G4 / degree 1</title>
-<circle cx="1217.43" cy="164" r="10.5" fill="#CE303A"/>
-<text x="1217.43" y="168" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1227.43" cy="164" r="10.5" fill="#CE303A"/>
+<text x="1227.43" y="168" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key7-note-69" data-midi="69" data-degree="2" data-color="#258448"><title>A4 / degree 2</title>
-<circle cx="1249.29" cy="157" r="10.5" fill="#258448"/>
-<text x="1249.29" y="161" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<circle cx="1258.29" cy="157" r="10.5" fill="#258448"/>
+<text x="1258.29" y="161" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key7-note-71" data-midi="71" data-degree="3" data-color="#258448"><title>B4 / degree 3</title>
-<circle cx="1281.14" cy="150" r="10.5" fill="#258448"/>
-<text x="1281.14" y="154" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
+<circle cx="1289.14" cy="150" r="10.5" fill="#258448"/>
+<text x="1289.14" y="154" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
 </g>
 <g id="key7-note-72" data-midi="72" data-degree="4" data-color="#E86568"><title>C5 / degree 4</title>
-<circle cx="1313" cy="143" r="10.5" fill="#E86568"/>
-<text x="1313" y="147" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
+<circle cx="1320" cy="143" r="10.5" fill="#E86568"/>
+<text x="1320" y="147" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
 </g>
 <g id="key7-note-74" data-midi="74" data-degree="5" data-color="#E86568"><title>D5 / degree 5</title>
-<circle cx="1344.86" cy="136" r="10.5" fill="#E86568"/>
-<text x="1344.86" y="140" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
+<circle cx="1350.86" cy="136" r="10.5" fill="#E86568"/>
+<text x="1350.86" y="140" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
 </g>
 <g id="key7-note-76" data-midi="76" data-degree="6" data-color="#1649E8"><title>E5 / degree 6</title>
-<circle cx="1376.71" cy="129" r="10.5" fill="#1649E8"/>
-<text x="1376.71" y="133" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
+<circle cx="1381.71" cy="129" r="10.5" fill="#1649E8"/>
+<text x="1381.71" y="133" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
 </g>
 <g id="key7-note-78" data-midi="78" data-degree="7" data-color="#1649E8"><title>F♯5 / degree 7</title>
-<circle cx="1408.57" cy="122" r="10.5" fill="#1649E8"/>
-<text x="1408.57" y="126" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
+<circle cx="1412.57" cy="122" r="10.5" fill="#1649E8"/>
+<text x="1412.57" y="126" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
 </g>
 <g id="key7-note-79" data-midi="79" data-degree="1" data-color="#CE303A"><title>G5 / degree 1</title>
-<circle cx="1440.43" cy="115" r="10.5" fill="#CE303A"/>
-<text x="1440.43" y="119" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1443.43" cy="115" r="10.5" fill="#CE303A"/>
+<text x="1443.43" y="119" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key7-note-81" data-midi="81" data-degree="2" data-color="#258448"><title>A5 / degree 2</title>
-<line x1="1457.29" y1="108" x2="1487.29" y2="108" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1472.29" cy="108" r="10.5" fill="#258448"/>
-<text x="1472.29" y="112" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<line x1="1459.29" y1="108" x2="1489.29" y2="108" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1474.29" cy="108" r="10.5" fill="#258448"/>
+<text x="1474.29" y="112" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key7-note-83" data-midi="83" data-degree="3" data-color="#258448"><title>B5 / degree 3</title>
-<line x1="1489.14" y1="108" x2="1519.14" y2="108" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1504.14" cy="101" r="10.5" fill="#258448"/>
-<text x="1504.14" y="105" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
+<line x1="1490.14" y1="108" x2="1520.14" y2="108" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1505.14" cy="101" r="10.5" fill="#258448"/>
+<text x="1505.14" y="105" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
 </g>
 <g id="key7-note-84" data-midi="84" data-degree="4" data-color="#E86568"><title>C6 / degree 4</title>
 <line x1="1521" y1="108" x2="1551" y2="108" stroke="#70808B" stroke-width="1.2"/>
@@ -8291,45 +8334,46 @@
 <line x1="1032" y1="220" x2="1552" y2="220" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="206" x2="1552" y2="206" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key7-bass-clef" d="M564 704C543 704 521 688 521 663C521 633 535 618 563 618C584 618 607 638 607 661C607 684 588 704 564 704ZM564 511C539 511 521 490 521 469C521 439 535 424 564 424C585 424 607 442 607 469C607 486 589 511 564 511ZM285 757C185 757 94 697 94 607C94 559 131 525 183 525C222 525 257 552 257 592C257 625 230 651 194 651C184 651 174 644 160 644C146 644 140 650 140 659C140 674 157 735 262 735C336 735 373 683 373 578C373 354 127 217 75 182L80 166C211 231 476 360 476 569C476 670 394 757 285 757Z" fill="#24323D" transform="translate(1027 260.845) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="bass" data-letter="F" data-accidental="1" transform="translate(1078 220)"><title>F♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key7-note-42" data-midi="42" data-degree="7" data-color="#1649E8"><title>F♯2 / degree 7</title>
-<circle cx="1090" cy="269" r="10.5" fill="#1649E8"/>
-<text x="1090" y="273" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
+<circle cx="1104" cy="269" r="10.5" fill="#1649E8"/>
+<text x="1104" y="273" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
 </g>
 <g id="key7-note-43" data-midi="43" data-degree="1" data-color="#CE303A"><title>G2 / degree 1</title>
-<circle cx="1134.6" cy="262" r="10.5" fill="#CE303A"/>
-<text x="1134.6" y="266" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1147.2" cy="262" r="10.5" fill="#CE303A"/>
+<text x="1147.2" y="266" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key7-note-45" data-midi="45" data-degree="2" data-color="#258448"><title>A2 / degree 2</title>
-<circle cx="1179.2" cy="255" r="10.5" fill="#258448"/>
-<text x="1179.2" y="259" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<circle cx="1190.4" cy="255" r="10.5" fill="#258448"/>
+<text x="1190.4" y="259" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key7-note-47" data-midi="47" data-degree="3" data-color="#258448"><title>B2 / degree 3</title>
-<circle cx="1223.8" cy="248" r="10.5" fill="#258448"/>
-<text x="1223.8" y="252" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
+<circle cx="1233.6" cy="248" r="10.5" fill="#258448"/>
+<text x="1233.6" y="252" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
 </g>
 <g id="key7-note-48" data-midi="48" data-degree="4" data-color="#E86568"><title>C3 / degree 4</title>
-<circle cx="1268.4" cy="241" r="10.5" fill="#E86568"/>
-<text x="1268.4" y="245" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
+<circle cx="1276.8" cy="241" r="10.5" fill="#E86568"/>
+<text x="1276.8" y="245" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
 </g>
 <g id="key7-note-50" data-midi="50" data-degree="5" data-color="#E86568"><title>D3 / degree 5</title>
-<circle cx="1313" cy="234" r="10.5" fill="#E86568"/>
-<text x="1313" y="238" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
+<circle cx="1320" cy="234" r="10.5" fill="#E86568"/>
+<text x="1320" y="238" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
 </g>
 <g id="key7-note-52" data-midi="52" data-degree="6" data-color="#1649E8"><title>E3 / degree 6</title>
-<circle cx="1357.6" cy="227" r="10.5" fill="#1649E8"/>
-<text x="1357.6" y="231" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
+<circle cx="1363.2" cy="227" r="10.5" fill="#1649E8"/>
+<text x="1363.2" y="231" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
 </g>
 <g id="key7-note-54" data-midi="54" data-degree="7" data-color="#1649E8"><title>F♯3 / degree 7</title>
-<circle cx="1402.2" cy="220" r="10.5" fill="#1649E8"/>
-<text x="1402.2" y="224" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
+<circle cx="1406.4" cy="220" r="10.5" fill="#1649E8"/>
+<text x="1406.4" y="224" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
 </g>
 <g id="key7-note-55" data-midi="55" data-degree="1" data-color="#CE303A"><title>G3 / degree 1</title>
-<circle cx="1446.8" cy="213" r="10.5" fill="#CE303A"/>
-<text x="1446.8" y="217" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1449.6" cy="213" r="10.5" fill="#CE303A"/>
+<text x="1449.6" y="217" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key7-note-57" data-midi="57" data-degree="2" data-color="#258448"><title>A3 / degree 2</title>
-<circle cx="1491.4" cy="206" r="10.5" fill="#258448"/>
-<text x="1491.4" y="210" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<circle cx="1492.8" cy="206" r="10.5" fill="#258448"/>
+<text x="1492.8" y="210" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key7-note-59" data-midi="59" data-degree="3" data-color="#258448"><title>B3 / degree 3</title>
 <circle cx="1536" cy="199" r="10.5" fill="#258448"/>
@@ -9363,64 +9407,68 @@
 <line x1="1032" y1="136" x2="1552" y2="136" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="122" x2="1552" y2="122" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key8-treble-clef" d="M434 2C506 30 542 82 542 162C542 256 479 332 397 332C389 332 378 331 368 329L342 447C417 516 455 601 455 710C455 831 404 900 379 900C340 900 280 820 280 689C280 641 288 593 303 539C212 449 120 355 120 232C120 99 227 -12 356 -12C373 -12 393 -11 411 -6C430 -91 439 -141 439 -157C439 -250 372 -268 338 -268C311 -268 292 -258 280 -240C327 -240 350 -220 350 -178C350 -143 324 -107 283 -107C242 -107 213 -153 213 -190C213 -247 272 -291 337 -291C406 -291 464 -242 464 -170C464 -109 436 -5 434 2ZM426 746C426 682 371 587 321 557C312 578 308 603 308 630C308 712 343 801 394 801C416 801 426 783 426 746ZM498 128C498 78 474 43 428 23L383 249C450 249 498 203 498 128ZM407 17C379 10 360 6 348 6C259 6 168 77 168 177C168 260 220 342 325 430L343 323C299 307 248 250 248 184C248 113 307 76 340 66L348 71C347 71 289 104 289 158C289 198 326 239 361 247Z" fill="#24323D" transform="translate(1027 176.268) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="treble" data-letter="B" data-accidental="-1" transform="translate(1078 150)"><title>B♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="E" data-accidental="-1" transform="translate(1092 129)"><title>E♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="A" data-accidental="-1" transform="translate(1106 157)"><title>A♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="D" data-accidental="-1" transform="translate(1120 136)"><title>D♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key8-note-60" data-midi="60" data-degree="3" data-color="#258448"><title>C4 / degree 3</title>
-<line x1="1075" y1="192" x2="1105" y2="192" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1090" cy="192" r="10.5" fill="#258448"/>
-<text x="1090" y="196" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
+<line x1="1131" y1="192" x2="1161" y2="192" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1146" cy="192" r="10.5" fill="#258448"/>
+<text x="1146" y="196" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
 </g>
 <g id="key8-note-61" data-midi="61" data-degree="4" data-color="#E86568"><title>D♭4 / degree 4</title>
-<circle cx="1121.86" cy="185" r="10.5" fill="#E86568"/>
-<text x="1121.86" y="189" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♭</text>
+<circle cx="1173.86" cy="185" r="10.5" fill="#E86568"/>
+<text x="1173.86" y="189" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♭</text>
 </g>
 <g id="key8-note-63" data-midi="63" data-degree="5" data-color="#E86568"><title>E♭4 / degree 5</title>
-<circle cx="1153.71" cy="178" r="10.5" fill="#E86568"/>
-<text x="1153.71" y="182" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
+<circle cx="1201.71" cy="178" r="10.5" fill="#E86568"/>
+<text x="1201.71" y="182" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
 </g>
 <g id="key8-note-65" data-midi="65" data-degree="6" data-color="#1649E8"><title>F4 / degree 6</title>
-<circle cx="1185.57" cy="171" r="10.5" fill="#1649E8"/>
-<text x="1185.57" y="175" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1229.57" cy="171" r="10.5" fill="#1649E8"/>
+<text x="1229.57" y="175" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key8-note-67" data-midi="67" data-degree="7" data-color="#1649E8"><title>G4 / degree 7</title>
-<circle cx="1217.43" cy="164" r="10.5" fill="#1649E8"/>
-<text x="1217.43" y="168" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1257.43" cy="164" r="10.5" fill="#1649E8"/>
+<text x="1257.43" y="168" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key8-note-68" data-midi="68" data-degree="1" data-color="#CE303A"><title>A♭4 / degree 1</title>
-<circle cx="1249.29" cy="157" r="10.5" fill="#CE303A"/>
-<text x="1249.29" y="161" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
+<circle cx="1285.29" cy="157" r="10.5" fill="#CE303A"/>
+<text x="1285.29" y="161" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
 </g>
 <g id="key8-note-70" data-midi="70" data-degree="2" data-color="#258448"><title>B♭4 / degree 2</title>
-<circle cx="1281.14" cy="150" r="10.5" fill="#258448"/>
-<text x="1281.14" y="154" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
+<circle cx="1313.14" cy="150" r="10.5" fill="#258448"/>
+<text x="1313.14" y="154" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
 </g>
 <g id="key8-note-72" data-midi="72" data-degree="3" data-color="#258448"><title>C5 / degree 3</title>
-<circle cx="1313" cy="143" r="10.5" fill="#258448"/>
-<text x="1313" y="147" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
+<circle cx="1341" cy="143" r="10.5" fill="#258448"/>
+<text x="1341" y="147" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
 </g>
 <g id="key8-note-73" data-midi="73" data-degree="4" data-color="#E86568"><title>D♭5 / degree 4</title>
-<circle cx="1344.86" cy="136" r="10.5" fill="#E86568"/>
-<text x="1344.86" y="140" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♭</text>
+<circle cx="1368.86" cy="136" r="10.5" fill="#E86568"/>
+<text x="1368.86" y="140" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♭</text>
 </g>
 <g id="key8-note-75" data-midi="75" data-degree="5" data-color="#E86568"><title>E♭5 / degree 5</title>
-<circle cx="1376.71" cy="129" r="10.5" fill="#E86568"/>
-<text x="1376.71" y="133" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
+<circle cx="1396.71" cy="129" r="10.5" fill="#E86568"/>
+<text x="1396.71" y="133" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
 </g>
 <g id="key8-note-77" data-midi="77" data-degree="6" data-color="#1649E8"><title>F5 / degree 6</title>
-<circle cx="1408.57" cy="122" r="10.5" fill="#1649E8"/>
-<text x="1408.57" y="126" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1424.57" cy="122" r="10.5" fill="#1649E8"/>
+<text x="1424.57" y="126" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key8-note-79" data-midi="79" data-degree="7" data-color="#1649E8"><title>G5 / degree 7</title>
-<circle cx="1440.43" cy="115" r="10.5" fill="#1649E8"/>
-<text x="1440.43" y="119" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1452.43" cy="115" r="10.5" fill="#1649E8"/>
+<text x="1452.43" y="119" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key8-note-80" data-midi="80" data-degree="1" data-color="#CE303A"><title>A♭5 / degree 1</title>
-<line x1="1457.29" y1="108" x2="1487.29" y2="108" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1472.29" cy="108" r="10.5" fill="#CE303A"/>
-<text x="1472.29" y="112" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
+<line x1="1465.29" y1="108" x2="1495.29" y2="108" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1480.29" cy="108" r="10.5" fill="#CE303A"/>
+<text x="1480.29" y="112" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
 </g>
 <g id="key8-note-82" data-midi="82" data-degree="2" data-color="#258448"><title>B♭5 / degree 2</title>
-<line x1="1489.14" y1="108" x2="1519.14" y2="108" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1504.14" cy="101" r="10.5" fill="#258448"/>
-<text x="1504.14" y="105" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
+<line x1="1493.14" y1="108" x2="1523.14" y2="108" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1508.14" cy="101" r="10.5" fill="#258448"/>
+<text x="1508.14" y="105" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
 </g>
 <g id="key8-note-84" data-midi="84" data-degree="3" data-color="#258448"><title>C6 / degree 3</title>
 <line x1="1521" y1="108" x2="1551" y2="108" stroke="#70808B" stroke-width="1.2"/>
@@ -9434,45 +9482,49 @@
 <line x1="1032" y1="220" x2="1552" y2="220" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="206" x2="1552" y2="206" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key8-bass-clef" d="M564 704C543 704 521 688 521 663C521 633 535 618 563 618C584 618 607 638 607 661C607 684 588 704 564 704ZM564 511C539 511 521 490 521 469C521 439 535 424 564 424C585 424 607 442 607 469C607 486 589 511 564 511ZM285 757C185 757 94 697 94 607C94 559 131 525 183 525C222 525 257 552 257 592C257 625 230 651 194 651C184 651 174 644 160 644C146 644 140 650 140 659C140 674 157 735 262 735C336 735 373 683 373 578C373 354 127 217 75 182L80 166C211 231 476 360 476 569C476 670 394 757 285 757Z" fill="#24323D" transform="translate(1027 260.845) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="bass" data-letter="B" data-accidental="-1" transform="translate(1078 248)"><title>B♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="E" data-accidental="-1" transform="translate(1092 227)"><title>E♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="A" data-accidental="-1" transform="translate(1106 255)"><title>A♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="D" data-accidental="-1" transform="translate(1120 234)"><title>D♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key8-note-41" data-midi="41" data-degree="6" data-color="#1649E8"><title>F2 / degree 6</title>
-<circle cx="1090" cy="269" r="10.5" fill="#1649E8"/>
-<text x="1090" y="273" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1146" cy="269" r="10.5" fill="#1649E8"/>
+<text x="1146" y="273" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key8-note-43" data-midi="43" data-degree="7" data-color="#1649E8"><title>G2 / degree 7</title>
-<circle cx="1134.6" cy="262" r="10.5" fill="#1649E8"/>
-<text x="1134.6" y="266" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1185" cy="262" r="10.5" fill="#1649E8"/>
+<text x="1185" y="266" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key8-note-44" data-midi="44" data-degree="1" data-color="#CE303A"><title>A♭2 / degree 1</title>
-<circle cx="1179.2" cy="255" r="10.5" fill="#CE303A"/>
-<text x="1179.2" y="259" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
+<circle cx="1224" cy="255" r="10.5" fill="#CE303A"/>
+<text x="1224" y="259" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
 </g>
 <g id="key8-note-46" data-midi="46" data-degree="2" data-color="#258448"><title>B♭2 / degree 2</title>
-<circle cx="1223.8" cy="248" r="10.5" fill="#258448"/>
-<text x="1223.8" y="252" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
+<circle cx="1263" cy="248" r="10.5" fill="#258448"/>
+<text x="1263" y="252" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
 </g>
 <g id="key8-note-48" data-midi="48" data-degree="3" data-color="#258448"><title>C3 / degree 3</title>
-<circle cx="1268.4" cy="241" r="10.5" fill="#258448"/>
-<text x="1268.4" y="245" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
+<circle cx="1302" cy="241" r="10.5" fill="#258448"/>
+<text x="1302" y="245" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
 </g>
 <g id="key8-note-49" data-midi="49" data-degree="4" data-color="#E86568"><title>D♭3 / degree 4</title>
-<circle cx="1313" cy="234" r="10.5" fill="#E86568"/>
-<text x="1313" y="238" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♭</text>
+<circle cx="1341" cy="234" r="10.5" fill="#E86568"/>
+<text x="1341" y="238" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♭</text>
 </g>
 <g id="key8-note-51" data-midi="51" data-degree="5" data-color="#E86568"><title>E♭3 / degree 5</title>
-<circle cx="1357.6" cy="227" r="10.5" fill="#E86568"/>
-<text x="1357.6" y="231" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
+<circle cx="1380" cy="227" r="10.5" fill="#E86568"/>
+<text x="1380" y="231" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
 </g>
 <g id="key8-note-53" data-midi="53" data-degree="6" data-color="#1649E8"><title>F3 / degree 6</title>
-<circle cx="1402.2" cy="220" r="10.5" fill="#1649E8"/>
-<text x="1402.2" y="224" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1419" cy="220" r="10.5" fill="#1649E8"/>
+<text x="1419" y="224" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key8-note-55" data-midi="55" data-degree="7" data-color="#1649E8"><title>G3 / degree 7</title>
-<circle cx="1446.8" cy="213" r="10.5" fill="#1649E8"/>
-<text x="1446.8" y="217" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1458" cy="213" r="10.5" fill="#1649E8"/>
+<text x="1458" y="217" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key8-note-56" data-midi="56" data-degree="1" data-color="#CE303A"><title>A♭3 / degree 1</title>
-<circle cx="1491.4" cy="206" r="10.5" fill="#CE303A"/>
-<text x="1491.4" y="210" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
+<circle cx="1497" cy="206" r="10.5" fill="#CE303A"/>
+<text x="1497" y="210" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♭</text>
 </g>
 <g id="key8-note-58" data-midi="58" data-degree="2" data-color="#258448"><title>B♭3 / degree 2</title>
 <circle cx="1536" cy="199" r="10.5" fill="#258448"/>
@@ -10503,59 +10555,62 @@
 <line x1="1032" y1="136" x2="1552" y2="136" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="122" x2="1552" y2="122" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key9-treble-clef" d="M434 2C506 30 542 82 542 162C542 256 479 332 397 332C389 332 378 331 368 329L342 447C417 516 455 601 455 710C455 831 404 900 379 900C340 900 280 820 280 689C280 641 288 593 303 539C212 449 120 355 120 232C120 99 227 -12 356 -12C373 -12 393 -11 411 -6C430 -91 439 -141 439 -157C439 -250 372 -268 338 -268C311 -268 292 -258 280 -240C327 -240 350 -220 350 -178C350 -143 324 -107 283 -107C242 -107 213 -153 213 -190C213 -247 272 -291 337 -291C406 -291 464 -242 464 -170C464 -109 436 -5 434 2ZM426 746C426 682 371 587 321 557C312 578 308 603 308 630C308 712 343 801 394 801C416 801 426 783 426 746ZM498 128C498 78 474 43 428 23L383 249C450 249 498 203 498 128ZM407 17C379 10 360 6 348 6C259 6 168 77 168 177C168 260 220 342 325 430L343 323C299 307 248 250 248 184C248 113 307 76 340 66L348 71C347 71 289 104 289 158C289 198 326 239 361 247Z" fill="#24323D" transform="translate(1027 176.268) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="treble" data-letter="F" data-accidental="1" transform="translate(1078 122)"><title>F♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="C" data-accidental="1" transform="translate(1092 143)"><title>C♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="G" data-accidental="1" transform="translate(1106 115)"><title>G♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key9-note-61" data-midi="61" data-degree="3" data-color="#258448"><title>C♯4 / degree 3</title>
-<line x1="1075" y1="192" x2="1105" y2="192" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1090" cy="192" r="10.5" fill="#258448"/>
-<text x="1090" y="196" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
+<line x1="1117" y1="192" x2="1147" y2="192" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1132" cy="192" r="10.5" fill="#258448"/>
+<text x="1132" y="196" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
 </g>
 <g id="key9-note-62" data-midi="62" data-degree="4" data-color="#E86568"><title>D4 / degree 4</title>
-<circle cx="1124.31" cy="185" r="10.5" fill="#E86568"/>
-<text x="1124.31" y="189" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
+<circle cx="1163.08" cy="185" r="10.5" fill="#E86568"/>
+<text x="1163.08" y="189" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
 </g>
 <g id="key9-note-64" data-midi="64" data-degree="5" data-color="#E86568"><title>E4 / degree 5</title>
-<circle cx="1158.62" cy="178" r="10.5" fill="#E86568"/>
-<text x="1158.62" y="182" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
+<circle cx="1194.15" cy="178" r="10.5" fill="#E86568"/>
+<text x="1194.15" y="182" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
 </g>
 <g id="key9-note-66" data-midi="66" data-degree="6" data-color="#1649E8"><title>F♯4 / degree 6</title>
-<circle cx="1192.92" cy="171" r="10.5" fill="#1649E8"/>
-<text x="1192.92" y="175" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
+<circle cx="1225.23" cy="171" r="10.5" fill="#1649E8"/>
+<text x="1225.23" y="175" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
 </g>
 <g id="key9-note-68" data-midi="68" data-degree="7" data-color="#1649E8"><title>G♯4 / degree 7</title>
-<circle cx="1227.23" cy="164" r="10.5" fill="#1649E8"/>
-<text x="1227.23" y="168" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
+<circle cx="1256.31" cy="164" r="10.5" fill="#1649E8"/>
+<text x="1256.31" y="168" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
 </g>
 <g id="key9-note-69" data-midi="69" data-degree="1" data-color="#CE303A"><title>A4 / degree 1</title>
-<circle cx="1261.54" cy="157" r="10.5" fill="#CE303A"/>
-<text x="1261.54" y="161" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<circle cx="1287.38" cy="157" r="10.5" fill="#CE303A"/>
+<text x="1287.38" y="161" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key9-note-71" data-midi="71" data-degree="2" data-color="#258448"><title>B4 / degree 2</title>
-<circle cx="1295.85" cy="150" r="10.5" fill="#258448"/>
-<text x="1295.85" y="154" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
+<circle cx="1318.46" cy="150" r="10.5" fill="#258448"/>
+<text x="1318.46" y="154" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
 </g>
 <g id="key9-note-73" data-midi="73" data-degree="3" data-color="#258448"><title>C♯5 / degree 3</title>
-<circle cx="1330.15" cy="143" r="10.5" fill="#258448"/>
-<text x="1330.15" y="147" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
+<circle cx="1349.54" cy="143" r="10.5" fill="#258448"/>
+<text x="1349.54" y="147" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
 </g>
 <g id="key9-note-74" data-midi="74" data-degree="4" data-color="#E86568"><title>D5 / degree 4</title>
-<circle cx="1364.46" cy="136" r="10.5" fill="#E86568"/>
-<text x="1364.46" y="140" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
+<circle cx="1380.62" cy="136" r="10.5" fill="#E86568"/>
+<text x="1380.62" y="140" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
 </g>
 <g id="key9-note-76" data-midi="76" data-degree="5" data-color="#E86568"><title>E5 / degree 5</title>
-<circle cx="1398.77" cy="129" r="10.5" fill="#E86568"/>
-<text x="1398.77" y="133" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
+<circle cx="1411.69" cy="129" r="10.5" fill="#E86568"/>
+<text x="1411.69" y="133" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
 </g>
 <g id="key9-note-78" data-midi="78" data-degree="6" data-color="#1649E8"><title>F♯5 / degree 6</title>
-<circle cx="1433.08" cy="122" r="10.5" fill="#1649E8"/>
-<text x="1433.08" y="126" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
+<circle cx="1442.77" cy="122" r="10.5" fill="#1649E8"/>
+<text x="1442.77" y="126" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
 </g>
 <g id="key9-note-80" data-midi="80" data-degree="7" data-color="#1649E8"><title>G♯5 / degree 7</title>
-<circle cx="1467.38" cy="115" r="10.5" fill="#1649E8"/>
-<text x="1467.38" y="119" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
+<circle cx="1473.85" cy="115" r="10.5" fill="#1649E8"/>
+<text x="1473.85" y="119" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
 </g>
 <g id="key9-note-81" data-midi="81" data-degree="1" data-color="#CE303A"><title>A5 / degree 1</title>
-<line x1="1486.69" y1="108" x2="1516.69" y2="108" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1501.69" cy="108" r="10.5" fill="#CE303A"/>
-<text x="1501.69" y="112" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<line x1="1489.92" y1="108" x2="1519.92" y2="108" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1504.92" cy="108" r="10.5" fill="#CE303A"/>
+<text x="1504.92" y="112" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key9-note-83" data-midi="83" data-degree="2" data-color="#258448"><title>B5 / degree 2</title>
 <line x1="1521" y1="108" x2="1551" y2="108" stroke="#70808B" stroke-width="1.2"/>
@@ -10568,45 +10623,48 @@
 <line x1="1032" y1="220" x2="1552" y2="220" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="206" x2="1552" y2="206" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key9-bass-clef" d="M564 704C543 704 521 688 521 663C521 633 535 618 563 618C584 618 607 638 607 661C607 684 588 704 564 704ZM564 511C539 511 521 490 521 469C521 439 535 424 564 424C585 424 607 442 607 469C607 486 589 511 564 511ZM285 757C185 757 94 697 94 607C94 559 131 525 183 525C222 525 257 552 257 592C257 625 230 651 194 651C184 651 174 644 160 644C146 644 140 650 140 659C140 674 157 735 262 735C336 735 373 683 373 578C373 354 127 217 75 182L80 166C211 231 476 360 476 569C476 670 394 757 285 757Z" fill="#24323D" transform="translate(1027 260.845) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="bass" data-letter="F" data-accidental="1" transform="translate(1078 220)"><title>F♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="C" data-accidental="1" transform="translate(1092 241)"><title>C♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="G" data-accidental="1" transform="translate(1106 213)"><title>G♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key9-note-42" data-midi="42" data-degree="6" data-color="#1649E8"><title>F♯2 / degree 6</title>
-<circle cx="1090" cy="269" r="10.5" fill="#1649E8"/>
-<text x="1090" y="273" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
+<circle cx="1132" cy="269" r="10.5" fill="#1649E8"/>
+<text x="1132" y="273" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
 </g>
 <g id="key9-note-44" data-midi="44" data-degree="7" data-color="#1649E8"><title>G♯2 / degree 7</title>
-<circle cx="1134.6" cy="262" r="10.5" fill="#1649E8"/>
-<text x="1134.6" y="266" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
+<circle cx="1172.4" cy="262" r="10.5" fill="#1649E8"/>
+<text x="1172.4" y="266" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
 </g>
 <g id="key9-note-45" data-midi="45" data-degree="1" data-color="#CE303A"><title>A2 / degree 1</title>
-<circle cx="1179.2" cy="255" r="10.5" fill="#CE303A"/>
-<text x="1179.2" y="259" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<circle cx="1212.8" cy="255" r="10.5" fill="#CE303A"/>
+<text x="1212.8" y="259" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key9-note-47" data-midi="47" data-degree="2" data-color="#258448"><title>B2 / degree 2</title>
-<circle cx="1223.8" cy="248" r="10.5" fill="#258448"/>
-<text x="1223.8" y="252" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
+<circle cx="1253.2" cy="248" r="10.5" fill="#258448"/>
+<text x="1253.2" y="252" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
 </g>
 <g id="key9-note-49" data-midi="49" data-degree="3" data-color="#258448"><title>C♯3 / degree 3</title>
-<circle cx="1268.4" cy="241" r="10.5" fill="#258448"/>
-<text x="1268.4" y="245" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
+<circle cx="1293.6" cy="241" r="10.5" fill="#258448"/>
+<text x="1293.6" y="245" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
 </g>
 <g id="key9-note-50" data-midi="50" data-degree="4" data-color="#E86568"><title>D3 / degree 4</title>
-<circle cx="1313" cy="234" r="10.5" fill="#E86568"/>
-<text x="1313" y="238" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
+<circle cx="1334" cy="234" r="10.5" fill="#E86568"/>
+<text x="1334" y="238" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
 </g>
 <g id="key9-note-52" data-midi="52" data-degree="5" data-color="#E86568"><title>E3 / degree 5</title>
-<circle cx="1357.6" cy="227" r="10.5" fill="#E86568"/>
-<text x="1357.6" y="231" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
+<circle cx="1374.4" cy="227" r="10.5" fill="#E86568"/>
+<text x="1374.4" y="231" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
 </g>
 <g id="key9-note-54" data-midi="54" data-degree="6" data-color="#1649E8"><title>F♯3 / degree 6</title>
-<circle cx="1402.2" cy="220" r="10.5" fill="#1649E8"/>
-<text x="1402.2" y="224" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
+<circle cx="1414.8" cy="220" r="10.5" fill="#1649E8"/>
+<text x="1414.8" y="224" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
 </g>
 <g id="key9-note-56" data-midi="56" data-degree="7" data-color="#1649E8"><title>G♯3 / degree 7</title>
-<circle cx="1446.8" cy="213" r="10.5" fill="#1649E8"/>
-<text x="1446.8" y="217" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
+<circle cx="1455.2" cy="213" r="10.5" fill="#1649E8"/>
+<text x="1455.2" y="217" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
 </g>
 <g id="key9-note-57" data-midi="57" data-degree="1" data-color="#CE303A"><title>A3 / degree 1</title>
-<circle cx="1491.4" cy="206" r="10.5" fill="#CE303A"/>
-<text x="1491.4" y="210" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<circle cx="1495.6" cy="206" r="10.5" fill="#CE303A"/>
+<text x="1495.6" y="210" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key9-note-59" data-midi="59" data-degree="2" data-color="#258448"><title>B3 / degree 2</title>
 <circle cx="1536" cy="199" r="10.5" fill="#258448"/>
@@ -11639,64 +11697,66 @@
 <line x1="1032" y1="136" x2="1552" y2="136" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="122" x2="1552" y2="122" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key10-treble-clef" d="M434 2C506 30 542 82 542 162C542 256 479 332 397 332C389 332 378 331 368 329L342 447C417 516 455 601 455 710C455 831 404 900 379 900C340 900 280 820 280 689C280 641 288 593 303 539C212 449 120 355 120 232C120 99 227 -12 356 -12C373 -12 393 -11 411 -6C430 -91 439 -141 439 -157C439 -250 372 -268 338 -268C311 -268 292 -258 280 -240C327 -240 350 -220 350 -178C350 -143 324 -107 283 -107C242 -107 213 -153 213 -190C213 -247 272 -291 337 -291C406 -291 464 -242 464 -170C464 -109 436 -5 434 2ZM426 746C426 682 371 587 321 557C312 578 308 603 308 630C308 712 343 801 394 801C416 801 426 783 426 746ZM498 128C498 78 474 43 428 23L383 249C450 249 498 203 498 128ZM407 17C379 10 360 6 348 6C259 6 168 77 168 177C168 260 220 342 325 430L343 323C299 307 248 250 248 184C248 113 307 76 340 66L348 71C347 71 289 104 289 158C289 198 326 239 361 247Z" fill="#24323D" transform="translate(1027 176.268) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="treble" data-letter="B" data-accidental="-1" transform="translate(1078 150)"><title>B♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="E" data-accidental="-1" transform="translate(1092 129)"><title>E♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key10-note-60" data-midi="60" data-degree="2" data-color="#258448"><title>C4 / degree 2</title>
-<line x1="1075" y1="192" x2="1105" y2="192" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1090" cy="192" r="10.5" fill="#258448"/>
-<text x="1090" y="196" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
+<line x1="1103" y1="192" x2="1133" y2="192" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1118" cy="192" r="10.5" fill="#258448"/>
+<text x="1118" y="196" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
 </g>
 <g id="key10-note-62" data-midi="62" data-degree="3" data-color="#258448"><title>D4 / degree 3</title>
-<circle cx="1121.86" cy="185" r="10.5" fill="#258448"/>
-<text x="1121.86" y="189" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
+<circle cx="1147.86" cy="185" r="10.5" fill="#258448"/>
+<text x="1147.86" y="189" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
 </g>
 <g id="key10-note-63" data-midi="63" data-degree="4" data-color="#E86568"><title>E♭4 / degree 4</title>
-<circle cx="1153.71" cy="178" r="10.5" fill="#E86568"/>
-<text x="1153.71" y="182" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
+<circle cx="1177.71" cy="178" r="10.5" fill="#E86568"/>
+<text x="1177.71" y="182" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
 </g>
 <g id="key10-note-65" data-midi="65" data-degree="5" data-color="#E86568"><title>F4 / degree 5</title>
-<circle cx="1185.57" cy="171" r="10.5" fill="#E86568"/>
-<text x="1185.57" y="175" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1207.57" cy="171" r="10.5" fill="#E86568"/>
+<text x="1207.57" y="175" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key10-note-67" data-midi="67" data-degree="6" data-color="#1649E8"><title>G4 / degree 6</title>
-<circle cx="1217.43" cy="164" r="10.5" fill="#1649E8"/>
-<text x="1217.43" y="168" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1237.43" cy="164" r="10.5" fill="#1649E8"/>
+<text x="1237.43" y="168" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key10-note-69" data-midi="69" data-degree="7" data-color="#1649E8"><title>A4 / degree 7</title>
-<circle cx="1249.29" cy="157" r="10.5" fill="#1649E8"/>
-<text x="1249.29" y="161" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<circle cx="1267.29" cy="157" r="10.5" fill="#1649E8"/>
+<text x="1267.29" y="161" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key10-note-70" data-midi="70" data-degree="1" data-color="#CE303A"><title>B♭4 / degree 1</title>
-<circle cx="1281.14" cy="150" r="10.5" fill="#CE303A"/>
-<text x="1281.14" y="154" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
+<circle cx="1297.14" cy="150" r="10.5" fill="#CE303A"/>
+<text x="1297.14" y="154" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
 </g>
 <g id="key10-note-72" data-midi="72" data-degree="2" data-color="#258448"><title>C5 / degree 2</title>
-<circle cx="1313" cy="143" r="10.5" fill="#258448"/>
-<text x="1313" y="147" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
+<circle cx="1327" cy="143" r="10.5" fill="#258448"/>
+<text x="1327" y="147" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
 </g>
 <g id="key10-note-74" data-midi="74" data-degree="3" data-color="#258448"><title>D5 / degree 3</title>
-<circle cx="1344.86" cy="136" r="10.5" fill="#258448"/>
-<text x="1344.86" y="140" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
+<circle cx="1356.86" cy="136" r="10.5" fill="#258448"/>
+<text x="1356.86" y="140" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
 </g>
 <g id="key10-note-75" data-midi="75" data-degree="4" data-color="#E86568"><title>E♭5 / degree 4</title>
-<circle cx="1376.71" cy="129" r="10.5" fill="#E86568"/>
-<text x="1376.71" y="133" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
+<circle cx="1386.71" cy="129" r="10.5" fill="#E86568"/>
+<text x="1386.71" y="133" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
 </g>
 <g id="key10-note-77" data-midi="77" data-degree="5" data-color="#E86568"><title>F5 / degree 5</title>
-<circle cx="1408.57" cy="122" r="10.5" fill="#E86568"/>
-<text x="1408.57" y="126" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1416.57" cy="122" r="10.5" fill="#E86568"/>
+<text x="1416.57" y="126" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key10-note-79" data-midi="79" data-degree="6" data-color="#1649E8"><title>G5 / degree 6</title>
-<circle cx="1440.43" cy="115" r="10.5" fill="#1649E8"/>
-<text x="1440.43" y="119" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1446.43" cy="115" r="10.5" fill="#1649E8"/>
+<text x="1446.43" y="119" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key10-note-81" data-midi="81" data-degree="7" data-color="#1649E8"><title>A5 / degree 7</title>
-<line x1="1457.29" y1="108" x2="1487.29" y2="108" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1472.29" cy="108" r="10.5" fill="#1649E8"/>
-<text x="1472.29" y="112" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<line x1="1461.29" y1="108" x2="1491.29" y2="108" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1476.29" cy="108" r="10.5" fill="#1649E8"/>
+<text x="1476.29" y="112" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key10-note-82" data-midi="82" data-degree="1" data-color="#CE303A"><title>B♭5 / degree 1</title>
-<line x1="1489.14" y1="108" x2="1519.14" y2="108" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1504.14" cy="101" r="10.5" fill="#CE303A"/>
-<text x="1504.14" y="105" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
+<line x1="1491.14" y1="108" x2="1521.14" y2="108" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1506.14" cy="101" r="10.5" fill="#CE303A"/>
+<text x="1506.14" y="105" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
 </g>
 <g id="key10-note-84" data-midi="84" data-degree="2" data-color="#258448"><title>C6 / degree 2</title>
 <line x1="1521" y1="108" x2="1551" y2="108" stroke="#70808B" stroke-width="1.2"/>
@@ -11710,45 +11770,47 @@
 <line x1="1032" y1="220" x2="1552" y2="220" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="206" x2="1552" y2="206" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key10-bass-clef" d="M564 704C543 704 521 688 521 663C521 633 535 618 563 618C584 618 607 638 607 661C607 684 588 704 564 704ZM564 511C539 511 521 490 521 469C521 439 535 424 564 424C585 424 607 442 607 469C607 486 589 511 564 511ZM285 757C185 757 94 697 94 607C94 559 131 525 183 525C222 525 257 552 257 592C257 625 230 651 194 651C184 651 174 644 160 644C146 644 140 650 140 659C140 674 157 735 262 735C336 735 373 683 373 578C373 354 127 217 75 182L80 166C211 231 476 360 476 569C476 670 394 757 285 757Z" fill="#24323D" transform="translate(1027 260.845) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="bass" data-letter="B" data-accidental="-1" transform="translate(1078 248)"><title>B♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="E" data-accidental="-1" transform="translate(1092 227)"><title>E♭</title><path d="M-3 -22 V5 C10 -1 7 -13 -3 -4" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key10-note-41" data-midi="41" data-degree="5" data-color="#E86568"><title>F2 / degree 5</title>
-<circle cx="1090" cy="269" r="10.5" fill="#E86568"/>
-<text x="1090" y="273" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1118" cy="269" r="10.5" fill="#E86568"/>
+<text x="1118" y="273" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key10-note-43" data-midi="43" data-degree="6" data-color="#1649E8"><title>G2 / degree 6</title>
-<circle cx="1134.6" cy="262" r="10.5" fill="#1649E8"/>
-<text x="1134.6" y="266" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1159.8" cy="262" r="10.5" fill="#1649E8"/>
+<text x="1159.8" y="266" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key10-note-45" data-midi="45" data-degree="7" data-color="#1649E8"><title>A2 / degree 7</title>
-<circle cx="1179.2" cy="255" r="10.5" fill="#1649E8"/>
-<text x="1179.2" y="259" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<circle cx="1201.6" cy="255" r="10.5" fill="#1649E8"/>
+<text x="1201.6" y="259" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key10-note-46" data-midi="46" data-degree="1" data-color="#CE303A"><title>B♭2 / degree 1</title>
-<circle cx="1223.8" cy="248" r="10.5" fill="#CE303A"/>
-<text x="1223.8" y="252" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
+<circle cx="1243.4" cy="248" r="10.5" fill="#CE303A"/>
+<text x="1243.4" y="252" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">B♭</text>
 </g>
 <g id="key10-note-48" data-midi="48" data-degree="2" data-color="#258448"><title>C3 / degree 2</title>
-<circle cx="1268.4" cy="241" r="10.5" fill="#258448"/>
-<text x="1268.4" y="245" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
+<circle cx="1285.2" cy="241" r="10.5" fill="#258448"/>
+<text x="1285.2" y="245" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">C</text>
 </g>
 <g id="key10-note-50" data-midi="50" data-degree="3" data-color="#258448"><title>D3 / degree 3</title>
-<circle cx="1313" cy="234" r="10.5" fill="#258448"/>
-<text x="1313" y="238" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
+<circle cx="1327" cy="234" r="10.5" fill="#258448"/>
+<text x="1327" y="238" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">D</text>
 </g>
 <g id="key10-note-51" data-midi="51" data-degree="4" data-color="#E86568"><title>E♭3 / degree 4</title>
-<circle cx="1357.6" cy="227" r="10.5" fill="#E86568"/>
-<text x="1357.6" y="231" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
+<circle cx="1368.8" cy="227" r="10.5" fill="#E86568"/>
+<text x="1368.8" y="231" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">E♭</text>
 </g>
 <g id="key10-note-53" data-midi="53" data-degree="5" data-color="#E86568"><title>F3 / degree 5</title>
-<circle cx="1402.2" cy="220" r="10.5" fill="#E86568"/>
-<text x="1402.2" y="224" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
+<circle cx="1410.6" cy="220" r="10.5" fill="#E86568"/>
+<text x="1410.6" y="224" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">F</text>
 </g>
 <g id="key10-note-55" data-midi="55" data-degree="6" data-color="#1649E8"><title>G3 / degree 6</title>
-<circle cx="1446.8" cy="213" r="10.5" fill="#1649E8"/>
-<text x="1446.8" y="217" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
+<circle cx="1452.4" cy="213" r="10.5" fill="#1649E8"/>
+<text x="1452.4" y="217" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">G</text>
 </g>
 <g id="key10-note-57" data-midi="57" data-degree="7" data-color="#1649E8"><title>A3 / degree 7</title>
-<circle cx="1491.4" cy="206" r="10.5" fill="#1649E8"/>
-<text x="1491.4" y="210" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
+<circle cx="1494.2" cy="206" r="10.5" fill="#1649E8"/>
+<text x="1494.2" y="210" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">A</text>
 </g>
 <g id="key10-note-58" data-midi="58" data-degree="1" data-color="#CE303A"><title>B♭3 / degree 1</title>
 <circle cx="1536" cy="199" r="10.5" fill="#CE303A"/>
@@ -12779,59 +12841,64 @@
 <line x1="1032" y1="136" x2="1552" y2="136" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="122" x2="1552" y2="122" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key11-treble-clef" d="M434 2C506 30 542 82 542 162C542 256 479 332 397 332C389 332 378 331 368 329L342 447C417 516 455 601 455 710C455 831 404 900 379 900C340 900 280 820 280 689C280 641 288 593 303 539C212 449 120 355 120 232C120 99 227 -12 356 -12C373 -12 393 -11 411 -6C430 -91 439 -141 439 -157C439 -250 372 -268 338 -268C311 -268 292 -258 280 -240C327 -240 350 -220 350 -178C350 -143 324 -107 283 -107C242 -107 213 -153 213 -190C213 -247 272 -291 337 -291C406 -291 464 -242 464 -170C464 -109 436 -5 434 2ZM426 746C426 682 371 587 321 557C312 578 308 603 308 630C308 712 343 801 394 801C416 801 426 783 426 746ZM498 128C498 78 474 43 428 23L383 249C450 249 498 203 498 128ZM407 17C379 10 360 6 348 6C259 6 168 77 168 177C168 260 220 342 325 430L343 323C299 307 248 250 248 184C248 113 307 76 340 66L348 71C347 71 289 104 289 158C289 198 326 239 361 247Z" fill="#24323D" transform="translate(1027 176.268) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="treble" data-letter="F" data-accidental="1" transform="translate(1078 122)"><title>F♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="C" data-accidental="1" transform="translate(1092 143)"><title>C♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="G" data-accidental="1" transform="translate(1106 115)"><title>G♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="D" data-accidental="1" transform="translate(1120 136)"><title>D♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="treble" data-letter="A" data-accidental="1" transform="translate(1134 157)"><title>A♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key11-note-61" data-midi="61" data-degree="2" data-color="#258448"><title>C♯4 / degree 2</title>
-<line x1="1075" y1="192" x2="1105" y2="192" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1090" cy="192" r="10.5" fill="#258448"/>
-<text x="1090" y="196" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
+<line x1="1145" y1="192" x2="1175" y2="192" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1160" cy="192" r="10.5" fill="#258448"/>
+<text x="1160" y="196" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
 </g>
 <g id="key11-note-63" data-midi="63" data-degree="3" data-color="#258448"><title>D♯4 / degree 3</title>
-<circle cx="1124.31" cy="185" r="10.5" fill="#258448"/>
-<text x="1124.31" y="189" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♯</text>
+<circle cx="1188.92" cy="185" r="10.5" fill="#258448"/>
+<text x="1188.92" y="189" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♯</text>
 </g>
 <g id="key11-note-64" data-midi="64" data-degree="4" data-color="#E86568"><title>E4 / degree 4</title>
-<circle cx="1158.62" cy="178" r="10.5" fill="#E86568"/>
-<text x="1158.62" y="182" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
+<circle cx="1217.85" cy="178" r="10.5" fill="#E86568"/>
+<text x="1217.85" y="182" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
 </g>
 <g id="key11-note-66" data-midi="66" data-degree="5" data-color="#E86568"><title>F♯4 / degree 5</title>
-<circle cx="1192.92" cy="171" r="10.5" fill="#E86568"/>
-<text x="1192.92" y="175" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
+<circle cx="1246.77" cy="171" r="10.5" fill="#E86568"/>
+<text x="1246.77" y="175" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
 </g>
 <g id="key11-note-68" data-midi="68" data-degree="6" data-color="#1649E8"><title>G♯4 / degree 6</title>
-<circle cx="1227.23" cy="164" r="10.5" fill="#1649E8"/>
-<text x="1227.23" y="168" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
+<circle cx="1275.69" cy="164" r="10.5" fill="#1649E8"/>
+<text x="1275.69" y="168" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
 </g>
 <g id="key11-note-70" data-midi="70" data-degree="7" data-color="#1649E8"><title>A♯4 / degree 7</title>
-<circle cx="1261.54" cy="157" r="10.5" fill="#1649E8"/>
-<text x="1261.54" y="161" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♯</text>
+<circle cx="1304.62" cy="157" r="10.5" fill="#1649E8"/>
+<text x="1304.62" y="161" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♯</text>
 </g>
 <g id="key11-note-71" data-midi="71" data-degree="1" data-color="#CE303A"><title>B4 / degree 1</title>
-<circle cx="1295.85" cy="150" r="10.5" fill="#CE303A"/>
-<text x="1295.85" y="154" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
+<circle cx="1333.54" cy="150" r="10.5" fill="#CE303A"/>
+<text x="1333.54" y="154" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
 </g>
 <g id="key11-note-73" data-midi="73" data-degree="2" data-color="#258448"><title>C♯5 / degree 2</title>
-<circle cx="1330.15" cy="143" r="10.5" fill="#258448"/>
-<text x="1330.15" y="147" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
+<circle cx="1362.46" cy="143" r="10.5" fill="#258448"/>
+<text x="1362.46" y="147" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
 </g>
 <g id="key11-note-75" data-midi="75" data-degree="3" data-color="#258448"><title>D♯5 / degree 3</title>
-<circle cx="1364.46" cy="136" r="10.5" fill="#258448"/>
-<text x="1364.46" y="140" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♯</text>
+<circle cx="1391.38" cy="136" r="10.5" fill="#258448"/>
+<text x="1391.38" y="140" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♯</text>
 </g>
 <g id="key11-note-76" data-midi="76" data-degree="4" data-color="#E86568"><title>E5 / degree 4</title>
-<circle cx="1398.77" cy="129" r="10.5" fill="#E86568"/>
-<text x="1398.77" y="133" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
+<circle cx="1420.31" cy="129" r="10.5" fill="#E86568"/>
+<text x="1420.31" y="133" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
 </g>
 <g id="key11-note-78" data-midi="78" data-degree="5" data-color="#E86568"><title>F♯5 / degree 5</title>
-<circle cx="1433.08" cy="122" r="10.5" fill="#E86568"/>
-<text x="1433.08" y="126" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
+<circle cx="1449.23" cy="122" r="10.5" fill="#E86568"/>
+<text x="1449.23" y="126" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
 </g>
 <g id="key11-note-80" data-midi="80" data-degree="6" data-color="#1649E8"><title>G♯5 / degree 6</title>
-<circle cx="1467.38" cy="115" r="10.5" fill="#1649E8"/>
-<text x="1467.38" y="119" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
+<circle cx="1478.15" cy="115" r="10.5" fill="#1649E8"/>
+<text x="1478.15" y="119" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
 </g>
 <g id="key11-note-82" data-midi="82" data-degree="7" data-color="#1649E8"><title>A♯5 / degree 7</title>
-<line x1="1486.69" y1="108" x2="1516.69" y2="108" stroke="#70808B" stroke-width="1.2"/>
-<circle cx="1501.69" cy="108" r="10.5" fill="#1649E8"/>
-<text x="1501.69" y="112" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♯</text>
+<line x1="1492.08" y1="108" x2="1522.08" y2="108" stroke="#70808B" stroke-width="1.2"/>
+<circle cx="1507.08" cy="108" r="10.5" fill="#1649E8"/>
+<text x="1507.08" y="112" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♯</text>
 </g>
 <g id="key11-note-83" data-midi="83" data-degree="1" data-color="#CE303A"><title>B5 / degree 1</title>
 <line x1="1521" y1="108" x2="1551" y2="108" stroke="#70808B" stroke-width="1.2"/>
@@ -12844,45 +12911,50 @@
 <line x1="1032" y1="220" x2="1552" y2="220" stroke="#CCD4D7" stroke-width="1.2"/>
 <line x1="1032" y1="206" x2="1552" y2="206" stroke="#CCD4D7" stroke-width="1.2"/>
 <path id="key11-bass-clef" d="M564 704C543 704 521 688 521 663C521 633 535 618 563 618C584 618 607 638 607 661C607 684 588 704 564 704ZM564 511C539 511 521 490 521 469C521 439 535 424 564 424C585 424 607 442 607 469C607 486 589 511 564 511ZM285 757C185 757 94 697 94 607C94 559 131 525 183 525C222 525 257 552 257 592C257 625 230 651 194 651C184 651 174 644 160 644C146 644 140 650 140 659C140 674 157 735 262 735C336 735 373 683 373 578C373 354 127 217 75 182L80 166C211 231 476 360 476 569C476 670 394 757 285 757Z" fill="#24323D" transform="translate(1027 260.845) scale(0.0721649 -0.0721649)"/>
+<g data-key-signature="bass" data-letter="F" data-accidental="1" transform="translate(1078 220)"><title>F♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="C" data-accidental="1" transform="translate(1092 241)"><title>C♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="G" data-accidental="1" transform="translate(1106 213)"><title>G♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="D" data-accidental="1" transform="translate(1120 234)"><title>D♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
+<g data-key-signature="bass" data-letter="A" data-accidental="1" transform="translate(1134 255)"><title>A♯</title><path d="M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" fill="none" stroke="#24323D" stroke-width="2" stroke-linecap="round"/></g>
 <g id="key11-note-42" data-midi="42" data-degree="5" data-color="#E86568"><title>F♯2 / degree 5</title>
-<circle cx="1090" cy="269" r="10.5" fill="#E86568"/>
-<text x="1090" y="273" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
+<circle cx="1160" cy="269" r="10.5" fill="#E86568"/>
+<text x="1160" y="273" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
 </g>
 <g id="key11-note-44" data-midi="44" data-degree="6" data-color="#1649E8"><title>G♯2 / degree 6</title>
-<circle cx="1134.6" cy="262" r="10.5" fill="#1649E8"/>
-<text x="1134.6" y="266" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
+<circle cx="1197.6" cy="262" r="10.5" fill="#1649E8"/>
+<text x="1197.6" y="266" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
 </g>
 <g id="key11-note-46" data-midi="46" data-degree="7" data-color="#1649E8"><title>A♯2 / degree 7</title>
-<circle cx="1179.2" cy="255" r="10.5" fill="#1649E8"/>
-<text x="1179.2" y="259" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♯</text>
+<circle cx="1235.2" cy="255" r="10.5" fill="#1649E8"/>
+<text x="1235.2" y="259" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♯</text>
 </g>
 <g id="key11-note-47" data-midi="47" data-degree="1" data-color="#CE303A"><title>B2 / degree 1</title>
-<circle cx="1223.8" cy="248" r="10.5" fill="#CE303A"/>
-<text x="1223.8" y="252" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
+<circle cx="1272.8" cy="248" r="10.5" fill="#CE303A"/>
+<text x="1272.8" y="252" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">B</text>
 </g>
 <g id="key11-note-49" data-midi="49" data-degree="2" data-color="#258448"><title>C♯3 / degree 2</title>
-<circle cx="1268.4" cy="241" r="10.5" fill="#258448"/>
-<text x="1268.4" y="245" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
+<circle cx="1310.4" cy="241" r="10.5" fill="#258448"/>
+<text x="1310.4" y="245" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">C♯</text>
 </g>
 <g id="key11-note-51" data-midi="51" data-degree="3" data-color="#258448"><title>D♯3 / degree 3</title>
-<circle cx="1313" cy="234" r="10.5" fill="#258448"/>
-<text x="1313" y="238" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♯</text>
+<circle cx="1348" cy="234" r="10.5" fill="#258448"/>
+<text x="1348" y="238" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">D♯</text>
 </g>
 <g id="key11-note-52" data-midi="52" data-degree="4" data-color="#E86568"><title>E3 / degree 4</title>
-<circle cx="1357.6" cy="227" r="10.5" fill="#E86568"/>
-<text x="1357.6" y="231" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
+<circle cx="1385.6" cy="227" r="10.5" fill="#E86568"/>
+<text x="1385.6" y="231" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="400">E</text>
 </g>
 <g id="key11-note-54" data-midi="54" data-degree="5" data-color="#E86568"><title>F♯3 / degree 5</title>
-<circle cx="1402.2" cy="220" r="10.5" fill="#E86568"/>
-<text x="1402.2" y="224" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
+<circle cx="1423.2" cy="220" r="10.5" fill="#E86568"/>
+<text x="1423.2" y="224" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">F♯</text>
 </g>
 <g id="key11-note-56" data-midi="56" data-degree="6" data-color="#1649E8"><title>G♯3 / degree 6</title>
-<circle cx="1446.8" cy="213" r="10.5" fill="#1649E8"/>
-<text x="1446.8" y="217" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
+<circle cx="1460.8" cy="213" r="10.5" fill="#1649E8"/>
+<text x="1460.8" y="217" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">G♯</text>
 </g>
 <g id="key11-note-58" data-midi="58" data-degree="7" data-color="#1649E8"><title>A♯3 / degree 7</title>
-<circle cx="1491.4" cy="206" r="10.5" fill="#1649E8"/>
-<text x="1491.4" y="210" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♯</text>
+<circle cx="1498.4" cy="206" r="10.5" fill="#1649E8"/>
+<text x="1498.4" y="210" font-size="9" fill="#FFFFFF" text-anchor="middle" font-weight="400">A♯</text>
 </g>
 <g id="key11-note-59" data-midi="59" data-degree="1" data-color="#CE303A"><title>B3 / degree 1</title>
 <circle cx="1536" cy="199" r="10.5" fill="#CE303A"/>

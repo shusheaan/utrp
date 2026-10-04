@@ -11,7 +11,7 @@ import pytest
 
 from scripts.render_key_atlas import (
     MajorKey, Note, Settings, block_positions, blocks_svg, fret_inlays, guitar_positions, guitar_svg,
-    ledger_lines, parse_settings, render_svg,
+    key_signature_svg, ledger_lines, parse_settings, render_svg, staff_svg,
     pitch_label, render_overview, scale_notes, staff_y, transpose_settings,
 )
 
@@ -49,6 +49,42 @@ def test_octaves_preserve_degree(midi: int) -> None:
 ])
 def test_staff_landmarks(midi: int, clef: str, y: int) -> None:
     assert staff_y(Note.from_midi(midi), clef) == y
+
+
+@pytest.mark.parametrize("name,letters,accidental", [
+    ("C", "", 0), ("G", "F", 1), ("D", "FC", 1),
+    ("A", "FCG", 1), ("E", "FCGD", 1), ("B", "FCGDA", 1),
+    ("F#", "FCGDAE", 1), ("C#", "FCGDAEB", 1),
+    ("F", "B", -1), ("Bb", "BE", -1), ("Eb", "BEA", -1),
+    ("Ab", "BEAD", -1), ("Db", "BEADG", -1),
+    ("Gb", "BEADGC", -1), ("Cb", "BEADGCF", -1),
+])
+@pytest.mark.parametrize("clef", ["treble", "bass"])
+def test_key_signatures_have_standard_order_positions_and_clearance(
+    name: str, letters: str, accidental: int, clef: str,
+) -> None:
+    config = transpose_settings(settings(), MajorKey.from_name(name))
+    root = ET.fromstring('<svg>' + ''.join(staff_svg(config, ('M0 0', 'M0 0'))) + '</svg>')
+    marks = root.findall(f'.//g[@data-key-signature="{clef}"]')
+    assert ''.join(mark.attrib['data-letter'] for mark in marks) == letters
+    expected_y = ((122, 143, 115, 136, 157, 129, 150) if accidental == 1
+                  else (150, 129, 157, 136, 164, 143, 171))
+    for index, mark in enumerate(marks):
+        assert mark.attrib['data-accidental'] == str(accidental)
+        y = expected_y[index] + (98 if clef == 'bass' else 0)
+        assert mark.attrib['transform'] == f'translate({1078 + index * 14} {y})'
+        assert mark.find('path') is not None  # No music-font fallback needed.
+    notes = root.findall('.//g[@data-midi]/circle')
+    xs = [float(note.attrib['cx']) for note in notes]
+    assert min(xs) == 1090 + len(letters) * 14
+    assert max(xs) == 1536
+    if marks:
+        assert min(xs) - 15 > 1078 + (len(marks) - 1) * 14 + 7
+
+
+def test_signature_rejects_unknown_clef() -> None:
+    with pytest.raises(ValueError, match="Unknown clef"):
+        key_signature_svg(MajorKey.from_name('G'), 'alto', '#24323D')
 
 
 def test_ledger_lines() -> None:
