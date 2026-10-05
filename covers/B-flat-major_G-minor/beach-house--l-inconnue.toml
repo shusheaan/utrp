@@ -1,10 +1,10 @@
 # Reference-based study draft; see same-name MD for evidence limits.
 title = "Beach House — L'Inconnue"
 info = "7 · Bb major 待核 · 标准定弦实音移植，无 capo"
-status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
+status = "候选和声仅据自动识别/教学资料，非人工定稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "合唱引子 → 主段；准确和弦时序待核"
 progression = "候选材料: Eb / Bb / Dm / Cm / Gm"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "Bb"
@@ -17,7 +17,10 @@ why = "多声部合唱的共同音"
 melody_status = "pending"
 evidence_status = "draft"
 caveat = "当前来源是机器识别，只记录和弦材料，未把它们编成未经证实的原曲循环。"
-sources = ["https://chordify.net/it/chords/beach-house-songs/l-inconnue-chords"]
+sources = ["https://chordify.net/it/chords/beach-house-songs/l-inconnue-chords", "https://www.subpop.com/releases/beach_house/7"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "Chordify 时间序列含 Eb/Bb/Dm/Cm/Gm；仅核实页面确实列出候选材料，不把机器识别当作人工转录，实际换和弦时间待核。"
 
 [[cards]]
 kind = "chord"
@@ -76,11 +79,11 @@ source = "https://chordify.net/it/chords/beach-house-songs/l-inconnue-chords"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "G4 → F4 → F4 → Eb4 → D4"
 scale = ["Bb", "C", "D", "Eb", "F", "G", "A"]
 notes = ["G4", "F4", "F4", "Eb4", "D4"]
 positions = ["B8", "B6", "B6", "G8", "G7"]
 anchor_frets = [3, 8, 12, 5, 10, 3]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"

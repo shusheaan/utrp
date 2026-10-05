@@ -4,7 +4,7 @@ info = "Thank Your Lucky Stars · B major / 混合音集 · 标准定弦实音�
 status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "Verse → Chorus → 延长 Outro"
 progression = "Verse: B → D#m → A → E → B；Chorus: E → B → F# → A → G#m → D#m"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "B"
@@ -17,7 +17,10 @@ why = "借用 bVII 与 iii–vi 的暗色"
 melody_status = "pending"
 evidence_status = "draft"
 caveat = "capo 2 的 A 指型已换算 B 实音；Chorus 尾部另有 D# / G# 大和弦，未在六个核心卡展开。"
-sources = ["https://www.e-chords.com/chords/beach-house/elegy-to-the-void"]
+sources = ["https://www.e-chords.com/chords/beach-house/elegy-to-the-void", "https://beachhouse.bandcamp.com/album/thank-your-lucky-stars"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "E-Chords 标 capo 2；A/C#m/G/D 等指型整体升全音与本页对应，D# 与 D#m 保留差别。不是逐小节复刻。"
 
 [[cards]]
 kind = "chord"
@@ -87,11 +90,11 @@ source = "https://www.e-chords.com/chords/beach-house/elegy-to-the-void"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "F#4 → F#4 → E4 → E4 → F#4 → G#4"
 scale = ["B", "C#", "D#", "E", "F#", "G#", "A#"]
 notes = ["F#4", "F#4", "E4", "E4", "F#4", "G#4"]
 positions = ["B7", "B7", "B5", "B5", "B7", "B9"]
 anchor_frets = [2, 7, 11, 4, 9, 2]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"

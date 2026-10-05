@@ -3,8 +3,8 @@ title = "Beach House — Levitation"
 info = "Depression Cherry · D major · 标准定弦实音移植，无 capo"
 status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "Intro → Verse → 对比段 → Outro: F#m / Gmaj7"
-progression = "Verse: D → Dmaj7 → F#m → G；后段: Gmaj7 → D → Em"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+progression = "Verse: D → Dmaj7 → D → F#m → G；后段: Gmaj7 → D → Em"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "D"
@@ -17,7 +17,10 @@ why = "持续主音与三度声部连接"
 melody_status = "pending"
 evidence_status = "draft"
 caveat = "图保留 D / Dmaj7 的色彩区别；G 与 Gmaj7 并非所有位置都可互换。"
-sources = ["https://www.e-chords.com/chords/beach-house/levitation"]
+sources = ["https://www.e-chords.com/chords/beach-house/levitation", "https://www.subpop.com/releases/beach_house/depression_cherry"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "E-Chords 的 Verse 在 Dmaj7 后先回 D 再到 F#m，已补回；G 与 Gmaj7、Outro 往返保持区分。"
 
 [[cards]]
 kind = "chord"
@@ -76,11 +79,11 @@ source = "https://www.e-chords.com/chords/beach-house/levitation"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "F#4 → F#4 → F#4 → F#4 → G4"
 scale = ["D", "E", "F#", "G", "A", "B", "C#"]
 notes = ["F#4", "F#4", "F#4", "F#4", "G4"]
 positions = ["B7", "B7", "B7", "B7", "B8"]
 anchor_frets = [2, 7, 11, 4, 9, 2]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"

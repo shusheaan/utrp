@@ -3,8 +3,8 @@ title = "Bon Iver — Blood Bank"
 info = "Blood Bank · E minor / G · 标准定弦实音移植，无 capo"
 status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "Verse → Chorus → Verse → Chorus / Outro"
-progression = "Verse: Em → D → C；Chorus: G → D/F# → Em → C"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+progression = "Verse: Em → D → C；Chorus 参考: G → D/F# → G → D/F# → Em → C"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "G"
@@ -17,7 +17,10 @@ why = "开放弦共鸣与下行 bass"
 melody_status = "pending"
 evidence_status = "draft"
 caveat = "本页是标准定弦等实音练习；不是原演奏的特殊定弦复原，D/F# 的低音请保留。"
-sources = ["https://www.songsterr.com/a/wsa/bon-iver-blood-bank-chords-s371874", "https://www.youtube.com/watch?v=dno6sP_t9zc"]
+sources = ["https://www.songsterr.com/a/wsa/bon-iver-blood-bank-chords-s371874", "https://www.youtube.com/watch?v=dno6sP_t9zc", "https://boniver.org/audio/blood-bank/"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "Songsterr 支持 Em/D/C 与 G/D-F#/Em/C 简化材料；后者有重复与省略，不是严格完整的 Chorus 小节表。视频未观看。"
 
 [[cards]]
 kind = "chord"
@@ -65,13 +68,13 @@ source = "https://www.songsterr.com/a/wsa/bon-iver-blood-bank-chords-s371874"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "G4 → F#4 → G4 → G4"
 scale = ["G", "A", "B", "C", "D", "E", "F#"]
 notes = ["G4", "F#4", "G4", "G4"]
 positions = ["B8", "B7", "B8", "B8"]
 anchor_frets = [3, 8, 12, 5, 10, 3]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"
 
 [[cards]]

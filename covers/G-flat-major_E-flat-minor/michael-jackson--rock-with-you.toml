@@ -3,8 +3,8 @@ title = "Michael Jackson — Rock With You"
 info = "Off the Wall · Eb minor / Dorian 混合 · 标准定弦实音移植，无 capo"
 status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "Intro → Verse / Chorus → Bridge → 末段升半音"
-progression = "Verse: Ebm9 → Ab → Bb7sus4；Bridge: Gbmaj7 → Fm7 → Cbmaj7 → Ab11"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+progression = "Spytunes 简化 Verse: Ebm9 → Ab → Bb7sus4；Bridge: Gbmaj7 → Fm7 → Cbmaj7 → Ab11"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "Gb"
@@ -16,8 +16,11 @@ original = "Db / Bbm · Db major"
 why = "Dorian 的大 IV 与跨调桥段"
 melody_status = "pending"
 evidence_status = "draft"
-caveat = "原表 Db 改 Ebm 中心；Bb11 以 Bb7sus4 核心音简化，未声称包含全部延伸。末段 Em 不在本页卡片中。"
-sources = ["https://spytunes.com/rock-with-you-chords/", "https://www.markusottenberg.de/downloads/Rock-With-You-Michael-Jackson.pdf"]
+caveat = "按 Spytunes 简化与段落命名；其 Bridge 对应 Ottenberg PDF 的 Pre-Chorus。Bb11 省九音为 Bb7sus4；PDF 另写 Ebm9/Ab、Ab/Bb、Dbmaj7/F、Cbmaj9、Gb/Ab，和声层次有差异。末段升至 Em，未在卡片展开。"
+sources = ["https://spytunes.com/rock-with-you-chords/", "https://www.markusottenberg.de/downloads/Rock-With-You-Michael-Jackson.pdf", "https://www.michaeljackson.com/albums/off-the-wall/"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "Spytunes 支持本页简化材料；已视觉检查 Ottenberg PDF 全 5 页，其第 1 页第 10/18 小节包含不同 slash chord/延伸，Dbmaj7/F 与 Fm7 音集合不同。PDF 将第 18 小节称 Pre-Chorus、第 58 小节称 Bridge，与 Spytunes 段落命名不同；第 4 页第 82 小节 Em9 支持末段升半音。未听核原录音。"
 
 [[cards]]
 kind = "chord"
@@ -87,11 +90,11 @@ source = "https://spytunes.com/rock-with-you-chords/"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "Gb4 → Ab4 → Ab4 → Bb4 → Ab4 → Gb4"
 scale = ["Gb", "Ab", "Bb", "Cb", "Db", "Eb", "F"]
 notes = ["Gb4", "Ab4", "Ab4", "Bb4", "Ab4", "Gb4"]
 positions = ["B7", "B9", "B9", "e6", "B9", "B7"]
 anchor_frets = [2, 7, 11, 4, 9, 2]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"

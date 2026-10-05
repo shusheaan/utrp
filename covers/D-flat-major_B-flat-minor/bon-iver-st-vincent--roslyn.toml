@@ -1,23 +1,26 @@
 # Reference-based study draft; see same-name MD for evidence limits.
-title = "Bon Iver & St. Vincent — Roslyn"
+title = "Bon Iver & St. Vincent — Rosyln"
 info = "The Twilight Saga: New Moon · Bb minor 待核 · 标准定弦实音移植，无 capo"
 status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "Intro → Verse → Refrain；版本音高待复核"
-progression = "参考谱实音: Gbmaj7 → Bbm → Db；尾句: Bbm → Db → Ab → F"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+progression = "候选升半音版本: Gbmaj7 → Bbm → Db；尾句: Bbm → Db → Ab → F"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "Db"
 rank = 4
 artist = "Bon Iver & St. Vincent"
-song = "Roslyn"
+song = "Rosyln"
 key = "Bb minor 待核"
 original = ""
 why = "小调中的大七和弦与属和弦"
 melody_status = "pending"
 evidence_status = "draft"
 caveat = "在线简谱为 Am 指型且未写 capo；此版按 Bbm 调性资料上移半音。需对原录音确认，不假称已听核。"
-sources = ["https://www.e-chords.com/chords/bon-iver/roslyn", "https://www.hooktheory.com/theorytab/view/bon-iver/roslyn"]
+sources = ["https://www.e-chords.com/chords/bon-iver/roslyn", "https://www.hooktheory.com/theorytab/view/bon-iver/roslyn", "https://music.apple.com/us/song/rosyln/334818026"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "E-Chords 无明确 capo 的 Am 版与 Hooktheory Bbm 标注不一致；整体升半音仅是候选移调方案，原调仍待核。Apple Music 发行标题为 Rosyln，谱站常写 Roslyn；保留旧文件名避免断链。"
 
 [[cards]]
 kind = "chord"
@@ -76,11 +79,11 @@ source = "https://www.e-chords.com/chords/bon-iver/roslyn"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "Gb4 → F4 → F4 → Eb4 → F4"
 scale = ["Db", "Eb", "F", "Gb", "Ab", "Bb", "C"]
 notes = ["Gb4", "F4", "F4", "Eb4", "F4"]
 positions = ["B7", "B6", "B6", "G8", "B6"]
 anchor_frets = [2, 7, 11, 4, 9, 2]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"

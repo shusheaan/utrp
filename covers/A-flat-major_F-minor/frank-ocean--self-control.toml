@@ -4,7 +4,7 @@ info = "Blonde · Ab major · 标准定弦实音移植，无 capo"
 status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "Intro → Verse → Hook → Solo → Outro"
 progression = "Verse: Abmaj7 → Fm7 → Bbm7 → Eb7；Outro 另有 Cm7 / Gb 色彩"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "Ab"
@@ -17,7 +17,10 @@ why = "ii–V–I 与混合调式 Outro"
 melody_status = "pending"
 evidence_status = "draft"
 caveat = "capo 1 的 G 指型已换算实音；Gb 卡仅画三和弦核心，来源 Gb13 的全部延伸尚未纳入。"
-sources = ["https://www.chords-and-tabs.net/song/name/frank-ocean-self-control-3", "https://janeway.uncpress.org/capstone/article/3366/galley/3409/download/"]
+sources = ["https://www.chords-and-tabs.net/song/name/frank-ocean-self-control-3", "https://janeway.uncpress.org/capstone/article/3366/galley/3409/download/", "https://music.apple.com/us/album/blonde/1146195596"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "已对照 capo 1 的 Gmaj7/Em7/Am7/D7 及 Outro 指型作实音换算；论文 PDF 本轮未逐页复核，和弦延伸仍是参考编配。"
 
 [[cards]]
 kind = "chord"
@@ -87,11 +90,11 @@ source = "https://www.chords-and-tabs.net/song/name/frank-ocean-self-control-3"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "G4 → Ab4 → Ab4 → G4 → G4 → Bb4"
 scale = ["Ab", "Bb", "C", "Db", "Eb", "F", "G"]
 notes = ["G4", "Ab4", "Ab4", "G4", "G4", "Bb4"]
 positions = ["B8", "B9", "B9", "B8", "B8", "e6"]
 anchor_frets = [3, 8, 12, 5, 10, 3]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"

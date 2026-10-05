@@ -3,8 +3,8 @@ title = "Beach House — Wild"
 info = "Bloom · D major · 标准定弦实音移植，无 capo"
 status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "Intro riff → 主循环；精确段落边界待核"
-progression = "骨架: D → F#m → G → A"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+progression = "参考 Intro / Verse: D → F#m → G → F#m；A 的位置待核"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "D"
@@ -16,8 +16,11 @@ original = ""
 why = "大调 iii 的暗色与吉他 hook"
 melody_status = "pending"
 evidence_status = "draft"
-caveat = "和声为候选骨架；吉他线请对照原 TAB，不把整曲简化为均分四和弦。"
-sources = ["https://www.guitartabsexplorer.com/beach-house/wild-tab", "https://chordify.net/chords/beach-house-wild-beachhousevideozone"]
+caveat = "新增和弦页主循环以 F#m 收尾，不是 A；A 仅保留为待核补充材料，卡序不等于原曲顺序。原 TAB 内文注明降半音定弦，与网页 Standard 标题冲突，不混用弦品。"
+sources = ["https://www.guitartabsexplorer.com/beach-house/wild-tab", "https://chordify.net/chords/beach-house-wild-beachhousevideozone", "https://www.guitartabsexplorer.com/pt-br/beach-house/wild-chords", "https://www.subpop.com/releases/beach_house/bloom"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "原 TAB 内文写降半音定弦，与网页自动 Standard 标题冲突；新增和弦页主循环 D/F#m/G/F#m，与旧 D/F#m/G/A 不同。按参考页修正主循环，A 只保留为待核补充材料。"
 
 [[cards]]
 kind = "chord"
@@ -28,7 +31,7 @@ notes = ["D", "F#", "A"]
 anchor_frets = [10, 15, 7, 12, 5, 10]
 footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
 evidence = "reference_harmony"
-source = "https://www.guitartabsexplorer.com/beach-house/wild-tab"
+source = "https://www.guitartabsexplorer.com/pt-br/beach-house/wild-chords"
 
 [[cards]]
 kind = "chord"
@@ -39,7 +42,7 @@ notes = ["F#", "A", "C#"]
 anchor_frets = [2, 7, 11, 4, 9, 2]
 footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
 evidence = "reference_harmony"
-source = "https://www.guitartabsexplorer.com/beach-house/wild-tab"
+source = "https://www.guitartabsexplorer.com/pt-br/beach-house/wild-chords"
 
 [[cards]]
 kind = "chord"
@@ -50,28 +53,28 @@ notes = ["G", "B", "D"]
 anchor_frets = [3, 8, 12, 5, 10, 3]
 footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
 evidence = "reference_harmony"
-source = "https://www.guitartabsexplorer.com/beach-house/wild-tab"
+source = "https://www.guitartabsexplorer.com/pt-br/beach-house/wild-chords"
 
 [[cards]]
 kind = "chord"
-title = "A · 核心和弦音"
+title = "A · 补充候选，位置待核"
 subtitle = "A – C# – E；完整音位地图，不是指定 voicing"
 scale = ["D", "E", "F#", "G", "A", "B", "C#"]
 notes = ["A", "C#", "E"]
 anchor_frets = [5, 10, 2, 7, 12, 5]
 footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
 evidence = "reference_harmony"
-source = "https://www.guitartabsexplorer.com/beach-house/wild-tab"
+source = "https://chordify.net/chords/beach-house-wild-beachhousevideozone"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "F#4 → F#4 → G4 → A4"
 scale = ["D", "E", "F#", "G", "A", "B", "C#"]
 notes = ["F#4", "F#4", "G4", "A4"]
 positions = ["B7", "B7", "B8", "e5"]
 anchor_frets = [2, 7, 11, 4, 9, 2]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"
 
 [[cards]]

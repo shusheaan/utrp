@@ -4,7 +4,7 @@ info = "Blonde · Db major 待核 · 标准定弦实音移植，无 capo"
 status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "Intro → Verse → Chorus → Outro"
 progression = "Intro: Db → Cb → Gb；Chorus: Db → Ab/C → Cb → Gb → Bbm"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "Db"
@@ -17,7 +17,10 @@ why = "福音终止与借用 bVII"
 melody_status = "pending"
 evidence_status = "draft"
 caveat = "capo 1 的 C/Bb/F 谱已换算实音；部分出版谱标 Gb，工作中心 Db 依据终止分析，不能称已无争议。"
-sources = ["https://www.guitartabsexplorer.com/ocean-frank/godspeed-chords", "https://podscripts.co/podcasts/dissect/s3e17-godspeed-futura-free-by-frank-ocean", "https://www.musicnotes.com/sheetmusic/frank-ocean/godspeed/MN0210504"]
+sources = ["https://www.guitartabsexplorer.com/ocean-frank/godspeed-chords", "https://podscripts.co/podcasts/dissect/s3e17-godspeed-futura-free-by-frank-ocean", "https://www.musicnotes.com/sheetmusic/frank-ocean/godspeed/MN0210504", "https://music.apple.com/us/album/blonde/1146195596"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "GuitarTabsExplorer capo 1 的 C/G-B/Bb/F/Am 换算与本页对应；其他列举来源未逐一复核，斜杠低音不由根音地图表达。"
 
 [[cards]]
 kind = "chord"
@@ -76,11 +79,11 @@ source = "https://www.guitartabsexplorer.com/ocean-frank/godspeed-chords"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "Ab4 → Gb4 → Gb4 → Ab4 → Bb4"
 scale = ["Db", "Eb", "F", "Gb", "Ab", "Bb", "C"]
 notes = ["Ab4", "Gb4", "Gb4", "Ab4", "Bb4"]
 positions = ["B9", "B7", "B7", "B9", "e6"]
 anchor_frets = [4, 9, 13, 6, 11, 4]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"

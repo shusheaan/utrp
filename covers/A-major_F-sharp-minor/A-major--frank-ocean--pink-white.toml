@@ -1,67 +1,10 @@
-# Sources and evidence limits: same-name .md. Not an official transcription.
+# Reference-based study draft; see same-name MD for evidence limits.
 title = "Frank Ocean — Pink + White"
 info = "Blonde (2016) · A 中心 / modal mixture · 6/8 · 标准定弦，无 capo"
 status = "和声已交叉查证；短旋律据公开改编谱，不等于原录音逐音核验。"
 structure = "Intro → Verse 1 → Chorus → Verse 2 → Chorus → Outro / Beyoncé 和声"
 progression = "主循环  | Cmaj7 | Bm7 | Amaj7 | Amaj7 |  ↺"
 timing = "每格一个 6/8 小节；数 1-2-3 / 4-5-6。速度标法有分歧，暂不固定 BPM。"
-
-[[cards]]
-kind = "chord"
-title = "Cmaj7 · 第 1 小节"
-subtitle = "1–3–5–7 = C–E–G–B；相对 A 中心：♭IIImaj7"
-scale = ["C", "D", "E", "F#", "G", "A", "B"]
-notes = ["C", "E", "G", "B"]
-anchor_frets = [8, 13, 5, 10, 3, 8] # e B G D A E; each window: anchor - 2 .. anchor + 4
-footer = "练习背景：G major 音集 / C Lydian；不是 C major。背景音不等于原曲全部实际用音。"
-
-[[cards]]
-kind = "chord"
-title = "Bm7 · 第 2 小节"
-subtitle = "1–♭3–5–♭7 = B–D–F#–A；相对 A 中心：ii7"
-scale = ["C", "D", "E", "F#", "G", "A", "B"]
-notes = ["B", "D", "F#", "A"]
-anchor_frets = [7, 12, 4, 9, 2, 7] # e B G D A E; each window: anchor - 2 .. anchor + 4
-footer = "与上一格共用 G major 音集；先听 bass C → B，以及 E → D、G → F#。"
-
-[[cards]]
-kind = "chord"
-title = "Amaj7 · 第 3–4 小节"
-subtitle = "1–3–5–7 = A–C#–E–G#；相对 A 中心：Imaj7"
-scale = ["A", "B", "C#", "D", "E", "F#", "G#"]
-notes = ["A", "C#", "E", "G#"]
-anchor_frets = [5, 10, 2, 7, 12, 5] # e B G D A E; each window: anchor - 2 .. anchor + 4
-footer = "练习背景换为 A major；原曲层间存在 G / G# 色彩，不要把此前所有 G 自动改成 G#。"
-
-[[cards]]
-kind = "melody"
-title = "伴奏 piano hook · 音高骨架"
-subtitle = "B4 → G4 → A4 → F#4 → D4 → E4；删去重复与延音，非人声旋律"
-scale = ["C", "D", "E", "F#", "G", "A", "B"]
-notes = ["B4", "G4", "A4", "F#4", "D4", "E4"]
-positions = ["e7", "B8", "e5", "B7", "G7", "B5"]
-anchor_frets = [7, 12, 4, 9, 2, 7] # e B G D A E; each window: anchor - 2 .. anchor + 4
-footer = "据参考改编谱 PDF 第 2 页开头；图中弦品是同实音的练习移植，并非原录音吉他声部。"
-
-[[cards]]
-kind = "melody"
-title = "主唱开句 · 短旋律摘录"
-subtitle = "G4 → G4 → A4 → A4 → B4 → A4 → G4；原谱末尾有休止"
-scale = ["C", "D", "E", "F#", "G", "A", "B"]
-notes = ["G4", "G4", "A4", "A4", "B4", "A4", "G4"]
-positions = ["B8", "B8", "e5", "e5", "e7", "e5", "B8"]
-anchor_frets = [3, 8, 12, 5, 10, 3] # e B G D A E; each window: anchor - 2 .. anchor + 4
-footer = "据参考改编谱 PDF 第 2 页第 9–10 小节；保留起伏与重复音，节奏请对照参考谱。"
-
-[[cards]]
-kind = "melody"
-title = "编配连接 · 七度音下行（自编，不是原唱）"
-subtitle = "Cmaj7 的 B → Bm7 的 A → Amaj7 的 G#；最后一个音跨第 3–4 小节"
-scale = ["A", "B", "C#", "D", "E", "F#", "G#"]
-notes = ["B4", "A4", "G#4"]
-positions = ["e7", "e5", "e4"]
-anchor_frets = [7, 12, 4, 9, 2, 7] # e B G D A E; each window: anchor - 2 .. anchor + 4
-footer = "钢琴：左手弹 C → B → A；吉他：高音 e 弦 7 → 5 → 4，先听上声部再补和弦。"
 
 [library]
 group = "A"
@@ -74,4 +17,75 @@ why = "保留已认可样板"
 melody_status = "excerpt"
 evidence_status = "reference"
 caveat = "保留原样板的证据限制；详见同名说明。"
-sources = ["https://www.ethanhein.com/wp/2017/frank-ocean-pink-and-white/"]
+sources = ["https://www.ethanhein.com/wp/2017/frank-ocean-pink-and-white/", "https://noisechest.com/articles/frank-ocean-pink-white", "https://www.scribd.com/document/670266412/Pink-White", "https://soundreasonstudio.com/MuseScore-Library-msv3-041119/Repertoire/Pink%20Plus%20White.pdf", "https://music.apple.com/us/album/blonde/1146195596"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "重新视觉核对公开 piano PDF 第 2 页开头与第 9–10 小节，短摘录音高相符；Ethan Hein 支持主循环及 6/8。未听核原录音，段落概览未独立重验。"
+
+[[cards]]
+kind = "chord"
+title = "Cmaj7 · 第 1 小节"
+subtitle = "1–3–5–7 = C–E–G–B；相对 A 中心：♭IIImaj7"
+scale = ["C", "D", "E", "F#", "G", "A", "B"]
+notes = ["C", "E", "G", "B"]
+anchor_frets = [8, 13, 5, 10, 3, 8]
+footer = "练习背景：G major 音集 / C Lydian；不是 C major。背景音不等于原曲全部实际用音。"
+evidence = "reference_harmony"
+source = "https://www.ethanhein.com/wp/2017/frank-ocean-pink-and-white/"
+
+[[cards]]
+kind = "chord"
+title = "Bm7 · 第 2 小节"
+subtitle = "1–♭3–5–♭7 = B–D–F#–A；相对 A 中心：ii7"
+scale = ["C", "D", "E", "F#", "G", "A", "B"]
+notes = ["B", "D", "F#", "A"]
+anchor_frets = [7, 12, 4, 9, 2, 7]
+footer = "与上一格共用 G major 音集；先听 bass C → B，以及 E → D、G → F#。"
+evidence = "reference_harmony"
+source = "https://www.ethanhein.com/wp/2017/frank-ocean-pink-and-white/"
+
+[[cards]]
+kind = "chord"
+title = "Amaj7 · 第 3–4 小节"
+subtitle = "1–3–5–7 = A–C#–E–G#；相对 A 中心：Imaj7"
+scale = ["A", "B", "C#", "D", "E", "F#", "G#"]
+notes = ["A", "C#", "E", "G#"]
+anchor_frets = [5, 10, 2, 7, 12, 5]
+footer = "练习背景换为 A major；原曲层间存在 G / G# 色彩，不要把此前所有 G 自动改成 G#。"
+evidence = "reference_harmony"
+source = "https://www.ethanhein.com/wp/2017/frank-ocean-pink-and-white/"
+
+[[cards]]
+kind = "melody"
+title = "伴奏 piano hook · 音高骨架"
+subtitle = "B4 → G4 → A4 → F#4 → D4 → E4；删去重复与延音，非人声旋律"
+scale = ["C", "D", "E", "F#", "G", "A", "B"]
+notes = ["B4", "G4", "A4", "F#4", "D4", "E4"]
+positions = ["e7", "B8", "e5", "B7", "G7", "B5"]
+anchor_frets = [7, 12, 4, 9, 2, 7]
+footer = "据参考改编谱 PDF 第 2 页开头；图中弦品是同实音的练习移植，并非原录音吉他声部。"
+evidence = "reference_excerpt"
+source = "https://soundreasonstudio.com/MuseScore-Library-msv3-041119/Repertoire/Pink%20Plus%20White.pdf"
+
+[[cards]]
+kind = "melody"
+title = "主唱开句 · 短旋律摘录"
+subtitle = "G4 → G4 → A4 → A4 → B4 → A4 → G4；原谱末尾有休止"
+scale = ["C", "D", "E", "F#", "G", "A", "B"]
+notes = ["G4", "G4", "A4", "A4", "B4", "A4", "G4"]
+positions = ["B8", "B8", "e5", "e5", "e7", "e5", "B8"]
+anchor_frets = [3, 8, 12, 5, 10, 3]
+footer = "据参考改编谱 PDF 第 2 页第 9–10 小节；保留起伏与重复音，节奏请对照参考谱。"
+evidence = "reference_excerpt"
+source = "https://soundreasonstudio.com/MuseScore-Library-msv3-041119/Repertoire/Pink%20Plus%20White.pdf"
+
+[[cards]]
+kind = "melody"
+title = "编配连接 · 七度音下行（自编，不是原唱）"
+subtitle = "Cmaj7 的 B → Bm7 的 A → Amaj7 的 G#；最后一个音跨第 3–4 小节"
+scale = ["A", "B", "C#", "D", "E", "F#", "G#"]
+notes = ["B4", "A4", "G#4"]
+positions = ["e7", "e5", "e4"]
+anchor_frets = [7, 12, 4, 9, 2, 7]
+footer = "钢琴：左手弹 C → B → A；吉他：高音 e 弦 7 → 5 → 4，先听上声部再补和弦。"
+evidence = "arrangement"

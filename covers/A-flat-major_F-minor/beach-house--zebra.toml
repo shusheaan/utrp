@@ -3,8 +3,8 @@ title = "Beach House — Zebra"
 info = "Teen Dream · Ab major · 标准定弦实音移植，无 capo"
 status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "Intro → Verse → Refrain；局部变体待核"
-progression = "Verse: Ab → C → Db → Fm → Eb → Cm；转折: Bbm → Eb → Gb → Fm"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+progression = "Verse 开头: Ab → Bbm → Db → Ab；Chorus: Ab → Db → Fm → Cm；转折见 MD"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "Ab"
@@ -13,11 +13,14 @@ artist = "Beach House"
 song = "Zebra"
 key = "Ab major"
 original = ""
-why = "大 III 与借用 bVII"
+why = "iii 与借用 bVII 的色彩对比"
 melody_status = "pending"
 evidence_status = "draft"
-caveat = "C 大和弦带 E natural，不是 Cm；Gb 带 Gb 而非 G，两处需要局部音集切换。"
-sources = ["https://ukutabs.com/b/beach-house/zebra/"]
+caveat = "参考谱写 Cm 而非 C major；Verse 后续含 Db→Cm→Eb→Ab、Db→Bbm→Ab，Chorus 转折 Bbm→Eb→Gb→Eb。Gb 为借用 bVII；卡片不是原曲顺序。"
+sources = ["https://ukutabs.com/b/beach-house/zebra/", "https://www.subpop.com/releases/beach_house/teen_dream"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "UkuTabs 的 Verse 为 Ab→Bbm→Db→Ab 等变体，Chorus 含 Fm/Cm 与 Gb；已纠正无来源的 C major，并补 Bbm。不是完整逐小节转录。"
 
 [[cards]]
 kind = "chord"
@@ -32,10 +35,10 @@ source = "https://ukutabs.com/b/beach-house/zebra/"
 
 [[cards]]
 kind = "chord"
-title = "C · 核心和弦音"
-subtitle = "C – E – G；完整音位地图，不是指定 voicing"
-scale = ["C", "D", "E", "F", "G", "A", "B"]
-notes = ["C", "E", "G"]
+title = "Cm · 核心和弦音"
+subtitle = "C – Eb – G；完整音位地图，不是指定 voicing"
+scale = ["Ab", "Bb", "C", "Db", "Eb", "F", "G"]
+notes = ["C", "Eb", "G"]
 anchor_frets = [8, 13, 5, 10, 3, 8]
 footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
 evidence = "reference_harmony"
@@ -86,12 +89,23 @@ evidence = "reference_harmony"
 source = "https://ukutabs.com/b/beach-house/zebra/"
 
 [[cards]]
-kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
-subtitle = "Ab4 → G4 → Ab4 → Ab4 → G4 → Bb4"
+kind = "chord"
+title = "Bbm · 核心和弦音"
+subtitle = "Bb – Db – F；完整音位地图，不是指定 voicing"
 scale = ["Ab", "Bb", "C", "Db", "Eb", "F", "G"]
-notes = ["Ab4", "G4", "Ab4", "Ab4", "G4", "Bb4"]
-positions = ["B9", "B8", "B9", "B9", "B8", "e6"]
+notes = ["Bb", "Db", "F"]
+anchor_frets = [6, 11, 3, 8, 13, 6]
+footer = "背景是本格的教学七声音集，不代表原曲所有用音；进行、段落与证据限制见页首及 MD。"
+evidence = "reference_harmony"
+source = "https://ukutabs.com/b/beach-house/zebra/"
+
+[[cards]]
+kind = "melody"
+title = "自编连接 · 逐卡和弦音选点"
+subtitle = "Ab4 → G4 → Ab4 → Ab4 → G4 → Bb4 → Bb4"
+scale = ["Ab", "Bb", "C", "Db", "Eb", "F", "G"]
+notes = ["Ab4", "G4", "Ab4", "Ab4", "G4", "Bb4", "Bb4"]
+positions = ["B9", "B8", "B9", "B9", "B8", "e6", "e6"]
 anchor_frets = [4, 9, 13, 6, 11, 4]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"

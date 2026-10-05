@@ -4,7 +4,7 @@ info = "Blonde · C / Am 待核 · 标准定弦实音移植，无 capo"
 status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "短段落；所引谱含现场扩展，不等于专辑完整结构"
 progression = "参考演奏: Fmaj7 → Em7 → Am7 → Dm7"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "C"
@@ -17,7 +17,10 @@ why = "下降七和弦与采样式短句"
 melody_status = "pending"
 evidence_status = "draft"
 caveat = "原表 Bb 与所引谱冲突；此处是参考演奏的 C/Am 材料，Blonde 音频调性和主旋律仍待核。"
-sources = ["https://www.cifraclub.com/frank-ocean/close-to-you/smpggpj.html"]
+sources = ["https://www.cifraclub.com/frank-ocean/close-to-you/smpggpj.html", "https://music.apple.com/us/album/blonde/1146195596"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "Cifra Club 支持 Fmaj7/Em7/Am7/Dm7 摘要；页面编配与 Blonde 录音的版本对应仍待核，不能直接等同现场/翻唱版。"
 
 [[cards]]
 kind = "chord"
@@ -65,13 +68,13 @@ source = "https://www.cifraclub.com/frank-ocean/close-to-you/smpggpj.html"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "A4 → G4 → G4 → F4"
 scale = ["C", "D", "E", "F", "G", "A", "B"]
 notes = ["A4", "G4", "G4", "F4"]
 positions = ["e5", "B8", "B8", "B6"]
 anchor_frets = [5, 10, 2, 7, 12, 5]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"
 
 [[cards]]

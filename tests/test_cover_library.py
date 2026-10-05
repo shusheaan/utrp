@@ -1,12 +1,18 @@
 """Ranking invariants, retained archives and evidence labels."""
 from dataclasses import replace
+from copy import deepcopy
 from pathlib import Path
 import re
+import subprocess
+import sys
 import tomllib
 
 import pytest
 
-from scripts.cover_library import entries, index_text, load_entry, validate
+from scripts.cover_library import (
+    entries, index_text, load_entry, validate, validate_chord_label,
+    validate_content, validate_evidence, validate_rendered,
+)
 from scripts.render_cover import load_style, parse_song, position_midi, midi_note
 
 
@@ -94,3 +100,92 @@ def test_generated_exercise_chromatic_octaves_are_spelled_correctly() -> None:
             if '下行拆分' in card.title:
                 midi = [midi_note(n) for n in card.notes]
                 assert midi == sorted(midi,reverse=True)
+
+
+def test_zebra_uses_minor_iii_and_includes_bbm() -> None:
+    path = Path('covers/A-flat-major_F-minor/beach-house--zebra.toml')
+    raw = tomllib.loads(path.read_text())
+    chords = {c['title'].split(' · ')[0]: c['notes']
+              for c in raw['cards'] if c['kind'] == 'chord'}
+    assert 'C' not in chords
+    assert chords['Cm'] == ['C', 'Eb', 'G']
+    assert chords['Bbm'] == ['Bb', 'Db', 'F']
+    assert 'Ab → Bbm → Db → Ab' in raw['progression']
+
+
+def test_chord_symbol_cannot_disagree_with_valid_chord_tones() -> None:
+    config = load_style(Path('config/cover-atlas.toml'))
+    path = Path('covers/A-flat-major_F-minor/beach-house--zebra.toml')
+    song = parse_song(tomllib.loads(path.read_text()), config)
+    minor = next(c for c in song.cards if c.title.startswith('Cm ·'))
+    validate_chord_label(minor)
+    with pytest.raises(ValueError, match='disagrees'):
+        validate_chord_label(replace(minor, title='C · incorrect major label'))
+
+
+@pytest.mark.parametrize('case', ('source', 'kind', 'evidence', 'arrangement', 'tone'))
+def test_content_evidence_and_selected_chord_tones_are_enforced(case: str) -> None:
+    path = Path('covers/A-flat-major_F-minor/beach-house--zebra.toml')
+    config = load_style(Path('config/cover-atlas.toml'))
+    raw = deepcopy(tomllib.loads(path.read_text()))
+    if case == 'source':
+        raw['cards'][0]['source'] = 'https://example.com/not-a-listed-source'
+    elif case == 'kind':
+        raw['cards'][0]['evidence'] = 'reference_excerpt'
+    elif case == 'evidence':
+        raw['cards'][0]['evidence'] = 'verified_by_magic'
+    elif case == 'arrangement':
+        raw['cards'][-1]['evidence'] = 'reference_excerpt'
+        raw['cards'][-1]['source'] = raw['library']['sources'][0]
+    else:
+        # Bbm contains F, not G; this is still a valid scale pitch and fret.
+        raw['cards'][-1]['notes'][-1] = 'G4'
+        raw['cards'][-1]['positions'][-1] = 'B8'
+    with pytest.raises(ValueError):
+        validate_evidence(raw, parse_song(raw, config))
+
+
+def test_audit_note_and_png_dimensions_are_checked(tmp_path: Path) -> None:
+    original = Path('covers/A-flat-major_F-minor/beach-house--zebra.toml')
+    config = load_style(Path('config/cover-atlas.toml'))
+    path = tmp_path/original.name
+    for suffix in ('.toml', '.md', '.png'):
+        path.with_suffix(suffix).write_bytes(original.with_suffix(suffix).read_bytes())
+    validate_content(path, config)
+    md = path.with_suffix('.md')
+    saved = md.read_text()
+    md.write_text(saved.replace('Verse 开头:', 'incorrect:'))
+    with pytest.raises(ValueError, match='progression'):
+        validate_content(path, config)
+    md.write_text(saved)
+    png = path.with_suffix('.png')
+    content = bytearray(png.read_bytes())
+    content[16:20] = (1599).to_bytes(4, 'big')
+    png.write_bytes(content)
+    with pytest.raises(ValueError, match='dimensions'):
+        validate_content(path, config)
+
+
+def test_regeneration_detects_stale_image_content(tmp_path: Path) -> None:
+    original = Path('covers/A-flat-major_F-minor/beach-house--zebra.toml')
+    path = tmp_path/original.name
+    path.write_bytes(original.read_bytes())
+    path.with_suffix('.png').write_bytes(original.with_suffix('.png').read_bytes())
+    config = load_style(Path('config/cover-atlas.toml'))
+    validate_rendered((load_entry(path),), config)
+    path.write_text(path.read_text().replace('title = "Beach House — Zebra"',
+                                            'title = "Changed title"'))
+    with pytest.raises(ValueError, match='PNG differs'):
+        validate_rendered((load_entry(path),), config)
+
+
+def test_check_cli_detects_stale_index(tmp_path: Path) -> None:
+    # Symlink song directories only; leave the real catalog and index untouched.
+    for directory in Path('covers').iterdir():
+        if directory.is_dir():
+            (tmp_path/directory.name).symlink_to(directory.resolve(), target_is_directory=True)
+    (tmp_path/'readme.md').write_text('stale index')
+    command = [sys.executable, 'scripts/cover_library.py', '--root', str(tmp_path), '--check']
+    result = subprocess.run(command, capture_output=True, text=True, check=False)
+    assert result.returncode == 1
+    assert 'Stale cover index' in result.stderr

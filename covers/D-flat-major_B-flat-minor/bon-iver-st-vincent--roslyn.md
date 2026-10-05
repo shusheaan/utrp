@@ -1,4 +1,4 @@
-# Bon Iver & St. Vincent — Roslyn
+# Bon Iver & St. Vincent — Rosyln
 
 - 专辑：The Twilight Saga: New Moon；工作调性：**Bb minor 待核**。
 - 值得扒：小调中的大七和弦与属和弦。
@@ -8,7 +8,7 @@
 
 Intro → Verse → Refrain；版本音高待复核。
 
-`参考谱实音: Gbmaj7 → Bbm → Db；尾句: Bbm → Db → Ab → F`
+`候选升半音版本: Gbmaj7 → Bbm → Db；尾句: Bbm → Db → Ab → F`
 
 在线简谱为 Am 指型且未写 capo；此版按 Bbm 调性资料上移半音。需对原录音确认，不假称已听核。
 
@@ -16,9 +16,9 @@ Intro → Verse → Refrain；版本音高待复核。
 
 **待核**：本轮尚未取得并核验逐音主旋律谱；图中自编拆和弦练习不替代原曲核心旋律。
 
-![Roslyn 和声与指板长图](bon-iver-st-vincent--roslyn.png)
+![Rosyln 和声与指板长图](bon-iver-st-vincent--roslyn.png)
 
-七品 × 六把位；下方品位点；钢琴与高低音五线谱。标准定弦、实音显示。灰色七声音集是本格教学背景，不是整首歌的唯一音阶；彩色点是音位而非同时按下的 voicing。
+七品 × 六把位；下方品位点；钢琴与高低音五线谱。标准定弦、实音显示。箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。灰色七声音集是本格教学背景，不是整首歌的唯一音阶；彩色点是音位而非同时按下的 voicing。
 
 ## 来源与限制
 
@@ -26,3 +26,17 @@ Intro → Verse → Refrain；版本音高待复核。
 - [参考 2](https://www.hooktheory.com/theorytab/view/bon-iver/roslyn)
 
 按公开谱例/文字分析整理，未声称已听辨原录音或看完视频。没有复制歌词或完整商业谱。
+
+## 复核记录（2026-10-04）
+
+E-Chords 无明确 capo 的 Am 版与 Hooktheory Bbm 标注不一致；整体升半音仅是候选移调方案，原调仍待核。Apple Music 发行标题为 Rosyln，谱站常写 Roslyn；保留旧文件名避免断链。
+
+本轮检查了数据、音高/弦品及可取得的引用内容；未逐段听核原录音，发行曲目归属核对不等于录音版本及完整演职员表已核验。图中的自编逐卡选音不保证最短声部连接，卡序不等于原曲进行。
+
+- [官方发行标题](https://music.apple.com/us/song/rosyln/334818026)
+
+## 曲目信息复核
+
+已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。
+
+- [曲目信息来源 1](https://music.apple.com/us/song/rosyln/334818026)

@@ -2,12 +2,24 @@
 
 **榜单 12 × 5；资料永久保留，下榜不删文件。**
 
+每调一个目录；每首仅 `md + toml + png`。沿用 Pink + White / U-N-I-T-Y 版式：6–8 格长图，钢琴、高低音五线谱、六个七品把位、下方品位点。
+
+**当前是研究初稿，不是已全部核验的谱库。榜内 56 首核心旋律待补；其自编和弦音练习不冒充原曲旋律。** 调性争议见各曲说明；榜单序号是当前探索优先级，不是客观评分。
+
+## 全量复核边界
+
+62 首均有逐曲复核记录（TOML `audit_date` / `audit_note` 与同名 MD）。联网对照可取得的谱例与作者说明，并检查音高、弦品、和弦名称、证据标签及图文一致性；未逐段听核全部原录音，未取得的完整商业谱、视频、具体录音版本与所有节奏细节不冒充已验证。
+
+主艺人、曲名、专辑归属已逐曲核对并附 `metadata_note` 与发行资料链接；其中 Endless 的 4 首分曲由发布报道/曲目数据库交叉支持，未直接读取官方片尾 credits。这不是完整演职员表，也不证明所引编配与某一录音版本完全相同。
+
+自编逐卡选音只保证来自相应和弦，不保证最近距离；卡片顺序不是原曲完整进行。来源相符不等于来源本身正确；机器识别、版本冲突和参考编配的限制见逐曲记录。
+
 ## 当前榜单
 
 | 调组 | 1 | 2 | 3 | 4 | 5 |
 |---|---|---|---|---|---|
 | C / Am | [Frank Ocean — Thinkin Bout You](C-major_A-minor/frank-ocean--thinkin-bout-you.md) | [Frank Ocean — Ivy](C-major_A-minor/frank-ocean--ivy.md) | [FKA twigs — mirrored heart](C-major_A-minor/fka-twigs--mirrored-heart.md) | [Beach House — Black Car](C-major_A-minor/beach-house--black-car.md) | [Frank Ocean — Close to You](C-major_A-minor/frank-ocean--close-to-you.md) |
-| Db / Bbm | [Frank Ocean — Godspeed](D-flat-major_B-flat-minor/frank-ocean--godspeed.md) | [Bon Iver — Holocene](D-flat-major_B-flat-minor/bon-iver--holocene.md) | [Beach House — Dark Spring](D-flat-major_B-flat-minor/beach-house--dark-spring.md) | [Bon Iver & St. Vincent — Roslyn](D-flat-major_B-flat-minor/bon-iver-st-vincent--roslyn.md) | [Beach House — The Bells](D-flat-major_B-flat-minor/beach-house--the-bells.md) |
+| Db / Bbm | [Frank Ocean — Godspeed](D-flat-major_B-flat-minor/frank-ocean--godspeed.md) | [Bon Iver — Holocene](D-flat-major_B-flat-minor/bon-iver--holocene.md) | [Beach House — Dark Spring](D-flat-major_B-flat-minor/beach-house--dark-spring.md) | [Bon Iver & St. Vincent — Rosyln](D-flat-major_B-flat-minor/bon-iver-st-vincent--roslyn.md) | [Beach House — The Bells](D-flat-major_B-flat-minor/beach-house--the-bells.md) |
 | D / Bm | [Michael Jackson — Human Nature](D-major_B-minor/michael-jackson--human-nature.md) | [Frank Ocean — Pink Matter](D-major_B-minor/frank-ocean--pink-matter.md) | [FKA twigs — cellophane](D-major_B-minor/fka-twigs--cellophane.md) | [Beach House — Levitation](D-major_B-minor/beach-house--levitation.md) | [Beach House — Wild](D-major_B-minor/beach-house--wild.md) |
 | Eb / Cm | [Frank Ocean — Solo](E-flat-major_C-minor/frank-ocean--solo.md) | [Travis Scott — SKELETONS](E-flat-major_C-minor/travis-scott--skeletons.md) | [Beach House — Superstar](E-flat-major_C-minor/beach-house--superstar.md) | [Beach House — Drunk in LA](E-flat-major_C-minor/beach-house--drunk-in-la.md) | [Frank Ocean — Nikes](E-flat-major_C-minor/frank-ocean--nikes.md) |
 | E / C#m | [Frank Ocean — Higgs](E-major_C-sharp-minor/frank-ocean--higgs.md) | [Michael Jackson — Thriller](E-major_C-sharp-minor/michael-jackson--thriller.md) | [FKA twigs — mary magdalene](E-major_C-sharp-minor/fka-twigs--mary-magdalene.md) | [Kanye West — Runaway](E-major_C-sharp-minor/kanye-west--runaway.md) | [Beach House — Lose Your Smile](E-major_C-sharp-minor/beach-house--lose-your-smile.md) |
@@ -26,6 +38,46 @@
 | [Frank Ocean — Sierra Leone](A-major_F-sharp-minor/frank-ocean--sierra-leone.md) | A Mixolydian / 多调待核 |
 | [Frank Ocean — Monks](E-flat-major_C-minor/frank-ocean--monks.md) | C minor / Eb 待核 |
 
+## 原始 36 首追踪
+
+| 歌曲 | 原表标注（未核验） | 当前工作调性 |
+|---|---|---|
+| [Michael Jackson — Remember the Time](A-flat-major_F-minor/michael-jackson--remember-the-time.md) | Ab / Fm · F minor | F minor |
+| [Frank Ocean — Pink + White](A-major_F-sharp-minor/A-major--frank-ocean--pink-white.md) | A / F#m · A major | A 中心 / modal mixture |
+| [Frank Ocean — U-N-I-T-Y](A-major_F-sharp-minor/F-sharp-minor-pending--frank-ocean--unity.md) | A / F#m · F# minor | F# minor 待核 |
+| [Frank Ocean — Sierra Leone](A-major_F-sharp-minor/frank-ocean--sierra-leone.md) | G / Em · G major | A Mixolydian / 多调待核 |
+| [Kanye West — Flashing Lights](A-major_F-sharp-minor/kanye-west--flashing-lights.md) | Gb / Ebm · F# major | F# minor |
+| [Michael Jackson — Billie Jean](A-major_F-sharp-minor/michael-jackson--billie-jean.md) | A / F#m · F# minor | F# minor / Dorian 混合 |
+| [Beach House — L'Inconnue](B-flat-major_G-minor/beach-house--l-inconnue.md) | Bb / Gm · Bb major | Bb major 待核 |
+| [Frank Ocean — Lost](B-flat-major_G-minor/frank-ocean--lost.md) | Db / Bbm · Bb minor | G minor |
+| [Kanye West — Welcome to Heartbreak](B-flat-major_G-minor/kanye-west--welcome-to-heartbreak.md) | G / Em · G major | G minor |
+| [Frank Ocean — Rushes](B-major_G-sharp-minor/frank-ocean--rushes.md) | B / G#m · B major | B major |
+| [Michael Jackson — Liberian Girl](B-major_G-sharp-minor/michael-jackson--liberian-girl.md) | B / G#m · G# minor | G# minor |
+| [Beach House — Black Car](C-major_A-minor/beach-house--black-car.md) | C / Am · A minor | A minor |
+| [Frank Ocean — Close to You](C-major_A-minor/frank-ocean--close-to-you.md) | Bb / Gm · Bb major | C / Am 待核 |
+| [Frank Ocean — Ivy](C-major_A-minor/frank-ocean--ivy.md) | C / Am · A minor | C / Am |
+| [Frank Ocean — Thinkin Bout You](C-major_A-minor/frank-ocean--thinkin-bout-you.md) | C / Am · C major | C / Am |
+| [Beach House — Dark Spring](D-flat-major_B-flat-minor/beach-house--dark-spring.md) | Gb / Ebm · Eb minor | Db major / 多调段落 |
+| [Frank Ocean — Godspeed](D-flat-major_B-flat-minor/frank-ocean--godspeed.md) | Db / Bbm · Db major | Db major 待核 |
+| [FKA twigs — cellophane](D-major_B-minor/fka-twigs--cellophane.md) | D / Bm · D major | D major |
+| [Frank Ocean — Pink Matter](D-major_B-minor/frank-ocean--pink-matter.md) | D / Bm · B minor | B minor |
+| [Michael Jackson — Human Nature](D-major_B-minor/michael-jackson--human-nature.md) | D / Bm · D major | D major |
+| [Beach House — Drunk in LA](E-flat-major_C-minor/beach-house--drunk-in-la.md) | Eb / Cm · C minor | C minor 待核 |
+| [Beach House — Superstar](E-flat-major_C-minor/beach-house--superstar.md) | Eb / Cm · Eb major | Eb major |
+| [Frank Ocean — Monks](E-flat-major_C-minor/frank-ocean--monks.md) | Bb / Gm · G minor | C minor / Eb 待核 |
+| [Frank Ocean — Nikes](E-flat-major_C-minor/frank-ocean--nikes.md) | Ab / Fm · Ab major | Eb major 待核 |
+| [Frank Ocean — Solo](E-flat-major_C-minor/frank-ocean--solo.md) | Ab / Fm · F minor | Eb major |
+| [Travis Scott — SKELETONS](E-flat-major_C-minor/travis-scott--skeletons.md) | Eb / Cm · C minor | C minor 待核 |
+| [FKA twigs — mary magdalene](E-major_C-sharp-minor/fka-twigs--mary-magdalene.md) | E / C#m · C# minor | C# minor |
+| [Frank Ocean — Higgs](E-major_C-sharp-minor/frank-ocean--higgs.md) | B / G#m · B major | C# minor |
+| [Kanye West — Runaway](E-major_C-sharp-minor/kanye-west--runaway.md) | E / C#m · E major | E major |
+| [Michael Jackson — Thriller](E-major_C-sharp-minor/michael-jackson--thriller.md) | E / C#m · C# minor | C# minor / Dorian 混合 |
+| [Frank Ocean — Pretty Sweet](F-major_D-minor/frank-ocean--pretty-sweet.md) | F / Dm · D minor | D minor 待核 |
+| [Frank Ocean — Wither](F-major_D-minor/frank-ocean--wither.md) | F / Dm · F major | F 中心 / 混合音集 |
+| [Michael Jackson — Who Is It](F-major_D-minor/michael-jackson--who-is-it.md) | F / Dm · F major | D minor 待核 |
+| [Michael Jackson — Beat It](G-flat-major_E-flat-minor/michael-jackson--beat-it.md) | Gb / Ebm · Eb minor | Eb minor |
+| [Michael Jackson — Rock With You](G-flat-major_E-flat-minor/michael-jackson--rock-with-you.md) | Db / Bbm · Db major | Eb minor / Dorian 混合 |
+| [Frank Ocean — Seigfried](G-major_E-minor/frank-ocean--seigfried.md) | G / Em · E minor | E minor / 混合音集 |
 
 ## 维护
 
@@ -34,6 +86,7 @@
 
 ```sh
 python scripts/cover_library.py --check
+python scripts/cover_library.py --check --check-images
 python scripts/cover_library.py --write-index
 python scripts/render_cover.py covers/A-major_F-sharp-minor/A-major--frank-ocean--pink-white.toml --force
 ```

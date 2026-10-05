@@ -4,7 +4,7 @@ info = "Blonde · E minor / 混合音集 · 标准定弦实音移植，无 capo"
 status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "Intro → 主段 → Rap → Outro"
 progression = "主段: Cmaj7 → Am9 → Em → Dmaj7；Rap: Em → Em/A → Em → Dmaj7"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "G"
@@ -17,7 +17,10 @@ why = "大七色彩与自然六级混用"
 melody_status = "pending"
 evidence_status = "draft"
 caveat = "Dmaj7 包含 C#，与 Cmaj7 的 C natural 分属不同局部音集；不能用一张 Em 自然小调图概括。"
-sources = ["https://www.e-chords.com/chords/frank-ocean/seigfried"]
+sources = ["https://www.e-chords.com/chords/frank-ocean/seigfried", "https://music.apple.com/us/album/blonde/1146195596"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "E-Chords 支持 Cmaj7/Am9/Em/Dmaj7 及 Em-A 的材料；Dmaj7 的 C# 是 E 小调外的音，七声音集仅分格教学背景。"
 
 [[cards]]
 kind = "chord"
@@ -65,13 +68,13 @@ source = "https://www.e-chords.com/chords/frank-ocean/seigfried"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "G4 → G4 → G4 → F#4"
 scale = ["G", "A", "B", "C", "D", "E", "F#"]
 notes = ["G4", "G4", "G4", "F#4"]
 positions = ["B8", "B8", "B8", "B7"]
 anchor_frets = [3, 8, 12, 5, 10, 3]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"
 
 [[cards]]

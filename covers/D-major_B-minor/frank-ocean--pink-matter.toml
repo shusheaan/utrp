@@ -3,8 +3,8 @@ title = "Frank Ocean — Pink Matter"
 info = "Channel Orange · B minor · 标准定弦实音移植，无 capo"
 status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "人声段 / André 3000 段；段落边界待录音核对"
-progression = "主循环: Em7 → A/C# → Bm7 → Bm7"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+progression = "候选主循环: Em7 → A/C# → Bm7 → Bm7"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "D"
@@ -13,11 +13,14 @@ artist = "Frank Ocean"
 song = "Pink Matter"
 key = "B minor"
 original = "D / Bm · B minor"
-why = "ii–V 色彩与小调落点"
+why = "iv–VII–i 的小调落点（相对 D 为 ii–V–vi）"
 melody_status = "pending"
 evidence_status = "draft"
-caveat = "采用翻弹者的 A/C# 版本；图中 A 卡不表示根音低音，请另保留 C# bass。"
-sources = ["https://www.reddit.com/r/FrankOcean/comments/1750oas", "https://www.chords-and-tabs.net/song/name/frank-ocean-pink-matter"]
+caveat = "已从搜索索引取得原 Reddit 作者的 Em7/A-C#/Bm7 候选；未听核原录音。按 B minor 分析为 iv7–VII6–i7，而非 ii–V；A 卡不表示根音低音，C# bass 需另弹。"
+sources = ["https://www.reddit.com/r/FrankOcean/comments/1750oas", "https://www.chords-and-tabs.net/song/name/frank-ocean-pink-matter", "https://music.apple.com/us/album/channel-orange/1440765580"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "搜索索引恢复原 Reddit 作者的 Em7→A/C#→Bm7→Bm7 描述，支持候选来源但不等于原录音认证。按 B minor 分析为 iv7–VII6–i7；相对 D 才可称 ii–V–vi。"
 
 [[cards]]
 kind = "chord"
@@ -54,13 +57,13 @@ source = "https://www.reddit.com/r/FrankOcean/comments/1750oas"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "G4 → A4 → A4"
 scale = ["D", "E", "F#", "G", "A", "B", "C#"]
 notes = ["G4", "A4", "A4"]
 positions = ["B8", "e5", "e5"]
 anchor_frets = [3, 8, 12, 5, 10, 3]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"
 
 [[cards]]

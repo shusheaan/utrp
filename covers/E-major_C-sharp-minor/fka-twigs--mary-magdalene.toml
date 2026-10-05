@@ -1,10 +1,10 @@
 # Reference-based study draft; see same-name MD for evidence limits.
 title = "FKA twigs — mary magdalene"
 info = "MAGDALENE · C# minor · 标准定弦实音移植，无 capo"
-status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
+status = "候选和声仅据自动识别/教学资料，非人工定稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "主段与后段织体变化；精确结构待核"
 progression = "候选循环: C#m → B → F#m → C#m；另有 E / G#m"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "E"
@@ -13,11 +13,14 @@ artist = "FKA twigs"
 song = "mary magdalene"
 key = "C# minor"
 original = "E / C#m · C# minor"
-why = "小调七九度色彩与多声部交叠"
+why = "小调候选和声与待核的七九度色彩"
 melody_status = "pending"
 evidence_status = "draft"
 caveat = "调性有独立分析支持；逐处 7th / 9th 未核实，先画三和弦骨架，不凭空给每个和弦加七度。"
-sources = ["https://www.reddit.com/r/musictheory/comments/jn832m", "https://chordu.com/chords-tabs-fka-twigs-mary-magdalene-official-audio--id_6W5znLCToKU"]
+sources = ["https://www.reddit.com/r/musictheory/comments/jn832m", "https://chordu.com/chords-tabs-fka-twigs-mary-magdalene-official-audio--id_6W5znLCToKU", "https://music.apple.com/us/album/magdalene/1477652618"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "Reddit 讨论仅为试探性 C# minor 判断；ChordU 给出相关三和弦候选。独立人工谱不足，和弦延伸与原曲时值仍待核。"
 
 [[cards]]
 kind = "chord"
@@ -76,11 +79,11 @@ source = "https://www.reddit.com/r/musictheory/comments/jn832m"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "G#4 → F#4 → F#4 → G#4 → G#4"
 scale = ["E", "F#", "G#", "A", "B", "C#", "D#"]
 notes = ["G#4", "F#4", "F#4", "G#4", "G#4"]
 positions = ["B9", "B7", "B7", "B9", "B9"]
 anchor_frets = [4, 9, 13, 6, 11, 4]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"

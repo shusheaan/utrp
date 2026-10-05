@@ -4,7 +4,7 @@ info = "My Beautiful Dark Twisted Fantasy · E major · 标准定弦实音移植
 status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "Piano intro → Verse / Chorus → 长 Outro"
 progression = "循环骨架: E → B/D# → C#m → A"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "E"
@@ -17,7 +17,10 @@ why = "固定高音动机与下行 bass"
 melody_status = "pending"
 evidence_status = "draft"
 caveat = "B/D# 与 D#m 有网络转录分歧；采用前者分析版，bass 的 D# 与上层和弦分开练。"
-sources = ["https://www.reddit.com/r/pianolearning/comments/rsx83o", "https://www.reddit.com/r/Kanye/comments/sximuo", "https://blogs.bu.edu/rpt/files/2016/07/Kanye-West-Runaway.pdf"]
+sources = ["https://www.reddit.com/r/pianolearning/comments/rsx83o", "https://www.reddit.com/r/Kanye/comments/sximuo", "https://blogs.bu.edu/rpt/files/2016/07/Kanye-West-Runaway.pdf", "https://music.apple.com/us/song/1440742918"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "Reddit 翻弹建议 E/B-D#/C#m/A，并有与 D#m 的不同解读。已视觉检查另列单页 PDF：仅有高低声部单音，不足以证明完整 B/D# 或 D#m，不能当作和弦争议的裁定证据。未听核原录音。"
 
 [[cards]]
 kind = "chord"
@@ -65,13 +68,13 @@ source = "https://www.reddit.com/r/pianolearning/comments/rsx83o"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "G#4 → F#4 → E4 → E4"
 scale = ["E", "F#", "G#", "A", "B", "C#", "D#"]
 notes = ["G#4", "F#4", "E4", "E4"]
 positions = ["B9", "B7", "B5", "B5"]
 anchor_frets = [4, 9, 13, 6, 11, 4]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"
 
 [[cards]]

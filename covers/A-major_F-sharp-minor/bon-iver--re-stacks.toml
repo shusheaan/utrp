@@ -3,8 +3,8 @@ title = "Bon Iver — re: Stacks"
 info = "For Emma, Forever Ago · A major · 标准定弦实音移植，无 capo"
 status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "Intro → Verse → Chorus；多轮叙事后 Outro"
-progression = "Intro/Verse: Esus4 → A → Dadd9/F#；Chorus: Esus4 → F#m7 → D"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+progression = "Intro/Verse: Esus4 → A → Dadd9/F#；Chorus: Esus4 → F#m7 → Dadd9/F#"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "A"
@@ -16,8 +16,11 @@ original = ""
 why = "悬挂音与开放定弦的声部连接"
 melody_status = "pending"
 evidence_status = "draft"
-caveat = "图为标准定弦实音移植，不是 Open D 原始指型；现场不同 capo 版本不可混用。"
-sources = ["https://vchords.com/en/chords/bon-iver/re-stacks-5825", "https://api.musicnotes.com/sheetmusic/bon-iver/re-stacks/MN0098562"]
+caveat = "图为标准定弦实音移植，不是 Open D 原始指型；现场不同 capo 版本不可混用。 这里只列段落骨架，Intro 的 E7sus4、Gadd9/E 等变化未展开。"
+sources = ["https://vchords.com/en/chords/bon-iver/re-stacks-5825", "https://api.musicnotes.com/sheetmusic/bon-iver/re-stacks/MN0098562", "https://boniver.org/audio/for-emma-forever-ago/"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "VChords 的 Chorus 保留 Dadd9/F#；已改正原来的 D 简写。页面版本与原录音定弦/capo 仍需对齐，Gadd9/E 等局部变化未展开。"
 
 [[cards]]
 kind = "chord"
@@ -76,11 +79,11 @@ source = "https://vchords.com/en/chords/bon-iver/re-stacks-5825"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "A4 → A4 → A4 → A4 → A4"
 scale = ["A", "B", "C#", "D", "E", "F#", "G#"]
 notes = ["A4", "A4", "A4", "A4", "A4"]
 positions = ["e5", "e5", "e5", "e5", "e5"]
 anchor_frets = [5, 10, 2, 7, 12, 5]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"

@@ -3,8 +3,8 @@ title = "Beach House — Black Car"
 info = "7 · A minor · 标准定弦实音移植，无 capo"
 status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "主循环 / 音色叠加；精确段落边界待听核"
-progression = "主循环: Am → Cmaj7 → F → Dm"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+progression = "主循环参考: Am7 → Cmaj7 → Fmaj7 → Dm7；卡片保留三和弦简化"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "C"
@@ -16,12 +16,15 @@ original = "C / Am · A minor"
 why = "小调循环中的共通音"
 melody_status = "pending"
 evidence_status = "draft"
-caveat = "和弦据翻弹者描述；尚未逐音核对 synth ostinato。"
-sources = ["https://www.reddit.com/r/BeachHouse/comments/15xde9o"]
+caveat = "Reddit 翻弹者给三和弦简化；Reverb Machine 重制分析补出 Am7/Cmaj7/Fmaj7/Dm7，每和弦两小节。此处三和弦卡与 Am 练习不代表完整 organ/bass 和声，synth ostinato 待核。"
+sources = ["https://www.reddit.com/r/BeachHouse/comments/15xde9o", "https://reverbmachine.com/blog/how-beach-house-created-black-car/", "https://www.subpop.com/releases/beach_house/7"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "新增 Reverb Machine 作者重制分析，其 organ/bass 主循环是 Am7/Cmaj7/Fmaj7/Dm7；原三和弦卡仅作为简化，不能抹去七度层。未听核 synth ostinato。"
 
 [[cards]]
 kind = "chord"
-title = "Am · 核心和弦音"
+title = "Am · 七和弦的三和弦简化"
 subtitle = "A – C – E；完整音位地图，不是指定 voicing"
 scale = ["C", "D", "E", "F", "G", "A", "B"]
 notes = ["A", "C", "E"]
@@ -43,7 +46,7 @@ source = "https://www.reddit.com/r/BeachHouse/comments/15xde9o"
 
 [[cards]]
 kind = "chord"
-title = "F · 核心和弦音"
+title = "F · 七和弦的三和弦简化"
 subtitle = "F – A – C；完整音位地图，不是指定 voicing"
 scale = ["C", "D", "E", "F", "G", "A", "B"]
 notes = ["F", "A", "C"]
@@ -54,7 +57,7 @@ source = "https://www.reddit.com/r/BeachHouse/comments/15xde9o"
 
 [[cards]]
 kind = "chord"
-title = "Dm · 核心和弦音"
+title = "Dm · 七和弦的三和弦简化"
 subtitle = "D – F – A；完整音位地图，不是指定 voicing"
 scale = ["C", "D", "E", "F", "G", "A", "B"]
 notes = ["D", "F", "A"]
@@ -65,13 +68,13 @@ source = "https://www.reddit.com/r/BeachHouse/comments/15xde9o"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "A4 → G4 → A4 → A4"
 scale = ["C", "D", "E", "F", "G", "A", "B"]
 notes = ["A4", "G4", "A4", "A4"]
 positions = ["e5", "B8", "e5", "e5"]
 anchor_frets = [5, 10, 2, 7, 12, 5]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"
 
 [[cards]]

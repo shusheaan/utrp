@@ -2,9 +2,9 @@
 title = "Beach House — Over and Over"
 info = "Once Twice Melody · G / Em 待核 · 标准定弦实音移植，无 capo"
 status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
-structure = "Intro → Chorus → Post-Chorus → 长 Outro"
-progression = "Chorus: C → D → Bm → C；Outro: C → G → Em → C"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+structure = "Intro → Verse → Chorus → Post-Chorus → 长 Outro"
+progression = "Chorus 开头: C → D → Bm → C；Outro: C → G → Em → C"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "G"
@@ -13,11 +13,14 @@ artist = "Beach House"
 song = "Over and Over"
 key = "G / Em 待核"
 original = ""
-why = "持续循环的内声部与借用 bVII"
+why = "持续循环的内声部与相对 G 中心的借用 bVII"
 melody_status = "pending"
 evidence_status = "draft"
-caveat = "Post-Chorus 另有 F → C → G → Em。归组按所引 Chorus/Outro 音集分析，整体主音仍待录音核验。"
-sources = ["https://www.cifraclub.com/beach-house/over-and-over/"]
+caveat = "Post-Chorus 另有 F → C → G → Em。归组按所引 Chorus/Outro 音集分析，整体主音仍待录音核验。 Chorus 后续另有 Bm→G、Bm→C、Bm→Em，并非只循环标题四和弦。"
+sources = ["https://www.cifraclub.com/beach-house/over-and-over/", "https://www.subpop.com/releases/beach_house/once_twice_melody"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "Cifra Club 含 Verse，已补结构标签；Chorus 的 C/D/Bm/C 仅是开头，后续 Bm/G、Bm/C、Bm/Em 未在标题全写。页面 Am 标注不作为整体主音定论。"
 
 [[cards]]
 kind = "chord"
@@ -87,11 +90,11 @@ source = "https://www.cifraclub.com/beach-house/over-and-over/"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "G4 → F#4 → F#4 → G4 → G4 → A4"
 scale = ["G", "A", "B", "C", "D", "E", "F#"]
 notes = ["G4", "F#4", "F#4", "G4", "G4", "A4"]
 positions = ["B8", "B7", "B7", "B8", "B8", "e5"]
 anchor_frets = [3, 8, 12, 5, 10, 3]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"

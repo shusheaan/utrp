@@ -4,7 +4,7 @@ info = "Blonde · Eb major · 标准定弦实音移植，无 capo"
 status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "Verse → Chorus → Bridge → Outro"
 progression = "Verse: Eb → Eb/D → Cm7 → Eb/Bb → Ab → Eb/G → Fm7 → Abm"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "Eb"
@@ -17,7 +17,10 @@ why = "下行 bass 与借用小 iv"
 melody_status = "pending"
 evidence_status = "draft"
 caveat = "capo 3 的 C 指型已换算 Eb 实音；原表 Fm 是把局部和弦当成主调。"
-sources = ["https://www.chords-and-tabs.net/song/name/frank-ocean-solo"]
+sources = ["https://www.chords-and-tabs.net/song/name/frank-ocean-solo", "https://music.apple.com/us/album/blonde/1146195596"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "用户谱 capo 3 的 C/C-B/Am7/C-G/F/C-E/Dm7/Fm 对应本页实音；骨架省略部分经过和弦，非完整原配器。"
 
 [[cards]]
 kind = "chord"
@@ -76,11 +79,11 @@ source = "https://www.chords-and-tabs.net/song/name/frank-ocean-solo"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "G4 → G4 → Ab4 → Ab4 → Ab4"
 scale = ["Eb", "F", "G", "Ab", "Bb", "C", "D"]
 notes = ["G4", "G4", "Ab4", "Ab4", "Ab4"]
 positions = ["B8", "B8", "B9", "B9", "B9"]
 anchor_frets = [3, 8, 12, 5, 10, 3]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"

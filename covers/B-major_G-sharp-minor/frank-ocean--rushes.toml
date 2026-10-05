@@ -4,7 +4,7 @@ info = "Endless · B major · 标准定弦实音移植，无 capo"
 status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "Verse → Chorus → Outro: B"
 progression = "Verse: B → E → B → E → C#m → F#；后段: G#m → E"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "B"
@@ -17,7 +17,10 @@ why = "I–IV 与 ii–V 的空间感"
 melody_status = "pending"
 evidence_status = "draft"
 caveat = "参考谱 F# → F → E 半音段的 F 和弦性质不确定，未把它自动当作 F 大和弦绘制。"
-sources = ["https://www.guitartabsexplorer.com/ocean-frank/rushes-chords"]
+sources = ["https://www.guitartabsexplorer.com/ocean-frank/rushes-chords", "https://music.apple.com/us/music-video/endless/1143705097", "https://www.metacritic.com/music/endless/frank-ocean/details", "https://www.the-independent.com/arts-entertainment/music/news/frank-ocean-new-album-endless-tracklist-full-credits-features-james-blake-jonny-greenwood-sampha-a7198641.html"]
+metadata_note = "Apple Music 官方页面确认 Frank Ocean 的 Endless 视觉专辑；分曲归属由 Metacritic 与 The Independent 发布资料交叉支持，未读取官方片尾逐曲 credits，视觉版与 CDQ 编配仍须区别。"
+audit_date = "2026-10-04"
+audit_note = "GuitarTabsExplorer 支持 B/E/C#m/F#；来源中 F 的性质仍可疑，保留候选警告，未宣称每个过渡和弦准确。"
 
 [[cards]]
 kind = "chord"
@@ -76,11 +79,11 @@ source = "https://www.guitartabsexplorer.com/ocean-frank/rushes-chords"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "F#4 → G#4 → G#4 → A#4 → B4"
 scale = ["B", "C#", "D#", "E", "F#", "G#", "A#"]
 notes = ["F#4", "G#4", "G#4", "A#4", "B4"]
 positions = ["B7", "B9", "B9", "e6", "e7"]
 anchor_frets = [2, 7, 11, 4, 9, 2]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"

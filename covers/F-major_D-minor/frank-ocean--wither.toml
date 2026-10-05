@@ -3,8 +3,8 @@ title = "Frank Ocean — Wither"
 info = "Endless · F 中心 / 混合音集 · 标准定弦实音移植，无 capo"
 status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "Intro → Verse 1 → Verse 2 → Bridge → Outro"
-progression = "Verse: Fmaj7 → Bbmaj7 → Cmaj7 → Bbmaj7/D"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+progression = "Verse 首句: F → Bbmaj7 → Cmaj7 → Bbmaj7/D；后续 F 改为 Fmaj7"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "F"
@@ -17,7 +17,10 @@ why = "不同大七色彩并置"
 melody_status = "pending"
 evidence_status = "draft"
 caveat = "capo 3 谱已换算实音；首句 F 三和弦后转 Fmaj7。Verse 2: Ebmaj7 → F6 → Bbmaj7 → Cmaj7，再 Cm7 → F7 → C7/Bb → Fmaj7/C。"
-sources = ["https://www.chords-and-tabs.net/song/name/frank-ocean-wither", "https://www.reddit.com/r/FrankOcean/comments/59xvvh/here_are_the_chords_to_wither/"]
+sources = ["https://www.chords-and-tabs.net/song/name/frank-ocean-wither", "https://www.reddit.com/r/FrankOcean/comments/59xvvh/here_are_the_chords_to_wither/", "https://music.apple.com/us/music-video/endless/1143705097", "https://www.metacritic.com/music/endless/frank-ocean/details", "https://www.the-independent.com/arts-entertainment/music/news/frank-ocean-new-album-endless-tracklist-full-credits-features-james-blake-jonny-greenwood-sampha-a7198641.html"]
+metadata_note = "Apple Music 官方页面确认 Frank Ocean 的 Endless 视觉专辑；分曲归属由 Metacritic 与 The Independent 发布资料交叉支持，未读取官方片尾逐曲 credits，视觉版与 CDQ 编配仍须区别。"
+audit_date = "2026-10-04"
+audit_note = "用户谱 capo 3 的 D/Gmaj7/Amaj7 等转换为 F/Bbmaj7/Cmaj7；后段出现 Fmaj7，不能将前段 F 自动全换 maj7。"
 
 [[cards]]
 kind = "chord"
@@ -87,11 +90,11 @@ source = "https://www.chords-and-tabs.net/song/name/frank-ocean-wither"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "A4 → A4 → G4 → G4 → A4 → Bb4"
 scale = ["F", "G", "A", "Bb", "C", "D", "E"]
 notes = ["A4", "A4", "G4", "G4", "A4", "Bb4"]
 positions = ["e5", "e5", "B8", "B8", "e5", "e6"]
 anchor_frets = [5, 10, 2, 7, 12, 5]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"

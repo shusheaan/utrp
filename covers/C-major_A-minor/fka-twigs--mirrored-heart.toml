@@ -3,8 +3,8 @@ title = "FKA twigs — mirrored heart"
 info = "MAGDALENE · C major · 标准定弦实音移植，无 capo"
 status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "Verse → Chorus → Post-Chorus → Bridge → Chorus"
-progression = "Verse: Fmaj7 → C；Chorus: C → Dm → G → E7/G# → Am → A → Dm → G"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+progression = "Verse: Fmaj7 → C；首轮 Chorus: C → Dm → E7 → G → E7/G# → Am → A → Dm → G"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "C"
@@ -17,7 +17,10 @@ why = "副属和弦与半音低音"
 melody_status = "pending"
 evidence_status = "draft"
 caveat = "摘取 Chorus 主要变化；参考谱部分轮次用 C/E，不能把 E7 自动套入每一轮。"
-sources = ["https://www.e-chords.com/chords/fka-twigs/mirrored-heart"]
+sources = ["https://www.e-chords.com/chords/fka-twigs/mirrored-heart", "https://music.apple.com/us/album/magdalene/1477652618"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "E-Chords 首轮 Chorus 在 Dm 后有 E7，已补回；后轮相同位置出现 C/E，不把首轮套遍全曲。"
 
 [[cards]]
 kind = "chord"
@@ -87,11 +90,11 @@ source = "https://www.e-chords.com/chords/fka-twigs/mirrored-heart"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "A4 → G4 → F4 → E4 → E4 → E4"
 scale = ["C", "D", "E", "F", "G", "A", "B"]
 notes = ["A4", "G4", "F4", "E4", "E4", "E4"]
 positions = ["e5", "B8", "B6", "B5", "B5", "B5"]
 anchor_frets = [5, 10, 2, 7, 12, 5]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"

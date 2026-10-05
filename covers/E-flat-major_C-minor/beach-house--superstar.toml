@@ -1,10 +1,10 @@
 # Reference-based study draft; see same-name MD for evidence limits.
 title = "Beach House — Superstar"
 info = "Once Twice Melody · Eb major · 标准定弦实音移植，无 capo"
-status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
+status = "候选和声仅据自动识别/教学资料，非人工定稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "Verse / Chorus；延展音与换和弦时点待核"
-progression = "循环骨架: Eb → Ab → Bb → Gm"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+progression = "候选循环: Eb → Ab → Bb → Gm"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "Eb"
@@ -17,7 +17,10 @@ why = "明亮主和弦与 iii 色彩"
 melody_status = "pending"
 evidence_status = "draft"
 caveat = "按 Chordify / ChordU 的机器转录候选整理三和弦骨架，尚未逐段听核；不把简化的 Eb 当作每处原始 voicing。"
-sources = ["https://chordify.net/nl/chords/beach-house-songs/superstar-chords", "https://www.hooktheory.com/theorytab/view/beach-house/superstar"]
+sources = ["https://chordify.net/nl/chords/beach-house-songs/superstar-chords", "https://www.hooktheory.com/theorytab/view/beach-house/superstar", "https://www.subpop.com/releases/beach_house/once_twice_melody"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。"
+audit_date = "2026-10-04"
+audit_note = "可检索到 Hooktheory 分析页，但纯文本未取得完整和弦时间线；保留 Eb/Ab/Bb/Gm 候选，不标作独立确认的进行。"
 
 [[cards]]
 kind = "chord"
@@ -65,13 +68,13 @@ source = "https://chordify.net/nl/chords/beach-house-songs/superstar-chords"
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "G4 → Ab4 → Bb4 → Bb4"
 scale = ["Eb", "F", "G", "Ab", "Bb", "C", "D"]
 notes = ["G4", "Ab4", "Bb4", "Bb4"]
 positions = ["B8", "B9", "e6", "e6"]
 anchor_frets = [3, 8, 12, 5, 10, 3]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"
 
 [[cards]]

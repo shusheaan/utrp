@@ -1,10 +1,10 @@
 # Reference-based study draft; see same-name MD for evidence limits.
 title = "Kanye West — Flashing Lights"
 info = "Graduation · F# minor · 标准定弦实音移植，无 capo"
-status = "和声研究初稿；原曲核心旋律待核，练习线不是原唱。"
+status = "候选和声仅据自动识别/教学资料，非人工定稿；原曲核心旋律待核，练习线不是原唱。"
 structure = "Intro / Verse / Chorus 共用循环；细分拍数待核"
 progression = "循环: F#m9 → Dmaj7 → C#m7 → Bm7"
-timing = "箭头只表先后；斜线表材料集合。未标出的时值、BPM、拍号及转位待核。"
+timing = "箭头只表先后；和弦名内 / 指定低音，其余斜线分隔材料或段落。时值、BPM、拍号及未标转位待核。"
 
 [library]
 group = "A"
@@ -17,7 +17,10 @@ why = "九度主和弦与下行七和弦"
 melody_status = "pending"
 evidence_status = "draft"
 caveat = "原表 F# major 与参考谱冲突；此处 F# minor 与 A major 同组，不是 Gb major 组。"
-sources = ["https://www.supersimplepiano.com/player/flashing-lights-49537765756569607"]
+sources = ["https://www.supersimplepiano.com/player/flashing-lights-49537765756569607", "https://music.apple.com/us/album/graduation/1451901307"]
+metadata_note = "已对照所列发行曲目表核对主艺人、曲名与所属专辑；不是完整演职员表，也不证明所用谱对应特定录音版本。 正式发行另署 feat. Dwele，本页 artist 字段保留主艺人。"
+audit_date = "2026-10-04"
+audit_note = "SuperSimplePiano 列出 F#m9/Dmaj7/C#m7/Bm7；属于教学参考而非原始录音转录，页面自动理论文案不作为证据。"
 
 [[cards]]
 kind = "chord"
@@ -65,13 +68,13 @@ source = "https://www.supersimplepiano.com/player/flashing-lights-49537765756569
 
 [[cards]]
 kind = "melody"
-title = "自编连接 · 核心和弦的共同音 / 最近音"
+title = "自编连接 · 逐卡和弦音选点"
 subtitle = "G#4 → A4 → G#4 → A4"
 scale = ["A", "B", "C#", "D", "E", "F#", "G#"]
 notes = ["G#4", "A4", "G#4", "A4"]
 positions = ["B9", "e5", "B9", "e5"]
 anchor_frets = [4, 9, 13, 6, 11, 4]
-footer = "按本页和弦卡顺序选择最近和弦音；不是原曲旋律或原编配，节奏自由处理。"
+footer = "按和弦卡顺序各选一个和弦音；不是原曲进行、旋律或最短声部连接，节奏自由处理。"
 evidence = "arrangement"
 
 [[cards]]
