@@ -26,6 +26,7 @@ class Theme:
     muted: str
     line: str
     black_key: str
+    white_key: str
     inlay_radius: int
 
 
@@ -151,7 +152,14 @@ def color(value: object) -> str:
     return result
 
 
-def parse_settings(raw: dict[str, object], base: Path) -> Settings:
+def parse_settings(raw: dict[str, object], base: Path, *, theme_name: str = "light") -> Settings:
+    if theme_name not in ("light", "dark"):
+        raise ValueError("Theme must be light or dark")
+    if theme_name == "dark":
+        variant = raw["dark"]
+        if not isinstance(variant, dict):
+            raise ValueError("Expected a dark theme table")
+        raw = raw | {"colors": variant["colors"], "theme": variant["theme"]}
     key = MajorKey.from_name(nonempty_text(raw["key"]))
     palette = raw["colors"]
     if not isinstance(palette, list) or len(palette) != 7:
@@ -180,7 +188,7 @@ def parse_settings(raw: dict[str, object], base: Path) -> Settings:
                     colors, font if font.is_absolute() else base / font,
                     nonempty_text(raw["text_font"]),
                     Theme(*(color(table[key]) for key in
-                            ("paper", "panel", "ink", "muted", "line", "black_key")),
+                            ("paper", "panel", "ink", "muted", "line", "black_key", "white_key")),
                           inlay_radius=bounded_integer(table["inlay_radius"], 1, 4)),
                     tuning, anchors, before, after, first, last,
                     parse_blocks(raw["blocks"], tuning, key), key,
@@ -289,16 +297,16 @@ def keyboard_svg(settings: Settings) -> list[str]:
     t = settings.theme
     first = Note.from_midi(settings.first_midi)
     whites = scale_notes(settings.first_midi, settings.last_midi)
-    width = 924 / len(whites)
-    parts = [rect(32, 76, 936, 192, t.black_key, 6)]
+    width = 492 / len(whites)
+    parts = [rect(278, 76, 504, 192, t.black_key, 6)]
     for black in (False, True):
         for midi in range(settings.first_midi, settings.last_midi + 1):
             physical = Note.from_midi(midi)
             if physical.sharp != black:
                 continue
             index = physical.staff_step() - first.staff_step()
-            x = (38 + (index + 1) * width - width * 0.3 if black
-                 else 38 + index * width)
+            x = (284 + (index + 1) * width - width * 0.3 if black
+                 else 284 + index * width)
             key_width, height = (width * 0.60, 112) if black else (width - 1, 180)
             note = settings.key.note(midi)
             attrs = (f' data-degree="{note.degree + 1}" data-color="{settings.colors[note.degree]}"'
@@ -306,12 +314,13 @@ def keyboard_svg(settings: Settings) -> list[str]:
             parts.append(f'<g id="key-{midi}" data-midi="{midi}" '
                          f'data-black="{str(black).lower()}"{attrs}>')
             parts.append(f'<title>{note.name() if note is not None else physical.name()}</title>')
-            parts.append(rect(x, 82, key_width, height, t.black_key if black else t.panel, 2))
+            parts.append(rect(x, 82, key_width, height, t.black_key if black else t.white_key, 2))
             if note is not None:
                 cx, cy = x + key_width / 2, 174 if black else 241
                 fill = settings.colors[note.degree]
-                parts.append(f'<circle cx="{cx:g}" cy="{cy:g}" r="10.5" fill="{fill}"/>')
-                parts.append(pitch_label(cx, cy + 5, note.letter, note.accidental, 14))
+                radius = min(8.5, (width - 2) / 2)
+                parts.append(f'<circle cx="{cx:g}" cy="{cy:g}" r="{radius:g}" fill="{fill}"/>')
+                parts.append(pitch_label(cx, cy + 4, note.letter, note.accidental, 11))
             parts.append('</g>')
     return parts
 
@@ -342,7 +351,9 @@ def pitch_label(x: float, y: float, letter: str, accidental: int, size: int) -> 
                 "#FFFFFF", "middle")
 
 
-def key_signature_svg(key: MajorKey, clef: str, fill: str) -> list[str]:
+def key_signature_svg(key: MajorKey, clef: str, fill: str, *,
+                      x_start: float = 1078, step_size: float = 7,
+                      treble_bottom: float = 178) -> list[str]:
     """Conventional signature order and staff positions, with font-free signs."""
     if clef not in ("treble", "bass"):
         raise ValueError("Unknown clef")
@@ -351,20 +362,20 @@ def key_signature_svg(key: MajorKey, clef: str, fill: str) -> list[str]:
     order = "FCGDAEB" if sharp else "BEADGCF"
     # Diatonic steps above the bottom line; bass signatures sit two steps lower.
     steps = (8, 5, 9, 6, 3, 7, 4) if sharp else (4, 7, 3, 6, 2, 5, 1)
-    bottom = 178 if clef == "treble" else 262
+    bottom = treble_bottom if clef == "treble" else treble_bottom + 12 * step_size
     path = ("M-3 -12 V12 M3 -14 V10 M-6 -4 L6 -7 M-6 5 L6 2" if sharp else
             "M-3 -22 V5 C10 -1 7 -13 -3 -4")
     parts: list[str] = []
     for letter, step in zip(order, steps):
         if accidentals[letter] == 0:
             continue
-        x = 1078 + len(parts) * 14
-        y = bottom - (step - (2 if clef == "bass" else 0)) * 7
+        x = x_start + len(parts) * 14
+        y = bottom - (step - (2 if clef == "bass" else 0)) * step_size
         sign = "♯" if sharp else "♭"
         parts.append(f'<g data-key-signature="{clef}" data-letter="{letter}" '
                      f'data-accidental="{accidentals[letter]}" '
-                     f'transform="translate({x} {y})"><title>{letter}{sign}</title>'
-                     f'<path d="{path}" fill="none" stroke="{fill}" '
+                     f'transform="translate({x:g} {y:g})"><title>{letter}{sign}</title>'
+                     f'<path d="{path}" transform="scale(1 {step_size / 7:g})" fill="none" stroke="{fill}" '
                      f'stroke-width="2" stroke-linecap="round"/></g>')
     return parts
 
@@ -372,37 +383,43 @@ def key_signature_svg(key: MajorKey, clef: str, fill: str) -> list[str]:
 def staff_svg(settings: Settings, clefs: tuple[str, str]) -> list[str]:
     t = settings.theme
     parts: list[str] = []
-    # Both clefs use the same diatonic coordinate system: C4 is y=192.
+    # 11 px per diatonic step: same-column neighbors are 22 px apart,
+    # leaving clearance around 21 px dots. C4 stays aligned between clefs.
     for clef, bottom, notes, glyph in (
-        ("treble", 178, settings.key.notes(60, settings.last_midi), clefs[0]),
-        ("bass", 262, settings.key.notes(settings.first_midi, 59), clefs[1]),
+        ("treble", 148, settings.key.notes(60, settings.last_midi), clefs[0]),
+        ("bass", 280, settings.key.notes(settings.first_midi, 59), clefs[1]),
     ):
         for i in range(5):
-            parts.append(line(1032, bottom - i * 14, 1552, bottom - i * 14, t.line, 1.2))
-        anchor_y = bottom - 14 if clef == "treble" else bottom - 42
+            parts.append(line(32, bottom - i * 22, 256, bottom - i * 22, t.line, 1.2))
+        anchor_y = bottom - 22 if clef == "treble" else bottom - 66
         glyph_anchor = 170 if clef == "treble" else 566
-        scale = 14 / 194
+        scale = 22 / 194
         parts.append(f'<path id="{clef}-clef" d="{glyph}" fill="{t.ink}" '
-                     f'transform="translate(1027 {anchor_y + glyph_anchor * scale:g}) '
+                     f'transform="translate(27 {anchor_y + glyph_anchor * scale:g}) '
                      f'scale({scale:g} {-scale:g})"/>')
-        signature = key_signature_svg(settings.key, clef, t.ink)
+        signature = key_signature_svg(settings.key, clef, t.ink, x_start=94,
+                                      step_size=11, treble_bottom=148)
         parts.extend(signature)
-        note_start = 1090 + len(signature) * 14
-        for index, note in enumerate(notes):
-            x = note_start + index * (1536 - note_start) / max(1, len(notes) - 1)
-            y = staff_y(note, clef)
+        # Paint all ledgers first: later notes must not draw lines over an
+        # earlier dot in the same column.
+        for note in notes:
+            x = 214 + (note.staff_step() % 2) * 24
+            y = 16 + (42 - note.staff_step()) * 11
+            parts.extend(line(x - 15, ledger, x + 15, ledger, t.line, 1.2)
+                         for ledger in ledger_lines(y, bottom, 22))
+        for note in notes:
+            x = 214 + (note.staff_step() % 2) * 24
+            y = 16 + (42 - note.staff_step()) * 11
             fill = settings.colors[note.degree]
             parts.append(f'<g id="note-{note.midi}" data-midi="{note.midi}" '
                          f'data-degree="{note.degree + 1}" data-color="{fill}">'
                          f'<title>{note.name()} / degree {note.degree + 1}</title>')
-            parts.extend(line(x - 15, ledger, x + 15, ledger, t.line, 1.2)
-                         for ledger in ledger_lines(y, bottom, 14))
             parts.append(f'<circle cx="{x:g}" cy="{y:g}" r="10.5" fill="{fill}"/>')
             parts.append(pitch_label(x, y + 4, note.letter, note.accidental, 12))
             parts.append('</g>')
-    parts.extend([line(1032, 122, 1032, 262, t.line, 1.5),
-                  '<path d="M1023 122 C1010 133 1028 180 1016 192 '
-                  'C1028 205 1010 252 1023 262" fill="none" '
+    parts.extend([line(32, 60, 32, 280, t.line, 1.5),
+                  '<path d="M23 60 C10 77 28 151 16 170 '
+                  'C28 190 10 264 23 280" fill="none" '
                   f'stroke="{t.ink}" stroke-width="2.5"/>'])
     return parts
 
@@ -431,14 +448,14 @@ def fret_inlays(x: float, side_y: float, double_offset: float,
 
 def guitar_svg(settings: Settings, panel: int, anchor_string: int) -> list[str]:
     t = settings.theme
-    left, top = 16 + (panel % 3) * 528, 300 + (panel // 3) * 224
+    left, top = (808 + panel * 396, 72) if panel < 2 else (16 + (panel - 2) * 396, 352)
     anchor = settings.anchor_frets[anchor_string]
     first = anchor - settings.frets_before_anchor
     last = anchor + settings.frets_after_anchor
     grid_x, grid_y = left + 40, top + 32
     columns = last - first + 1
-    width = 456 / columns
-    parts = [rect(left, top, 512, 208, t.panel, 10)]
+    width = 324 / columns
+    parts = [rect(left, top, 380, 208, t.panel, 10)]
     for fret in range(first, last + 1):
         x = grid_x + (fret - first + 0.5) * width
         parts.append(text(x, grid_y - 19, str(fret), 12, t.muted, "middle"))
@@ -449,7 +466,7 @@ def guitar_svg(settings: Settings, panel: int, anchor_string: int) -> list[str]:
         parts.append(line(x, grid_y, x, grid_y + 150, t.line))
     for row in range(len(settings.tuning)):
         y = grid_y + row * 30
-        parts.append(line(grid_x, y, grid_x + 456, y, t.line, 1 + row * 0.16))
+        parts.append(line(grid_x, y, grid_x + 324, y, t.line, 1 + row * 0.16))
         parts.append(text(left + 24, y + 4, str(row + 1), 12, t.muted, "end"))
     for row, fret, note in guitar_positions(settings, anchor_string):
         x = grid_x + (fret - first + 0.5) * width
@@ -509,12 +526,9 @@ def blocks_svg(settings: Settings) -> list[str]:
 
 
 def tile_parts(settings: Settings, clefs: tuple[str, str]) -> list[str]:
-    t = settings.theme
-    parts = [f'<g transform="translate(0 -52)" font-family="{escape(settings.text_font, quote=True)}">',
-             rect(16, 60, 968, 224, t.panel, 10),
-             rect(1000, 60, 584, 224, t.panel, 10)]
-    parts.extend(keyboard_svg(settings))
+    parts = [f'<g font-family="{escape(settings.text_font, quote=True)}">']
     parts.extend(staff_svg(settings, clefs))
+    parts.extend(keyboard_svg(settings))
     for panel, anchor_string in enumerate((5, 4, 3, 2, 1, 0)):
         parts.extend(guitar_svg(settings, panel, anchor_string))
     parts.append('</g>')
@@ -532,14 +546,14 @@ def svg_start(width: int, height: int, title: str, paper: str) -> list[str]:
 
 
 def render_svg(settings: Settings, clefs: tuple[str, str]) -> str:
-    parts = svg_start(1600, 696, settings.title, settings.theme.paper)
+    parts = svg_start(1600, 576, settings.title, settings.theme.paper)
     parts.extend(tile_parts(settings, clefs))
     return '\n'.join(parts + ['</svg>']) + '\n'
 
 
 def render_overview(settings: Settings, clefs: tuple[str, str], *, stacked: bool = False) -> str:
     overview = replace(settings.overview, columns=1, rows=12) if stacked else settings.overview
-    tile_width, tile_height = 1600, 696
+    tile_width, tile_height = 1600, 576
     width = overview.columns * tile_width + (overview.columns + 1) * overview.gap
     height = overview.rows * tile_height + (overview.rows + 1) * overview.gap
     parts = svg_start(width, height, '十二大调 · 钢琴 / 五线谱 / 吉他', settings.theme.paper)
@@ -560,6 +574,8 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", type=Path, default=root / "config/c-major-atlas.toml")
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--theme", choices=("light", "dark"), default="light",
+                        help="White background / black lines, or black background / white lines")
     layout = parser.add_mutually_exclusive_group()
     layout.add_argument("--all-keys", action="store_true", help="Render the configured 12-major-key grid")
     layout.add_argument("--stacked", action="store_true", help="Render all 12 keys in one mobile column")
@@ -567,13 +583,15 @@ def main() -> None:
     args = parser.parse_args()
     try:
         with args.config.open("rb") as stream:
-            settings = parse_settings(tomllib.load(stream), args.config.parent)
+            settings = parse_settings(tomllib.load(stream), args.config.parent, theme_name=args.theme)
         clefs = load_clefs(settings.music_font)
         svg = (render_overview(settings, clefs, stacked=args.stacked)
                if args.all_keys or args.stacked else render_svg(settings, clefs))
         if args.output is None:
             name = ("major-scales-atlas-mobile.svg" if args.stacked else
                     "major-scales-atlas.svg" if args.all_keys else "c-major-atlas.svg")
+            if args.theme == "dark":
+                name = name.removesuffix(".svg") + "-dark.svg"
             args.output = root / "scripts" / name
         if args.output.suffix.lower() != ".svg":
             raise ValueError("Output must have an .svg extension")

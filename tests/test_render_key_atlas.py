@@ -1,5 +1,8 @@
 """Musical alignment and shared-color checks for the C-major atlas."""
 
+from dataclasses import replace
+from itertools import combinations
+from math import hypot
 from pathlib import Path
 import subprocess
 import sys
@@ -16,10 +19,10 @@ from scripts.render_key_atlas import (
 )
 
 
-def settings() -> Settings:
+def settings(theme: str = "light") -> Settings:
     path = Path("config/c-major-atlas.toml")
     with path.open("rb") as stream:
-        return parse_settings(tomllib.load(stream), path.parent)
+        return parse_settings(tomllib.load(stream), path.parent, theme_name=theme)
 
 
 def test_keyboard_range_and_scale() -> None:
@@ -67,19 +70,18 @@ def test_key_signatures_have_standard_order_positions_and_clearance(
     root = ET.fromstring('<svg>' + ''.join(staff_svg(config, ('M0 0', 'M0 0'))) + '</svg>')
     marks = root.findall(f'.//g[@data-key-signature="{clef}"]')
     assert ''.join(mark.attrib['data-letter'] for mark in marks) == letters
-    expected_y = ((122, 143, 115, 136, 157, 129, 150) if accidental == 1
-                  else (150, 129, 157, 136, 164, 143, 171))
+    expected_y = ((60, 93, 49, 82, 115, 71, 104) if accidental == 1
+                  else (104, 71, 115, 82, 126, 93, 137))
     for index, mark in enumerate(marks):
         assert mark.attrib['data-accidental'] == str(accidental)
-        y = expected_y[index] + (98 if clef == 'bass' else 0)
-        assert mark.attrib['transform'] == f'translate({1078 + index * 14} {y})'
+        y = expected_y[index] + (154 if clef == 'bass' else 0)
+        assert mark.attrib['transform'] == f'translate({94 + index * 14} {y})'
         assert mark.find('path') is not None  # No music-font fallback needed.
     notes = root.findall('.//g[@data-midi]/circle')
     xs = [float(note.attrib['cx']) for note in notes]
-    assert min(xs) == 1090 + len(letters) * 14
-    assert max(xs) == 1536
+    assert set(xs) == {214, 238}
     if marks:
-        assert min(xs) - 15 > 1078 + (len(marks) - 1) * 14 + 7
+        assert min(xs) - 15 > 94 + (len(marks) - 1) * 14 + 7
 
 
 def test_signature_rejects_unknown_clef() -> None:
@@ -229,7 +231,7 @@ def test_compact_staff_uses_shared_middle_c_coordinate() -> None:
 def test_compact_layout_has_black_white_keys_with_colored_dots() -> None:
     config = settings()
     root = ET.fromstring(render_svg(config, ("M0 0", "M0 0")))
-    assert root.attrib["viewBox"] == "0 0 1600 696"
+    assert root.attrib["viewBox"] == "0 0 1600 576"
     for node in root.findall('.//{*}g[@data-degree]'):
         labels = node.findall('{*}text')
         assert len(labels) == 1
@@ -240,7 +242,7 @@ def test_compact_layout_has_black_white_keys_with_colored_dots() -> None:
         if node.attrib.get("id", "").startswith("key-"):
             keys = node.findall('{*}rect')
             assert len(keys) == 1
-            assert keys[0].attrib["fill"] == config.theme.panel
+            assert keys[0].attrib["fill"] == config.theme.white_key
             assert "opacity" not in keys[0].attrib
             circle = node.find('{*}circle')
             assert circle is not None
@@ -250,7 +252,7 @@ def test_compact_layout_has_black_white_keys_with_colored_dots() -> None:
     assert not any("说明" in value or "主音在" in value or "统一级数" in value for value in texts)
 
 
-def test_guitar_panels_have_three_columns_two_rows_and_no_titles() -> None:
+def test_guitar_panels_have_two_above_four_below_and_no_titles() -> None:
     config = settings()
     origins: list[tuple[float, float]] = []
     for panel, string in enumerate((5, 4, 3, 2, 1, 0)):
@@ -263,10 +265,10 @@ def test_guitar_panels_have_three_columns_two_rows_and_no_titles() -> None:
             x, y = float(circle.attrib['cx']), float(circle.attrib['cy'])
             radius = float(circle.attrib['r'])
             left, top = origins[-1]
-            assert left <= x - radius < x + radius <= left + 512
+            assert left <= x - radius < x + radius <= left + 380
             assert top <= y - radius < y + radius <= top + 208
-    assert origins == [(16, 300), (544, 300), (1072, 300),
-                       (16, 524), (544, 524), (1072, 524)]
+    assert origins == [(808, 72), (1204, 72), (16, 352),
+                       (412, 352), (808, 352), (1204, 352)]
 
 
 @pytest.mark.parametrize("accidental,label,weight", [
@@ -391,7 +393,7 @@ def test_every_key_transposes_all_views_and_block_intervals() -> None:
             key_rect = node.find('{*}rect')
             assert key_rect is not None
             assert key_rect.attrib['fill'] == (config.theme.black_key if node.attrib['data-black'] == 'true'
-                                               else config.theme.panel)
+                                               else config.theme.white_key)
 
 
 def test_overview_is_four_by_three_with_unique_ids_and_g_flat() -> None:
@@ -400,7 +402,7 @@ def test_overview_is_four_by_three_with_unique_ids_and_g_flat() -> None:
     assert [node.attrib['data-key'] for node in keys] == [
         'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B',
     ]
-    assert root.attrib['viewBox'] == '0 0 6480 2152'
+    assert root.attrib['viewBox'] == '0 0 6480 1792'
     ids = [node.attrib['id'] for node in root.iter() if 'id' in node.attrib]
     assert len(ids) == len(set(ids))
     assert len(root.findall('.//*[@data-anchor="true"]')) == 72
@@ -408,13 +410,98 @@ def test_overview_is_four_by_three_with_unique_ids_and_g_flat() -> None:
     assert len({node.attrib['transform'].split()[0] for node in keys}) == 4
 
 
+@pytest.mark.parametrize('theme', ['light', 'dark'])
 @pytest.mark.parametrize('mode', ['--all-keys', '--stacked'])
-def test_overview_cli(tmp_path: Path, mode: str) -> None:
+def test_overview_cli(tmp_path: Path, mode: str, theme: str) -> None:
     output = tmp_path / 'all.svg'
     result = subprocess.run([sys.executable, 'scripts/render_key_atlas.py', mode,
-                             '--output', str(output)], capture_output=True, text=True, check=False)
+                             '--theme', theme, '--output', str(output)],
+                            capture_output=True, text=True, check=False)
     assert result.returncode == 0, result.stderr
     assert len(ET.parse(output).getroot().findall('.//{*}g[@data-key]')) == 12
+    background = ET.parse(output).getroot().find('{*}rect')
+    assert background is not None and background.attrib['fill'] == settings(theme).theme.paper
+
+
+@pytest.mark.parametrize('theme', ['light', 'dark'])
+@pytest.mark.parametrize('first,last', [(41, 84), (36, 84), (59, 60)])
+def test_staff_notes_alternate_without_overlap_or_clipping(theme: str, first: int, last: int) -> None:
+    base = replace(settings(theme), first_midi=first, last_midi=last)
+    for key in base.overview.keys:
+        config = transpose_settings(base, key)
+        root = ET.fromstring('<svg>' + ''.join(staff_svg(config, ('M0 0', 'M0 0'))) + '</svg>')
+        groups = root.findall('.//g[@data-midi]')
+        assert len(groups) == len(key.notes(first, last))
+        dots: list[tuple[float, float, float]] = []
+        for group in groups:
+            circle = group.find('circle')
+            assert circle is not None
+            x, y, radius = (float(circle.attrib[attr]) for attr in ('cx', 'cy', 'r'))
+            note = key.note(int(group.attrib['data-midi']))
+            assert note is not None
+            assert x == 214 + note.staff_step() % 2 * 24
+            assert y == 16 + (42 - note.staff_step()) * 11
+            assert 0 <= y - radius < y + radius < 352
+            assert 32 < x - radius < x + radius < 278
+            dots.append((x, y, radius))
+        for (x1, y1, r1), (x2, y2, r2) in combinations(dots, 2):
+            assert hypot(x1 - x2, y1 - y2) > r1 + r2
+        # No later ledger line may overwrite an already painted note dot.
+        painted: list[tuple[float, float, float]] = []
+        for element in root:
+            if element.tag == 'g' and 'data-midi' in element.attrib:
+                dot = element.find('circle')
+                assert dot is not None
+                painted.append(tuple(float(dot.attrib[attr]) for attr in ('cx', 'cy', 'r')))
+            if element.tag == 'line' and element.attrib['y1'] == element.attrib['y2']:
+                x1, x2, y = (float(element.attrib[attr]) for attr in ('x1', 'x2', 'y1'))
+                assert all(hypot(x - min(max(x, x1), x2), cy - y) > radius
+                           for x, cy, radius in painted)
+
+
+@pytest.mark.parametrize('theme', ['light', 'dark'])
+def test_theme_lines_labels_and_physical_keys(theme: str) -> None:
+    base = settings(theme)
+    expected_line = '#000000' if theme == 'light' else '#FFFFFF'
+    assert base.theme.line == expected_line
+    assert base.theme.paper == base.theme.panel == ('#FFFFFF' if theme == 'light' else '#000000')
+    assert len(set(base.colors)) == 4
+    assert base.colors[1] == base.colors[2]
+    assert base.colors[3] == base.colors[4]
+    assert base.colors[5] == base.colors[6]
+    for key in base.overview.keys:
+        config = transpose_settings(base, key)
+        root = ET.fromstring(render_svg(config, ('M0 0', 'M0 0')))
+        assert all(node.attrib['stroke'] == expected_line for node in root.findall('.//{*}line'))
+        for node in root.findall('.//{*}g[@data-degree]'):
+            note = key.note(int(node.attrib['data-midi']))
+            assert note is not None
+            assert node.attrib['data-color'] == config.colors[note.degree]
+            label = node.find('{*}text')
+            assert label is not None
+            assert label.text == note.letter + {-1: '♭', 0: '', 1: '♯'}[note.accidental]
+        keys = root.findall('.//{*}g[@data-black]')
+        assert len(keys) == config.last_midi - config.first_midi + 1
+        for node in keys:
+            body = node.find('{*}rect')
+            assert body is not None
+            assert body.attrib['fill'] == (config.theme.black_key if node.attrib['data-black'] == 'true'
+                                            else '#FFFFFF')
+
+
+def test_dark_palette_is_brighter_without_changing_hue_groups() -> None:
+    from colorsys import rgb_to_hsv
+
+    for light, dark in zip(settings().colors, settings('dark').colors, strict=True):
+        l_hue, _, l_value = rgb_to_hsv(*(int(light[i:i + 2], 16) / 255 for i in (1, 3, 5)))
+        d_hue, _, d_value = rgb_to_hsv(*(int(dark[i:i + 2], 16) / 255 for i in (1, 3, 5)))
+        assert abs(l_hue - d_hue) < 0.025
+        assert d_value > l_value
+
+
+def test_reject_unknown_theme() -> None:
+    with pytest.raises(ValueError, match='Theme must be light or dark'):
+        settings('sepia')
 
 
 def test_side_dots_are_below_strings_in_all_keys() -> None:
@@ -438,12 +525,12 @@ def test_mobile_has_same_twelve_tiles_stacked_without_footer() -> None:
     base = settings()
     grid = ET.fromstring(render_overview(base, ('M0 0', 'M0 0')))
     mobile = ET.fromstring(render_overview(base, ('M0 0', 'M0 0'), stacked=True))
-    assert mobile.attrib['viewBox'] == '0 0 1632 8560'
+    assert mobile.attrib['viewBox'] == '0 0 1632 7120'
     grid_tiles = grid.findall('.//{*}g[@data-key]')
     mobile_tiles = mobile.findall('.//{*}g[@data-key]')
     assert len(grid_tiles) == len(mobile_tiles) == 12
     for index, (grid_tile, mobile_tile) in enumerate(zip(grid_tiles, mobile_tiles)):
-        assert mobile_tile.attrib['transform'] == f'translate(16 {16 + index * 712})'
+        assert mobile_tile.attrib['transform'] == f'translate(16 {16 + index * 592})'
         assert grid_tile.attrib['data-key'] == mobile_tile.attrib['data-key']
         assert [ET.tostring(child) for child in grid_tile] == [
             ET.tostring(child) for child in mobile_tile
@@ -454,7 +541,7 @@ def test_mobile_has_same_twelve_tiles_stacked_without_footer() -> None:
             assert tile.findall('{*}circle') == []
             content = tile.find('{*}g')
             assert content is not None
-            assert content.attrib['transform'] == 'translate(0 -52)'
+            assert 'transform' not in content.attrib
             assert content.findall('.//*[@data-degree]')
         outer_group = root.find('{*}g')
         assert outer_group is not None

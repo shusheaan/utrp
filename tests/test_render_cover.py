@@ -207,7 +207,7 @@ def test_atlas_tiles_have_six_seven_fret_windows_and_unique_ids(path: Path) -> N
             assert frets <= set(range(first, first + 7))
             panel_svg = ET.fromstring('<svg>' + ''.join(
                 atlas.guitar_svg(settings, panel, anchor_string)) + '</svg>')
-            label_y = str(300 + (panel // 3) * 224 + 32 - 19)
+            label_y = str((72 if panel < 2 else 352) + 32 - 19)
             labels = panel_svg.findall(f".//text[@y='{label_y}']")
             assert [int(label.text) for label in labels] == list(range(first, first + 7))
         selected = [node for node in notes if node.attrib['data-anchor'] == 'true']
@@ -224,7 +224,7 @@ def test_inlays_are_below_boards_and_twelfth_fret_is_horizontal_pair() -> None:
     for panel, anchor_string in enumerate((5, 4, 3, 2, 1, 0)):
         root = ET.fromstring('<svg>' + ''.join(atlas.guitar_svg(settings, panel, anchor_string)) + '</svg>')
         dots = root.findall('.//circle[@data-inlay-fret]')
-        bottom = 300 + (panel // 3) * 224 + 32 + 150
+        bottom = (72 if panel < 2 else 352) + 32 + 150
         assert all(float(dot.attrib['cy']) > bottom for dot in dots)
         first = settings.anchor_frets[anchor_string] - 2
         for fret in range(first, first + 7):

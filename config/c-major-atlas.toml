@@ -34,3 +34,18 @@ muted = "#70808B"
 line = "#000000"
 inlay_radius = 4
 black_key = "#26313B"
+white_key = "#FFFFFF"
+
+[dark]
+# Same degree groups and hues; brighter fills on black, retaining white labels.
+colors = ["#E0444E", "#309E59", "#309E59", "#EF777A", "#EF777A", "#4775F0", "#4775F0"]
+
+[dark.theme]
+paper = "#000000"
+panel = "#000000"
+ink = "#FFFFFF"
+muted = "#B8C1CC"
+line = "#FFFFFF"
+inlay_radius = 4
+black_key = "#26313B"
+white_key = "#FFFFFF"
