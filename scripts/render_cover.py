@@ -247,7 +247,7 @@ def atlas_settings(card: Card, style: Style) -> atlas.Settings:
 
 def atlas_tile(card: Card, index: int, style: Style, clefs: tuple[str, str]) -> str:
     settings = atlas_settings(card, style)
-    markup = "\n".join(atlas.tile_parts(settings, clefs))
+    markup = "\n".join(atlas.tile_parts(settings, clefs, local_windows=True))
     # Each card reuses the exact atlas tile; namespace its keyboard/staff IDs.
     markup = re.sub(r'\bid="([^"]+)"', lambda match: f'id="card{index}-{match[1]}"', markup)
     return '<g transform="translate(0 100)">' + markup + '</g>'

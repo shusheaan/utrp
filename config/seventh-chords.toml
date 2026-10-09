@@ -1,0 +1,33 @@
+atlas_config = "c-major-atlas.toml"
+roots = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"]
+guitar_keys = ["G"]
+diminished_root = "C"
+margin = 24
+gap = 24
+keyboard_card_height = 244
+guitar_card_height = 232
+
+[[chords]]
+name = "大七"
+suffix = "maj7"
+intervals = [0, 4, 7, 11]
+
+[[chords]]
+name = "小七"
+suffix = "m7"
+intervals = [0, 3, 7, 10]
+
+[[chords]]
+name = "属七"
+suffix = "7"
+intervals = [0, 4, 7, 10]
+
+[[chords]]
+name = "半减七"
+suffix = "m7♭5"
+intervals = [0, 3, 6, 10]
+
+[[chords]]
+name = "全减七"
+suffix = "dim7"
+intervals = [0, 3, 6, 9]

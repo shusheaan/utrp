@@ -161,14 +161,59 @@ def test_standard_fret_inlays(fret: int, count: int) -> None:
         assert [float(mark.attrib["cx"]) for mark in marks] == [70, 130]
 
 
-def test_inlays_render_in_all_visible_fret_windows() -> None:
+def test_inlays_render_once_on_continuous_fretboard() -> None:
     config = settings()
     root = ET.fromstring(render_svg(config, ("M0 0", "M0 0")))
-    windows = [range(fret - config.frets_before_anchor, fret + config.frets_after_anchor + 1)
-               for fret in config.anchor_frets]
     expected = sum(len(fret_inlays(0, 0, 1, fret, config.theme.line, config.theme.inlay_radius))
-                   for window in windows for fret in window)
+                   for fret in range(config.first_fret, config.last_fret + 1))
     assert len(root.findall('.//*[@data-inlay-fret]')) == expected
+
+
+@pytest.mark.parametrize('theme', ['light', 'dark'])
+def test_full_fretboard_has_all_seventeen_frets_without_duplicates_or_clipping(theme: str) -> None:
+    base = settings(theme)
+    assert (base.first_fret, base.last_fret) == (1, 17)
+    for key in base.overview.keys:
+        config = transpose_settings(base, key)
+        root = ET.fromstring(render_svg(config, ('M0 0', 'M0 0')))
+        boards = root.findall('.//{*}g[@data-fretboard="full"]')
+        assert len(boards) == 1
+        board = boards[0]
+        assert [node.text for node in board.findall('{*}text')][:17] == [
+            str(fret) for fret in range(1, 18)
+        ]
+        lines = board.findall('{*}line')
+        assert sum(node.attrib['x1'] == node.attrib['x2'] for node in lines) == 18
+        keyboard = root.find('.//{*}rect[@data-keyboard="true"]')
+        assert keyboard is not None
+        left = float(keyboard.attrib['x'])
+        width = float(keyboard.attrib['width'])
+        assert 504 < width < 970
+        assert config.canvas_width == 1040
+        strings = [line for line in lines if line.attrib['y1'] == line.attrib['y2']]
+        assert len(strings) == 6
+        assert all(float(line.attrib['x1']) == 56 < left
+                   and float(line.attrib['x2']) == left + width for line in strings)
+        assert float(strings[0].attrib['x2']) - float(strings[0].attrib['x1']) > width
+        notes = board.findall('{*}g[@data-fret]')
+        actual = [(int(node.attrib['data-string']), int(node.attrib['data-fret']),
+                   int(node.attrib['data-midi'])) for node in notes]
+        expected = {(row + 1, fret, pitch + fret) for row, pitch in enumerate(config.tuning)
+                    for fret in range(1, 18) if (pitch + fret) % 12 in key.pitch_classes}
+        assert len(actual) == len(set(actual))
+        assert set(actual) == expected
+        assert len(root.findall('.//{*}g[@data-panel]')) == len(notes)
+        dots: list[tuple[float, float, float]] = []
+        for node in notes:
+            circles = node.findall('{*}circle')
+            x, y, radius = (float(circles[0].attrib[attr]) for attr in ('cx', 'cy', 'r'))
+            assert 16 <= x - radius < x + radius <= config.canvas_width - 16
+            assert 352 <= y - radius < y + radius <= 560
+            dots.append((x, y, radius))
+        for (x1, y1, r1), (x2, y2, r2) in combinations(dots, 2):
+            assert hypot(x1 - x2, y1 - y2) > r1 + r2
+        assert all(float(mark.attrib['cy']) - float(mark.attrib['r']) > 534
+                   for mark in board.findall('{*}circle[@data-inlay-fret]'))
 
 
 def test_staff_and_guitar_background_lines_and_inlays_are_black() -> None:
@@ -231,7 +276,7 @@ def test_compact_staff_uses_shared_middle_c_coordinate() -> None:
 def test_compact_layout_has_black_white_keys_with_colored_dots() -> None:
     config = settings()
     root = ET.fromstring(render_svg(config, ("M0 0", "M0 0")))
-    assert root.attrib["viewBox"] == "0 0 1600 576"
+    assert root.attrib["viewBox"] == "0 0 1040 576"
     for node in root.findall('.//{*}g[@data-degree]'):
         labels = node.findall('{*}text')
         assert len(labels) == 1
@@ -300,6 +345,10 @@ def test_reject_invalid_block_placement(block: dict[str, int]) -> None:
     ("colors", ["#ffffff"] * 6), ("colors", ["invalid"] * 7),
     ("anchor_frets", [0] * 6),
     ("frets_before_anchor", 5), ("tuning", [40]),
+    ("first_fret", 0), ("first_fret", True), ("first_fret", 20),
+    ("first_fret", 21), ("last_fret", 1), ("last_fret", 25),
+    ("first_fret", 17), ("canvas_width", True), ("canvas_width", 959),
+    ("canvas_width", 2401),
 ])
 def test_reject_bad_config(field: str, value: object) -> None:
     with Path("config/c-major-atlas.toml").open("rb") as stream:
@@ -380,7 +429,9 @@ def test_every_key_transposes_all_views_and_block_intervals() -> None:
         staff = {int(node.attrib['data-midi']) for node in root.findall('.//{*}g')
                  if node.attrib.get('id', '').startswith('note-')}
         assert keyboard == staff == expected
-        assert len(root.findall('.//*[@data-anchor="true"]')) == 6
+        assert len(root.findall('.//*[@data-anchor="true"]')) == sum(
+            config.first_fret <= fret <= config.last_fret for fret in config.anchor_frets
+        )
         for node in root.findall('.//{*}g[@data-degree]'):
             note = key.note(int(node.attrib['data-midi']))
             assert note is not None
@@ -402,10 +453,14 @@ def test_overview_is_four_by_three_with_unique_ids_and_g_flat() -> None:
     assert [node.attrib['data-key'] for node in keys] == [
         'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B',
     ]
-    assert root.attrib['viewBox'] == '0 0 6480 1792'
+    assert root.attrib['viewBox'] == '0 0 4240 1792'
     ids = [node.attrib['id'] for node in root.iter() if 'id' in node.attrib]
     assert len(ids) == len(set(ids))
-    assert len(root.findall('.//*[@data-anchor="true"]')) == 72
+    assert len(root.findall('.//*[@data-anchor="true"]')) == sum(
+        base.first_fret <= fret <= base.last_fret
+        for base in (transpose_settings(settings(), key) for key in settings().overview.keys)
+        for fret in base.anchor_frets
+    )
     assert root.findall('.//*[@data-block]') == []
     assert len({node.attrib['transform'].split()[0] for node in keys}) == 4
 
@@ -462,6 +517,8 @@ def test_staff_notes_alternate_without_overlap_or_clipping(theme: str, first: in
 @pytest.mark.parametrize('theme', ['light', 'dark'])
 def test_theme_lines_labels_and_physical_keys(theme: str) -> None:
     base = settings(theme)
+    assert base.theme.white_key == ('#FFFFFF' if theme == 'light' else '#000000')
+    assert base.theme.black_key == ('#26313B' if theme == 'light' else '#FFFFFF')
     expected_line = '#000000' if theme == 'light' else '#FFFFFF'
     assert base.theme.line == expected_line
     assert base.theme.paper == base.theme.panel == ('#FFFFFF' if theme == 'light' else '#000000')
@@ -486,7 +543,7 @@ def test_theme_lines_labels_and_physical_keys(theme: str) -> None:
             body = node.find('{*}rect')
             assert body is not None
             assert body.attrib['fill'] == (config.theme.black_key if node.attrib['data-black'] == 'true'
-                                            else '#FFFFFF')
+                                            else config.theme.white_key)
 
 
 def test_dark_palette_is_brighter_without_changing_hue_groups() -> None:
@@ -525,7 +582,7 @@ def test_mobile_has_same_twelve_tiles_stacked_without_footer() -> None:
     base = settings()
     grid = ET.fromstring(render_overview(base, ('M0 0', 'M0 0')))
     mobile = ET.fromstring(render_overview(base, ('M0 0', 'M0 0'), stacked=True))
-    assert mobile.attrib['viewBox'] == '0 0 1632 7120'
+    assert mobile.attrib['viewBox'] == '0 0 1072 7120'
     grid_tiles = grid.findall('.//{*}g[@data-key]')
     mobile_tiles = mobile.findall('.//{*}g[@data-key]')
     assert len(grid_tiles) == len(mobile_tiles) == 12

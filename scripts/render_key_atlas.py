@@ -109,6 +109,9 @@ class Settings:
     anchor_frets: tuple[int, ...]
     frets_before_anchor: int
     frets_after_anchor: int
+    first_fret: int
+    last_fret: int
+    canvas_width: int
     first_midi: int
     last_midi: int
     blocks: Blocks
@@ -180,6 +183,10 @@ def parse_settings(raw: dict[str, object], base: Path, *, theme_name: str = "lig
         raise ValueError("Every guitar anchor must match the key tonic")
     if any(fret - before < 0 or fret + after > 24 for fret in anchors):
         raise ValueError("A guitar window falls outside frets 0–24")
+    first_fret = bounded_integer(raw["first_fret"], 1, 23)
+    last_fret = bounded_integer(raw["last_fret"], 2, 24)
+    if first_fret >= last_fret:
+        raise ValueError("The full fretboard must span at least two frets")
     first = bounded_integer(raw["first_midi"], 36, 59)
     last = bounded_integer(raw["last_midi"], 60, 84)
     if Note.from_midi(first).sharp or Note.from_midi(last).sharp:
@@ -190,7 +197,8 @@ def parse_settings(raw: dict[str, object], base: Path, *, theme_name: str = "lig
                     Theme(*(color(table[key]) for key in
                             ("paper", "panel", "ink", "muted", "line", "black_key", "white_key")),
                           inlay_radius=bounded_integer(table["inlay_radius"], 1, 4)),
-                    tuning, anchors, before, after, first, last,
+                    tuning, anchors, before, after, first_fret, last_fret,
+                    bounded_integer(raw["canvas_width"], 960, 2400), first, last,
                     parse_blocks(raw["blocks"], tuning, key), key,
                     parse_overview(raw["overview"]))
 
@@ -293,12 +301,14 @@ def line(x1: float, y1: float, x2: float, y2: float, stroke: str,
             f'stroke="{stroke}" stroke-width="{width:g}"/>')
 
 
-def keyboard_svg(settings: Settings) -> list[str]:
+def keyboard_svg(settings: Settings, *, full_width: bool = False) -> list[str]:
     t = settings.theme
     first = Note.from_midi(settings.first_midi)
     whites = scale_notes(settings.first_midi, settings.last_midi)
-    width = 492 / len(whites)
-    parts = [rect(278, 76, 504, 192, t.black_key, 6)]
+    outer_width = settings.canvas_width - 310 if full_width else 504
+    width = (outer_width - 12) / len(whites)
+    parts = [rect(278, 76, outer_width, 192, t.black_key, 6,
+                  'data-keyboard="true"')]
     for black in (False, True):
         for midi in range(settings.first_midi, settings.last_midi + 1):
             physical = Note.from_midi(midi)
@@ -447,15 +457,27 @@ def fret_inlays(x: float, side_y: float, double_offset: float,
 
 
 def guitar_svg(settings: Settings, panel: int, anchor_string: int) -> list[str]:
-    t = settings.theme
     left, top = (808 + panel * 396, 72) if panel < 2 else (16 + (panel - 2) * 396, 352)
     anchor = settings.anchor_frets[anchor_string]
     first = anchor - settings.frets_before_anchor
     last = anchor + settings.frets_after_anchor
+    return fretboard_svg(settings, first, last, left, top, 324, panel, anchor_string)
+
+
+def full_guitar_svg(settings: Settings) -> list[str]:
+    """One uninterrupted neck, with each string/fret represented exactly once."""
+    return ['<g data-fretboard="full">',
+            *fretboard_svg(settings, settings.first_fret, settings.last_fret,
+                           16, 352, settings.canvas_width - 88, 0, None), '</g>']
+
+
+def fretboard_svg(settings: Settings, first: int, last: int, left: int, top: int,
+                  board_width: int, panel: int, anchor_string: int | None) -> list[str]:
+    t = settings.theme
     grid_x, grid_y = left + 40, top + 32
     columns = last - first + 1
-    width = 324 / columns
-    parts = [rect(left, top, 380, 208, t.panel, 10)]
+    width = board_width / columns
+    parts = [rect(left, top, board_width + 56, 208, t.panel, 10)]
     for fret in range(first, last + 1):
         x = grid_x + (fret - first + 0.5) * width
         parts.append(text(x, grid_y - 19, str(fret), 12, t.muted, "middle"))
@@ -466,19 +488,23 @@ def guitar_svg(settings: Settings, panel: int, anchor_string: int) -> list[str]:
         parts.append(line(x, grid_y, x, grid_y + 150, t.line))
     for row in range(len(settings.tuning)):
         y = grid_y + row * 30
-        parts.append(line(grid_x, y, grid_x + 324, y, t.line, 1 + row * 0.16))
+        parts.append(line(grid_x, y, grid_x + board_width, y, t.line, 1 + row * 0.16))
         parts.append(text(left + 24, y + 4, str(row + 1), 12, t.muted, "end"))
-    for row, fret, note in guitar_positions(settings, anchor_string):
+    positions = ((row, fret, note) for row, pitch in enumerate(settings.tuning)
+                 for fret in range(first, last + 1)
+                 if (note := settings.key.note(pitch + fret)) is not None)
+    for row, fret, note in positions:
         x = grid_x + (fret - first + 0.5) * width
         y = grid_y + row * 30
         fill = settings.colors[note.degree]
-        selected = row == anchor_string and fret == anchor
+        selected = (anchor_string is None or row == anchor_string) and fret == settings.anchor_frets[row]
         parts.append(f'<g data-panel="{panel}" data-string="{row + 1}" data-fret="{fret}" '
                      f'data-midi="{note.midi}" data-degree="{note.degree + 1}" '
                      f'data-anchor="{str(selected).lower()}" data-color="{fill}">'
                      f'<title>{note.name()}</title>')
         if selected:
-            parts.append(f'<circle cx="{x:g}" cy="{y:g}" r="18" fill="{t.panel}" '
+            radius = 15 if anchor_string is None else 18
+            parts.append(f'<circle cx="{x:g}" cy="{y:g}" r="{radius}" fill="{t.panel}" '
                          f'stroke="{fill}" stroke-width="2"/>')
         parts.append(f'<circle cx="{x:g}" cy="{y:g}" r="13" fill="{fill}"/>')
         parts.append(pitch_label(x, y + 5, note.letter, note.accidental, 15))
@@ -525,12 +551,15 @@ def blocks_svg(settings: Settings) -> list[str]:
     return parts
 
 
-def tile_parts(settings: Settings, clefs: tuple[str, str]) -> list[str]:
+def tile_parts(settings: Settings, clefs: tuple[str, str], *, local_windows: bool = False) -> list[str]:
     parts = [f'<g font-family="{escape(settings.text_font, quote=True)}">']
     parts.extend(staff_svg(settings, clefs))
-    parts.extend(keyboard_svg(settings))
-    for panel, anchor_string in enumerate((5, 4, 3, 2, 1, 0)):
-        parts.extend(guitar_svg(settings, panel, anchor_string))
+    parts.extend(keyboard_svg(settings, full_width=not local_windows))
+    if local_windows:
+        for panel, anchor_string in enumerate((5, 4, 3, 2, 1, 0)):
+            parts.extend(guitar_svg(settings, panel, anchor_string))
+    else:
+        parts.extend(full_guitar_svg(settings))
     parts.append('</g>')
     return parts
 
@@ -546,14 +575,14 @@ def svg_start(width: int, height: int, title: str, paper: str) -> list[str]:
 
 
 def render_svg(settings: Settings, clefs: tuple[str, str]) -> str:
-    parts = svg_start(1600, 576, settings.title, settings.theme.paper)
+    parts = svg_start(settings.canvas_width, 576, settings.title, settings.theme.paper)
     parts.extend(tile_parts(settings, clefs))
     return '\n'.join(parts + ['</svg>']) + '\n'
 
 
 def render_overview(settings: Settings, clefs: tuple[str, str], *, stacked: bool = False) -> str:
     overview = replace(settings.overview, columns=1, rows=12) if stacked else settings.overview
-    tile_width, tile_height = 1600, 576
+    tile_width, tile_height = settings.canvas_width, 576
     width = overview.columns * tile_width + (overview.columns + 1) * overview.gap
     height = overview.rows * tile_height + (overview.rows + 1) * overview.gap
     parts = svg_start(width, height, '十二大调 · 钢琴 / 五线谱 / 吉他', settings.theme.paper)
