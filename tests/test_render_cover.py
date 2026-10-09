@@ -12,7 +12,7 @@ import pytest
 
 from scripts.render_cover import (
     Card, Song, Style, atlas, atlas_settings, load_style, melody_staff, midi_note,
-    note_color, parse_card, parse_song, parse_style, pitch_class, position_midi, render_svg,
+    note_color, parse_card, parse_song, parse_style, pitch_class, position_midi, render_svg, visible_anchor,
 )
 
 
@@ -112,13 +112,14 @@ def test_invalid_melody(field: str, value: object) -> None:
         parse_card(raw, style())
 
 
-def test_chord_color_is_relative_to_chord_not_song() -> None:
+def test_cover_palette_matches_shared_atlas() -> None:
     config = style()
     card = parse_card(chord_data(), config)
-    assert note_color(0, card, config) == config.root
-    assert note_color(4, card, config) == config.third
-    assert note_color(7, card, config) == config.fifth
-    assert note_color(11, card, config) == config.seventh
+    settings = atlas_settings(card, config)
+    assert settings.colors == config.atlas.colors
+    assert settings.theme == config.atlas.theme
+    for degree, pc in enumerate(settings.key.pitch_classes):
+        assert note_color(pc, card, config) == config.atlas.colors[degree]
 
 
 @pytest.mark.parametrize("path", sorted(Path("covers").rglob("*.toml")))
@@ -135,6 +136,7 @@ def test_six_cards_and_exact_melody_positions(path: Path) -> None:
              if node.attrib["id"].startswith("card-")]
     assert len(cards) == len(loaded.cards)
     assert root.attrib["height"] == str(420 + 1030 * len(loaded.cards))
+    assert root.attrib["width"] == str(config.atlas.canvas_width) == "1040"
     for suffix in (".md", ".png", ".toml"):
         assert path.with_suffix(suffix).is_file()
     assert path.with_suffix(".png").read_bytes().startswith(b"\x89PNG\r\n\x1a\n")
@@ -187,7 +189,7 @@ def test_cli_preserves_existing_output(tmp_path: Path) -> None:
 
 
 @pytest.mark.parametrize('path', sorted(Path('covers').rglob('*.toml')))
-def test_atlas_tiles_have_six_seven_fret_windows_and_unique_ids(path: Path) -> None:
+def test_atlas_tiles_have_one_complete_neck_and_shared_colors(path: Path) -> None:
     config, loaded = style(), song(path)
     root = ET.fromstring(render_svg(loaded, config, clefs()))
     ids = [node.attrib['id'] for node in root.iter() if 'id' in node.attrib]
@@ -195,49 +197,58 @@ def test_atlas_tiles_have_six_seven_fret_windows_and_unique_ids(path: Path) -> N
     ns = {'s': 'http://www.w3.org/2000/svg'}
     for index, card in enumerate(loaded.cards, 1):
         settings = atlas_settings(card, config)
-        assert settings.frets_before_anchor + settings.frets_after_anchor + 1 == 7
         group = root.find(f".//s:g[@id='card-{index}']", ns)
         assert group is not None
+        boards = group.findall(".//s:g[@data-fretboard='full']", ns)
+        assert len(boards) == 1
         notes = group.findall('.//s:g[@data-panel]', ns)
-        assert {int(node.attrib['data-panel']) for node in notes} == set(range(6))
-        for panel, anchor_string in enumerate((5, 4, 3, 2, 1, 0)):
-            first = settings.anchor_frets[anchor_string] - 2
-            frets = {int(node.attrib['data-fret']) for node in notes
-                     if int(node.attrib['data-panel']) == panel}
-            assert frets <= set(range(first, first + 7))
-            panel_svg = ET.fromstring('<svg>' + ''.join(
-                atlas.guitar_svg(settings, panel, anchor_string)) + '</svg>')
-            label_y = str((72 if panel < 2 else 352) + 32 - 19)
-            labels = panel_svg.findall(f".//text[@y='{label_y}']")
-            assert [int(label.text) for label in labels] == list(range(first, first + 7))
+        assert {node.attrib['data-panel'] for node in notes} == {'0'}
+        positions = [(int(node.attrib['data-string']), int(node.attrib['data-fret']))
+                     for node in notes]
+        expected = {(row + 1, fret) for row, pitch in enumerate(settings.tuning)
+                    for fret in range(settings.first_fret, settings.last_fret + 1)
+                    if settings.key.note(pitch + fret) is not None}
+        assert len(positions) == len(set(positions))
+        assert set(positions) == expected
         selected = [node for node in notes if node.attrib['data-anchor'] == 'true']
         assert len(selected) == 6
-        assert len({int(node.attrib['data-fret']) for node in selected}) >= 4
+        assert {(int(node.attrib['data-string']), int(node.attrib['data-fret']))
+                for node in selected} == set(enumerate(settings.anchor_frets, 1))
+        for position in card.positions:
+            assert ('eBGDAE'.index(position[0]) + 1, int(position[1:])) in expected
+        for node in group.findall('.//*[@data-degree]'):
+            assert node.attrib['data-color'] == config.atlas.colors[int(node.attrib['data-degree']) - 1]
         assert group.find(f".//s:path[@id='card{index}-treble-clef']", ns) is not None
         assert group.find(f".//s:path[@id='card{index}-bass-clef']", ns) is not None
+        keyboard = group.find(".//s:rect[@data-keyboard='true']", ns)
+        assert keyboard is not None
+        right = float(keyboard.attrib['x']) + float(keyboard.attrib['width'])
+        strings = boards[0].findall('.//s:line', ns)
+        horizontal = [line for line in strings if line.attrib['y1'] == line.attrib['y2']]
+        assert len(horizontal) == 6
+        assert all(float(line.attrib['x2']) == right for line in horizontal)
+        assert min(float(line.attrib['y1']) for line in horizontal) > (
+            float(keyboard.attrib['y']) + float(keyboard.attrib['height']))
 
 
-def test_inlays_are_below_boards_and_twelfth_fret_is_horizontal_pair() -> None:
+def test_inlays_are_below_full_board_and_twelfth_fret_is_horizontal_pair() -> None:
     config = style()
     card = parse_card(chord_data(), config)
     settings = atlas_settings(card, config)
-    for panel, anchor_string in enumerate((5, 4, 3, 2, 1, 0)):
-        root = ET.fromstring('<svg>' + ''.join(atlas.guitar_svg(settings, panel, anchor_string)) + '</svg>')
-        dots = root.findall('.//circle[@data-inlay-fret]')
-        bottom = (72 if panel < 2 else 352) + 32 + 150
-        assert all(float(dot.attrib['cy']) > bottom for dot in dots)
-        first = settings.anchor_frets[anchor_string] - 2
-        for fret in range(first, first + 7):
-            matching = [dot for dot in dots if int(dot.attrib['data-inlay-fret']) == fret]
-            assert len(matching) == (2 if fret == 12 else int(fret in (3, 5, 7, 9, 15, 17, 19, 21)))
-            if len(matching) == 2:
-                assert matching[0].attrib['cy'] == matching[1].attrib['cy']
-                assert matching[0].attrib['cx'] != matching[1].attrib['cx']
+    root = ET.fromstring('<svg>' + ''.join(atlas.full_guitar_svg(settings)) + '</svg>')
+    dots = root.findall('.//circle[@data-inlay-fret]')
+    assert all(float(dot.attrib['cy']) > 352 + 32 + 150 for dot in dots)
+    for fret in range(settings.first_fret, settings.last_fret + 1):
+        matching = [dot for dot in dots if int(dot.attrib['data-inlay-fret']) == fret]
+        assert len(matching) == (2 if fret == 12 else int(fret in (3, 5, 7, 9, 15, 17, 19, 21)))
+        if len(matching) == 2:
+            assert matching[0].attrib['cy'] == matching[1].attrib['cy']
+            assert matching[0].attrib['cx'] != matching[1].attrib['cx']
 
 
 def test_melody_staff_retains_order_repeats_and_actual_octaves() -> None:
     config = style()
-    loaded = song(Path('covers/A-major_F-sharp-minor/F-sharp-minor-pending--frank-ocean--unity.toml'))
+    loaded = song(Path('covers/F-sharp-minor-pending--frank-ocean--unity/F-sharp-minor-pending--frank-ocean--unity.toml'))
     card = loaded.cards[4]
     root = ET.fromstring('<svg>' + ''.join(melody_staff(card, config, clefs())) + '</svg>')
     notes = root.findall('.//g[@data-melody-index]')
@@ -262,13 +273,31 @@ def test_melody_notes_clear_caption_and_pitch_labels(path: Path) -> None:
             assert y + radius < 904
 
 
-def test_six_and_eight_fret_styles_are_rejected() -> None:
-    from dataclasses import replace
+@pytest.mark.parametrize('first,last', [(-1, 24), (0, 25), (12, 12), (24, 0), (True, 24)])
+def test_invalid_continuous_fret_ranges_are_rejected(first: object, last: object) -> None:
     with Path('config/cover-atlas.toml').open('rb') as stream:
         raw = tomllib.load(stream)
-    for after in (3, 5):
-        with pytest.raises(ValueError, match='exactly seven'):
-            parse_style(raw, replace(style().atlas, frets_after_anchor=after))
+    raw['guitar'] = {'first_fret': first, 'last_fret': last}
+    with pytest.raises(ValueError):
+        parse_style(raw, style().atlas)
+
+
+def test_anchors_outside_configured_neck_are_rejected() -> None:
+    from dataclasses import replace
+    config = style()
+    narrow = replace(config, atlas=replace(config.atlas, last_fret=5))
+    with pytest.raises(ValueError, match='Anchor pitch class falls outside'):
+        parse_card(chord_data(), narrow)
+
+
+def test_melody_outside_configured_neck_is_rejected() -> None:
+    from dataclasses import replace
+    config = style()
+    narrow = replace(config, atlas=replace(config.atlas, last_fret=12))
+    raw = melody_data()
+    raw['positions'] = ['D17', 'e5']
+    with pytest.raises(ValueError, match='Melody position falls outside'):
+        parse_card(raw, narrow)
 
 
 def test_different_position_same_pitch_is_accepted() -> None:
@@ -276,3 +305,24 @@ def test_different_position_same_pitch_is_accepted() -> None:
     raw['positions'] = ['e3', 'e5']
     parsed = parse_card(raw, style())
     assert parsed.positions == ('e3', 'e5')
+
+
+def test_seventeen_fret_layout_preserves_source_anchor_pitch_classes() -> None:
+    config = style()
+    assert (config.atlas.first_fret, config.atlas.last_fret) == (1, 17)
+    assert visible_anchor(18, 1, 17) == 6
+    for fret in range(25):
+        displayed = visible_anchor(fret, 1, 17)
+        assert 1 <= displayed <= 17
+        assert (displayed - fret) % 12 == 0
+        if 1 <= fret <= 17:
+            assert displayed == fret
+
+
+def test_outside_anchor_is_relocated_without_changing_card() -> None:
+    config = style()
+    raw = chord_data()
+    raw['anchor_frets'] = [20, 13, 5, 10, 3, 8]
+    card = parse_card(raw, config)
+    assert card.anchor_frets[0] == 20
+    assert atlas_settings(card, config).anchor_frets[0] == 8

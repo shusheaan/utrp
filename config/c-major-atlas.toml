@@ -13,7 +13,7 @@ tuning = [64, 59, 55, 50, 45, 40] # High e to low E, sounding MIDI.
 first_fret = 1 # One continuous fretboard for each major key.
 last_fret = 17
 canvas_width = 1040 # Staff + keyboard together span the full fretboard row.
-# Local windows are retained for song cards in covers/.
+# Legacy local-window helpers remain available; covers use a continuous neck.
 anchor_frets = [8, 13, 5, 10, 3, 8] # A C on each corresponding string.
 frets_before_anchor = 2
 frets_after_anchor = 4

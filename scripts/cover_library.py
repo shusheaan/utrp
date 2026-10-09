@@ -133,7 +133,7 @@ def validate_content(path: Path, style: cover.Style) -> None:
     png = path.with_suffix('.png').read_bytes()
     if len(png) < 33 or png[:8] != b'\x89PNG\r\n\x1a\n' or png[12:16] != b'IHDR':
         raise ValueError(f'Invalid PNG: {path}')
-    if struct.unpack('>II', png[16:24]) != (1600, 420 + 1030 * len(song.cards)):
+    if struct.unpack('>II', png[16:24]) != (style.atlas.canvas_width, 420 + 1030 * len(song.cards)):
         raise ValueError(f'{path}: PNG dimensions disagree with card count')
 
 
@@ -160,12 +160,14 @@ def validate(items: tuple[Entry, ...], slots: int, assets: bool = True) -> None:
         raise ValueError('Duplicate song identity')
     for group in groups:
         members = tuple(item for item in items if item.group == group)
-        if len({item.path.parent for item in members}) != 1:
-            raise ValueError(f'{group}: each group needs a single directory')
         if sorted(item.rank for item in members if item.rank) != list(range(1, slots+1)):
             raise ValueError(f'{group}: active ranks must be exactly 1..{slots}; replace, do not delete assets')
-    if len({item.path.parent for item in items}) != 12:
-        raise ValueError('Expected one directory per key group')
+    if len({item.path.parent for item in items}) != len(items):
+        raise ValueError('Expected one directory per song')
+    for item in items:
+        if re.match(r'^[A-G](?:-flat|-sharp)?-(?:major|minor|center|mixolydian)(?:-|_)',
+                    item.path.parent.name) is None:
+            raise ValueError(f'{item.path}: song directory must start with its working key')
     if assets:
         style = cover.load_style(Path(__file__).resolve().parents[1]/'config/cover-atlas.toml')
         for item in items:
@@ -184,8 +186,11 @@ def index_text(items: tuple[Entry, ...], root: Path, slots: int) -> str:
     groups = sorted({item.group for item in items}, key=cover.pitch_class)
     pending = sum(item.melody_status == 'pending' for item in items if item.rank)
     lines = ['# Covers', '', f'**榜单 12 × {slots}；资料永久保留，下榜不删文件。**', '',
-             '每调一个目录；每首仅 `md + toml + png`。沿用 Pink + White / U-N-I-T-Y 版式：'
-             '6–8 格长图，钢琴、高低音五线谱、六个七品把位、下方品位点。', '',
+             '每歌一个目录：`工作调性--artist--song/`；`pending` 表示调性待核，'
+             '`center` 表示调性中心而非强行判定大／小调。调组仅作榜单元数据，不再作为目录层级。'
+             '原有 `md + toml + png` 保留；`sources.md` 记录谱源、购买链接和缺口。'
+             '总表见 [谱源与购买清单](sources.md)。沿用 Pink + White / U-N-I-T-Y 版式：'
+             '6–8 格长图；上排高低音五线谱＋键盘，下排等宽 1–17 品连续吉他指板，宽度和配色统一沿用最新 atlas。', '',
              f'**当前是研究初稿，不是已全部核验的谱库。榜内 {pending} 首核心旋律待补；'
              '其自编和弦音练习不冒充原曲旋律。** 调性争议见各曲说明；榜单序号是当前探索优先级，不是客观评分。', '',
              '## 全量复核边界', '',
@@ -197,7 +202,10 @@ def index_text(items: tuple[Entry, ...], root: Path, slots: int) -> str:
              '这不是完整演职员表，也不证明所引编配与某一录音版本完全相同。', '',
              '自编逐卡选音只保证来自相应和弦，不保证最近距离；卡片顺序不是原曲完整进行。'
              '来源相符不等于来源本身正确；机器识别、版本冲突和参考编配的限制见逐曲记录。', '',
-             '## 当前榜单', '', '| 调组 | '+ ' | '.join(str(i) for i in range(1,slots+1))+' |',
+             '## 按歌曲浏览', '', '| 歌曲 | 工作调性 | 谱源 / PDF / 购买 |', '|---|---|---|']
+    lines += [f'| {link(i, root)} | {i.key} | [谱源]({i.path.parent.relative_to(root).as_posix()}/sources.md) |'
+              for i in sorted(items, key=lambda item: (item.artist, item.song))]
+    lines += ['', '## 当前榜单（仅索引，非目录分组）', '', '| 调组 | '+ ' | '.join(str(i) for i in range(1,slots+1))+' |',
              '|---|'+'---|'*slots]
     for group in groups:
         members = sorted((item for item in items if item.group == group and item.rank), key=lambda i:i.rank)
@@ -215,7 +223,7 @@ def index_text(items: tuple[Entry, ...], root: Path, slots: int) -> str:
               '```sh', 'python scripts/cover_library.py --check',
               'python scripts/cover_library.py --check --check-images',
               'python scripts/cover_library.py --write-index',
-              'python scripts/render_cover.py covers/A-major_F-sharp-minor/A-major--frank-ocean--pink-white.toml --force',
+              'python scripts/render_cover.py covers/A-center--frank-ocean--pink-white/A-major--frank-ocean--pink-white.toml --force',
               '```', '', '绘图依赖：`fontTools`、`rsvg-convert`、`FreeSerif`、`Noto Sans CJK SC`。来源及证据限制见各曲 MD。', '']
     return '\n'.join(lines)
 

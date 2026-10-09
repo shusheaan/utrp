@@ -64,6 +64,36 @@ def test_markdown_local_links_resolve() -> None:
                 assert (path.parent/target).is_file(), (path,target)
 
 
+def test_each_song_has_its_own_key_prefixed_directory_and_sources() -> None:
+    root = Path('covers')
+    items = entries(root)
+    directories = {item.path.parent for item in items}
+    assert len(directories) == len(items)
+    assert directories == {path for path in root.iterdir() if path.is_dir()}
+    catalog = (root/'sources.md').read_text()
+    for item in items:
+        assert len(tuple(item.path.parent.glob('*.toml'))) == 1
+        source_path = item.path.parent/'sources.md'
+        text = source_path.read_text()
+        assert text.startswith(f'# {item.artist} — {item.song} — 谱源与购买\n')
+        assert f'({source_path.relative_to(root).as_posix()})' in catalog
+        assert '## 五线谱 / PDF / 购买入口' in text
+        assert '## Chord 提示与既有参考' in text
+        assert '## 本地 PDF' in text
+        assert 'https://' in text
+
+
+def test_shared_or_unprefixed_song_directories_are_rejected() -> None:
+    items = entries(Path('covers'))
+    first, second = items[:2]
+    shared = replace(first, path=second.path.parent/first.path.name)
+    with pytest.raises(ValueError, match='one directory per song'):
+        validate((shared, *items[1:]), 5, assets=False)
+    unprefixed = replace(first, path=Path('covers/song-only')/first.path.name)
+    with pytest.raises(ValueError, match='start with its working key'):
+        validate((unprefixed, *items[1:]), 5, assets=False)
+
+
 def test_pending_melodies_are_not_mislabeled_transcriptions() -> None:
     for entry in entries(Path('covers')):
         if entry.melody_status != 'pending':
@@ -79,7 +109,7 @@ def test_pending_melodies_are_not_mislabeled_transcriptions() -> None:
 
 
 def test_beat_it_half_step_tuning_and_octave_transfer() -> None:
-    path = Path('covers/G-flat-major_E-flat-minor/michael-jackson--beat-it.toml')
+    path = Path('covers/E-flat-minor--michael-jackson--beat-it/michael-jackson--beat-it.toml')
     config = load_style(Path('config/cover-atlas.toml'))
     song = parse_song(tomllib.loads(path.read_text()),config)
     card = next(c for c in song.cards if c.title.startswith('吉他 riff'))
@@ -103,7 +133,7 @@ def test_generated_exercise_chromatic_octaves_are_spelled_correctly() -> None:
 
 
 def test_zebra_uses_minor_iii_and_includes_bbm() -> None:
-    path = Path('covers/A-flat-major_F-minor/beach-house--zebra.toml')
+    path = Path('covers/A-flat-major--beach-house--zebra/beach-house--zebra.toml')
     raw = tomllib.loads(path.read_text())
     chords = {c['title'].split(' · ')[0]: c['notes']
               for c in raw['cards'] if c['kind'] == 'chord'}
@@ -115,7 +145,7 @@ def test_zebra_uses_minor_iii_and_includes_bbm() -> None:
 
 def test_chord_symbol_cannot_disagree_with_valid_chord_tones() -> None:
     config = load_style(Path('config/cover-atlas.toml'))
-    path = Path('covers/A-flat-major_F-minor/beach-house--zebra.toml')
+    path = Path('covers/A-flat-major--beach-house--zebra/beach-house--zebra.toml')
     song = parse_song(tomllib.loads(path.read_text()), config)
     minor = next(c for c in song.cards if c.title.startswith('Cm ·'))
     validate_chord_label(minor)
@@ -125,7 +155,7 @@ def test_chord_symbol_cannot_disagree_with_valid_chord_tones() -> None:
 
 @pytest.mark.parametrize('case', ('source', 'kind', 'evidence', 'arrangement', 'tone'))
 def test_content_evidence_and_selected_chord_tones_are_enforced(case: str) -> None:
-    path = Path('covers/A-flat-major_F-minor/beach-house--zebra.toml')
+    path = Path('covers/A-flat-major--beach-house--zebra/beach-house--zebra.toml')
     config = load_style(Path('config/cover-atlas.toml'))
     raw = deepcopy(tomllib.loads(path.read_text()))
     if case == 'source':
@@ -146,7 +176,7 @@ def test_content_evidence_and_selected_chord_tones_are_enforced(case: str) -> No
 
 
 def test_audit_note_and_png_dimensions_are_checked(tmp_path: Path) -> None:
-    original = Path('covers/A-flat-major_F-minor/beach-house--zebra.toml')
+    original = Path('covers/A-flat-major--beach-house--zebra/beach-house--zebra.toml')
     config = load_style(Path('config/cover-atlas.toml'))
     path = tmp_path/original.name
     for suffix in ('.toml', '.md', '.png'):
@@ -167,7 +197,7 @@ def test_audit_note_and_png_dimensions_are_checked(tmp_path: Path) -> None:
 
 
 def test_regeneration_detects_stale_image_content(tmp_path: Path) -> None:
-    original = Path('covers/A-flat-major_F-minor/beach-house--zebra.toml')
+    original = Path('covers/A-flat-major--beach-house--zebra/beach-house--zebra.toml')
     path = tmp_path/original.name
     path.write_bytes(original.read_bytes())
     path.with_suffix('.png').write_bytes(original.with_suffix('.png').read_bytes())

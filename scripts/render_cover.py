@@ -28,13 +28,6 @@ class Style:
     panel: str
     ink: str
     muted: str
-    grid: str
-    scale: str
-    root: str
-    third: str
-    fifth: str
-    seventh: str
-    melody: str
     atlas: atlas.Settings
 
 
@@ -110,14 +103,13 @@ def position_midi(position: str, tuning: tuple[int, ...]) -> int:
 
 
 def parse_style(raw: dict[str, object], base: atlas.Settings) -> Style:
-    if base.frets_before_anchor + base.frets_after_anchor + 1 != 7:
-        raise ValueError("Cover guitar panels must show exactly seven frets")
-    colors = tuple(string(raw[key]) for key in
-                   ("paper", "panel", "ink", "muted", "grid", "scale", "root",
-                    "third", "fifth", "seventh", "melody"))
-    if any(re.fullmatch(r"#[0-9a-fA-F]{6}", color) is None for color in colors):
-        raise ValueError("Colors must be #RRGGBB")
-    return Style(base.text_font, base.tuning, base.first_midi, base.last_midi, *colors, base)
+    guitar = table(raw["guitar"])
+    first = integer(guitar["first_fret"], 0, 24)
+    last = integer(guitar["last_fret"], first + 1, 24)
+    base = replace(base, first_fret=first, last_fret=last)
+    theme = base.theme
+    return Style(base.text_font, base.tuning, base.first_midi, base.last_midi,
+                 theme.paper, theme.panel, theme.ink, theme.muted, base)
 
 
 def load_style(path: Path) -> Style:
@@ -127,6 +119,14 @@ def load_style(path: Path) -> Style:
     with atlas_path.open("rb") as stream:
         base = atlas.parse_settings(tomllib.load(stream), atlas_path.parent)
     return parse_style(raw, base)
+
+
+def visible_anchor(fret: int, first: int, last: int) -> int:
+    """Keep a pitch-class landmark visible; never remap actual melody positions."""
+    candidates = tuple(value for value in range(first, last + 1) if (value - fret) % 12 == 0)
+    if not candidates:
+        raise ValueError("Anchor pitch class falls outside the continuous fretboard")
+    return min(candidates, key=lambda value: (abs(value - fret), value))
 
 
 def parse_card(value: object, style: Style) -> Card:
@@ -139,9 +139,9 @@ def parse_card(value: object, style: Style) -> Card:
     if len(pcs) != 7 or len(set(pcs)) != 7:
         raise ValueError("Provide a seven-note background collection without duplicates")
     anchors = atlas.six_integers(raw["anchor_frets"], 0, 24)
-    before, after = style.atlas.frets_before_anchor, style.atlas.frets_after_anchor
-    if any(fret - before < 0 or fret + after > 24 for fret in anchors):
-        raise ValueError("Seven-fret window falls outside frets 0–24")
+    first, last = style.atlas.first_fret, style.atlas.last_fret
+    for fret in anchors:
+        visible_anchor(fret, first, last)
     positions = strings(raw.get("positions", []))
     if kind == "chord":
         chord = tuple(pitch_class(note) for note in notes)
@@ -166,8 +166,8 @@ def parse_card(value: object, style: Style) -> Card:
                 raise ValueError("Melody note missing from background collection")
             if position_midi(position, style.tuning) != midi:
                 raise ValueError(f"Guitar position {position} does not match melody MIDI {midi}")
-            if not any(fret - before <= int(position[1:]) <= fret + after for fret in anchors):
-                raise ValueError("Melody position falls outside all six fret windows")
+            if not first <= int(position[1:]) <= last:
+                raise ValueError("Melody position falls outside the continuous fretboard")
     anchor_pc = pitch_class(notes[0]) if kind == "chord" else midi_note(notes[0]) % 12
     if any((pitch + fret) % 12 != anchor_pc
            for pitch, fret in zip(style.tuning, anchors, strict=True)):
@@ -186,11 +186,11 @@ def parse_song(raw: dict[str, object], style: Style) -> Song:
     return Song(*headings, tuple(parse_card(card, style) for card in cards))
 
 
-def text(x: float, y: float, value: str, color: str, size: int = 20,
+def text(canvas_width: int, x: float, y: float, value: str, color: str, size: int = 20,
          anchor: str = "start", weight: int = 400) -> str:
     estimated = sum(1.0 if unicodedata.east_asian_width(c) in ("W", "F") else 0.6
                     for c in value) * size
-    available = 1568 - x
+    available = canvas_width - 32 - x
     fit = (f' textLength="{available:g}" lengthAdjust="spacingAndGlyphs"'
            if anchor == "start" and estimated > available else "")
     return (f'<text x="{x:g}" y="{y:g}" fill="{color}" font-size="{size}" '
@@ -208,17 +208,9 @@ def circle(x: float, y: float, radius: float, color: str) -> str:
 
 
 def note_color(pc: int, card: Card, style: Style) -> str:
-    if card.kind == "melody":
-        return style.melody
-    tones = tuple(pitch_class(note) for note in card.notes)
-    interval = (pc - tones[0]) % 12
-    if interval == 0:
-        return style.root
-    if interval in (3, 4):
-        return style.third
-    if interval in (6, 7):
-        return style.fifth
-    return style.seventh
+    """Use the same degree palette as the latest atlas, on every instrument."""
+    key = background_key(card.scale, style)
+    return style.atlas.colors[key.pitch_classes.index(pc)]
 
 
 def background_key(scale: tuple[str, ...], style: Style) -> atlas.MajorKey:
@@ -235,19 +227,16 @@ def background_key(scale: tuple[str, ...], style: Style) -> atlas.MajorKey:
 
 def atlas_settings(card: Card, style: Style) -> atlas.Settings:
     key = background_key(card.scale, style)
-    tones = ({pitch_class(note) for note in card.notes} if card.kind == "chord"
-             else {midi_note(note) % 12 for note in card.notes})
-    colors = tuple(note_color(pc, card, style) if pc in tones else style.scale
-                   for pc in key.pitch_classes)
-    theme = replace(style.atlas.theme, paper=style.panel, panel=style.panel)
-    # Ring anchors are the chord root / first melody pitch, not the scale tonic.
-    return replace(style.atlas, key=key, colors=colors, theme=theme,
-                   anchor_frets=card.anchor_frets)
+    # Palette and theme come unchanged from the shared atlas configuration.
+    # Ring anchors remain the chord root / first melody pitch, not the scale tonic.
+    anchors = tuple(visible_anchor(fret, style.atlas.first_fret, style.atlas.last_fret)
+                    for fret in card.anchor_frets)
+    return replace(style.atlas, key=key, anchor_frets=anchors)
 
 
 def atlas_tile(card: Card, index: int, style: Style, clefs: tuple[str, str]) -> str:
     settings = atlas_settings(card, style)
-    markup = "\n".join(atlas.tile_parts(settings, clefs, local_windows=True))
+    markup = "\n".join(atlas.tile_parts(settings, clefs))
     # Each card reuses the exact atlas tile; namespace its keyboard/staff IDs.
     markup = re.sub(r'\bid="([^"]+)"', lambda match: f'id="card{index}-{match[1]}"', markup)
     return '<g transform="translate(0 100)">' + markup + '</g>'
@@ -264,9 +253,9 @@ def melody_staff(card: Card, style: Style, clefs: tuple[str, str]) -> list[str]:
     high = max(178, *(atlas.staff_y(note, "treble") for note in pitched))
     factor = min(1.0, 66 / (high - low))
     bottom = 889 - (high - 178) * factor
-    parts = [text(48, 805, "旋律音高谱 · 实音（不作吉他高八度记谱）· 横向等距只表先后，不表时值", style.muted, 18)]
+    parts = [text(style.atlas.canvas_width, 48, 805, "旋律音高谱 · 实音（不作吉他高八度记谱）· 横向等距只表先后，不表时值", style.muted, 18)]
     for index in range(5):
-        parts.append(atlas.line(64, bottom - index * 14 * factor, 1540, bottom - index * 14 * factor,
+        parts.append(atlas.line(64, bottom - index * 14 * factor, style.atlas.canvas_width - 60, bottom - index * 14 * factor,
                                 style.ink, 1))
     scale = 14 * factor / 194
     parts.append(f'<path data-melody-clef="treble" d="{clefs[0]}" fill="{style.ink}" '
@@ -276,17 +265,17 @@ def melody_staff(card: Card, style: Style, clefs: tuple[str, str]) -> list[str]:
     parts.extend(atlas.key_signature_svg(key, "treble", style.ink))
     parts.append('</g>')
     for index, (name, position, note) in enumerate(zip(card.notes, card.positions, pitched, strict=True)):
-        x = 280 + index * 1180 / (len(card.notes) - 1)
+        x = 280 + index * (style.atlas.canvas_width - 420) / (len(card.notes) - 1)
         raw_y = atlas.staff_y(note, "treble")
         y = bottom + (raw_y - 178) * factor
         parts.append(f'<g data-melody-index="{index}" data-midi="{note.midi}">')
         parts.extend(atlas.line(x - 16, bottom + (ledger - 178) * factor,
                                 x + 16, bottom + (ledger - 178) * factor, style.ink, 1)
                      for ledger in atlas.ledger_lines(raw_y, 178, 14))
-        parts.extend([circle(x, y, 11, style.melody),
+        parts.extend([circle(x, y, 11, note_color(note.midi % 12, card, style)),
                       atlas.pitch_label(x, y + 4, note.letter, note.accidental, 13),
-                      text(x, 921, f"{index + 1} · {name}", style.ink, 17, "middle"),
-                      text(x, 946, position, style.muted, 17, "middle"), '</g>'])
+                      text(style.atlas.canvas_width, x, 921, f"{index + 1} · {name}", style.ink, 17, "middle"),
+                      text(style.atlas.canvas_width, x, 946, position, style.muted, 17, "middle"), '</g>'])
     return parts
 
 
@@ -294,40 +283,40 @@ def render_card(card: Card, index: int, style: Style, clefs: tuple[str, str]) ->
     settings = atlas_settings(card, style)
     reference = card.notes[0] if card.kind == "chord" else card.notes[0][:-1]
     parts = [f'<g id="card-{index}" transform="translate(0 {410 + (index - 1) * 1030})">',
-             rect(0, 0, 1600, 1010, style.panel),
-             text(32, 39, f"{index:02d}  {card.title}", style.ink, 26, weight=700),
-             text(32, 73, card.subtitle, style.muted, 19),
+             rect(0, 0, style.atlas.canvas_width, 1010, style.panel),
+             text(style.atlas.canvas_width, 32, 39, f"{index:02d}  {card.title}", style.ink, 26, weight=700),
+             text(style.atlas.canvas_width, 32, 73, card.subtitle, style.muted, 19),
              atlas_tile(card, index, style, clefs)]
     if card.kind == "melody":
         parts.extend(melody_staff(card, style, clefs))
     else:
-        parts.append(text(48, 829, "和弦音  " + "  ·  ".join(card.notes), style.ink, 24))
-        parts.append(text(48, 869, "背景音集  " + "  ".join(card.scale) +
+        parts.append(text(style.atlas.canvas_width, 48, 829, "和弦音  " + "  ·  ".join(card.notes), style.ink, 24))
+        parts.append(text(style.atlas.canvas_width, 48, 869, "背景音集  " + "  ".join(card.scale) +
                           f"  /  五线谱用 {settings.key.name} major 调号（本格音集，不是全曲定调）",
                           style.muted, 20))
-        parts.append(text(48, 916, f"六弦分别圈出 {reference}，每个窗口七品；这是音位地图，不是同时按下的 voicing。",
+        parts.append(text(style.atlas.canvas_width, 48, 916, f"六弦分别圈出 {reference}；连续 {settings.first_fret}–{settings.last_fret} 品音位地图，不是同时按下的 voicing。",
                           style.muted, 20))
-    parts.extend([text(32, 992, card.footer, style.muted, 18), '</g>'])
+    parts.extend([text(style.atlas.canvas_width, 32, 992, card.footer, style.muted, 18), '</g>'])
     return "\n".join(parts)
 
 
 def render_svg(song: Song, style: Style, clefs: tuple[str, str]) -> str:
     height = 420 + len(song.cards) * 1030
-    parts = [f'<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="{height}" '
-             f'viewBox="0 0 1600 {height}" role="img">',
+    parts = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{style.atlas.canvas_width}" height="{height}" '
+             f'viewBox="0 0 {style.atlas.canvas_width} {height}" role="img">',
              f'<title>{escape(song.title)}</title>',
              f'<desc>{escape(song.status + "；" + song.progression)}</desc>',
-             rect(0, 0, 1600, height, style.paper),
+             rect(0, 0, style.atlas.canvas_width, height, style.paper),
              f'<g font-family="{escape(style.font, quote=True)}">',
-             text(48, 42, "UTRP / COVER STUDY / PIANO + GUITAR", style.muted, 17),
-             text(48, 104, song.title, style.ink, 43, weight=700),
-             text(48, 145, song.info, style.muted, 23),
-             text(48, 183, song.status, style.root, 21),
-             text(48, 227, song.structure, style.ink, 21),
-             text(48, 273, song.progression, style.ink, 28, weight=600),
-             text(48, 313, song.timing, style.muted, 20),
-             text(48, 350, "灰色＝背景音集；彩色＝和弦音 / 旋律音类；圆环＝和弦根音 / 旋律首音。", style.muted, 19),
-             text(48, 382, "每格：钢琴 + 高低音五线谱 + 六个七品窗口；下方品位点沿用 atlas，12 品为横向双点。", style.muted, 19)]
+             text(style.atlas.canvas_width, 48, 42, "UTRP / COVER STUDY / PIANO + GUITAR", style.muted, 17),
+             text(style.atlas.canvas_width, 48, 104, song.title, style.ink, 43, weight=700),
+             text(style.atlas.canvas_width, 48, 145, song.info, style.muted, 23),
+             text(style.atlas.canvas_width, 48, 183, song.status, style.atlas.colors[0], 21),
+             text(style.atlas.canvas_width, 48, 227, song.structure, style.ink, 21),
+             text(style.atlas.canvas_width, 48, 273, song.progression, style.ink, 28, weight=600),
+             text(style.atlas.canvas_width, 48, 313, song.timing, style.muted, 20),
+             text(style.atlas.canvas_width, 48, 350, "配色沿用 atlas：本格音集 1 红、2/3 绿、4/5 鲑鱼色、6/7 蓝；圆环＝根音 / 旋律首音。", style.muted, 19),
+             text(style.atlas.canvas_width, 48, 382, "每格：上排高低音五线谱 + 键盘，下排等宽连续吉他指板；下方 12 品为横向双点。", style.muted, 19)]
     parts.extend(render_card(card, index, style, clefs) for index, card in enumerate(song.cards, 1))
     parts.extend(['</g>', '</svg>'])
     return "\n".join(parts) + "\n"

@@ -17,3 +17,6 @@
 
 # Purchased scores remain local; analysis notes and checksums can be versioned.
 /sheets/NLND_TABS/*.pdf
+
+# Downloaded and purchased cover references remain local, not published.
+/covers/**/*.pdf

@@ -1,0 +1,917 @@
+{
+  "checked_on": "2026-10-08",
+  "scope": "62 首；本地文件及当次主入口请求记录。未购买全谱，未绕过访问限制；不声称全网穷尽或逐音听核。",
+  "files": [
+    {
+      "song": "frank-ocean--pink-white",
+      "path": "A-center--frank-ocean--pink-white/reference--pink-white--piano.pdf",
+      "kind": "piano_arrangement",
+      "source": "https://soundreasonstudio.com/MuseScore-Library-msv3-041119/Repertoire/Pink%20Plus%20White.pdf",
+      "source_page": "https://soundreasonstudio.com/MuseScore-Library-msv3-041119/Repertoire/Pink%20Plus%20White.pdf",
+      "pages": 5,
+      "bytes": 2294192,
+      "sha256": "2b7d49f203af199b8fc949da164cd2d5116bcbc87760ef5a3c7beddb09a5f091",
+      "note": "公开第三方钢琴参考，不是官方原版；第 2 页钢琴大谱表、三升号、6/8，未见 chord symbols。授权来源未独立确认，仅本地使用，不再分发。",
+      "visual_check": "第 2 页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "frank-ocean--pink-white",
+      "path": "A-center--frank-ocean--pink-white/teaching--musicwill--Bass-Pink+White-FrankOcean.pdf",
+      "kind": "teaching_chart",
+      "source": "https://cdn.sanity.io/files/teha7qd2/production/fef5b657129534d583d4e250881d654249520f84.pdf",
+      "source_page": "https://jamzone.musicwill.org/songs/pink-white",
+      "pages": 1,
+      "bytes": 174634,
+      "sha256": "904a8290cae4fd3cabb1e4668ab4ff8577a3a5321b5a04a8add077c1e9c63d34",
+      "note": "Music Will「IN THE STYLE OF」单页简化教学谱，不是原版全曲转录。教学 chart 标 G、简化 C-D-E，与本库原曲和声分析 Cmaj7-Bm7-Amaj7 不一致；当前 PDF 为 6/8。仅低可信教学对照，不推荐代替原曲和声。",
+      "visual_check": "整页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "frank-ocean--pink-white",
+      "path": "A-center--frank-ocean--pink-white/teaching--musicwill--Drums-Pink+White-FrankOcean.pdf",
+      "kind": "teaching_chart",
+      "source": "https://cdn.sanity.io/files/teha7qd2/production/21c52846f7e50900fd5f61981d5500a5ff19065f.pdf",
+      "source_page": "https://jamzone.musicwill.org/songs/pink-white",
+      "pages": 1,
+      "bytes": 140748,
+      "sha256": "eb05fbe36cd2f7cd939789cac7fb6f004f22e18819c205d5a3a5d4977a26f188",
+      "note": "Music Will「IN THE STYLE OF」单页简化教学谱，不是原版全曲转录。教学 chart 标 G、简化 C-D-E，与本库原曲和声分析 Cmaj7-Bm7-Amaj7 不一致；当前 PDF 为 6/8。仅低可信教学对照，不推荐代替原曲和声。",
+      "visual_check": "整页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "frank-ocean--pink-white",
+      "path": "A-center--frank-ocean--pink-white/teaching--musicwill--Guitar-Pink+White-FrankOcean.pdf",
+      "kind": "teaching_chart",
+      "source": "https://cdn.sanity.io/files/teha7qd2/production/0663a27ab89f6aeb671a3867cf7395284734ef5f.pdf",
+      "source_page": "https://jamzone.musicwill.org/songs/pink-white",
+      "pages": 1,
+      "bytes": 150218,
+      "sha256": "a3c29b5284d1d2efdc5592cbb0e7c9661fa923f361a8e1a34256c7db772d2d84",
+      "note": "Music Will「IN THE STYLE OF」单页简化教学谱，不是原版全曲转录。教学 chart 标 G、简化 C-D-E，与本库原曲和声分析 Cmaj7-Bm7-Amaj7 不一致；当前 PDF 为 6/8。仅低可信教学对照，不推荐代替原曲和声。",
+      "visual_check": "整页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "frank-ocean--pink-white",
+      "path": "A-center--frank-ocean--pink-white/teaching--musicwill--Keyboard-Pink+White-FrankOcean.pdf",
+      "kind": "teaching_chart",
+      "source": "https://cdn.sanity.io/files/teha7qd2/production/62bc0a8c5bca11be64a87eacce1457f89badcfa4.pdf",
+      "source_page": "https://jamzone.musicwill.org/songs/pink-white",
+      "pages": 1,
+      "bytes": 200823,
+      "sha256": "1d0bea708b7a06b08781235a96df9ec0c1d07b0ede2caf2c16fe7a987a4aa007",
+      "note": "Music Will「IN THE STYLE OF」单页简化教学谱，不是原版全曲转录。教学 chart 标 G、简化 C-D-E，与本库原曲和声分析 Cmaj7-Bm7-Amaj7 不一致；当前 PDF 为 6/8。仅低可信教学对照，不推荐代替原曲和声。",
+      "visual_check": "整页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "frank-ocean--pink-white",
+      "path": "A-center--frank-ocean--pink-white/teaching--musicwill--ModernBand-Pink+White-FrankOcean.pdf",
+      "kind": "teaching_chart",
+      "source": "https://cdn.sanity.io/files/teha7qd2/production/423da9daca2ce9683bc75251e09876760ac2778a.pdf",
+      "source_page": "https://jamzone.musicwill.org/songs/pink-white",
+      "pages": 1,
+      "bytes": 341213,
+      "sha256": "9951a135e9c688d08796cea11b8be8652be9db68084ea44f1f74b244dcc683fa",
+      "note": "Music Will「IN THE STYLE OF」单页简化教学谱，不是原版全曲转录。教学 chart 标 G、简化 C-D-E，与本库原曲和声分析 Cmaj7-Bm7-Amaj7 不一致；当前 PDF 为 6/8。仅低可信教学对照，不推荐代替原曲和声。",
+      "visual_check": "整页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "frank-ocean--pink-white",
+      "path": "A-center--frank-ocean--pink-white/teaching--musicwill--Ukulele-Pink+White-FrankOcean.pdf",
+      "kind": "teaching_chart",
+      "source": "https://cdn.sanity.io/files/teha7qd2/production/23de25a9182b85e3200575cf4ef2f60b3d4d23ba.pdf",
+      "source_page": "https://jamzone.musicwill.org/songs/pink-white",
+      "pages": 1,
+      "bytes": 138518,
+      "sha256": "bc41a628e969a68f812ec597cf3860e153df672a95256a184821b4c1e524e827",
+      "note": "Music Will「IN THE STYLE OF」单页简化教学谱，不是原版全曲转录。教学 chart 标 G、简化 C-D-E，与本库原曲和声分析 Cmaj7-Bm7-Amaj7 不一致；当前 PDF 为 6/8。仅低可信教学对照，不推荐代替原曲和声。",
+      "visual_check": "整页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "fka-twigs--mirrored-heart",
+      "path": "C-major--fka-twigs--mirrored-heart/reference--song-exploder--interview.pdf",
+      "kind": "interview",
+      "source": "https://songexploder.net/transcripts/fka-twigs-transcript.pdf",
+      "source_page": "https://songexploder.net/transcripts/fka-twigs-transcript.pdf",
+      "pages": 7,
+      "bytes": 77219,
+      "sha256": "60f54569aef84bbb6861506f0d605a07e40d262d7c33eb8cc245c7432c41cc9f",
+      "note": "Song Exploder 访谈文本；不是五线谱、TAB 或 chord chart，不计入乐谱 PDF。",
+      "visual_check": "此前已核实为访谈文本",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "frank-ocean--ivy",
+      "path": "C-major_A-minor--frank-ocean--ivy/reference--ivy--community-piano.pdf",
+      "kind": "piano_arrangement",
+      "source": "https://drive.google.com/uc?export=download&id=1JoIfTU7BDMmIvYV3f9vaJ-GjqEezSc8Q",
+      "source_page": "https://www.reddit.com/r/FrankOcean/comments/1tz11b1/frank_ocean_ivy_piano/",
+      "pages": 3,
+      "bytes": 82885,
+      "sha256": "83a2323ca37813294d9611e40e8dd793557646dee06ce5f697a74e6042b367e1",
+      "note": "社区分享的简化钢琴编配；无调号、4/4，附音名／指法，无 chord symbols。PDF metadata 的 Title 错写 Stereo Madness，但谱面首末页明确为 Ivy / Frank Ocean；保留原文件，不冒充官方原谱。",
+      "visual_check": "第 1、3 页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "frank-ocean--thinkin-bout-you",
+      "path": "C-major_A-minor--frank-ocean--thinkin-bout-you/preview--thinkin-bout-you--note-store.pdf",
+      "kind": "preview",
+      "source": "https://note-store.com/api/preview_pdf_download/19815/",
+      "source_page": "https://note-store.com/notes/frank-ocean/thinkin-bout-you-2/piano-solo/",
+      "pages": 1,
+      "bytes": 34455,
+      "sha256": "cb6889cc3c8777e553417a7ae239a39b9672c9c9c5ece74985bf91ca6f9324b9",
+      "note": "Note Store 公开免费首张样谱，MusiCaaat piano solo，商品 PSO0019815。仅 1 页；商品全谱 7 页仍需购买。没有把样张计作完整全谱。",
+      "visual_check": "整页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "bon-iver--holocene",
+      "path": "D-flat-major--bon-iver--holocene/reference--holocene--chords-tab.pdf",
+      "kind": "chords_tab",
+      "source": "https://meesterdavidgitaar.wordpress.com/wp-content/uploads/2014/09/holocene-bon-iver-lyrics-and-chords.pdf",
+      "source_page": "https://meesterdavidgitaar.wordpress.com/wp-content/uploads/2014/09/holocene-bon-iver-lyrics-and-chords.pdf",
+      "pages": 2,
+      "bytes": 1376718,
+      "sha256": "c8877afd3663f39a30d9ba353d36263516d36949bf236410698ff29aa7dff722",
+      "note": "Guitar TAB 与 chord/lyrics；Capo I、C 指型。不是完整旋律五线谱。",
+      "visual_check": "全部 2 页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "michael-jackson--human-nature",
+      "path": "D-major--michael-jackson--human-nature/reference--human-nature--bass.pdf",
+      "kind": "bass_transcription",
+      "source": "https://arthurgeurts.com/wp-content/uploads/2020/03/michael-jackson-human-nature-notation.pdf",
+      "source_page": "https://arthurgeurts.com/wp-content/uploads/2020/03/michael-jackson-human-nature-notation.pdf",
+      "pages": 2,
+      "bytes": 54493,
+      "sha256": "6e03d802b7a437347312c19155dd007aac2f6deffaad823f50e8ef3d88e76156",
+      "note": "Arthur Geurts bass transcription，带 chord symbols；两升号、4/4。不是人声或钢琴全谱。",
+      "visual_check": "全部 2 页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "frank-ocean--solo",
+      "path": "E-flat-major--frank-ocean--solo/reference--solo--philip-g-piano.pdf",
+      "kind": "piano_arrangement",
+      "source": "https://drive.google.com/uc?export=download&id=10td1919a5RT3rOTHmR5XBQxnjRFlOcF4",
+      "source_page": "https://www.youtube.com/watch?v=aJCKT0TGlqQ",
+      "pages": 3,
+      "bytes": 529006,
+      "sha256": "48d7a0fbdf712aff53898592c2cec5e62c2bce58974af815e81e25602f7e4f6b",
+      "note": "Philip G 教程作者在视频描述中公开分享；标题 Solo / Piano Score / Frank Ocean，三降号，带 chord symbols。是 Solo，不是 Solo (Reprise)；作者钢琴编配，不是官方全分轨。",
+      "visual_check": "第 1、3 页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "michael-jackson--beat-it",
+      "path": "E-flat-minor--michael-jackson--beat-it/teaching--musicwill--Bass-BeatIt-MichaelJackson.pdf",
+      "kind": "teaching_chart",
+      "source": "https://cdn.sanity.io/files/teha7qd2/production/a30be0fbfb110e1f3458d469a2863e24fa86030e.pdf",
+      "source_page": "https://jamzone.musicwill.org/songs/inthestyleof-beatit-by-michaeljackson",
+      "pages": 1,
+      "bytes": 232633,
+      "sha256": "60377be66ad3f7900b3d935f2417ddce29acf838fa10a281649c19a10aa4b89b",
+      "note": "Music Will「IN THE STYLE OF」单页简化教学谱，不是原版全曲转录。E minor 简化教学，与本库原录音 Eb minor 差半音；Guitar/Bass 节奏示例调号与顶部 Em 标签存在冲突，须复核。",
+      "visual_check": "整页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "michael-jackson--beat-it",
+      "path": "E-flat-minor--michael-jackson--beat-it/teaching--musicwill--Drums-BeatIt-MichaelJackson.pdf",
+      "kind": "teaching_chart",
+      "source": "https://cdn.sanity.io/files/teha7qd2/production/21b83356a3b4a8aaa1f5a73b876c8be249cd45ae.pdf",
+      "source_page": "https://jamzone.musicwill.org/songs/inthestyleof-beatit-by-michaeljackson",
+      "pages": 1,
+      "bytes": 156615,
+      "sha256": "4955e0ff63085b0e6e42fd66cd6ffe017e6bcaaeb95b295a363b2dabc0b9c7dc",
+      "note": "Music Will「IN THE STYLE OF」单页简化教学谱，不是原版全曲转录。E minor 简化教学，与本库原录音 Eb minor 差半音；Guitar/Bass 节奏示例调号与顶部 Em 标签存在冲突，须复核。",
+      "visual_check": "整页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "michael-jackson--beat-it",
+      "path": "E-flat-minor--michael-jackson--beat-it/teaching--musicwill--Guitar-BeatIt-MichaelJackson.pdf",
+      "kind": "teaching_chart",
+      "source": "https://cdn.sanity.io/files/teha7qd2/production/fd3c6562fb8d297e6490690e27101533e02251ae.pdf",
+      "source_page": "https://jamzone.musicwill.org/songs/inthestyleof-beatit-by-michaeljackson",
+      "pages": 1,
+      "bytes": 250947,
+      "sha256": "1b8689340a65ea73e14a1d87b371dcb4257b308fb71a0313def7a716baa220f9",
+      "note": "Music Will「IN THE STYLE OF」单页简化教学谱，不是原版全曲转录。E minor 简化教学，与本库原录音 Eb minor 差半音；Guitar/Bass 节奏示例调号与顶部 Em 标签存在冲突，须复核。",
+      "visual_check": "整页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "michael-jackson--beat-it",
+      "path": "E-flat-minor--michael-jackson--beat-it/teaching--musicwill--Keyboard-BeatIt-MichaelJackson.pdf",
+      "kind": "teaching_chart",
+      "source": "https://cdn.sanity.io/files/teha7qd2/production/470b501908a854952036c9386b33c8a9f329fe65.pdf",
+      "source_page": "https://jamzone.musicwill.org/songs/inthestyleof-beatit-by-michaeljackson",
+      "pages": 1,
+      "bytes": 278609,
+      "sha256": "4a6acd44936170750192211d70729db4dc476bd2cf4c520a61421ccd5427f250",
+      "note": "Music Will「IN THE STYLE OF」单页简化教学谱，不是原版全曲转录。E minor 简化教学，与本库原录音 Eb minor 差半音；Guitar/Bass 节奏示例调号与顶部 Em 标签存在冲突，须复核。",
+      "visual_check": "整页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "michael-jackson--rock-with-you",
+      "path": "E-flat-minor--michael-jackson--rock-with-you/reference--rock-with-you--bass.pdf",
+      "kind": "bass_transcription",
+      "source": "https://www.markusottenberg.de/downloads/Rock-With-You-Michael-Jackson.pdf",
+      "source_page": "https://www.markusottenberg.de/downloads/Rock-With-You-Michael-Jackson.pdf",
+      "pages": 5,
+      "bytes": 267510,
+      "sha256": "277e9d53f0eff5f7ec4c6bfd25e551547fce5b1b2cc1d0d0b5539f181c88dbe1",
+      "note": "Markus Ottenberg bass transcription，带 chord symbols；开头六降号，末页转调。不是人声或钢琴全谱。",
+      "visual_check": "第 1、5 页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "kanye-west--runaway",
+      "path": "E-major--kanye-west--runaway/reference--runaway--piano-excerpt.pdf",
+      "kind": "piano_excerpt",
+      "source": "https://blogs.bu.edu/rpt/files/2016/07/Kanye-West-Runaway.pdf",
+      "source_page": "https://blogs.bu.edu/rpt/files/2016/07/Kanye-West-Runaway.pdf",
+      "pages": 1,
+      "bytes": 18150,
+      "sha256": "a338ceec6a8ab49b3330deff3d6dc248a30bd41b6a9dae5202f1b1d006d09d46",
+      "note": "钢琴 intro/hook 与低音片段，共 23 小节；没有完整人声／全曲，没有 chord symbols。",
+      "visual_check": "整页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "michael-jackson--remember-the-time",
+      "path": "F-minor--michael-jackson--remember-the-time/reference--remember-the-time--groove.pdf",
+      "kind": "groove_excerpt",
+      "source": "https://tartelet.dk/grooveark-pdf/Michael%20Jackson-RememberTheTime_groove.pdf",
+      "source_page": "https://tartelet.dk/grooveark-pdf/Michael%20Jackson-RememberTheTime_groove.pdf",
+      "pages": 2,
+      "bytes": 56719,
+      "sha256": "7354dc0c23c9798be6829b33792fc7fed013d3dab080165ceb087756fd1c82d2",
+      "note": "多声部 groove 片段，含键盘、bass、strings、drums、人声与 chord symbols；F minor，4/4。末尾省略，不是全曲总谱。",
+      "visual_check": "全部 2 页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "michael-jackson--billie-jean",
+      "path": "F-sharp-minor--michael-jackson--billie-jean/teaching--musicwill--Bass-BillieJean-MichaelJackson.pdf",
+      "kind": "teaching_chart",
+      "source": "https://cdn.sanity.io/files/teha7qd2/production/eb0688c8284aa6a9a149fe7e5b149271dff49725.pdf",
+      "source_page": "https://jamzone.musicwill.org/songs/inthestyleof-billiejean-by-michaeljackson",
+      "pages": 1,
+      "bytes": 1529932,
+      "sha256": "56dfa3998889c1ea61482b82da016e495922d637d5e85b5c4cdb47ca0cc5152a",
+      "note": "Music Will「IN THE STYLE OF」单页简化教学谱，不是原版全曲转录。简化教学，顶部 A major 标签不能替代 F#m 中心判断；Easy guitar 为 Em 指型＋capo 2。普通 Guitar 的 solo scale 标签与 F#m 不一致，部分 bass chord 标签亦有冲突，须复核。",
+      "visual_check": "整页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "michael-jackson--billie-jean",
+      "path": "F-sharp-minor--michael-jackson--billie-jean/teaching--musicwill--Drums-BillieJean-MichaelJackson.pdf",
+      "kind": "teaching_chart",
+      "source": "https://cdn.sanity.io/files/teha7qd2/production/561c98f5f7a46539233119434ea519525590519f.pdf",
+      "source_page": "https://jamzone.musicwill.org/songs/inthestyleof-billiejean-by-michaeljackson",
+      "pages": 1,
+      "bytes": 314195,
+      "sha256": "6139994e6c926a0b18981d935cdfcd74693d8ca5b94300d2e8e13f09a923ea06",
+      "note": "Music Will「IN THE STYLE OF」单页简化教学谱，不是原版全曲转录。简化教学，顶部 A major 标签不能替代 F#m 中心判断；Easy guitar 为 Em 指型＋capo 2。普通 Guitar 的 solo scale 标签与 F#m 不一致，部分 bass chord 标签亦有冲突，须复核。",
+      "visual_check": "整页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "michael-jackson--billie-jean",
+      "path": "F-sharp-minor--michael-jackson--billie-jean/teaching--musicwill--Guitar-BillieJean-MichaelJackson-Easy.pdf",
+      "kind": "teaching_chart",
+      "source": "https://cdn.sanity.io/files/teha7qd2/production/e14252d98b6cba89a9811b3e131d37c2e24fa5a1.pdf",
+      "source_page": "https://jamzone.musicwill.org/songs/inthestyleof-billiejean-by-michaeljackson",
+      "pages": 1,
+      "bytes": 1640145,
+      "sha256": "5cd604ee5d6b345823be2799fde6c7f88873b7c02aec8ff446af494945d4efc4",
+      "note": "Music Will「IN THE STYLE OF」单页简化教学谱，不是原版全曲转录。简化教学，顶部 A major 标签不能替代 F#m 中心判断；Easy guitar 为 Em 指型＋capo 2。普通 Guitar 的 solo scale 标签与 F#m 不一致，部分 bass chord 标签亦有冲突，须复核。",
+      "visual_check": "整页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "michael-jackson--billie-jean",
+      "path": "F-sharp-minor--michael-jackson--billie-jean/teaching--musicwill--Guitar-BillieJean-MichaelJackson.pdf",
+      "kind": "teaching_chart",
+      "source": "https://cdn.sanity.io/files/teha7qd2/production/7bfd22ae94e57ed7efe4ae9887dbda39eaf0d4e1.pdf",
+      "source_page": "https://jamzone.musicwill.org/songs/inthestyleof-billiejean-by-michaeljackson",
+      "pages": 1,
+      "bytes": 1665439,
+      "sha256": "c1d8c81dd9b9d37848cd2f0830be7d574741f8c2ad4dc73ed602316e655e60b9",
+      "note": "Music Will「IN THE STYLE OF」单页简化教学谱，不是原版全曲转录。简化教学，顶部 A major 标签不能替代 F#m 中心判断；Easy guitar 为 Em 指型＋capo 2。普通 Guitar 的 solo scale 标签与 F#m 不一致，部分 bass chord 标签亦有冲突，须复核。",
+      "visual_check": "整页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "michael-jackson--billie-jean",
+      "path": "F-sharp-minor--michael-jackson--billie-jean/teaching--musicwill--Keyboard-BillieJean-MichaelJackson.pdf",
+      "kind": "teaching_chart",
+      "source": "https://cdn.sanity.io/files/teha7qd2/production/23356a4ea97013bc0d816db24fad7b61ce19088a.pdf",
+      "source_page": "https://jamzone.musicwill.org/songs/inthestyleof-billiejean-by-michaeljackson",
+      "pages": 1,
+      "bytes": 1747291,
+      "sha256": "96b3b487c34d3e516decacdf908266ae2c404e814ea59165ab19166448f3ad07",
+      "note": "Music Will「IN THE STYLE OF」单页简化教学谱，不是原版全曲转录。简化教学，顶部 A major 标签不能替代 F#m 中心判断；Easy guitar 为 Em 指型＋capo 2。普通 Guitar 的 solo scale 标签与 F#m 不一致，部分 bass chord 标签亦有冲突，须复核。",
+      "visual_check": "整页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "michael-jackson--liberian-girl",
+      "path": "G-sharp-minor--michael-jackson--liberian-girl/reference--liberian-girl--bb-clarinet.pdf",
+      "kind": "instrument_part",
+      "source": "https://jmboucher.fr/accueil/wp-content/themes/JMB_Theme/partitions/entrepot/Michael.Jackson.Liberian%20girl.cla.pdf",
+      "source_page": "https://jmboucher.fr/accueil/wp-content/themes/JMB_Theme/partitions/entrepot/Michael.Jackson.Liberian%20girl.cla.pdf",
+      "pages": 2,
+      "bytes": 60766,
+      "sha256": "32b5620ad033176252d7ae08265236747de1f64342360aeabf17a871e97ae756",
+      "note": "Bb clarinet 移调分谱，不是钢琴／吉他谱；与同源总谱配套，不可当实音原调。",
+      "visual_check": "全部 2 页",
+      "downloaded_on": "2026-10-08"
+    },
+    {
+      "song": "michael-jackson--liberian-girl",
+      "path": "G-sharp-minor--michael-jackson--liberian-girl/reference--liberian-girl--ensemble-transposed.pdf",
+      "kind": "ensemble_arrangement",
+      "source": "https://jmboucher.fr/accueil/wp-content/themes/JMB_Theme/partitions/Michael.Jackson.Liberian%20girl.pdf",
+      "source_page": "https://jmboucher.fr/accueil/wp-content/themes/JMB_Theme/partitions/Michael.Jackson.Liberian%20girl.pdf",
+      "pages": 46,
+      "bytes": 294815,
+      "sha256": "613d38e5439ea2fb474ad69b18cbb930003f93ca17f96bad85f23c045da8511a",
+      "note": "MuseScore 多乐器总谱，含 synth bass、strings、Bb clarinet、marimba、drums、keyboards；实音乐器两降号，Bb clarinet 无调号。移调编配，与本库 G# minor 不同，不能直接当原录音版本。",
+      "visual_check": "第 1、46 页",
+      "downloaded_on": "2026-10-08"
+    }
+  ],
+  "primary_page_checks": [
+    {
+      "slug": "frank-ocean--pink-white",
+      "url": "https://www.musicnotes.com/sheetmusic/frank-ocean/pink-white/MN0288570",
+      "curl_exit": 0,
+      "effective_url": "https://www.musicnotes.com/sheetmusic/frank-ocean/pink-white/MN0288570",
+      "bytes": 288982,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "frank-ocean--thinkin-bout-you",
+      "url": "https://www.virtualsheetmusic.com/score/HL-254947.html",
+      "curl_exit": 22,
+      "effective_url": "https://www.virtualsheetmusic.com/score/HL-254947.html",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "frank-ocean--ivy",
+      "url": "https://www.musicnotes.com/sheetmusic/frank-ocean/ivy/MN0202475",
+      "curl_exit": 0,
+      "effective_url": "https://www.musicnotes.com/sheetmusic/frank-ocean/ivy/MN0202475",
+      "bytes": 286638,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "frank-ocean--self-control",
+      "url": "https://apps.musicnotes.com/sheetmusic/the-theorist/self-control/MN0168650",
+      "curl_exit": 22,
+      "effective_url": "https://apps.musicnotes.com/sheetmusic/the-theorist/self-control/MN0168650",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "frank-ocean--godspeed",
+      "url": "https://www.musicnotes.com/sheetmusic/frank-ocean/godspeed/MN0210504",
+      "curl_exit": 0,
+      "effective_url": "https://www.musicnotes.com/sheetmusic/frank-ocean/godspeed/MN0210504",
+      "bytes": 413687,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "frank-ocean--solo",
+      "url": "https://www.sheetmusicplus.com/en/product/solo-22796435.html",
+      "curl_exit": 22,
+      "effective_url": "https://www.sheetmusicplus.com/en/product/solo-22796435.html",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "frank-ocean--close-to-you",
+      "url": "https://www.sheetmusicplus.com/en/product/close-to-you-22478767.html",
+      "curl_exit": 22,
+      "effective_url": "https://www.sheetmusicplus.com/en/product/close-to-you-22478767.html",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "frank-ocean--lost",
+      "url": "https://www.musicnotes.com/sheetmusic/frank-ocean/lost/MN0113503",
+      "curl_exit": 0,
+      "effective_url": "https://www.musicnotes.com/sheetmusic/frank-ocean/lost/MN0113503",
+      "bytes": 408897,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "frank-ocean--pink-matter",
+      "url": "https://www.musicnotes.com/sheetmusic/frank-ocean/pink-matter/MN0113508",
+      "curl_exit": 0,
+      "effective_url": "https://www.musicnotes.com/sheetmusic/frank-ocean/pink-matter/MN0113508",
+      "bytes": 292760,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "frank-ocean--monks",
+      "url": "https://www.sheetmusicplus.com/en/product/monks-19855346.html",
+      "curl_exit": 22,
+      "effective_url": "https://www.sheetmusicplus.com/en/product/monks-19855346.html",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "frank-ocean--sierra-leone",
+      "url": "https://www.musicnotes.com/sheetmusic/frank-ocean/sierra-leone/MN0113509",
+      "curl_exit": 0,
+      "effective_url": "https://www.musicnotes.com/sheetmusic/frank-ocean/sierra-leone/MN0113509",
+      "bytes": 285741,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "frank-ocean--nikes",
+      "url": "https://www.hooktheory.com/theorytab/view/frank-ocean/nikes",
+      "curl_exit": 0,
+      "effective_url": "https://www.hooktheory.com/theorytab/view/frank-ocean/nikes",
+      "bytes": 195607,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "frank-ocean--seigfried",
+      "url": "https://www.e-chords.com/chords/frank-ocean/seigfried",
+      "curl_exit": 22,
+      "effective_url": "https://www.e-chords.com/chords/frank-ocean/seigfried",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "frank-ocean--pretty-sweet",
+      "url": "https://chordu.com/chords-tabs-frank-ocean-pretty-sweet-id_HWDaIRe8_XI",
+      "curl_exit": 0,
+      "effective_url": "https://chordu.com/chords-tabs-frank-ocean-pretty-sweet-id_HWDaIRe8_XI",
+      "bytes": 103971,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "frank-ocean--higgs",
+      "url": "https://www.chordlines.com/frank-ocean/higgs",
+      "curl_exit": 0,
+      "effective_url": "https://www.chordlines.com/frank-ocean/higgs",
+      "bytes": 34917,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "frank-ocean--rushes",
+      "url": "https://www.e-chords.com/keyboards/frank-ocean/rushes",
+      "curl_exit": 22,
+      "effective_url": "https://www.e-chords.com/keyboards/frank-ocean/rushes",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "frank-ocean--wither",
+      "url": "https://www.cifraclub.com.br/frank-ocean/wither/",
+      "curl_exit": 22,
+      "effective_url": "https://www.cifraclub.com.br/frank-ocean/wither/",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "frank-ocean--unity",
+      "url": "https://chordify.net/chords/frank-ocean-songs/unity-chords",
+      "curl_exit": 22,
+      "effective_url": "https://chordify.net/chords/frank-ocean-songs/unity-chords",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "bon-iver--re-stacks",
+      "url": "https://www.musicnotes.com/sheetmusic/bon-iver/re-stacks/MN0098562",
+      "curl_exit": 0,
+      "effective_url": "https://www.musicnotes.com/sheetmusic/bon-iver/re-stacks/MN0098562",
+      "bytes": 407471,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "bon-iver--holocene",
+      "url": "https://www.virtualsheetmusic.com/score/HL-219782.html",
+      "curl_exit": 22,
+      "effective_url": "https://www.virtualsheetmusic.com/score/HL-219782.html",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "bon-iver--calgary",
+      "url": "https://www.sheetmusicplus.com/en/product/calgary-19747534.html",
+      "curl_exit": 22,
+      "effective_url": "https://www.sheetmusicplus.com/en/product/calgary-19747534.html",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "bon-iver--michicant",
+      "url": "https://www.prestomusic.com/sheet-music/products/10094502--bon-iver-michicant",
+      "curl_exit": 22,
+      "effective_url": "https://www.prestomusic.com/sheet-music/products/10094502--bon-iver-michicant",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "bon-iver--8-circle",
+      "url": "https://www.musicnotes.com/sheetmusic/bon-iver/8-circle/MN0189856",
+      "curl_exit": 0,
+      "effective_url": "https://www.musicnotes.com/sheetmusic/bon-iver/8-circle/MN0189856",
+      "bytes": 285796,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "bon-iver--u-man-like",
+      "url": "https://www.musicnotes.com/sheetmusic/bon-iver/u-man-like/MN0197434",
+      "curl_exit": 0,
+      "effective_url": "https://www.musicnotes.com/sheetmusic/bon-iver/u-man-like/MN0197434",
+      "bytes": 288456,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "bon-iver--blood-bank",
+      "url": "https://www.stretta-music.at/justin-vernon-blood-bank-nr-2040711.html",
+      "curl_exit": 22,
+      "effective_url": "https://www.stretta-music.at/justin-vernon-blood-bank-nr-2040711.html",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "bon-iver-st-vincent--roslyn",
+      "url": "https://www.virtualsheetmusic.com/score/HL-245869.html",
+      "curl_exit": 22,
+      "effective_url": "https://www.virtualsheetmusic.com/score/HL-245869.html",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "michael-jackson--billie-jean",
+      "url": "https://www.fabermusic.com/shop/billie-jean-d1255",
+      "curl_exit": 0,
+      "effective_url": "https://www.fabermusic.com/shop/billie-jean-d1255",
+      "bytes": 51640,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "michael-jackson--human-nature",
+      "url": "https://www.musicnotes.com/sheetmusic/michael-jackson/human-nature/MN0041789",
+      "curl_exit": 0,
+      "effective_url": "https://www.musicnotes.com/sheetmusic/michael-jackson/human-nature/MN0041789",
+      "bytes": 304269,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "michael-jackson--thriller",
+      "url": "https://www.musicnotes.com/sheetmusic/michael-jackson/thriller/MN0072610",
+      "curl_exit": 0,
+      "effective_url": "https://www.musicnotes.com/sheetmusic/michael-jackson/thriller/MN0072610",
+      "bytes": 445069,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "michael-jackson--beat-it",
+      "url": "https://www.musicnotes.com/sheetmusic/michael-jackson/beat-it/MN0041780",
+      "curl_exit": 0,
+      "effective_url": "https://www.musicnotes.com/sheetmusic/michael-jackson/beat-it/MN0041780",
+      "bytes": 304700,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "michael-jackson--rock-with-you",
+      "url": "https://www.musicnotes.com/sheetmusic/michael-jackson/rock-with-you/MN0015813",
+      "curl_exit": 0,
+      "effective_url": "https://www.musicnotes.com/sheetmusic/michael-jackson/rock-with-you/MN0015813",
+      "bytes": 445209,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "michael-jackson--off-the-wall",
+      "url": "https://www.musicnotes.com/sheetmusic/michael-jackson/off-the-wall/MN0121596",
+      "curl_exit": 0,
+      "effective_url": "https://www.musicnotes.com/sheetmusic/michael-jackson/off-the-wall/MN0121596",
+      "bytes": 283700,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "michael-jackson--remember-the-time",
+      "url": "https://www.musicnotes.com/sheetmusic/michael-jackson/remember-the-time/MN0041831",
+      "curl_exit": 0,
+      "effective_url": "https://www.musicnotes.com/sheetmusic/michael-jackson/remember-the-time/MN0041831",
+      "bytes": 297346,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "michael-jackson--you-rock-my-world",
+      "url": "https://www.musicnotes.com/sheetmusic/michael-jackson/you-rock-my-world/MN0071044",
+      "curl_exit": 0,
+      "effective_url": "https://www.musicnotes.com/sheetmusic/michael-jackson/you-rock-my-world/MN0071044",
+      "bytes": 291488,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "michael-jackson--liberian-girl",
+      "url": "https://www.quickpartitions.com/en/sheetmusic/michael-jackson/liberian-girl/7083",
+      "curl_exit": 0,
+      "effective_url": "https://www.quickpartitions.com/en/sheetmusic/michael-jackson/liberian-girl/7083",
+      "bytes": 514323,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "michael-jackson--who-is-it",
+      "url": "https://www.musicnotes.com/sheetmusic/michael-jackson/who-is-it/MN0075745",
+      "curl_exit": 0,
+      "effective_url": "https://www.musicnotes.com/sheetmusic/michael-jackson/who-is-it/MN0075745",
+      "bytes": 410456,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "fka-twigs--cellophane",
+      "url": "https://www.musicnotes.com/sheetmusic/fka-twigs/cellophane/MN0196395",
+      "curl_exit": 0,
+      "effective_url": "https://www.musicnotes.com/sheetmusic/fka-twigs/cellophane/MN0196395",
+      "bytes": 408335,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "fka-twigs--mirrored-heart",
+      "url": "https://www.youtube.com/watch?v=181PDyRyvAk",
+      "curl_exit": 0,
+      "effective_url": "https://www.youtube.com/watch?v=181PDyRyvAk",
+      "bytes": 1229952,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "fka-twigs--mary-magdalene",
+      "url": "https://www.youtube.com/watch?v=Mk9muPgo5jI",
+      "curl_exit": 0,
+      "effective_url": "https://www.youtube.com/watch?v=Mk9muPgo5jI",
+      "bytes": 1210780,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "kanye-west--flashing-lights",
+      "url": "https://www.musicnotes.com/sheetmusic/kanye-west/flashing-lights/MN0063406",
+      "curl_exit": 0,
+      "effective_url": "https://www.musicnotes.com/sheetmusic/kanye-west/flashing-lights/MN0063406",
+      "bytes": 289698,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "kanye-west--runaway",
+      "url": "https://www.sheetmusicplus.com/en/product/runaway-22168186.html",
+      "curl_exit": 22,
+      "effective_url": "https://www.sheetmusicplus.com/en/product/runaway-22168186.html",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "kanye-west--welcome-to-heartbreak",
+      "url": "https://chordu.com/chords-tabs-welcome-to-heartbreak-kanye-west-featuring-kid-cudi-piano-lesson-by-matt-mccloskey--id_C_SrkI95qCI",
+      "curl_exit": 0,
+      "effective_url": "https://chordu.com/chords-tabs-welcome-to-heartbreak-kanye-west-featuring-kid-cudi-piano-lesson-by-matt-mccloskey--id_C_SrkI95qCI",
+      "bytes": 88314,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "travis-scott--skeletons",
+      "url": "https://www.mymusic5.com/monkekeys/177636",
+      "curl_exit": 0,
+      "effective_url": "https://www.mymusic5.com/monkekeys/177636",
+      "bytes": 371160,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "beach-house--zebra",
+      "url": "https://www.musicnotes.com/sheetmusic/beach-house/zebra/MN0099876",
+      "curl_exit": 0,
+      "effective_url": "https://www.musicnotes.com/sheetmusic/beach-house/zebra/MN0099876",
+      "bytes": 390937,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "beach-house--levitation",
+      "url": "https://www.sheetmusicplus.com/en/product/levitation-22532226.html",
+      "curl_exit": 22,
+      "effective_url": "https://www.sheetmusicplus.com/en/product/levitation-22532226.html",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "beach-house--drunk-in-la",
+      "url": "https://www.sheetmusicplus.com/en/product/drunk-in-la-22829370.html",
+      "curl_exit": 22,
+      "effective_url": "https://www.sheetmusicplus.com/en/product/drunk-in-la-22829370.html",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "beach-house--new-year",
+      "url": "https://musescore.com/user/97106398/scores/18938383",
+      "curl_exit": 22,
+      "effective_url": "https://musescore.com/user/97106398/scores/18938383",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "beach-house--rough-song",
+      "url": "https://www.sheetmusicplus.com/en/product/rough-song-22558391.html",
+      "curl_exit": 22,
+      "effective_url": "https://www.sheetmusicplus.com/en/product/rough-song-22558391.html",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "beach-house--over-and-over",
+      "url": "https://www.sheetmusicplus.com/en/product/over-and-over-22364410.html",
+      "curl_exit": 22,
+      "effective_url": "https://www.sheetmusicplus.com/en/product/over-and-over-22364410.html",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "beach-house--she-s-so-lovely",
+      "url": "https://www.mymusic5.com/video/106079",
+      "curl_exit": 0,
+      "effective_url": "https://www.mymusic5.com/video/106079",
+      "bytes": 340749,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "beach-house--beyond-love",
+      "url": "https://www.sheetmusicplus.com/en/product/beyond-love-22650196.html",
+      "curl_exit": 22,
+      "effective_url": "https://www.sheetmusicplus.com/en/product/beyond-love-22650196.html",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "beach-house--black-car",
+      "url": "https://www.hooktheory.com/theorytab/view/beach-house/black-car",
+      "curl_exit": 0,
+      "effective_url": "https://www.hooktheory.com/theorytab/view/beach-house/black-car",
+      "bytes": 157973,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "beach-house--dark-spring",
+      "url": "https://www.hooktheory.com/theorytab/view/beach-house/dark-spring",
+      "curl_exit": 0,
+      "effective_url": "https://www.hooktheory.com/theorytab/view/beach-house/dark-spring",
+      "bytes": 192659,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "beach-house--the-bells",
+      "url": "https://www.chordsbase.com/guitar-chords/beach-house/the-bells",
+      "curl_exit": 0,
+      "effective_url": "https://www.chordsbase.com/guitar-chords/beach-house/the-bells",
+      "bytes": 26878,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "beach-house--wild",
+      "url": "https://www.guitartabs.cc/tabs/b/beach_house/wild_crd_ver_2.html",
+      "curl_exit": 0,
+      "effective_url": "https://www.guitartabs.cc/tabs/b/beach_house/wild_crd_ver_2.html",
+      "bytes": 48649,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "beach-house--superstar",
+      "url": "https://www.hooktheory.com/theorytab/view/beach-house/superstar",
+      "curl_exit": 0,
+      "effective_url": "https://www.hooktheory.com/theorytab/view/beach-house/superstar",
+      "bytes": 215186,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "beach-house--lose-your-smile",
+      "url": "https://www.e-chords.com/chords/beach-house/lose-your-smile",
+      "curl_exit": 22,
+      "effective_url": "https://www.e-chords.com/chords/beach-house/lose-your-smile",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "beach-house--home-again",
+      "url": "https://www.hooktheory.com/theorytab/view/beach-house/home-again",
+      "curl_exit": 0,
+      "effective_url": "https://www.hooktheory.com/theorytab/view/beach-house/home-again",
+      "bytes": 193434,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "beach-house--holy-dances",
+      "url": "https://www.e-chords.com/chords/beach-house/holy-dances",
+      "curl_exit": 22,
+      "effective_url": "https://www.e-chords.com/chords/beach-house/holy-dances",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "beach-house--l-inconnue",
+      "url": "https://chordify.net/it/chords/beach-house-songs/l-inconnue-chords",
+      "curl_exit": 22,
+      "effective_url": "https://chordify.net/it/chords/beach-house-songs/l-inconnue-chords",
+      "bytes": 0,
+      "pdf_links": [],
+      "error": "curl: (22) The requested URL returned error: 403\n"
+    },
+    {
+      "slug": "beach-house--girl-of-the-year",
+      "url": "https://www.guitartabsexplorer.com/beach-house/girl-of-the-year-chords",
+      "curl_exit": 0,
+      "effective_url": "https://www.guitartabsexplorer.com/beach-house/girl-of-the-year-chords",
+      "bytes": 56819,
+      "pdf_links": [],
+      "error": ""
+    },
+    {
+      "slug": "beach-house--elegy-to-the-void",
+      "url": "https://www.hooktheory.com/theorytab/view/beach-house/elegy-to-the-void",
+      "curl_exit": 0,
+      "effective_url": "https://www.hooktheory.com/theorytab/view/beach-house/elegy-to-the-void",
+      "bytes": 177612,
+      "pdf_links": [],
+      "error": ""
+    }
+  ]
+}
