@@ -1,0 +1,27 @@
+desc:Chord Lab test MIDI probe (not for installation)
+slider1:0<0,4294967295,1>-Notes 0-31
+slider2:0<0,4294967295,1>-Notes 32-63
+slider3:0<0,4294967295,1>-Notes 64-95
+slider4:0<0,4294967295,1>-Notes 96-127
+slider5:0<0,1000000,1>-Note ons
+slider6:0<0,1000000,1>-Note offs
+slider7:0<0,127,1>-Last CC
+slider8:0<0,127,1>-Last CC value
+@init
+ext_noinit=1;
+@block
+while(midirecv(o,s,n,v)) (
+  ch=s&15; type=s&240;
+  type==144 && v>0 ? (state[ch*128+n]=1; slider5+=1;);
+  type==128 || (type==144 && v==0) ? (state[ch*128+n]=0; slider6+=1;);
+  type==176 ? (slider7=n; slider8=v;);
+  midisend(o,s,n,v);
+);
+slider1=slider2=slider3=slider4=0;
+i=0; loop(32,
+  slider1+=state[i]*2^i;
+  slider2+=state[32+i]*2^i;
+  slider3+=state[64+i]*2^i;
+  slider4+=state[96+i]*2^i;
+  i+=1;
+);

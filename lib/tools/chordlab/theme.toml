@@ -1,0 +1,15 @@
+# Study-compatible role dots; fifth is deliberately orange rather than salmon.
+root = "#CE303A"
+third = "#258448"
+fifth = "#DC872C"
+seventh = "#477CEC"
+ninth = "#8B3DB8"
+external = "#707070"
+background = "#B3B3B3"
+button = "#A5A5A5"
+button_hover = "#969696"
+button_selected = "#707070"
+text = "#202020"
+text_muted = "#505050"
+text_selected = "#FFFFFF"
+font_scale = 1.45

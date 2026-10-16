@@ -1,0 +1,136 @@
+@init
+// State is private to each JSFX instance, never gmem/global across instances.
+// Channel 16 is the reserved computer-control channel; hardware uses 1..15.
+function release_chord(offset) local(i,n) (
+  i=0;
+  loop(5,
+    n=voices[i];
+    n>=0 ? (
+      own[n]=0;
+      held[n]==0 ? midisend(offset,$x80,n,0);
+      voices[i]=-1;
+    );
+    i+=1;
+  );
+  sounding=0;
+);
+function start_chord(offset) local(i,n) (
+  // Release first, always using the old note set, not the newly chosen key.
+  release_chord(offset);
+  i=0;
+  loop(voice_count,
+    n=chord_note(key,degree,inversion,i,centre,voice_count);
+    voices[i]=n; own[n]=1;
+    held[n]==0 ? midisend(offset,$x90,n,velocity);
+    i+=1;
+  );
+  sounding=1;
+);
+function publish_voicing() (
+  voice_count=3+kind;
+  slider3=inversion; slider4=centre; slider16=kind; sliderchange(32780);
+);
+function recall_voicing() local(index) (
+  index=saved+degree*4;
+  kind=index[1]; inversion=index[2]; centre=index[3]; publish_voicing();
+);
+function move_voicing(direction,offset) local(oldlow,nextinv,nextlow,nextcentre) (
+  oldlow=chord_note(key,degree,inversion,0,centre,voice_count);
+  nextinv=(inversion+direction+voice_count)%voice_count;
+  nextlow=chord_note(key,degree,nextinv,0,centre,voice_count);
+  nextcentre=centre;
+  direction>0 && nextlow<=oldlow ? nextcentre+=12;
+  direction<0 && nextlow>=oldlow ? nextcentre-=12;
+  nextlow=chord_note(key,degree,nextinv,0,nextcentre,voice_count);
+  nextcentre>=12 && nextcentre<=115 && (nextlow-oldlow)*direction>0 ? (
+    inversion=nextinv; centre=nextcentre; publish_voicing();
+    sounding ? start_chord(offset);
+  );
+);
+function save_voicing() local(index) (
+  index=saved+degree*4;
+  index[0]=1; index[1]=kind; index[2]=inversion; index[3]=centre;
+  slider15=(slider15+1)%1000001; sliderchange(16384);
+);
+function cycle_kind(offset) (
+  kind=(kind+1)%3; inversion=inversion%(3+kind); publish_voicing();
+  sounding ? start_chord(offset);
+);
+// Seven computer keys plus one mouse button: last-held chord has priority.
+function update_gate(offset) local(i,best,stamp) (
+  i=0; best=-1; stamp=0;
+  loop(8,
+    chord_held[i]>stamp ? (best=i; stamp=chord_held[i];);
+    i+=1;
+  );
+  best!=active_slot ? (
+    active_slot=best;
+    best<0 ? release_chord(offset) : (
+      degree=best==7 ? mouse_degree : (best+5)%7;
+      slider2=degree; sliderchange(2); recall_voicing(); start_chord(offset);
+    );
+  );
+);
+function press_degree(slot,offset) (
+  !chord_held[slot] ? (
+    gate_serial+=1; chord_held[slot]=gate_serial; update_gate(offset);
+  );
+);
+function release_degree(slot,offset) (
+  chord_held[slot]=0; update_gate(offset);
+);
+function stop_controls(offset) (
+  memset(chord_held,0,8); memset(control_held,0,128);
+  active_slot=-1; gate_serial=0; release_chord(offset);
+);
+function command(cmd,offset) (
+  cmd>=0 && cmd<12 ? (
+    !sounding && !(play_state&1) && play_state!=5 ? (
+      key=cmd; slider1=key; sliderchange(1); recall_voicing();
+    );
+  ) : cmd>=12 && cmd<19 ? (
+    mouse_degree=(cmd-12+5)%7;
+    press_degree(7,offset);
+  ) : cmd==19 ? move_voicing(-1,offset)
+    : cmd==20 ? move_voicing(1,offset)
+    : cmd==21 ? save_voicing()
+    : cmd==22 ? (
+      inversion=0; centre=60; publish_voicing(); save_voicing();
+      sounding ? start_chord(offset);
+    ) : cmd==23 ? stop_controls(offset)
+    : cmd==24 ? release_degree(7,offset)
+    : cmd==25 ? cycle_kind(offset);
+);
+function receive_midi(offset,status,note,value) local(type,ch,index) (
+  type=status&$xf0; ch=status&15;
+  ch==15 ? (
+    // Reserved VKB channel is never forwarded to the instrument.
+    index=note-60;
+    type==$x90 && value>0 && enabled && slider14 ? (
+      !control_held[note] ? (
+        control_held[note]=1;
+        index>=12 && index<19 ? press_degree(index-12,offset) : command(index,offset);
+      );
+    );
+    type==$x80 || (type==$x90 && value==0) ? (
+      control_held[note]=0;
+      index>=12 && index<19 ? release_degree(index-12,offset);
+    );
+    type==$xb0 && (note==120 || note==123) ? stop_controls(offset);
+  ) : (
+    index=ch*128+note;
+    type==$x90 && value>0 ? (
+      held[index]+=1;
+      !(ch==0 && own[note]) && held[index]==1 ? midisend(offset,status,note,value);
+    ) : type==$x80 || (type==$x90 && value==0) ? (
+      held[index]=max(0,held[index]-1);
+      held[index]==0 && !(ch==0 && own[note]) ? midisend(offset,status,note,value);
+    ) : type==$xb0 && (note==120 || note==123) ? (
+      memset(held+ch*128,0,128);
+      ch==0 ? stop_controls(offset);
+      midisend(offset,status,note,value);
+    ) : (
+      midisend(offset,status,note,value);
+    );
+  );
+);

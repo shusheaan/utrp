@@ -1,0 +1,109 @@
+@init
+// Pure pitch calculations. Indices are zero-based; centre is a MIDI note.
+function major_step(i) local(d) (
+  d=i%7;
+  floor(i/7)*12 + (d==0 ? 0 : d==1 ? 2 : d==2 ? 4 : d==3 ? 5 : d==4 ? 7 : d==5 ? 9 : 11);
+);
+// Ninth chords use a compact voicing: root, ninth, third, fifth, seventh.
+function voice_role(voice,count) (
+  count==5 ? (voice==0 ? 0 : voice==1 ? 4 : voice-1) : voice;
+);
+function base_pitch(key,degree,index,count) local(role,pitch,root) (
+  role=voice_role(index%count,count); root=key+major_step(degree);
+  pitch=key+major_step(degree+2*role);
+  pitch-root>=12 ? pitch-=12;
+  pitch+12*floor(index/count);
+);
+function chord_note(key,degree,inversion,voice,centre,count) local(i,total,shift,low,high) (
+  total=0; i=0;
+  loop(count,total+=base_pitch(key,degree,i+inversion,count); i+=1;);
+  low=base_pitch(key,degree,inversion,count);
+  high=base_pitch(key,degree,inversion+count-1,count);
+  shift=12*floor((centre-total/count)/12+0.5);
+  shift=max(-12*floor(low/12),min(12*floor((127-high)/12),shift));
+  base_pitch(key,degree,voice+inversion,count)+shift;
+);
+function chord_role(pc,key,degree,count) local(i,result) (
+  result=-1; i=0;
+  loop(count,(key+major_step(degree+2*i))%12==pc ? result=i; i+=1;);
+  result;
+);
+function chord_quality(dest,degree,kind) (
+  kind==0 ? strcpy(dest,degree==6 ? "dim" : degree==1 || degree==2 || degree==5 ? "m" : "M") :
+  kind==1 ? strcpy(dest,degree==6 ? "m7b5" : degree==4 ? "7" : degree==0 || degree==3 ? "M7" : "m7") :
+  strcpy(dest,degree==6 ? "m7b5(b9)" : degree==2 ? "m7(b9)" : degree==4 ? "9" : degree==0 || degree==3 ? "M9" : "m9");
+  dest;
+);
+function key_letter(key) (
+  // C Db D Eb E F Gb G Ab A Bb B: avoid theoretical sharp keys.
+  key==0 ? 0 : key<=2 ? 1 : key<=4 ? 2 : key==5 ? 3 : key<=7 ? 4 : key<=9 ? 5 : 6;
+);
+function spell_note(dest,key,step) local(letter,pc,natural,delta) (
+  letter=(key_letter(key)+step)%7;
+  pc=(key+major_step(step))%12;
+  natural=major_step(letter);
+  delta=(pc-natural+18)%12-6;
+  strcpy_substr(dest,"CDEFGAB",letter,1);
+  delta==-1 ? strcat(dest,"b") : delta==1 ? strcat(dest,"#");
+  dest;
+);
+function key_name(dest,key) (spell_note(dest,key,0););
+function pitch_letter(key,note) local(pc,step,found,flats) (
+  pc=note%12; step=0; found=-1;
+  loop(7,(key+major_step(step))%12==pc ? found=(key_letter(key)+step)%7; step+=1;);
+  flats=key==1 || key==3 || key==5 || key==6 || key==8 || key==10;
+  found>=0 ? found : (
+    pc<=1 ? (pc==1 && flats ? 1 : 0) : pc<=3 ? (pc==3 && flats ? 2 : 1) :
+    pc==4 ? 2 : pc<=6 ? (pc==6 && flats ? 4 : 3) :
+    pc<=8 ? (pc==8 && flats ? 5 : 4) : pc<=10 ? (pc==10 && flats ? 6 : 5) : 6;
+  );
+);
+function pitch_accidental(key,note) (
+  (note%12-major_step(pitch_letter(key,note))+18)%12-6;
+);
+// Absolute diatonic index: C4=28, including correct written octaves for Cb/B#.
+function written_step(key,note) local(letter,octave) (
+  letter=pitch_letter(key,note);
+  octave=floor((note-major_step(letter)-pitch_accidental(key,note))/12)-1;
+  octave*7+letter;
+);
+function staff_side(position,previous,side) (
+  position-previous<=1 ? 1-side : 0;
+);
+// Preserve the selected key's diatonic spelling; use simple chromatic names otherwise.
+function spell_pitch(dest,key,note) local(pc,step,found,flats) (
+  pc=note%12; step=0; found=-1;
+  loop(7,(key+major_step(step))%12==pc ? found=step; step+=1;);
+  found>=0 ? spell_note(dest,key,found) : (
+    flats=key==1 || key==3 || key==5 || key==6 || key==8 || key==10;
+    pc==0 ? strcpy(dest,"C") : pc==1 ? strcpy(dest,flats ? "Db" : "C#") :
+    pc==2 ? strcpy(dest,"D") : pc==3 ? strcpy(dest,flats ? "Eb" : "D#") :
+    pc==4 ? strcpy(dest,"E") : pc==5 ? strcpy(dest,"F") :
+    pc==6 ? strcpy(dest,flats ? "Gb" : "F#") : pc==7 ? strcpy(dest,"G") :
+    pc==8 ? strcpy(dest,flats ? "Ab" : "G#") : pc==9 ? strcpy(dest,"A") :
+    pc==10 ? strcpy(dest,flats ? "Bb" : "A#") : strcpy(dest,"B");
+  );
+  dest;
+);
+
+// Signed circle-of-fifths count for the 12 displayed major keys.
+function key_signature(key) (
+  key==0 ? 0 : key==1 ? -5 : key==2 ? 2 : key==3 ? -3 :
+  key==4 ? 4 : key==5 ? -1 : key==6 ? -6 : key==7 ? 1 :
+  key==8 ? -4 : key==9 ? 3 : key==10 ? -2 : 5;
+);
+function signature_letter(index,flats) (
+  flats ? (6+3*index)%7 : (3+4*index)%7;
+);
+function signature_accidental(key,letter) local(count,i,result) (
+  count=key_signature(key); i=0; result=0;
+  loop(abs(count),
+    signature_letter(i,count<0)==letter ? result=count<0 ? -1 : 1;
+    i+=1;
+  );
+  result;
+);
+function signature_position(index,flats) (
+  flats ? (index==0 ? 34 : index==1 ? 37 : index==2 ? 33 : index==3 ? 36 : index==4 ? 32 : index==5 ? 35 : 31) :
+  (index==0 ? 38 : index==1 ? 35 : index==2 ? 39 : index==3 ? 36 : index==4 ? 33 : index==5 ? 37 : 34);
+);

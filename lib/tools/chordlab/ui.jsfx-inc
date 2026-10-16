@@ -1,0 +1,193 @@
+@init
+// UI submits commands; MIDI state is owned exclusively by @block.
+function ui_command(cmd) local(next) (
+  next=(ui_write+1)%32;
+  next!=ui_read ? (ui_queue[ui_write]=cmd; ui_write=next;);
+);
+function ink(hex,alpha) (
+  gfx_set(((hex>>16)&255)/255,((hex>>8)&255)/255,(hex&255)/255,alpha);
+);
+function label(x,y,text,size,color) (
+  gfx_setfont(1,"DejaVu Sans",size*font_scale);
+  ink(color,1); gfx_x=x; gfx_y=y; gfx_drawstr(text);
+);
+function centered_style(x,y,w,h,text,size,color,bold) (
+  gfx_setfont(1,"DejaVu Sans",size*font_scale,bold ? 'b' : 0); ink(color,1);
+  gfx_x=x; gfx_y=y; gfx_drawstr(text,5,x+w,y+h);
+);
+function centered(x,y,w,h,text,size,color) (centered_style(x,y,w,h,text,size,color,0););
+function hover(x,y,w,h) (
+  mouse_x>=x && mouse_x<x+w && mouse_y>=y && mouse_y<y+h;
+);
+function button(x,y,w,h,text,selected,locked) local(hit) (
+  hit=hover(x,y,w,h);
+  ink(selected ? button_selected_color : hit && !locked ? button_hover_color : button_color,1);
+  gfx_rect(x,y,w,h);
+  centered_style(x,y,w,h,text,12,selected ? text_selected_color : locked ? text_muted_color : text_color,selected);
+  hit && clicked && !locked;
+);
+function role_color(role) (
+  role==0 ? root_color : role==1 ? third_color : role==2 ? fifth_color : role==3 ? seventh_color : ninth_color;
+);
+function hardware_held(note) local(hw,ch) (
+  hw=0; ch=0; loop(15,hw+=held[ch*128+note]; ch+=1;); hw;
+);
+function role_ink(role,lit) local(color) (
+  color=role_color(role);
+  lit ? ink(color,1) : gfx_set(
+    .55+.45*((color>>16)&255)/255,
+    .55+.45*((color>>8)&255)/255,
+    .55+.45*(color&255)/255,1);
+);
+// Filled gfx_circle rounds its centre to an integer pixel. Interpolate a small
+// transparent sprite for half-pixel centres instead of rounding a staff-line note.
+function note_circle(x,y,radius) local(destination,top) (
+  y==floor(y) ? gfx_circle(x,y,radius,1,1) : (
+    destination=gfx_dest; top=floor(y);
+    gfx_setimgdim(1,24,24); gfx_dest=1;
+    gfx_muladdrect(0,0,24,24,0,0,0,0,gfx_r,gfx_g,gfx_b,0);
+    gfx_circle(12,12,radius,1,1);
+    gfx_dest=destination;
+    gfx_blit(1,1,0,0,top-y,24,24,x-12,top-12,24,24);
+  );
+);
+// One circle/text renderer shared by staff, keyboard and guitar.
+function note_dot(x,y,role,note) local(lit,hw,radius,tw,th,size) (
+  hw=hardware_held(note); lit=(sounding && own[note]) || hw>0;
+  radius=9; x=floor(x+.5); // Preserve the staff's half-pixel space centres.
+  role>=0 ? role_ink(role,lit) : ink(external_color,1);
+  note_circle(x,y,radius);
+  role>=0 ? spell_note(#tone,key,degree+role*2) : spell_pitch(#tone,key,note);
+  // Measure the actual string, not a guessed rectangle; shrink accidentals to fit.
+  size=15;
+  gfx_setfont(5,"DejaVu Sans",size,'b');
+  gfx_measurestr(#tone,tw,th);
+  tw>radius*1.85 ? (
+    size*=radius*1.85/tw; gfx_setfont(5,"DejaVu Sans",size,'b'); gfx_measurestr(#tone,tw,th);
+  );
+  ink($x111111,1);
+  gfx_x=x-tw/2; gfx_y=y-th/2; gfx_drawstr(#tone);
+);
+function dot(x,y,role,note) (note_dot(x,floor(y+.5),role,note););
+function external_dot(x,y,note) (hardware_held(note)>0 ? note_dot(x,floor(y+.5),-1,note););
+function is_black(pc) (pc==1 || pc==3 || pc==6 || pc==8 || pc==10;);
+function draw_keyboard(x,y,w,h) local(i,n,pc,white,kx,kw,role,ch,hw) (
+  kw=w/29; white=0; i=0;
+  loop(49,
+    n=38+i; pc=n%12;
+    !is_black(pc) ? (
+      kx=x+white*kw;
+      ink($xe9edf0,1); gfx_rect(kx+.8,y,kw-1.6,h);
+      ink($xc7cfd5,1); gfx_rect(kx+.8,y+h-4,kw-1.6,4);
+      role=chord_role(pc,key,degree,voice_count);
+      role>=0 ? dot(kx+kw/2,y+h-27,role,n);
+      role<0 ? external_dot(kx+kw/2,y+h-27,n);
+      (pc==0 || i==0 || i==48) ? (sprintf(#oct,pc==0 ? "C%d" : "D%d",floor(n/12)-1); centered(kx,y+h-15,kw,12,#oct,8,$x6d7984););
+      white+=1;
+    );
+    i+=1;
+  );
+  white=0; i=0;
+  loop(49,
+    n=38+i; pc=n%12;
+    is_black(pc) ? (
+      kx=x+white*kw-kw*.33;
+      ink($x101820,1); gfx_rect(kx,y,kw*.66,h*.61);
+      ink($x25313b,1); gfx_rect(kx+2,y+2,kw*.66-4,h*.61-6);
+      role=chord_role(pc,key,degree,voice_count);
+      role>=0 ? dot(x+white*kw,y+h*.61-18,role,n);
+      role<0 ? external_dot(x+white*kw,y+h*.61-18,n);
+    ) : white+=1;
+    i+=1;
+  );
+);
+function guitar_open(string) (
+  string==0 ? 64 : string==1 ? 59 : string==2 ? 55 :
+  string==3 ? 50 : string==4 ? 45 : 40;
+);
+function fret_marker(fret) (
+  fret==12 ? 2 : fret==3 || fret==5 || fret==7 || fret==9 ||
+  fret==15 || fret==17 || fret==19 ? 1 : 0;
+);
+function draw_guitar(x,y,w,h) local(open_w,fw,fret,string,kx,sy,n,role,marker,ch,hw) (
+  open_w=26; fw=(w-open_w)/17;
+  ink($xe9edf0,1); gfx_rect(x,y,w,h);
+  ink($xdde3e7,1); gfx_rect(x,y,open_w,h);
+  fret=0; loop(18,
+    kx=x+open_w+fret*fw;
+    ink(fret==0 ? $x52606c : $x9aa7b1,1);
+    gfx_rect(kx-1,y,fret==0 ? 3 : 1,h);
+    fret+=1;
+  );
+  string=0; loop(6,
+    sy=floor(y+11+string*(h-22)/5+.5);
+    ink($x7d8b97,.7); gfx_rect(x,sy-(string>=3 ? 1 : 0),w,string>=3 ? 3 : 1);
+    string+=1;
+  );
+  string=0; loop(6,
+    sy=floor(y+11+string*(h-22)/5+.5);
+    fret=0; loop(18,
+      kx=fret==0 ? x+open_w/2 : x+open_w+(fret-.5)*fw;
+      n=guitar_open(string)+fret;
+      role=chord_role(n%12,key,degree,voice_count);
+      role>=0 ? dot(kx,sy,role,n) : external_dot(kx,sy,n);
+      fret+=1;
+    );
+    string+=1;
+  );
+  fret=0; loop(18,
+    kx=fret==0 ? x+open_w/2 : x+open_w+(fret-.5)*fw;
+    marker=fret_marker(fret); ink(text_muted_color,1);
+    marker==1 ? gfx_circle(kx,y+h+13,2.5,1,1);
+    marker==2 ? (gfx_circle(kx-5,y+h+13,2.5,1,1); gfx_circle(kx+5,y+h+13,2.5,1,1););
+    fret+=1;
+  );
+);
+function draw_choices() local(i,d,x,w,locked,selected,index,bass,text_width,text_height,text_size) (
+  locked=sounding || (play_state&1) || play_state==5;
+  i=0; loop(12,
+    key_name(#major_key,i); spell_note(#minor_key,i,5);
+    sprintf(#text,"%s/%s",#minor_key,#major_key);
+    x=floor(18+i*(gfx_w-36)/12); w=floor(18+(i+1)*(gfx_w-36)/12)-x;
+    button(x,60,w,25,#text,key==i,locked) ? ui_command(i);
+    i+=1;
+  );
+  i=0; loop(7,
+    d=(i+5)%7; index=saved+d*4;
+    d==0 ? strcpy(#roman,"I") : d==1 ? strcpy(#roman,"ii") : d==2 ? strcpy(#roman,"iii") :
+    d==3 ? strcpy(#roman,"IV") : d==4 ? strcpy(#roman,"V") : d==5 ? strcpy(#roman,"vi") :
+    strcpy(#roman,index[1]==0 ? "vii°" : "viiø");
+    selected=degree==d; x=floor(18+i*(gfx_w-36)/7); w=floor(18+(i+1)*(gfx_w-36)/7)-x;
+    button(x,85,w,29,"",selected,0) ? ui_command(12+i);
+    bass=chord_note(key,d,index[2],0,index[3],3+index[1]);
+    spell_note(#bass,key,d+voice_role(index[2],3+index[1])*2);
+    spell_note(#root,key,d);
+    chord_quality(#quality,d,index[1]);
+    index[1]==0 && strcmp(#quality,"M")==0 ? strcpy(#quality,"");
+    sprintf(#text,"%s %s%s/%s%d",#roman,#root,#quality,#bass,floor(written_step(key,bass)/7));
+    gfx_setfont(1,"DejaVu Sans",10*font_scale,selected ? 'b' : 0); gfx_measurestr(#text,text_width,text_height);
+    text_size=10*min(1,(w-8)/max(1,text_width));
+    centered_style(x,85,w,29,#text,text_size,selected ? text_selected_color : text_color,selected);
+    index[0] ? (ink(selected ? text_selected_color : text_muted_color,1); gfx_circle(x+w-4,89,1.2,1,1););
+    i+=1;
+  );
+);
+function ui_draw(map_height,guitar_height) local(i,map_width,guitar_y,map_x,staff_width) (
+  ui_heartbeat=time_precise();
+  clicked=(mouse_cap&1) && !(previous_mouse&1);
+  !(mouse_cap&1) && (previous_mouse&1) ? ui_command(24);
+  previous_mouse=mouse_cap;
+  gfx_clear=0;
+  ink(background_color,1); gfx_rect(0,0,gfx_w,gfx_h);
+  gfx_setfont(1,"DejaVu Sans",16*font_scale,'b'); ink(text_color,1);
+  gfx_x=18; gfx_y=22; gfx_drawstr("CHORD LAB");
+  gfx_setfont(3,"DejaVu Sans",10); ink(text_muted_color,1);
+  gfx_x=170; gfx_y=22;
+  gfx_drawstr("Row 1: key · Row 2: chord · K/L: move · ;: save · Enter: reset",6,gfx_w-18,46);
+  draw_choices();
+  staff_width=min(170,max(156,(gfx_w-36)*.21)); map_x=18+staff_width+14;
+  map_width=max(1,gfx_w-map_x-18);
+  guitar_y=149+map_height;
+  draw_keyboard(map_x,135,map_width,map_height);
+  draw_guitar(map_x,guitar_y,map_width,guitar_height);
+);

@@ -1,0 +1,56 @@
+desc:Chord Lab temporary staff math probe
+in_pin:none
+out_pin:none
+slider1:-1<-1,10000,1>Checks
+slider2:-1<-1,10000,1>Failures
+import ChordLab/harmony.jsfx-inc
+@init
+checks=0; failures=0;
+function check(condition) (checks+=1; !condition ? failures+=1;);
+k=0;
+loop(12,
+  n=0;
+  loop(128,
+    position=written_step(k,n); letter=pitch_letter(k,n); accidental=pitch_accidental(k,n);
+    check(12*(floor(position/7)+1)+major_step(letter)+accidental==n);
+    check(abs(accidental)<=1);
+    spell_pitch(#name,k,n); strcpy_substr(#letter,"CDEFGAB",letter,1);
+    check(str_getchar(#name,0)==str_getchar(#letter,0));
+    n+=1;
+  );
+  k+=1;
+);
+check(written_step(0,40)==16); // E2, first ledger below bass
+check(written_step(0,60)==28); // shared C4
+check(written_step(0,81)==40); // A5, first ledger above treble
+check(written_step(0,36)==14); // C2, second ledger below bass
+check(written_step(0,84)==42); // C6, second ledger above treble
+check(written_step(6,59)==28); // Cb4, not Cb3
+check(pitch_accidental(6,59)==-1);
+check(staff_side(28,-100,0)==0);
+check(staff_side(29,28,0)==1);
+check(staff_side(30,29,1)==0);
+check(staff_side(32,30,0)==0); // thirds vertically aligned
+check(staff_side(28,28,0)==1); // chromatic unison displaced
+k=0;
+loop(12,
+  d=0;
+  loop(7,
+    n=60+(k+major_step(d))%12;
+    check(signature_accidental(k,pitch_letter(k,n))==pitch_accidental(k,n));
+    d+=1;
+  );
+  c=key_signature(k); i=0;
+  loop(abs(c),
+    check(signature_position(i,c<0)%7==signature_letter(i,c<0));
+    check((signature_position(i,c<0)-14)%7==signature_letter(i,c<0));
+    i+=1;
+  );
+  k+=1;
+);
+check(signature_accidental(7,3)==1); // G major F#; F natural needs a natural sign.
+check(pitch_accidental(7,65)==0);
+check(signature_accidental(6,6)==-1); // Gb major includes Bb.
+check(pitch_accidental(6,71)==-1); // B is diatonically spelled Cb in Gb.
+check(pitch_accidental(6,70)==-1); // Bb remains covered by the signature.
+slider1=checks; slider2=failures;

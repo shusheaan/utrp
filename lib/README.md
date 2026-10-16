@@ -1,7 +1,7 @@
 # lib — 音色库(patch 即代码)
 
-utrp 的声音资产层:合成器 patch 全部以文本/小文件形式进 git,宿主通过 symlink
-看到它们。目标是让"调音色"像写代码:可 diff、可回滚、git 历史即作者证据链。
+utrp 的声音资产层:合成器 patch 以小文件形式进 git,宿主通过 symlink
+看到它们。目标是让"调音色"像写代码:参数可提取比对、文件可回滚、git 历史保留修改记录。
 
 在此之上,lib 承载三条核心能力线(详见下文"三大支柱"):
 
@@ -16,7 +16,7 @@ utrp 的声音资产层:合成器 patch 全部以文本/小文件形式进 git,�
 
 ```
 lib/
-  surge/           # Surge XT patch(.fxp,内容为 XML),按 collection 分子目录
+  surge/           # Surge XT patch(.fxp 二进制，含 XML／可能含 wavetable),按 collection 分子目录
     endless/       # Frank Ocean《Endless》复刻实验(2026-08-09 起)
     sega-universe/ # Sega Bodega《I Created The Universe…》
     tev-woods/     # Tev Woods
@@ -24,6 +24,8 @@ lib/
   tools/
     pipeline/      # 支柱 1+2:spec TOML -> 分析/browse/渲染/评分/鼓 MIDI/RPP
     harmony/       # 支柱 3:voicing 键盘探索 + simulation 表演层(YAML 驱动)
+    library/       # synth.rpp 一次性迁移 + 单音色在线试听管理
+    chordlab/      # 纯 REAPER 实时七和弦工具：电脑键盘 + 钢琴/吉他音位图
     simulate/      # Rust 薄适配器:path dependency 复用根 utrp::simulator,
                    # 与 TUI 共享进行/指板引擎，headless 输出事件 JSON
     <collection>/  # 各专辑的提取数据(data/)+ 未泛化的特例脚本(存档)
@@ -33,7 +35,7 @@ lib/
 - 按引擎分顶层目录(以后可加 zyn/、sfz/、drumkv1/),按主题分 collection 子目录
 - 命名:`<目标>-<变体>.fxp`;收录时在 Surge 的 patch comment 里写一行配方要点
   (如 `2saw det7 | LP24@1.8k | A550ms | chorus+hall`)
-- **只进文本类 patch。任何音频物料(采样、渲染、stem)留 `~/storage`,
+- **只收小型音色 patch（FXP 不是纯文本）。任何音频物料(采样、渲染、stem)留 `~/storage`,
   尤其从唱片切的采样绝不进这个公开仓库**
 
 ## 三大支柱
@@ -73,6 +75,10 @@ browse 给 top-24,人挑 4–5 个进 spec 再精调。
 grid.html 做成可编辑回写 MIDI。
 
 ### 3. 和声探索:键盘即和弦实验台
+
+**REAPER 内实时试听 / 学习**：[`tools/chordlab/`](tools/chordlab/README.md)
+提供独立 JSFX + 原生 VKB 接入，单键七和弦与实时转位、D2–D6 钢琴与
+17 品吉他指板；可和外接 MIDI 共用 synth，并录下实际和弦音符。
 
 `tools/harmony/`(用法见其 README)两条线,音色都来自本库 patch:
 
@@ -114,3 +120,5 @@ endless-ref、sega-universe、tev-woods、magdalene,目标与配方见各工程 
 Somewhere/Florida/Higgs),magdalene 加 M5–M9 五目标(sad day wash+lead/
 mary magdalene arp+grind/cellophane),含 refine 精调版与 varispeed 发现
 (Endless 全轨 ±40–50c 磁带漂移),细节见两工程 README「第二轮目标」。
+
+日常 REAPER 音色入口及隔离原则见 [`tools/library/README.md`](tools/library/README.md)。

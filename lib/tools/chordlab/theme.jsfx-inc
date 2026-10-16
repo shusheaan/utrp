@@ -1,0 +1,16 @@
+// Generated from theme.toml by install.py. Do not edit independently.
+@init
+root_color=$xCE303A;
+third_color=$x258448;
+fifth_color=$xDC872C;
+seventh_color=$x477CEC;
+ninth_color=$x8B3DB8;
+external_color=$x707070;
+background_color=$xB3B3B3;
+button_color=$xA5A5A5;
+button_hover_color=$x969696;
+button_selected_color=$x707070;
+text_color=$x202020;
+text_muted_color=$x505050;
+text_selected_color=$xFFFFFF;
+font_scale=1.45;
