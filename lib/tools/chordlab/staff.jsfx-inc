@@ -8,7 +8,7 @@ function staff_accidental(x,y,accidental) local(source,scale) (
   gfx_blit(0,1,0,source,0,128,256,x-16*scale,y-160*scale,128*scale,256*scale);
 );
 function staff_clef(x,anchor,bass) local(scale) (
-  scale=19*.62/30;
+  scale=19*staff_clef_scale/30;
   gfx_blit(0,1,0,bass ? 128 : 0,0,128,256,
     x-16*scale,anchor-160*scale,128*scale,256*scale);
 );

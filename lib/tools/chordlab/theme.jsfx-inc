@@ -14,3 +14,6 @@ text_color=$x202020;
 text_muted_color=$x505050;
 text_selected_color=$xFFFFFF;
 font_scale=1.45;
+piano_height_ratio=0.85;
+guitar_height_ratio=0.6;
+staff_clef_scale=0.62;

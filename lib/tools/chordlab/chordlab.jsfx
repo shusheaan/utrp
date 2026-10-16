@@ -113,8 +113,10 @@ file_avail(0)>=0 ? (
 );
 
 @gfx 884 565
-// Shared geometry keeps the staff and guitar white panels on the same baseline.
-layout_piano_height=max(40,floor((gfx_h-197)/2));
-layout_guitar_height=max(40,floor(layout_piano_height*.85+.5));
+// Keep the outer panel fixed; the staff fills the keyboard/guitar stack.
+layout_map_height=max(40,floor((gfx_h-197)/2));
+layout_piano_height=max(40,floor(layout_map_height*piano_height_ratio+.5));
+layout_guitar_height=max(40,floor(layout_map_height*guitar_height_ratio+.5));
 ui_draw(layout_piano_height,layout_guitar_height);
-draw_staff(18,135,min(170,max(156,(gfx_w-36)*.21)),layout_piano_height+14+layout_guitar_height);
+layout_staff_height=layout_piano_height+14+layout_guitar_height;
+draw_staff(18,135,min(170,max(156,(gfx_w-36)*.21)),layout_staff_height);

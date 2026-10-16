@@ -30,6 +30,24 @@ def test_theme_is_generated_consistently() -> None:
     assert module.make_theme(SOURCE) == (SOURCE / "theme.jsfx-inc").read_text()
 
 
+@pytest.mark.parametrize("name", ["piano_height_ratio", "guitar_height_ratio", "staff_clef_scale"])
+@pytest.mark.parametrize("value", ["0.24", "1.01", "true", '"small"', "nan", "inf"])
+def test_diagram_scales_reject_invalid_values(tmp_path: Path, name: str, value: str) -> None:
+    lines = (SOURCE / "theme.toml").read_text().splitlines()
+    (tmp_path / "theme.toml").write_text("\n".join(
+        f"{name} = {value}" if line.startswith(f"{name} =") else line for line in lines
+    ))
+    with pytest.raises(ValueError, match=name):
+        module.make_theme(tmp_path)
+
+
+def test_diagram_scales_are_generated() -> None:
+    theme = module.make_theme(SOURCE)
+    assert "piano_height_ratio=0.85;" in theme
+    assert "guitar_height_ratio=0.6;" in theme
+    assert "staff_clef_scale=0.62;" in theme
+
+
 def test_mapping_is_exact_and_unique() -> None:
     rows = [line.split() for line in (SOURCE / "reaper-vkbmap.txt").read_text().splitlines()
             if line and not line.startswith(";")]

@@ -51,6 +51,11 @@ def make_theme(source: Path) -> str:
     if not isinstance(scale, (int, float)) or not 1 <= scale <= 2:
         raise ValueError("font_scale must be in 1..2")
     lines.append(f"font_scale={scale};")
+    for name in ("piano_height_ratio", "guitar_height_ratio", "staff_clef_scale"):
+        value = raw[name]
+        if isinstance(value, bool) or not isinstance(value, (int, float)) or not 0.25 <= value <= 1:
+            raise ValueError(f"{name} must be in 0.25..1")
+        lines.append(f"{name}={value};")
     return "\n".join(lines) + "\n"
 
 

@@ -13,3 +13,7 @@ text = "#202020"
 text_muted = "#505050"
 text_selected = "#FFFFFF"
 font_scale = 1.45
+# Compact diagrams independently without resizing the outer panel.
+piano_height_ratio = 0.85
+guitar_height_ratio = 0.60
+staff_clef_scale = 0.62
