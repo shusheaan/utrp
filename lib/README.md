@@ -21,6 +21,7 @@ lib/
     sega-universe/ # Sega Bodega《I Created The Universe…》
     tev-woods/     # Tev Woods
     magdalene/     # FKA twigs《MAGDALENE》
+    crying-in-a-loop/ # Crying in a Loop（3 个音色）
   tools/
     pipeline/      # 支柱 1+2:spec TOML -> 分析/browse/渲染/评分/鼓 MIDI/RPP
     harmony/       # 支柱 3:voicing 键盘探索 + simulation 表演层(YAML 驱动)

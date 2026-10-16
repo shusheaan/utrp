@@ -1,7 +1,9 @@
 # Synth Library — 单音色试听工程
 
-目标：85 个仓库 FXP 按四张专辑分组，保留 Storage 中一个参数不同的版本；
-86 条 synth 轨共用一个 Chord Lab 输入。不是 86 层叠加演奏器。
+当前：88 个仓库 FXP 按五个 collection 分组，保留 Storage 中一个参数不同的版本；
+89 条 synth 轨共用一个 Chord Lab 输入。不是多层叠加演奏器。
+
+- `Crying in a Loop`：3 个音色（01、02、03）。
 
 ## 文件边界
 

@@ -1,0 +1,41 @@
+name = "Crying in a Loop"
+reference_url = "https://www.youtube.com/watch?v=jmHVxvEnUEU"
+
+[[patches]]
+file = "01.fxp"
+name = "01"
+base = "Giana Brotherz / Pads / Deep Choir"
+original_author = "Sola"
+description = "暗色人声雾；Filter 2 约 651 Hz；attack 702 ms、release 2.09 s；reverb 2.50 s。"
+
+[[patches]]
+file = "02.fxp"
+name = "02"
+base = "Damon Armani / Pads / Freedom Message"
+original_author = "Damon Armani"
+description = "明亮空气波表 Pad；cutoff 约 2.8 kHz；attack 400 ms、release 1.8 s；reverb mix 25%、decay 2.7 s。"
+
+[[patches]]
+file = "03.fxp"
+name = "03"
+base = "01.fxp"
+original_author = "Sola"
+description = "更慢起音、更暗滤波、更少滤波包络起伏、更长且柔化高频的混响。"
+
+[patches.tweaks]
+"A Filter 2 Cutoff" = "478.31 Hz"
+"A Filter 2 FEG Mod Amount" = "3.00 semitones"
+"A Amp EG Attack" = "1.20 s"
+"A Amp EG Release" = "3.00 s"
+"A Filter EG Attack" = "1.40 s"
+"A Filter EG Decay" = "3.00 s"
+"A Filter EG Sustain" = "35.16 %"
+"A Filter EG Release" = "3.00 s"
+"A Send FX 2 Level" = "-20.05 dB"
+"FX S1 Decay Time" = "3.80 s"
+"FX S1 Pre-Delay" = "12.05 ms"
+"FX S1 HF Damping" = "44.92 %"
+"FX S1 High Cut" = "2991.51 Hz"
+"FX S1 Low Cut" = "159.22 Hz"
+"FX G1 Depth" = "8.01 cents"
+"FX G1 Mix" = "16.02 %"
