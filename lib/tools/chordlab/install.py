@@ -41,7 +41,7 @@ def update_section(text: str, section: str, changes: dict[str, str | None]) -> s
 def make_theme(source: Path) -> str:
     raw = tomllib.loads((source / "theme.toml").read_text())
     lines = ["// Generated from theme.toml by install.py. Do not edit independently.", "@init"]
-    for role in ("root", "third", "fifth", "seventh", "ninth", "external", "background", "button",
+    for role in ("root", "third", "fifth", "seventh", "ninth", "external", "background", "diagram_background", "button",
                  "button_hover", "button_selected", "text", "text_muted", "text_selected"):
         color = raw[role]
         if not isinstance(color, str) or not re.fullmatch(r"#[0-9A-Fa-f]{6}", color):
@@ -51,10 +51,15 @@ def make_theme(source: Path) -> str:
     if not isinstance(scale, (int, float)) or not 1 <= scale <= 2:
         raise ValueError("font_scale must be in 1..2")
     lines.append(f"font_scale={scale};")
-    for name in ("piano_height_ratio", "guitar_height_ratio", "staff_clef_scale"):
+    for name in ("piano_height_ratio", "guitar_height_ratio", "staff_clef_scale", "staff_accidental_scale"):
         value = raw[name]
         if isinstance(value, bool) or not isinstance(value, (int, float)) or not 0.25 <= value <= 1:
             raise ValueError(f"{name} must be in 0.25..1")
+        lines.append(f"{name}={value};")
+    for name, lower, upper in (("note_radius", 5, 9), ("note_font_size", 9, 15), ("staff_accidental_gap", 20, 40)):
+        value = raw[name]
+        if isinstance(value, bool) or not isinstance(value, (int, float)) or not lower <= value <= upper:
+            raise ValueError(f"{name} must be in {lower}..{upper}")
         lines.append(f"{name}={value};")
     return "\n".join(lines) + "\n"
 

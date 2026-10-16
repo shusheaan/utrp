@@ -1,4 +1,4 @@
--- Scratch-only: shared-degree memory, reset, type changes, and real RPP reload.
+-- Scratch-only: automatic move memory, reset, type changes, and real RPP reload.
 local _,path=reaper.EnumProjects(-1,'')
 assert(path:match('^/tmp/chordlab%-'),'Scratch project only')
 local t=reaper.GetTrack(0,0)
@@ -23,8 +23,14 @@ local cases={
   function() tap(60); hold() end,
   function() voices({60,64,67,71}); tap(85) end,
   function() voices({60,62,64,67,71}); tap(80) end,
-  function() voices({62,64,67,71,72}); tap(81) end,
+  function() voices({62,64,67,71,72}); check(p(14)>0,'Move did not update memory') end,
   function() release() end,
+  function() reaper.StuffMIDIMessage(0,0x9f,75,100) end,
+  function()
+    check(p(1)==1 and p(2)==0 and p(3)==60 and p(15)==1,'Move changed another degree')
+    reaper.StuffMIDIMessage(0,0x8f,75,0); hold()
+  end,
+  function() voices({62,64,67,71,72}); release() end,
   function() tap(61) end,
   function() hold() end,
   function()
@@ -38,8 +44,11 @@ local cases={
     voices({60,62,64,67,71}); check(p(15)==2 and p(2)==0 and p(3)==60,'Reset not remembered'); tap(85)
   end,
   function() voices({60,64,67}); tap(79) end,
-  function() voices({55,60,64}); tap(81) end,
+  function() voices({55,60,64}) end,
   function() release() end,
+  -- Idle K/L movement also persists, without pressing the semicolon save key.
+  function() tap(80) end,
+  function() tap(79) end,
   function()
     check(p(8)==0,'Still sounding'); reaper.TrackFX_SetParam(t,fx,13,0)
     reaper.Main_SaveProject(0,false); reaper.Main_OnCommand(40860,0)

@@ -4,6 +4,7 @@ assert(path:sub(1,5)=='/tmp/','Audit only a disposable project copy')
 assert(reaper.GetExtState('utrp.library','running')~='','Start Library mode first')
 local source=reaper.GetTrack(project,0)
 local master=reaper.GetMasterTrack(project)
+local old_vkb=reaper.GetToggleCommandState(40377)
 local old_volume=reaper.GetMediaTrackInfo_Value(master,'D_VOL')
 local tracks={}
 for i=0,reaper.CountTracks(project)-1 do
@@ -12,9 +13,11 @@ for i=0,reaper.CountTracks(project)-1 do
   if id~='' then tracks[#tracks+1]={track=t,id=id,index=i} end
 end
 assert(#tracks>0,'No library instruments')
--- Explicit test setup: selection must never reopen a synth editor.
+-- Start from a clean editor baseline; each selection must open only its synth.
 for _,e in ipairs(tracks) do reaper.TrackFX_Show(e.track,0,2) end
 reaper.TrackFX_Show(source,0x1000000,3)
+-- Seed VKB for computer-channel checks; subsequent selections keep it open.
+if old_vkb==0 then reaper.Main_OnCommand(40377,0) end
 local log=assert(io.open('/tmp/library-audio-results.tsv','w'))
 log:write('index\tpatch\tcomputer_peak\tmidi_message_peak\theld\tonline\tsolo\tarmed\tsurge_windows\taudio_xrun\tmedia_xrun\n');log:flush()
 local index,phase,deadline,peak,computer_peak=1,'select',0,0,0
@@ -29,6 +32,7 @@ local function cleanup()
   if reaper.ValidatePtr2(project,master,'MediaTrack*') then
     reaper.SetMediaTrackInfo_Value(master,'D_VOL',old_volume)
   end
+  if reaper.GetToggleCommandState(40377)~=old_vkb then reaper.Main_OnCommand(40377,0) end
   log:close()
 end
 reaper.atexit(cleanup)
@@ -41,6 +45,9 @@ local function tick()
     deadline=now+.6;phase='settle'
   elseif phase=='settle' and now>=deadline then
     assert(not reaper.TrackFX_GetOffline(current.track,0),'Manager failed to activate synth')
+    assert(reaper.TrackFX_GetFloatingWindow(current.track,0),'Selected Surge editor missing')
+    assert(reaper.TrackFX_GetOpen(source,0x1000000),'Shared Chord Lab editor missing')
+    assert(reaper.GetToggleCommandState(40377)==1,'Native VKB missing')
     reaper.StuffMIDIMessage(0,0x9f,74,88)
     peak=0;deadline=now+2;phase='computer'
   elseif phase=='computer' or phase=='hardware' then
@@ -59,7 +66,7 @@ local function tick()
           armed=armed+reaper.GetMediaTrackInfo_Value(reaper.GetTrack(project,i),'I_RECARM')
         end
         assert(online==1,'More than one synth online')
-        assert(solo==1 and armed==1 and windows==0,'Audition isolation failed')
+        assert(solo==1 and armed==1 and windows==1,'Audition isolation failed')
         assert(reaper.Track_GetPeakInfo(master,0)==0,'Audit master must remain silent')
         local audio_xrun,media_xrun=reaper.GetUnderrunTime()
         log:write(current.index,'\t',current.id,'\t',computer_peak,'\t',peak,'\t',

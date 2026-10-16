@@ -1,10 +1,10 @@
 @init
-// Written diatonic coordinates: C2=14, C4=28, C6=42; one step is half a staff space.
-function staff_accidental(x,y,accidental) local(source,scale) (
+// Visible range: E2=16, C4=28, A5=40; one step is half a staff space.
+function staff_accidental(x,y,accidental,size_ratio) local(source,scale) (
   source=accidental<0 ? 256 : accidental>0 ? 384 : 512;
   // Bravura: 250 font units per staff space; atlas uses .12 pixels per font unit.
   // All symbols share the exact pitch origin (16,160), regardless of their bbox.
-  scale=19*.58/30; // Fixed glyph size; pitch spacing only changes the anchor.
+  scale=19*.58*size_ratio/30; // Fixed glyph size; pitch spacing only changes the anchor.
   gfx_blit(0,1,0,source,0,128,256,x-16*scale,y-160*scale,128*scale,256*scale);
 );
 function staff_clef(x,anchor,bass) local(scale) (
@@ -17,13 +17,13 @@ function staff_signature(x,centre,w,step) local(count,i,position,sx,sign) (
   loop(abs(count),
     position=signature_position(i,count<0);
     sx=x+46+i*9*.90;
-    staff_accidental(sx,centre-(position-28)*step,sign);
-    staff_accidental(sx,centre-(position-14-28)*step,sign);
+    staff_accidental(sx,centre-(position-28)*step,sign,1);
+    staff_accidental(sx,centre-(position-14-28)*step,sign,1);
     i+=1;
   );
 );
 function staff_lines(x,y,w,h,centre,step) local(i,nx) (
-  ink($xe9edf0,1); gfx_rect(x,y,w,h);
+  ink(diagram_background_color,1); gfx_rect(x,y,w,h);
   ink($x777777,1); i=0;
   loop(5,
     gfx_rect(x+8,centre-(30+2*i-28)*step-1,w-16,2);
@@ -49,31 +49,31 @@ function staff_ledgers(x,y,position,step,radius) local(line) (
     gfx_rect(x-radius-4,y+(position-line)*step-1,2*radius+8,2); line-=2;
   );
 );
-function staff_note(x,y,note,role,side,step) local(lit,accidental) (
+function staff_note(x,y,note,role,side,step,scale_view) local(lit,accidental) (
   lit=(sounding && own[note]) || hardware_held(note)>0;
   accidental=pitch_accidental(key,note);
   accidental!=signature_accidental(key,pitch_letter(key,note)) ? (
     gfx_a=lit ? 1 : .6;
-    staff_accidental(x-19-side*20,y,accidental);
+    staff_accidental(x-staff_accidental_gap-side*20,y,accidental,staff_accidental_scale);
     gfx_a=1;
   );
   // A 2 px rect at y-1 covers pixel rows y-1 and y: its visible centre is y-.5.
-  note_dot(x,y-.5,role,note);
+  note_dot(x,y-.5,role,note,scale_view);
 );
-function draw_staff(x,y,w,h) local(step,centre,note,position,role,previous,side,nx,layer) (
+function draw_staff(x,y,w,h,scale_view) local(step,centre,note,position,role,previous,side,nx,layer) (
   // Half-pixel spaces retain exact pitch centres; symbol size is independent of spacing.
-  step=min(11.5,max(1,floor((h-28)/14)/2)); centre=floor(y+h/2+.5);
+  step=min(11.5,max(1,floor((h-28)/12)/2)); centre=floor(y+h/2+.5);
   staff_lines(x,y,w,h,centre,step); layer=0;
   // Paint every ledger before any circle; never stripe another chord note.
   loop(2,
     previous=-100; side=0; note=34;
     loop(54,
-      position=written_step(key,note); role=chord_role(note%12,key,degree,voice_count);
-      position>=14 && position<=42 && (role>=0 || hardware_held(note)>0) ? (
+      position=written_step(key,note); role=diagram_role(note%12,key,degree,voice_count,scale_view);
+      staff_in_range(position) && (role>=0 || hardware_held(note)>0) ? (
         side=staff_side(position,previous,side); previous=position;
         nx=floor(x+w*.79+.5)+side*20;
-        layer==0 ? staff_ledgers(nx,centre-(position-28)*step,position,step,9) :
-          staff_note(nx,centre-(position-28)*step,note,role,side,step);
+        layer==0 ? staff_ledgers(nx,centre-(position-28)*step,position,step,note_radius) :
+          staff_note(nx,centre-(position-28)*step,note,role,side,step,scale_view);
       );
       note+=1;
     );

@@ -112,11 +112,21 @@ file_avail(0)>=0 ? (
   memory_version=2; file_var(0,memory_version); file_mem(0,saved,28);
 );
 
-@gfx 884 565
-// Keep the outer panel fixed; the staff fills the keyboard/guitar stack.
-layout_map_height=max(40,floor((gfx_h-197)/2));
-layout_piano_height=max(40,floor(layout_map_height*piano_height_ratio+.5));
-layout_guitar_height=max(40,floor(layout_map_height*guitar_height_ratio+.5));
-ui_draw(layout_piano_height,layout_guitar_height);
-layout_staff_height=layout_piano_height+14+layout_guitar_height;
-draw_staff(18,135,min(170,max(156,(gfx_w-36)*.21)),layout_staff_height);
+@gfx 884 683
+// Two equal diagram groups: major-scale context above, selected chord below.
+// No internal title row: reserve the reclaimed 36px for the external VKB.
+layout_group_height=max(160,floor((gfx_h-142)/2));
+layout_available=layout_group_height-12;
+layout_piano_height=floor(layout_available*piano_height_ratio/(piano_height_ratio+guitar_height_ratio));
+layout_guitar_height=layout_available-layout_piano_height;
+layout_staff_width=min(170,max(156,(gfx_w-36)*.21));
+layout_map_x=18+layout_staff_width+14;
+layout_map_width=max(1,gfx_w-layout_map_x-18);
+layout_chord_y=72+layout_group_height;
+ui_begin();
+draw_key_choices(10);
+draw_maps(layout_map_x,47,layout_map_width,layout_piano_height,layout_guitar_height,1);
+draw_staff(18,47,layout_staff_width,layout_group_height,1);
+draw_chord_choices(layout_chord_y);
+draw_maps(layout_map_x,layout_chord_y+41,layout_map_width,layout_piano_height,layout_guitar_height,0);
+draw_staff(18,layout_chord_y+41,layout_staff_width,layout_group_height,0);

@@ -26,6 +26,9 @@ local function route(target)
   end
   for _,e in ipairs(entries) do
     local enabled=e.track==target
+    if not enabled and reaper.TrackFX_GetFloatingWindow(e.track,0) then
+      reaper.TrackFX_Show(e.track,0,2)
+    end
     if not enabled and not reaper.TrackFX_GetOffline(e.track,0) then
       reaper.TrackFX_SetOffline(e.track,0,true)
     end
@@ -39,6 +42,21 @@ local function route(target)
     local dest=reaper.GetTrackSendInfo_Value(input,0,i,'P_DESTTRACK')
     if dest==target then reaper.SetTrackSendInfo_Value(input,0,i,'B_MUTE',0) end
   end
+end
+local function show_editors(target)
+  -- Only an explicit selection change requests focus, never the polling loop.
+  -- Include VKB even when Chord Lab was already open on the previous track.
+  reaper.TrackFX_Show(target,0,3)
+  for i=0,reaper.TrackFX_GetRecCount(input)-1 do
+    local fx=i|0x1000000
+    local ok,ident=reaper.TrackFX_GetNamedConfigParm(input,fx,'fx_ident')
+    if ok and ident=='ChordLab/chordlab.jsfx' then
+      reaper.TrackFX_Show(input,fx,3)
+      if reaper.GetToggleCommandState(40377) ~= 1 then reaper.Main_OnCommand(40377,0) end
+      return
+    end
+  end
+  error('Shared Chord Lab Input FX is missing')
 end
 local function cleanup()
   if reaper.GetExtState(section,'running')~=token then return end
@@ -68,6 +86,7 @@ local function tick()
   if chosen~=active or not initialized then
     route(chosen);active=chosen;initialized=true
   end
+  if clicked then show_editors(clicked) end
   reaper.defer(tick)
 end
 -- The fixed source remains the only armed track. Selecting synths never adds Input FX.

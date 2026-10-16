@@ -53,4 +53,31 @@ check(pitch_accidental(7,65)==0);
 check(signature_accidental(6,6)==-1); // Gb major includes Bb.
 check(pitch_accidental(6,71)==-1); // B is diatonically spelled Cb in Gb.
 check(pitch_accidental(6,70)==-1); // Bb remains covered by the signature.
+// Every major key has exactly seven scale tones in the four requested colors.
+k=0;
+loop(12,
+  pc=0; members=0;
+  loop(12,
+    role=scale_role(pc,k);
+    check(role>=-1 && role<=3); // No purple ninth in the scale view.
+    role>=0 ? members+=1;
+    d=0;
+    loop(7,
+      check(diagram_role(pc,k,d,5,1)==role);
+      check(diagram_role(pc,k,d,5,0)==chord_role(pc,k,d,5));
+      d+=1;
+    );
+    pc+=1;
+  );
+  check(members==7);
+  d=0;
+  loop(7,
+    expected=d==0 ? 0 : d<=2 ? 1 : d<=4 ? 2 : 3;
+    check(scale_role((k+major_step(d))%12,k)==expected);
+    d+=1;
+  );
+  k+=1;
+);
+check(staff_in_range(16)); check(staff_in_range(40));
+check(!staff_in_range(15)); check(!staff_in_range(41));
 slider1=checks; slider2=failures;

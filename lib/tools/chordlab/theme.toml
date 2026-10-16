@@ -6,6 +6,8 @@ seventh = "#477CEC"
 ninth = "#8B3DB8"
 external = "#707070"
 background = "#B3B3B3"
+# One shared light surface for staff, piano white keys and guitar fretboards.
+diagram_background = "#E9EDF0"
 button = "#A5A5A5"
 button_hover = "#969696"
 button_selected = "#707070"
@@ -13,7 +15,12 @@ text = "#202020"
 text_muted = "#505050"
 text_selected = "#FFFFFF"
 font_scale = 1.45
-# Compact diagrams independently without resizing the outer panel.
-piano_height_ratio = 0.85
-guitar_height_ratio = 0.60
-staff_clef_scale = 0.62
+# Equal heights inside both diagram groups, sharing the staff's total height.
+piano_height_ratio = 0.50
+guitar_height_ratio = 0.50
+staff_clef_scale = 0.56
+note_radius = 7
+note_font_size = 12
+# Temporary accidentals only: smaller than the signature, farther left of notes.
+staff_accidental_scale = 0.75
+staff_accidental_gap = 34

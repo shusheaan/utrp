@@ -30,7 +30,25 @@ def test_theme_is_generated_consistently() -> None:
     assert module.make_theme(SOURCE) == (SOURCE / "theme.jsfx-inc").read_text()
 
 
-@pytest.mark.parametrize("name", ["piano_height_ratio", "guitar_height_ratio", "staff_clef_scale"])
+def test_shared_diagram_background_is_configurable(tmp_path: Path) -> None:
+    text = (SOURCE / "theme.toml").read_text().replace(
+        'diagram_background = "#E9EDF0"', 'diagram_background = "#fafafa"'
+    )
+    (tmp_path / "theme.toml").write_text(text)
+    assert "diagram_background_color=$xFAFAFA;" in module.make_theme(tmp_path)
+
+
+@pytest.mark.parametrize("value", ['"#fff"', '"#GGGGGG"', "123"])
+def test_shared_diagram_background_rejects_invalid_colors(tmp_path: Path, value: str) -> None:
+    text = (SOURCE / "theme.toml").read_text().replace(
+        'diagram_background = "#E9EDF0"', f"diagram_background = {value}"
+    )
+    (tmp_path / "theme.toml").write_text(text)
+    with pytest.raises(ValueError, match="diagram_background"):
+        module.make_theme(tmp_path)
+
+
+@pytest.mark.parametrize("name", ["piano_height_ratio", "guitar_height_ratio", "staff_clef_scale", "staff_accidental_scale"])
 @pytest.mark.parametrize("value", ["0.24", "1.01", "true", '"small"', "nan", "inf"])
 def test_diagram_scales_reject_invalid_values(tmp_path: Path, name: str, value: str) -> None:
     lines = (SOURCE / "theme.toml").read_text().splitlines()
@@ -43,9 +61,11 @@ def test_diagram_scales_reject_invalid_values(tmp_path: Path, name: str, value: 
 
 def test_diagram_scales_are_generated() -> None:
     theme = module.make_theme(SOURCE)
-    assert "piano_height_ratio=0.85;" in theme
-    assert "guitar_height_ratio=0.6;" in theme
-    assert "staff_clef_scale=0.62;" in theme
+    assert "piano_height_ratio=0.5;" in theme
+    assert "guitar_height_ratio=0.5;" in theme
+    assert "staff_clef_scale=0.56;" in theme
+    assert "staff_accidental_scale=0.75;" in theme
+    assert "staff_accidental_gap=34;" in theme
 
 
 def test_mapping_is_exact_and_unique() -> None:
@@ -123,3 +143,24 @@ def test_upgrade_adds_missing_known_runtime_assets(tmp_path: Path) -> None:
     module.install(SOURCE, tmp_path)
     for name in ("staff.jsfx-inc", "notation.png"):
         assert (tmp_path / "Effects/ChordLab" / name).resolve() == SOURCE / name
+
+
+@pytest.mark.parametrize("name", ["note_radius", "note_font_size"])
+@pytest.mark.parametrize("value", ["0", "16", "true", '\"small\"', "nan", "inf"])
+def test_note_sizes_reject_invalid_values(tmp_path: Path, name: str, value: str) -> None:
+    lines = (SOURCE / "theme.toml").read_text().splitlines()
+    (tmp_path / "theme.toml").write_text("\n".join(
+        f"{name} = {value}" if line.startswith(f"{name} =") else line for line in lines
+    ))
+    with pytest.raises(ValueError, match=name):
+        module.make_theme(tmp_path)
+
+
+@pytest.mark.parametrize("value", ["19", "41", "true", '\"left\"', "nan", "inf"])
+def test_accidental_gap_rejects_invalid_values(tmp_path: Path, value: str) -> None:
+    text = (SOURCE / "theme.toml").read_text().replace(
+        "staff_accidental_gap = 34", f"staff_accidental_gap = {value}"
+    )
+    (tmp_path / "theme.toml").write_text(text)
+    with pytest.raises(ValueError, match="staff_accidental_gap"):
+        module.make_theme(tmp_path)

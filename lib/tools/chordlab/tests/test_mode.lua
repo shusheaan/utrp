@@ -63,36 +63,35 @@ local function host(initially_open, initially_vkb)
 end
 local checks=0
 local function check(value) assert(value);checks=checks+1 end
-local s=host(false,true)
+local s=host(false,false)
 s.run('Chord Lab mode.lua')
--- Background startup suppresses a standalone VKB but does not open/bypass FX.
+-- Background startup never opens VKB or the FX editor.
 check(s.shows==0 and s.enables==0 and s.toggles[40377]==0)
 check(s.params[13]==0 and s.toggles[40637]==0)
 check(s.track.I_RECARM==1 and s.track.I_RECMON==1 and s.track.I_RECINPUT==6112)
 local writes=s.writes;s.tick();check(s.writes==writes)
--- Opening the Input FX editor, including its chain view, enables only computer input.
+-- Opening either Input FX editor view enables VKB and computer monitoring.
 s.chain=true;s.tick()
 check(s.toggles[40377]==1 and s.toggles[40637]==1 and s.params[13]==1)
 check(s.shows==0 and s.enabled and s.enables==0)
--- Moving between chain and floating windows is not a close/reopen transition.
 s.floating=true;s.chain=false;writes=s.writes;s.tick();check(s.writes==writes)
--- Hiding while computer notes are held schedules stop, but leaves processing/arm intact.
+-- Hiding the editor does not stop the open VKB or computer notes.
+s.toggles[40377]=1;s.tick();check(s.params[13]==1 and s.toggles[40637]==1)
 s.params[8]=1;s.floating=false;s.tick()
+check(s.stops==0 and s.params[13]==1 and s.toggles[40377]==1)
+check(s.track.I_RECARM==1 and s.track.I_RECMON==1 and s.enabled)
+-- Closing VKB releases generated notes but neither closes nor opens the editor.
+s.floating=true;s.tick();s.toggles[40377]=0;s.tick()
 check(s.stops==1 and s.params[13]==0 and s.toggles[40637]==0)
-check(s.toggles[40377]==0 and s.enabled and s.enables==0)
-check(s.track.I_RECARM==1 and s.track.I_RECMON==1)
+check(s.floating and s.enabled and s.enables==0)
 check(s.ext['utrp.chordlab/running']=='session')
--- MIDI state is consumed by the audio thread in the real host, not by this mock.
-s.params[8]=0
--- Reopening from Input FX resumes; closing VKB reciprocally hides the editor.
-s.floating=true;s.tick();check(s.params[13]==1 and s.toggles[40377]==1)
-s.toggles[40377]=0;s.tick()
-check(not s.floating and not s.chain and s.params[13]==0 and s.enabled)
-s.toggles[40377]=1;s.tick()
-check(s.floating and s.shows==1 and s.params[13]==1)
+writes=s.writes;s.tick();check(s.writes==writes and s.toggles[40377]==0)
+s.params[8]=0;s.floating=false;s.toggles[40377]=1;s.tick()
+check(not s.floating and s.shows==0 and s.params[13]==1)
+s.floating=true;s.tick()
 -- Stable polling and track selection never steal focus or change the input target.
 s.selected=s.other;writes=s.writes;s.tick()
-check(s.writes==writes and s.shows==1 and s.other.I_RECARM==0)
+check(s.writes==writes and s.shows==0 and s.other.I_RECARM==0)
 -- Explicit bypass is independent of windows; re-enable resumes computer input.
 s.enabled=false;s.tick()
 check(s.params[13]==0 and s.floating and s.toggles[40377]==1)
@@ -114,7 +113,7 @@ s.track.I_FXEN=1;s.tick();check(s.params[13]==1)
 s.other.I_RECARM=1;s.tick();check(s.params[13]==0 and s.warnings==1)
 s.tick();check(s.warnings==1)
 s.other.I_RECARM=0;s.tick();check(s.params[13]==1)
--- Project switch ends the session and restores the pre-session input/VKB state.
+-- Project switch restores input/send state, but preserves the manually opened VKB.
 s.project=2;s.tick();s.tick();check(s.deferred==nil)
 s.cleanup()
 check(s.ext['utrp.chordlab/running']==nil and s.params[13]==0)
@@ -122,12 +121,17 @@ check(s.track.I_RECINPUT==0 and s.track.I_RECARM==0 and s.track.I_RECMON==0)
 check(s.toggles[40377]==1 and s.toggles[40637]==0)
 -- Explicit Open retains its original action contract (open/start, then stop).
 s=host(false,false);s.exists=false;s.run('Open Chord Lab.lua');s.tick()
-check(s.exists and s.floating and s.shows==1 and s.params[13]==1)
+check(s.exists and s.floating and s.shows==1 and s.params[13]==1 and s.toggles[40377]==1)
 s.run('Open Chord Lab.lua');s.tick();s.tick();check(s.deferred==nil)
-s.cleanup();check(s.toggles[40377]==0 and s.ext['utrp.chordlab/running']==nil)
+s.cleanup();check(s.toggles[40377]==1 and s.ext['utrp.chordlab/running']==nil)
 -- A saved open FX editor is preserved; no fresh show/focus request at startup.
 s=host(true,false);s.run('Chord Lab mode.lua')
 check(s.floating and s.shows==0 and s.toggles[40377]==1 and s.params[13]==1)
 s.valid=false;s.tick();check(s.deferred==nil);s.cleanup()
 check(s.ext['utrp.chordlab/running']==nil)
+-- Pre-existing manual VKB remains open, even with no Chord Lab editor.
+s=host(false,true);s.run('Chord Lab mode.lua')
+check(not s.floating and s.params[13]==1 and s.toggles[40377]==1)
+s.toggles[40377]=0;s.tick();s.cleanup()
+check(s.toggles[40377]==0)
 print('Chord Lab window lifecycle: '..checks..' assertions passed')

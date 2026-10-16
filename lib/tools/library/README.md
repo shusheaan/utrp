@@ -17,18 +17,20 @@
 
 运行 `Start library.lua` 启动；重复运行不会关闭会话。
 启动时仅建立 MIDI 监听与试听路由，不主动打开 Chord Lab 或 Surge；工程保存的窗口状态由 REAPER 恢复。
-**单击另一条音色轨即可切换试听**，但不再打开或聚焦任何编辑器。
+**选中另一条音色轨即可切换试听，并同时打开该轨 Surge 与共享 Chord Lab**，并打开原生 VKB。
+切到文件夹／公共输入轨后再选回当前音色，也会重新打开编辑器，但不重新加载音色。
+只响应选中轨道的变化：手动关窗后不会被轮询立即打开；重复点击已选中的同一轨不算新的选择。
 所有音色轨共用输入，不逐轨复制 Chord Lab。点击专辑文件夹或公共输入轨不切音色。
 
-- **Chord Lab**：从 `CHORD LAB - shared MIDI input` 轨的 **Input FX** 打开；原生虚拟键盘同步出现，关闭任一窗口则一起隐藏。
-- **Surge**：从音色轨的普通 **FX** 单独打开／关闭，不带动 Chord Lab 或 VKB。
-- **显示与处理独立**：关闭编辑器不是 bypass。隐藏 Chord Lab 后 Input FX、arm／monitor 和实体 MIDI 通路保持运行；电脑按键输入随 VKB 关闭，电脑／鼠标持音会安全释放。
+- **Chord Lab**：选中音色轨时自动显示，也可从 `CHORD LAB - shared MIDI input` 轨的 **Input FX** 打开；同时打开原生 VKB。
+- **Surge**：选中音色轨时自动显示，也可从音色轨的普通 **FX** 单独打开／关闭；手动开关 Surge 不带动 Chord Lab 或 VKB。
+- **显示与处理独立**：关闭编辑器不是 bypass。隐藏 Chord Lab 后 Input FX、arm／monitor 和实体 MIDI 通路保持运行；隐藏编辑器只到期释放鼠标持音；电脑输入仍由打开的 VKB 提供，关闭 VKB 才停止电脑控制。
 - 插件是否处理由各自 FX 的启用／bypass 控制；重新打开 Chord Lab 不会自动取消 bypass。
-- 音色切换仍将旧 Surge 离线；REAPER 可能随离线关闭旧实例界面。这是资源策略，不是选轨自动弹窗。需要编辑某个音色时先选中该轨，再打开 FX。
-- 会话运行时 VKB 与 Chord Lab 双向同步；稳定轮询不反复开窗或抢焦点。独立打开 VKB 会同时显示 Chord Lab。
+- 音色切换关闭旧 Surge 浮窗并将旧实例离线，再加载新实例；选轨时打开新 Surge 与共享 Chord Lab。保持单个音色在线，不改其保存参数。
+- VKB 随打开 Chord Lab／选中音色轨显示，也可通过 **View → Virtual MIDI Keyboard** 手动开关。手动关闭后稳定轮询不强制重开；隐藏 Chord Lab 不关闭 VKB，关闭 VKB 也不隐藏 Chord Lab。
 
 点击某条音色轨的 **Solo** 也可以切换，管理器自动取消上一个 Solo：只保持当前 Surge 在线、
-只把公共 MIDI 发给它，其余 Surge 离线但状态仍保存在 RPP 中。
+只把公共 MIDI 发给它，其余 Surge 离线但状态仍保存在 RPP 中。仅改变 Solo、不改变选中轨道时，不自动打开编辑器。
 不选任何 Solo 就没有 synth 发声。不要 Solo 专辑文件夹，不要额外 arm synth 轨。
 
 先松开琴键再换轨／音色。离线切换会切断旧音色尾音，不支持跨音色连续长音。
@@ -45,12 +47,18 @@ MIDI 设备使用 channel 1–15，channel 16 留给电脑控制。
 ### 本机窗口布局
 
 布局规则独立放在 `~/work/gral/arch/sway/config`，不进入 MIDI／和声代码。
-当前 3440×1440 屏幕：左上 Chord Lab `(560, 300)`，大小 `884×646`；
-左下原生虚拟键盘 `(560, 946)`，大小 `884×150`；右侧 Surge `(1480, 300)`，
-当前实例大小 `1232×796`。左侧两窗等宽；原生键盘降低高度后琴键同步变窄，约显示五个八度。
-中央 C 为 MIDI 60（本机显示 C4），保持居中；左侧组合与 Surge 顶底对齐。
-保留左侧轨道和顶部空间。REAPER `reaper.ini` 的 `dockheight=280`
-将混音台留在底部。规则只决定新窗口初始位置，之后可以自由拖动。
+当前 3440×1440 屏幕：左侧 Chord Lab `(560, 282)`，大小 `884×712`；
+下接原生 VKB `(560, 994)`、大小 `884×163`，右侧 Surge `(1444, 282)`、大小 `1359×875`。
+三窗边缘直接相接，横向与纵向间隙均为 **0 px**。左侧组合和右侧均高 **875 px**，顶底对齐、垂直居中（上下空隙 282／283 px）。
+Surge 使用原生约 150% 等比例缩放，当前实际 149% 已保存为默认。
+Sway 每次打开 Surge 浮窗时指定 `1359×875`，插件内容随宿主尺寸真实等比例缩放，
+避免旧实例保留较小 Zoom；不只扩大空白外框，也不批量改写 89 条轨的音色状态。
+Chord Lab 无内部标题行；两套音阶／和弦图同步略压缩，再给 VKB 增加 24 px。
+上下谱表各高 270 px，钢琴／吉他各 129 px，仍为 50/50。
+VKB 随选轨／打开 Chord Lab 显示，与 Chord Lab 同宽，琴键不再压到极薄。
+保留左侧轨道和顶部空间；REAPER `reaper.ini` 的 `dockheight=280` 将混音台留在底部。
+规则只决定新窗口初始位置，之后可以自由拖动，不使用常驻布局服务。
+更新同名 `for_window` 规则后需 reload Sway；仅运行同名规则不能可靠替换旧缓存。
 原生 VKB 图示不是实际和弦输出，以 Chord Lab 为准。
 更换屏幕分辨率时需要调整这些桌面坐标；不为此增加常驻布局服务。
 
@@ -71,8 +79,8 @@ lua lib/tools/chordlab/tests/test_mode.lua
 
 `host_audit.lua` 只允许 `/tmp/` 工程副本，且必须先启动 Library mode。
 它顺序选中全部音色轨，分别注入电脑控制通道和普通 MIDI Note On/Off，
-测轨道输出峰值，断言只有一个在线 Surge／Solo／armed 输入，且选轨不打开 Surge 浮窗，并导出 CLAP 状态。
-测试脚本会显式打开共享 Chord Lab，并关闭副本中的 Surge 浮窗以建立检查基线。
+测轨道输出峰值，断言只有一个在线 Surge／Solo／armed 输入，且选轨打开目标 Surge、共享 Chord Lab 和 VKB，只保留一个 Surge 浮窗，并导出 CLAP 状态。
+测试脚本会显式打开共享 Chord Lab 和 VKB，并关闭副本中的 Surge 浮窗以建立检查基线；结束恢复原 VKB 可见性。
 运行前创建 `/tmp/synth-build-stage/` 作为状态导出目录；重新运行前移走旧的
 `/tmp/library-audio-done.txt`，避免外部监测器误认完成。
 不会主观评价音色，也不能代替实际电脑按键或 USB MIDI 验收。

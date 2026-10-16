@@ -34,6 +34,11 @@ function recall_voicing() local(index) (
   index=saved+degree*4;
   kind=index[1]; inversion=index[2]; centre=index[3]; publish_voicing();
 );
+function save_voicing() local(index) (
+  index=saved+degree*4;
+  index[0]=1; index[1]=kind; index[2]=inversion; index[3]=centre;
+  slider15=(slider15+1)%1000001; sliderchange(16384);
+);
 function move_voicing(direction,offset) local(oldlow,nextinv,nextlow,nextcentre) (
   oldlow=chord_note(key,degree,inversion,0,centre,voice_count);
   nextinv=(inversion+direction+voice_count)%voice_count;
@@ -43,14 +48,9 @@ function move_voicing(direction,offset) local(oldlow,nextinv,nextlow,nextcentre)
   direction<0 && nextlow>=oldlow ? nextcentre-=12;
   nextlow=chord_note(key,degree,nextinv,0,nextcentre,voice_count);
   nextcentre>=12 && nextcentre<=115 && (nextlow-oldlow)*direction>0 ? (
-    inversion=nextinv; centre=nextcentre; publish_voicing();
+    inversion=nextinv; centre=nextcentre; publish_voicing(); save_voicing();
     sounding ? start_chord(offset);
   );
-);
-function save_voicing() local(index) (
-  index=saved+degree*4;
-  index[0]=1; index[1]=kind; index[2]=inversion; index[3]=centre;
-  slider15=(slider15+1)%1000001; sliderchange(16384);
 );
 function cycle_kind(offset) (
   kind=(kind+1)%3; inversion=inversion%(3+kind); publish_voicing();

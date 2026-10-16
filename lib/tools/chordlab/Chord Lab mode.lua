@@ -20,7 +20,6 @@ local previous = {
   armed = reaper.GetMediaTrackInfo_Value(track, 'I_RECARM'),
   monitor = reaper.GetMediaTrackInfo_Value(track, 'I_RECMON'),
   send = reaper.GetToggleCommandState(SEND),
-  visible = reaper.GetToggleCommandState(VKB),
 }
 local function set_toggle(action, wanted)
   if reaper.GetToggleCommandState(action) ~= wanted then reaper.Main_OnCommand(action, 0) end
@@ -62,7 +61,6 @@ local function cleanup()
     reaper.SetTrackUIInputMonitor(track, previous.monitor, 0)
   end
   set_toggle(SEND, previous.send)
-  set_toggle(VKB, previous.visible)
   reaper.DeleteExtState(SECTION, 'target_track', false)
   reaper.DeleteExtState(SECTION, 'target_fx', false)
   reaper.DeleteExtState(SECTION, 'running', false)
@@ -78,34 +76,22 @@ reaper.SetTrackUIInputMonitor(track, 0, 0)
 reaper.SetMediaTrackInfo_Value(track, 'I_RECINPUT', 4096 + 63 * 32)
 reaper.SetMediaTrackInfo_Value(track, 'I_RECARM', 1)
 reaper.SetTrackUIInputMonitor(track, 1, 0)
--- GUI visibility controls only the VKB input source, never FX enablement.
-local last_visible, last_vkb = nil, nil
+-- Opening an editor also opens VKB; hiding it never closes the keyboard.
+-- Edge-triggered only: respect a manual VKB close during stable polling.
+local last_visible = false
 local bypass_pending = false
 local stopping = false
 local warned_conflict = false
-local function sync_windows()
-  local visible = reaper.TrackFX_GetOpen(track, fx)
-  local vkb = reaper.GetToggleCommandState(VKB) == 1
-  if last_visible == nil or visible ~= last_visible then
-    -- FX chain and floating editors both count. Chord Lab wins simultaneous changes.
-    set_toggle(VKB, visible and 1 or 0)
-    vkb = visible
-  elseif vkb ~= last_vkb then
-    -- Closing either companion hides both; reopening VKB also restores its editor.
-    if vkb then reaper.TrackFX_Show(track, fx, 3)
-    else reaper.TrackFX_SetOpen(track, fx, false) end
-    visible = reaper.TrackFX_GetOpen(track, fx)
-  end
-  last_visible, last_vkb = visible, vkb
-  return visible and vkb
-end
 local function tick()
   if not valid() then return end
   if reaper.GetExtState(SECTION, 'stop') == token or reaper.EnumProjects(-1, '') ~= project then
     if not stopping then send_stop(); stopping = true; reaper.defer(tick); return end
     return
   end
-  local visible = sync_windows()
+  local visible = reaper.TrackFX_GetOpen(track, fx)
+  if visible and not last_visible then set_toggle(VKB, 1) end
+  last_visible = visible
+  local keyboard_open = reaper.GetToggleCommandState(VKB) == 1
   if bypass_pending then
     if reaper.TrackFX_GetParam(track, fx, 8) < 0.5 then
       reaper.TrackFX_SetEnabled(track, fx, false); bypass_pending = false
@@ -120,12 +106,12 @@ local function tick()
   local active = reaper.TrackFX_GetEnabled(track, fx)
     and not reaper.TrackFX_GetOffline(track, fx)
     and reaper.GetMediaTrackInfo_Value(track, 'I_FXEN') ~= 0
-  local blocked = visible and active and conflict()
+  local blocked = keyboard_open and active and conflict()
   if blocked and not warned_conflict then
     reaper.MB('Keyboard mode disabled: another armed track receives Virtual MIDI Keyboard or All MIDI inputs. Disarm that track to resume computer input.', 'Chord Lab', 0)
   end
   warned_conflict = blocked
-  local mode = visible and active and not blocked
+  local mode = keyboard_open and active and not blocked
   local wanted = mode and 1 or 0
   if reaper.TrackFX_GetParam(track, fx, 13) ~= wanted then
     if not mode then send_stop() end

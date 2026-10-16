@@ -28,6 +28,19 @@ function chord_role(pc,key,degree,count) local(i,result) (
   loop(count,(key+major_step(degree+2*i))%12==pc ? result=i; i+=1;);
   result;
 );
+// Major-scale degrees share the study palette, never the chord's ninth role.
+function scale_role(pc,key) local(i,result) (
+  result=-1; i=0;
+  loop(7,
+    (key+major_step(i))%12==pc ? result=(i==0 ? 0 : ceil(i/2));
+    i+=1;
+  );
+  result;
+);
+function diagram_role(pc,key,degree,count,scale_view) (
+  scale_view ? scale_role(pc,key) : chord_role(pc,key,degree,count);
+);
+function staff_in_range(position) (position>=16 && position<=40;);
 function chord_quality(dest,degree,kind) (
   kind==0 ? strcpy(dest,degree==6 ? "dim" : degree==1 || degree==2 || degree==5 ? "m" : "M") :
   kind==1 ? strcpy(dest,degree==6 ? "m7b5" : degree==4 ? "7" : degree==0 || degree==3 ? "M7" : "m7") :

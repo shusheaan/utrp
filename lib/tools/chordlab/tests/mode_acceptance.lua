@@ -46,7 +46,12 @@ local cases = {
     check(reaper.GetMediaTrackInfo_Value(track,'I_RECINPUT')==6112, 'All MIDI input missing')
     check(reaper.GetMediaTrackInfo_Value(track,'I_RECARM')==1, 'Not armed')
     check(reaper.GetMediaTrackInfo_Value(track,'I_RECMON')==1, 'Not monitored')
-    check(reaper.GetToggleCommandState(40637)==1, 'Send-all disabled')
+    check(reaper.GetToggleCommandState(40377)==1, 'Opening Chord Lab did not open VKB')
+    check(reaper.GetToggleCommandState(40637)==1, 'Companion VKB did not enable capture')
+    toggle(40377,1)
+  end,
+  function()
+    check(reaper.GetToggleCommandState(40637)==1, 'Manual VKB did not enable computer input')
     hold(74)
   end,
   function()
@@ -55,15 +60,22 @@ local cases = {
   end,
   function() visible(false) end,
   function()
-    check(sounding()==0,'Hidden editor did not release controls')
+    check(sounding()==1,'Hiding editor stopped manual VKB input')
     check(reaper.TrackFX_GetEnabled(track,fx),'Hiding bypassed the plugin')
-    check(reaper.GetToggleCommandState(40377)==0,'Hidden editor left VKB visible')
+    check(reaper.GetToggleCommandState(40377)==1,'Hiding editor closed manual VKB')
     check(reaper.GetMediaTrackInfo_Value(track,'I_RECARM')==1,'Hiding disarmed input')
-    check(reaper.GetToggleCommandState(40637)==0,'Mode off still captures keys')
+    check(reaper.GetToggleCommandState(40637)==1,'Hidden editor disabled manual VKB')
+    toggle(40377,0)
   end,
   function()
-    check(reaper.TrackFX_GetParam(track,0,1)==2^28,'Physical MIDI hold lost when hiding editor')
+    check(sounding()==0,'Closing VKB did not release controls')
+    check(reaper.TrackFX_GetParam(track,0,1)==2^28,'Physical MIDI hold lost when closing VKB')
     reaper.StuffMIDIMessage(0,0x80,60,0); visible(true)
+  end,
+  function()
+    check(reaper.GetToggleCommandState(40377)==1,'Reopening editor did not restore VKB')
+    check(reaper.TrackFX_GetOpen(track,fx),'Manual VKB close hid editor')
+    toggle(40377,1)
   end,
   function() check(reaper.GetToggleCommandState(40637)==1,'Mode on failed'); hold(74) end,
   function() check(sounding()==1,'Chord missing after mode on'); reaper.TrackFX_SetEnabled(track,fx,false) end,
@@ -85,7 +97,7 @@ local cases = {
     check(reaper.GetMediaTrackInfo_Value(track,'I_RECARM')==0,'Arm not restored')
     check(reaper.GetMediaTrackInfo_Value(track,'I_RECMON')==0,'Monitor not restored')
     check(reaper.GetToggleCommandState(40637)==0,'VKB send not restored')
-    check(reaper.GetToggleCommandState(40377)==0,'VKB window not restored')
+    check(reaper.GetToggleCommandState(40377)==1,'Session exit changed manual VKB visibility')
     reaper.SetMediaTrackInfo_Value(track,'I_RECINPUT',original.input)
     reaper.SetMediaTrackInfo_Value(track,'I_RECARM',original.arm)
     reaper.SetMediaTrackInfo_Value(track,'I_RECMON',original.monitor)
