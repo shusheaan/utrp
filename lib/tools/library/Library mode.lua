@@ -19,18 +19,6 @@ assert(input and #entries>0,'Open synth.rpp first')
 local token=reaper.genGuid()
 reaper.SetExtState(section,'running',token,false)
 local active,deadline,initialized,last_selected=nil,0,false,nil
-local function show_audition(target)
-  if reaper.GetToggleCommandState(40377)~=1 then reaper.Main_OnCommand(40377,0) end
-  reaper.TrackFX_Show(target,0,3)
-  -- Leave computer-keyboard focus in Chord Lab, not in the synth editor.
-  for i=0,reaper.TrackFX_GetRecCount(input)-1 do
-    local fx=i|0x1000000
-    local ok,ident=reaper.TrackFX_GetNamedConfigParm(input,fx,'fx_ident')
-    if ok and ident=='ChordLab/chordlab.jsfx' then
-      reaper.TrackFX_Show(input,fx,3);break
-    end
-  end
-end
 local function route(target)
   -- Disconnect MIDI first; unload the old synth before loading the new one.
   for i=0,reaper.GetTrackNumSends(input,0)-1 do
@@ -78,11 +66,7 @@ local function tick()
   end
   chosen=clicked or chosen or first
   if chosen~=active or not initialized then
-    if active and active~=chosen then reaper.TrackFX_Show(active,0,2) end
     route(chosen);active=chosen;initialized=true
-    if chosen then show_audition(chosen) end
-  elseif clicked then
-    show_audition(clicked)
   end
   reaper.defer(tick)
 end
@@ -90,7 +74,8 @@ end
 reaper.SetOnlyTrackSelected(input)
 local chord=reaper.GetExtState('utrp.chordlab','running')
 if chord=='' then
-  local action=reaper.AddRemoveReaScript(true,0,reaper.GetResourcePath()..'/Scripts/ChordLab/Open Chord Lab.lua',true)
+  -- Start monitoring without requesting any editor windows.
+  local action=reaper.AddRemoveReaScript(true,0,reaper.GetResourcePath()..'/Scripts/ChordLab/Chord Lab mode.lua',true)
   assert(action>0);reaper.Main_OnCommand(action,0)
 end
 tick()

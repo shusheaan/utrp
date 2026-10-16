@@ -16,11 +16,17 @@
 ## 日常使用
 
 运行 `Start library.lua` 启动；重复运行不会关闭会话。
-首次启动打开 Chord Lab、当前 Solo 音色的 Surge 和原生虚拟键盘；不会打开全部 86 个 GUI。
-**单击另一条音色轨即可切换试听**，自动关闭上一个 Surge 浮窗、显示当前 Surge、
-共享 Chord Lab 和原生虚拟键盘。所有音色轨共用输入，不逐轨复制 Chord Lab。
-点击专辑文件夹或公共输入轨不切音色；已经选中的轨再次单击不产生选择变化，
-若手动关了窗口，可先选别轨再选回来。窗口不会被轮询反复打开或强制定位。
+启动时仅建立 MIDI 监听与试听路由，不主动打开 Chord Lab 或 Surge；工程保存的窗口状态由 REAPER 恢复。
+**单击另一条音色轨即可切换试听**，但不再打开或聚焦任何编辑器。
+所有音色轨共用输入，不逐轨复制 Chord Lab。点击专辑文件夹或公共输入轨不切音色。
+
+- **Chord Lab**：从 `CHORD LAB - shared MIDI input` 轨的 **Input FX** 打开；原生虚拟键盘同步出现，关闭任一窗口则一起隐藏。
+- **Surge**：从音色轨的普通 **FX** 单独打开／关闭，不带动 Chord Lab 或 VKB。
+- **显示与处理独立**：关闭编辑器不是 bypass。隐藏 Chord Lab 后 Input FX、arm／monitor 和实体 MIDI 通路保持运行；电脑按键输入随 VKB 关闭，电脑／鼠标持音会安全释放。
+- 插件是否处理由各自 FX 的启用／bypass 控制；重新打开 Chord Lab 不会自动取消 bypass。
+- 音色切换仍将旧 Surge 离线；REAPER 可能随离线关闭旧实例界面。这是资源策略，不是选轨自动弹窗。需要编辑某个音色时先选中该轨，再打开 FX。
+- 会话运行时 VKB 与 Chord Lab 双向同步；稳定轮询不反复开窗或抢焦点。独立打开 VKB 会同时显示 Chord Lab。
+
 点击某条音色轨的 **Solo** 也可以切换，管理器自动取消上一个 Solo：只保持当前 Surge 在线、
 只把公共 MIDI 发给它，其余 Surge 离线但状态仍保存在 RPP 中。
 不选任何 Solo 就没有 synth 发声。不要 Solo 专辑文件夹，不要额外 arm synth 轨。
@@ -60,11 +66,13 @@ MIDI 设备使用 channel 1–15，channel 16 留给电脑控制。
 python -m pytest -q lib/tools/library/test_*.py lib/tools/chordlab/tests/test_install.py
 luac -p 'lib/tools/library/Library mode.lua'
 lua lib/tools/library/test_mode.lua
+lua lib/tools/chordlab/tests/test_mode.lua
 ```
 
 `host_audit.lua` 只允许 `/tmp/` 工程副本，且必须先启动 Library mode。
-它顺序选中全部 86 条轨，分别注入电脑控制通道和普通 MIDI Note On/Off，
-测轨道输出峰值，断言只有一个在线 Surge／Solo／armed 输入／Surge 浮窗，并导出 CLAP 状态。
+它顺序选中全部音色轨，分别注入电脑控制通道和普通 MIDI Note On/Off，
+测轨道输出峰值，断言只有一个在线 Surge／Solo／armed 输入，且选轨不打开 Surge 浮窗，并导出 CLAP 状态。
+测试脚本会显式打开共享 Chord Lab，并关闭副本中的 Surge 浮窗以建立检查基线。
 运行前创建 `/tmp/synth-build-stage/` 作为状态导出目录；重新运行前移走旧的
 `/tmp/library-audio-done.txt`，避免外部监测器误认完成。
 不会主观评价音色，也不能代替实际电脑按键或 USB MIDI 验收。

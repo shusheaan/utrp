@@ -9,8 +9,10 @@
 | 工作工程与媒体 | `~/storage/daw/` | `synth.rpp`、历史工程、录音、MIDI、渲染、采样 |
 
 `../library/` 只负责音色库工程的迁移与单在线试听路由；不复制 Chord Lab 计算代码。
-单击音色轨自动显示当前 Surge、共享 Chord Lab、原生虚拟键盘；此行为属于 Library mode，
-不在 JSFX 内实现，不给每条音色轨重复添加输入 FX。
+单击音色轨只切换试听路由，不再自动显示任何编辑器。Surge 从各轨普通 FX 独立开关；
+共享 Chord Lab 从公共输入轨 Input FX 开关界面，并由 Chord Lab Lua 会话同步原生 VKB。
+隐藏不等于 bypass：电脑／鼠标持音释放，实体 MIDI 处理继续。不在 JSFX 内实现窗口联动，
+不给每条音色轨重复添加输入 FX。
 历史 `tools/harmony` 与 `pipeline` 不接入这个实时会话，不应为本工具改动它们。
 
 ## 本次工具做了什么

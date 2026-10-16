@@ -7,6 +7,9 @@ python -m pytest lib/tools/chordlab/tests -q
 ```
 
 检查配置保留、VKB 映射、主题一致性、安装/卸载、运行时文件隔离和拒绝覆盖用户改动。
+另由 `test_lifecycle.py` 调用 Lua host mock，检查选轨与窗口解耦、双向 VKB 联动、
+隐藏不 bypass／disarm、旁路恢复和会话清理；需要 `lua` 可执行文件。
+mock 不模拟 JSFX 音频线程，也不能代替原生窗口或实体 MIDI 验收。
 
 ## REAPER 宿主测试
 
@@ -15,7 +18,7 @@ python -m pytest lib/tools/chordlab/tests -q
 轨道 1：Input FX = Chord Lab；normal FX 0 = `midi_probe.jsfx`；normal FX 1 = synth。开启 All MIDI input、arm、monitor；先退出 Chord Lab Lua 模式。测试期间不要按琴键、改变轨道或拖动 FX。
 
 - `host_acceptance.lua`：12 调 × 7 级 × 4 转位，核对实际输出 MIDI，而非仅核对 UI 参数；另测调性锁、停音、双来源同音持有、velocity-zero Note Off、pedal、关闭电脑输入。输出 `/tmp/chordlab-acceptance.txt`。
-- `mode_acceptance.lua`：会话启动/关闭、重复运行 Open、输入/arm/monitor/VKB 恢复、模式关闭后的硬件 MIDI 透传、JSFX 单独旁路。输出 `/tmp/chordlab-mode.txt`。
+- `mode_acceptance.lua`：会话启动/关闭、重复运行 Open、输入/arm/monitor/VKB 恢复、隐藏时释放电脑音符但保留普通 MIDI 持音、JSFX 单独旁路。输出 `/tmp/chordlab-mode.txt`。
 - `record_acceptance.lua`：空轨录入两组四音和弦，核对 8 个 channel 1 正时长 MIDI 音符。录音后若宿主提示，选 Save All；输出 `/tmp/chordlab-recording.txt`。运行前轨道必须没有 item。
 
 宿主音频线程与 Lua defer 异步，和弦检查等待 150 ms。最初 45 ms 等待在 GUI 更新期间出现一次输出 mask 不匹配，怀疑与异步音频处理时序有关；增加等待后完整复测通过，不自动忽略失败。
@@ -44,3 +47,12 @@ REAPER 7.78 / Surge XT CLAP / Arch Linux。安装器 pytest **10 passed**；最�
 - 实际截图发现：Eb 调 Fm7 的 Ab5 与 C6 共用上方加线，原先逐音绘制让后绘制的 C6 加线穿过已画好的 Ab5 圆点；下方共用加线同样存在风险。
 - 改为两遍绘制：先绘制所有短加线，再绘制所有音符／临时记号。两个遍历采用相同的筛选与秒度错位规则。
 - 保存并备份工程后在 REAPER 重载，实际截图确认 Ab5 圆点完整、没有横线穿过，中央 C 和外侧加线仍是短线；原键盘模式恢复。安装器测试再次 **11 passed**。未将此前 4781 项音高检查描述为本次重跑。
+
+## 窗口与处理解耦验证（2026-10-16）
+
+- `python -m pytest -q lib/tools/library/test_*.py lib/tools/chordlab/tests`：**56 passed**，其中两个测试调用下列 Lua mock。
+- `lua lib/tools/library/test_mode.lua`：**23 assertions passed**；选轨／Solo 只影响路由，不请求开关编辑器。
+- `lua lib/tools/chordlab/tests/test_mode.lua`：**40 assertions passed**；覆盖后台启动、保存的已开编辑器、chain／浮窗切换、VKB 双向联动、隐藏不 bypass／disarm、隐藏后重开不取消 bypass、异步旁路清理、冲突解除及退出恢复。
+- 全部 Chord Lab／Library Lua 文件通过 `luac -p`；`git diff --check` 通过。
+- 本次没有可用图形会话，**未运行更新后的 REAPER 宿主验收**，也未实测 `Ctrl+W`。没有修改快捷键、用户 RPP、Surge 音色或系统配置；运行目录已有 symlink 指向源码，下次启动会话加载新逻辑。
+- 待宿主验收：Input FX chain 与浮窗各自开关、关闭 VKB 反向隐藏编辑器、隐藏时普通 MIDI 持音保持、重新启用 bypass、Surge 独立开关及切轨不弹窗。关窗建议使用窗口关闭按钮，不把 `Ctrl+W` 当作已经验证的统一插件关闭键。

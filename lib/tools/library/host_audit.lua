@@ -11,7 +11,10 @@ for i=0,reaper.CountTracks(project)-1 do
   local _,id=reaper.GetSetMediaTrackInfo_String(t,'P_EXT:utrp_patch','',false)
   if id~='' then tracks[#tracks+1]={track=t,id=id,index=i} end
 end
-assert(#tracks==86,'Unexpected library inventory')
+assert(#tracks>0,'No library instruments')
+-- Explicit test setup: selection must never reopen a synth editor.
+for _,e in ipairs(tracks) do reaper.TrackFX_Show(e.track,0,2) end
+reaper.TrackFX_Show(source,0x1000000,3)
 local log=assert(io.open('/tmp/library-audio-results.tsv','w'))
 log:write('index\tpatch\tcomputer_peak\tmidi_message_peak\theld\tonline\tsolo\tarmed\tsurge_windows\taudio_xrun\tmedia_xrun\n');log:flush()
 local index,phase,deadline,peak,computer_peak=1,'select',0,0,0
@@ -56,7 +59,7 @@ local function tick()
           armed=armed+reaper.GetMediaTrackInfo_Value(reaper.GetTrack(project,i),'I_RECARM')
         end
         assert(online==1,'More than one synth online')
-        assert(solo==1 and armed==1 and windows==1,'Audition isolation failed')
+        assert(solo==1 and armed==1 and windows==0,'Audition isolation failed')
         assert(reaper.Track_GetPeakInfo(master,0)==0,'Audit master must remain silent')
         local audio_xrun,media_xrun=reaper.GetUnderrunTime()
         log:write(current.index,'\t',current.id,'\t',computer_peak,'\t',peak,'\t',

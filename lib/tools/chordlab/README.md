@@ -6,7 +6,9 @@
 
 1. 选择已有 Surge XT 或其他 synthesizer 的轨道，Actions 运行 **Open Chord Lab.lua**。
 2. 选调，**按住**级数键发声，**松开**发送 Note Off。鼠标级数按钮同样按住发声。两个级数键重叠时，后按优先，松开后回到仍按住的前一个。
-3. 再次运行 **Open Chord Lab.lua** 退出模式，恢复此前输入、录音待命、监听及 VKB 状态。输入 preset 名称前先退出模式，避免字母被当成演奏键。
+3. 窗口显示与 FX 启用独立：在公共输入轨的 **Input FX** 打开 Chord Lab，原生 VKB 同时显示；关闭任一窗口，两者一起隐藏。隐藏不会 bypass Chord Lab，也不会撤销 arm／monitor；实体 MIDI 仍正常处理。重新打开任一窗口恢复电脑演奏。
+4. Input FX 列表中的启用／bypass 开关才控制插件是否处理输入。Surge 在音色轨的普通 FX 中单独开关界面；不要用 bypass 代替隐藏窗口。
+5. 再次运行 **Open Chord Lab.lua** 才是退出会话，恢复此前输入、录音待命、监听及 VKB 状态，不等于关窗口。输入 preset 名称前先隐藏 Chord Lab／VKB 或退出会话，避免字母被当成演奏键。
 
 | 按键 | 功能 |
 |---|---|
@@ -47,10 +49,10 @@
 
 - 插件放在 **Input FX**，不是 synth 后面。生成音符在 channel 1；同通道同音高合并持有，所有来源释放后才 Note Off。其他 MIDI 通道及 sustain / pitch bend 等控制器透传。
 - channel 16 专用于电脑控制，被完整吞掉。原生 VKB 高亮的是控制音，不是额外 synth 音符；不能关闭原生映射又期待纯 REAPER 方案收到电脑按键。Surge 自己的 QWERTY 演奏键盘保持关闭。
-- VKB 窗口必须保持打开；不要改其 channel / centre / layout。不支持其他应用获焦时全局演奏。Surge CLAP 获焦后松开电脑键实测会丢 Note Off、产生挂音；应松键后再进入 Surge 编辑，不能当作可靠的跨窗口演奏。按用户选择不加入外部 helper。
-- 只管理固定目标轨，选别的轨不会转移目标。另一条 armed 轨收到 VKB/All MIDI 时会禁用电脑模式并提示，避免控制音误入其他 synth。
-- 退出模式和单独旁路 JSFX 会清理生成音符。关闭浮窗时只释放鼠标持有，不影响仍按住的电脑／实体键。删除/offline 插件、旁路整条 FX chain、关闭工程或音频设备前先松开所有键并退出模式；不能保证强制卸载后仍能发送 MIDI 清理。异常挂音用 REAPER All notes off。
-- 打开 `.rpp` 不自动运行 Lua 会话，再次运行 Open action 即可，不恢复持续发声。音色仍由 synth preset / 工程管理。
+- 电脑键盘演奏时 VKB 窗口必须保持打开；隐藏 Chord Lab／VKB 后电脑键盘不再作为输入，但插件及实体 MIDI 通路继续运行；不要改其 channel / centre / layout。不支持其他应用获焦时全局演奏。Surge CLAP 获焦后松开电脑键实测会丢 Note Off、产生挂音；应松键后再进入 Surge 编辑，不能当作可靠的跨窗口演奏。按用户选择不加入外部 helper。
+- 只管理固定目标轨，选别的轨不会转移目标。另一条 armed 轨收到 VKB/All MIDI 时会禁用电脑模式并提示，避免控制音误入其他 synth；解除冲突后自动恢复。
+- 退出模式和单独旁路 JSFX 会清理生成音符。关闭 Chord Lab／VKB 时释放电脑和鼠标生成的音符、关闭电脑键盘捕获，不清理实体 MIDI 的持有状态。删除/offline 插件、旁路整条 FX chain、关闭工程或音频设备前先松开所有键并退出模式；不能保证强制卸载后仍能发送 MIDI 清理。异常挂音用 REAPER All notes off。
+- 打开 `.rpp` 本身不自动运行 Lua 会话；日常 Library 启动器会在后台启动会话，不主动打开编辑器，并按工程已有的 Chord Lab 界面状态同步 VKB。单独使用时运行 Open action。窗口联动需要 Lua 会话运行，不恢复持续发声。音色仍由 synth preset / 工程管理。
 - 外接设备需在 REAPER Preferences 中启用；未连接真实键盘时，模拟测试不等同实体设备验收。
 
 ## 安装与卸载

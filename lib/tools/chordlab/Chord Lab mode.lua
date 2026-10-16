@@ -78,18 +78,34 @@ reaper.SetTrackUIInputMonitor(track, 0, 0)
 reaper.SetMediaTrackInfo_Value(track, 'I_RECINPUT', 4096 + 63 * 32)
 reaper.SetMediaTrackInfo_Value(track, 'I_RECARM', 1)
 reaper.SetTrackUIInputMonitor(track, 1, 0)
-reaper.TrackFX_SetParam(track, fx, 13, 1)
-reaper.TrackFX_Show(track, fx, 3)
-local last_mode = -1
+-- GUI visibility controls only the VKB input source, never FX enablement.
+local last_visible, last_vkb = nil, nil
 local bypass_pending = false
 local stopping = false
 local warned_conflict = false
+local function sync_windows()
+  local visible = reaper.TrackFX_GetOpen(track, fx)
+  local vkb = reaper.GetToggleCommandState(VKB) == 1
+  if last_visible == nil or visible ~= last_visible then
+    -- FX chain and floating editors both count. Chord Lab wins simultaneous changes.
+    set_toggle(VKB, visible and 1 or 0)
+    vkb = visible
+  elseif vkb ~= last_vkb then
+    -- Closing either companion hides both; reopening VKB also restores its editor.
+    if vkb then reaper.TrackFX_Show(track, fx, 3)
+    else reaper.TrackFX_SetOpen(track, fx, false) end
+    visible = reaper.TrackFX_GetOpen(track, fx)
+  end
+  last_visible, last_vkb = visible, vkb
+  return visible and vkb
+end
 local function tick()
   if not valid() then return end
   if reaper.GetExtState(SECTION, 'stop') == token or reaper.EnumProjects(-1, '') ~= project then
     if not stopping then send_stop(); stopping = true; reaper.defer(tick); return end
     return
   end
+  local visible = sync_windows()
   if bypass_pending then
     if reaper.TrackFX_GetParam(track, fx, 8) < 0.5 then
       reaper.TrackFX_SetEnabled(track, fx, false); bypass_pending = false
@@ -102,19 +118,20 @@ local function tick()
     reaper.defer(tick); return
   end
   local active = reaper.TrackFX_GetEnabled(track, fx)
+    and not reaper.TrackFX_GetOffline(track, fx)
     and reaper.GetMediaTrackInfo_Value(track, 'I_FXEN') ~= 0
-  local requested = reaper.TrackFX_GetParam(track, fx, 13) >= 0.5
-  local blocked = requested and conflict()
+  local blocked = visible and active and conflict()
   if blocked and not warned_conflict then
-    reaper.MB('Keyboard mode disabled: another armed track receives Virtual MIDI Keyboard or All MIDI inputs. Disarm that track, then run Open Chord Lab twice to restart the mode.', 'Chord Lab', 0)
+    reaper.MB('Keyboard mode disabled: another armed track receives Virtual MIDI Keyboard or All MIDI inputs. Disarm that track to resume computer input.', 'Chord Lab', 0)
   end
   warned_conflict = blocked
-  local mode = requested and active and not blocked
-  if mode ~= last_mode then
-    if mode then set_toggle(VKB, 1); set_toggle(SEND, 1)
-    else send_stop(); set_toggle(SEND, 0); reaper.TrackFX_SetParam(track, fx, 13, 0) end
-    last_mode = mode
+  local mode = visible and active and not blocked
+  local wanted = mode and 1 or 0
+  if reaper.TrackFX_GetParam(track, fx, 13) ~= wanted then
+    if not mode then send_stop() end
+    reaper.TrackFX_SetParam(track, fx, 13, wanted)
   end
+  set_toggle(SEND, wanted)
   reaper.defer(tick)
 end
 tick()

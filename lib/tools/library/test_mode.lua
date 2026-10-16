@@ -1,4 +1,4 @@
--- Pure host mock: selection, exclusive routing, window activation and lifecycle.
+-- Pure host mock: selection, exclusive routing, window independence and lifecycle.
 local tracks={
  {input='1',patch='',solo=0,offline=true,guid='input'},
  {input='',patch='one',solo=2,offline=false,guid='one'},
@@ -45,7 +45,9 @@ reaper={
  atexit=function(f) cleanup=f end,
  SetOnlyTrackSelected=function(t) assert(t==tracks[1]);selected=t end,
  GetResourcePath=function() return '/mock' end,
- AddRemoveReaScript=function() return 1 end,
+ AddRemoveReaScript=function(_,_,path)
+  assert(path=='/mock/Scripts/ChordLab/Chord Lab mode.lua');return 1
+ end,
  GetToggleCommandState=function(id) assert(id==40377);return vkb end,
  Main_OnCommand=function(id)
   if id==40377 then vkb=1-vkb
@@ -60,33 +62,38 @@ end
 dofile('lib/tools/library/Library mode.lua')
 check(table.concat(events,',')=='mute0:1,mute1:1,two:true,mute0:0')
 check(not tracks[2].offline and tracks[3].offline)
-check(table.concat(shown,',')=='one:3,input:3' and vkb==1)
--- A track selection switches sound and closes the previous synth window.
+check(#shown==0 and vkb==0)
+-- A track selection switches sound without requesting any window changes.
 selected=tracks[3];events={};shown={};tick()
 check(table.concat(events,',')=='mute0:1,mute1:1,one:true,two:false,mute1:0')
 check(tracks[2].solo==0 and tracks[3].solo==2)
 check(sends[1].mute==1 and sends[2].mute==0)
-check(table.concat(shown,',')=='one:2,two:3,input:3')
+check(#shown==0 and vkb==0)
 -- Polling must not reload synths, reopen a closed window or steal focus.
 events={};shown={};vkb=0;tick()
 check(#events==0 and #shown==0 and vkb==0)
 -- Album folders and the shared input do not change the sound.
 selected=tracks[4];tick();selected=tracks[1];tick()
 check(#events==0 and #shown==0 and tracks[3].solo==2)
--- Returning to the active track reopens the three windows without reloading.
+-- Returning to the active track does not reopen any windows.
 selected=tracks[3];tick()
-check(#events==0 and table.concat(shown,',')=='two:3,input:3' and vkb==1)
+check(#events==0 and #shown==0 and vkb==0)
 -- Solo buttons remain an alternative to selection.
 tracks[2].solo=2;events={};shown={};tick()
 check(table.concat(events,',')=='mute0:1,mute1:1,two:true,one:false,mute0:0')
 check(tracks[2].solo==2 and tracks[3].solo==0)
-check(table.concat(shown,',')=='two:2,one:3,input:3')
+check(#shown==0 and vkb==0)
+-- Manually visible companions stay untouched by selection and polling.
+vkb=1;selected=tracks[3];shown={};tick()
+check(#shown==0 and vkb==1)
+selected=tracks[2];tick();check(#shown==0 and vkb==1)
 -- No Solo means silence, even while a synth track remains selected.
 tracks[2].solo=0;tick()
 check(tracks[2].offline and tracks[3].offline)
 check(sends[1].mute==1 and sends[2].mute==1)
 events={};shown={};tick();check(#events==0 and #shown==0)
 -- A simultaneous new selection wins over a manually changed Solo.
+selected=tracks[4];tick()
 tracks[3].solo=2;selected=tracks[2];tick()
 check(tracks[2].solo==2 and tracks[3].solo==0)
 check(not tracks[2].offline and tracks[3].offline)

@@ -17,7 +17,10 @@ end
 local function hold(note)
   reaper.StuffMIDIMessage(0, 0x9f, note, 100)
 end
-local function mode(value) reaper.TrackFX_SetParam(track, fx, 13, value) end
+local function visible(value)
+  if value then reaper.TrackFX_Show(track, fx, 3)
+  else reaper.TrackFX_SetOpen(track, fx, false) end
+end
 local function sounding() return reaper.TrackFX_GetParam(track, fx, 8) end
 local original = {
   input=reaper.GetMediaTrackInfo_Value(track,'I_RECINPUT'),
@@ -46,22 +49,28 @@ local cases = {
     check(reaper.GetToggleCommandState(40637)==1, 'Send-all disabled')
     hold(74)
   end,
-  function() check(sounding()==1,'Computer chord missing'); mode(0) end,
   function()
-    check(sounding()==0,'Mode off did not stop')
-    check(reaper.GetToggleCommandState(40637)==0,'Mode off still captures keys')
+    check(sounding()==1,'Computer chord missing')
     reaper.StuffMIDIMessage(0,0x90,60,99)
   end,
+  function() visible(false) end,
   function()
-    check(reaper.TrackFX_GetParam(track,0,1)==2^28,'Physical MIDI blocked with mode off')
-    reaper.StuffMIDIMessage(0,0x80,60,0); mode(1)
+    check(sounding()==0,'Hidden editor did not release controls')
+    check(reaper.TrackFX_GetEnabled(track,fx),'Hiding bypassed the plugin')
+    check(reaper.GetToggleCommandState(40377)==0,'Hidden editor left VKB visible')
+    check(reaper.GetMediaTrackInfo_Value(track,'I_RECARM')==1,'Hiding disarmed input')
+    check(reaper.GetToggleCommandState(40637)==0,'Mode off still captures keys')
+  end,
+  function()
+    check(reaper.TrackFX_GetParam(track,0,1)==2^28,'Physical MIDI hold lost when hiding editor')
+    reaper.StuffMIDIMessage(0,0x80,60,0); visible(true)
   end,
   function() check(reaper.GetToggleCommandState(40637)==1,'Mode on failed'); hold(74) end,
   function() check(sounding()==1,'Chord missing after mode on'); reaper.TrackFX_SetEnabled(track,fx,false) end,
   function()
     check(sounding()==0,'Bypass did not flush notes')
     check(not reaper.TrackFX_GetEnabled(track,fx),'Bypass not restored')
-    reaper.TrackFX_SetEnabled(track,fx,true); mode(1)
+    reaper.TrackFX_SetEnabled(track,fx,true); visible(true)
   end,
   function() hold(74) end,
   function()
