@@ -58,7 +58,7 @@ function staff_note(x,y,note,role,side,step,scale_view) local(lit,accidental) (
     gfx_a=1;
   );
   // A 2 px rect at y-1 covers pixel rows y-1 and y: its visible centre is y-.5.
-  note_dot(x,y-.5,role,note,scale_view);
+  note_dot(x,y-.5,role,note,scale_view,note_radius);
 );
 function draw_staff(x,y,w,h,scale_view) local(step,centre,note,position,role,previous,side,nx,layer) (
   // Half-pixel spaces retain exact pitch centres; symbol size is independent of spacing.

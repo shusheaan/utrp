@@ -4,7 +4,7 @@ local function host(initially_open, initially_vkb)
   local track = {I_RECINPUT=0, I_RECARM=0, I_RECMON=0, I_FXEN=1}
   local other = {I_RECINPUT=6112, I_RECARM=0}
   local s = {track=track, other=other, project=1, selected=track, ext={},
-    params={[6]=0, [7]=23, [8]=0, [13]=0}, enabled=true, offline=false,
+    params={[6]=0, [7]=23, [8]=0, [13]=0, [17]=0}, enabled=true, offline=false,
     floating=initially_open, chain=false, valid=true, exists=true,
     toggles={[40377]=initially_vkb and 1 or 0, [40637]=0},
     shows=0, enables=0, stops=0, warnings=0, writes=0}
@@ -134,4 +134,11 @@ s=host(false,true);s.run('Chord Lab mode.lua')
 check(not s.floating and s.params[13]==1 and s.toggles[40377]==1)
 s.toggles[40377]=0;s.tick();s.cleanup()
 check(s.toggles[40377]==0)
+-- Pedal-only sustain must be flushed before bypass, even with no held chord.
+s=host(false,true);s.run('Chord Lab mode.lua')
+s.params[17]=1;s.enabled=false;s.tick()
+check(s.enabled and s.stops==1)
+s.tick();check(s.enabled)
+s.params[17]=0;s.tick();check(not s.enabled)
+s.cleanup()
 print('Chord Lab window lifecycle: '..checks..' assertions passed')

@@ -8,10 +8,10 @@ slider1:0<0,11,1{C,Db,D,Eb,E,F,Gb,G,Ab,A,Bb,B}>-Key
 slider2:0<0,6,1>-Degree
 slider3:0<0,4,1>-Inversion
 slider4:60<12,115,1>-Voicing centre (MIDI)
-slider5:88<1,127,1>-Velocity
+slider5:64<1,127,1>-Velocity
 slider6:1<0,1,1>-Enabled
 slider7:0<0,1000000,1>-Command serial
-slider8:23<0,25,1>-Command
+slider8:23<0,27,1>-Command
 slider9:0<0,1,1>-Sounding (read only)
 slider10:0<0,127,1>-Voice 1 (read only)
 slider11:0<0,127,1>-Voice 2 (read only)
@@ -22,6 +22,7 @@ slider15:0<0,1000000,1>-Voicing memory revision
 
 slider16:1<0,2,1{Triad,Seventh,Ninth}>-Chord type
 slider17:0<0,127,1>-Voice 5 (read only)
+slider18:0<0,1,1>-Sustain lock (read only)
 
 import harmony.jsfx-inc
 import midi.jsfx-inc
@@ -42,6 +43,7 @@ memset(voices,-1,5);
 key=slider1; degree=slider2; inversion=slider3; kind=slider16; voice_count=3+kind;
 centre=slider4; velocity=slider5; enabled=slider6;
 sounding=0; slider9=0; serial=slider7;
+sustain_on=0; sustain_reset_pending=1; slider18=0;
 active_slot=-1; gate_serial=0; previous_mode=slider14;
 ui_read=ui_write=0; ui_queue=2600;
 previous_play=play_state;
@@ -52,6 +54,8 @@ settings_dirty=1;
 
 @block
 midi_bus=0;
+// Saved slider values may be restored after @init: never replay the last command.
+sustain_reset_pending ? (serial=slider7; set_sustain(0,0); sustain_reset_pending=0;);
 // A hidden/closed UI cannot deliver its mouse-up; expire only the mouse gate.
 chord_held[7] && time_precise()-ui_heartbeat>0.5 ? release_degree(7,0);
 settings_dirty ? (
@@ -74,16 +78,17 @@ settings_dirty ? (
 previous_play=play_state;
 slider7!=serial ? (
   serial=slider7;
-  enabled || slider8==23 ? command(slider8,0);
+  enabled || slider8==23 || slider8==27 ? command(slider8,0);
 );
 while(ui_read!=ui_write) (
   cmd=ui_queue[ui_read]; ui_read=(ui_read+1)%32;
-  enabled || cmd==23 ? command(cmd,0);
+  enabled || cmd==23 || cmd==27 ? command(cmd,0);
 );
 while(midirecv(offset,status,note,value)) (
   midi_bus==0 ? receive_midi(offset,status,note,value) : midisend(offset,status,note,value);
 );
 slider9=sounding;
+slider18=sustain_on;
 slider10=max(0,voices[0]); slider11=max(0,voices[1]);
 slider12=max(0,voices[2]); slider13=max(0,voices[3]); slider17=max(0,voices[4]);
 

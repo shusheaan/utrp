@@ -19,7 +19,7 @@ mock 不模拟 JSFX 音频线程，也不能代替原生窗口或实体 MIDI 验
 
 - `host_acceptance.lua`：12 调 × 7 级 × 4 转位，核对实际输出 MIDI，而非仅核对 UI 参数；另测调性锁、停音、双来源同音持有、velocity-zero Note Off、pedal、关闭电脑输入。输出 `/tmp/chordlab-acceptance.txt`。
 - `mode_acceptance.lua`：会话启动/关闭、重复运行 Open、输入/arm/monitor/按键捕获恢复（不改变手动 VKB 可见性）、隐藏编辑器保留电脑持音、关闭 VKB 只释放控制音而保留普通 MIDI 持音、JSFX 单独旁路。输出 `/tmp/chordlab-mode.txt`。
-- `state_acceptance.lua`：无需分号的持音／松键 K/L 记忆、不同音级隔离、跨调调用、Enter 重置、三／七／九和弦以及 RPP 保存重载。输出 `/tmp/chordlab-state.txt`。
+- `state_acceptance.lua`：无需分号的持音／松键 K/L 记忆、不同音级隔离、跨调调用、分号重置、三／七／九和弦以及 RPP 保存重载。输出 `/tmp/chordlab-state.txt`。
 - `record_acceptance.lua`：空轨录入两组四音和弦，核对 8 个 channel 1 正时长 MIDI 音符。录音后若宿主提示，选 Save All；输出 `/tmp/chordlab-recording.txt`。运行前轨道必须没有 item。
 
 宿主音频线程与 Lua defer 异步，和弦检查等待 150 ms。最初 45 ms 等待在 GUI 更新期间出现一次输出 mask 不匹配，怀疑与异步音频处理时序有关；增加等待后完整复测通过，不自动忽略失败。
@@ -126,3 +126,30 @@ REAPER 7.78 / Surge XT CLAP / Arch Linux。安装器 pytest **10 passed**；最�
 - 安全重载及重开通过：当前参数、`JS_SER`、VKB 可见性保持，computer mode=1；三窗尺寸／边缘坐标断言通过。pytest 84 passed、`git diff --check` 通过；本轮前段 Lua mocks 43 + 31 assertions 通过。
 - 文件主要为 Chord Lab JSFX 布局、UI、theme 与测试／说明，以及本机 Sway 配置；Surge 原生默认缩放沿用前面确认的实际 149%。没有新增常驻服务、没有保存或覆盖 `synth.rpp`、没有 Git commit。原生 VKB 跨 Surge 焦点的 Note Off 限制不变；未重跑实体 MIDI／全音色压力测试。
 - 最终截图、参数验证、几何断言及像素检查：`/tmp/chordlab-spacing2-20261016/`。
+
+## Sustain、Tab 即时记忆与音量平衡（2026-10-16）
+
+- 新增 `controls_acceptance.lua`：独立无音源的 REAPER profile 实测 **42 checks passed**，包含 channels 1–15 的延音锁、实体踏板松开不撤销锁、隐藏 UI 保留锁、panic／禁用复位、channel 1/15 的 12 档代表性 Note On 力度原样透传、velocity-zero Note Off、电脑固定力度 64、Tab 切换自动记忆与音级隔离、保存重开后保留类型且 Sustain 默认 OFF。
+- 修复重开工程时宿主在 `@init` 后恢复 command serial 导致旧命令被重播的问题：首个音频 block 同步 serial，丢弃存盘命令，显式发送 CC64=0。真实 RPP reload 回归通过。
+- 测试探针曾有不支持的 EEL 一元取反语法，已修正；测试曾误用隐藏 UI 的鼠标持音命令，触发预期的超时释放，已改为电脑控制 MIDI。以上失败不记为产品验收通过。最终结果为 `/tmp/chordlab-controls-result.txt` 的 42 checks。
+- pytest **85 passed**；Chord Lab lifecycle mock **46 assertions**、Library mock **34 assertions**；所有相关 Lua 通过 `luac -p`，`git diff --check` 通过。
+- 正式工程当前 Master 从 `0.70794578438414`（-3 dB）升至 `1`（0 dB），电脑和弦力度从 76 降至 64；实体 MIDI **没有**新增力度曲线、固定力度或压缩。既有各音色轨增益不改。短时输出监测未捕获有效演奏，不据此宣称极重触键／所有音色无削波。
+- 正式 Chord Lab 与 Lua managers 已安全重载；当前调性、音级、转位、类型、完整 `JS_SER` 记忆、各轨增益与 Master 全部保持。鼠标实际点击 `Sustain ON / OFF` 截图通过，最后恢复 OFF。没有向正式工程注入音符，也没有保存覆盖 `synth.rpp`。
+- 隔离测试实例已退出；当前 RAM 工程备份、参数一致性记录与截图位于 `/tmp/chordlab-controls-20261016/`。自动记忆不等于自动保存工程，长期保留仍需用户保存 `.rpp`。本轮未重新进行实体键盘人耳响度评审。
+
+## 分号恢复默认、Enter 切换 Sustain（2026-10-16）
+
+- `;` 替代旧 Enter：恢复当前和弦 inversion=0、centre=60，保留三／七／九和弦类型并即时记忆。Enter 改为 Sustain 锁切换，Note Off 不撤销锁，重复 Note On 不重复切换。Tab、K/L 自动记忆行为不变。
+- 独立无音源 REAPER profile 的 `controls_acceptance.lua` **50 checks passed**，覆盖新增 reset／Enter 行为与原有 42 项回归。pytest 85 passed；Lua 语法和 `git diff --check` 通过。
+- 正式工程安全重载通过：参数、完整 `JS_SER`、各轨音量与 Master 均保持，两个 managers 已重启。重载前因演奏仍在继续而被保护检查拒绝两次；用户暂停后通过。测试实例已退出，正式工程未保存覆盖。
+- 正式窗口通过 X11 模拟 Enter 验证 OFF→ON、随后单独一次 Enter 验证 ON→OFF；这是软件键盘事件验证，不是用户实体按键验收。首次双键尝试仅一组 Note On/Off 进入 VKB，因此不把该尝试记为两次切换均成功。确认焦点稳定后单键关闭通过，最终 Sustain OFF。
+- Master 沿用用户随后要求的 -1.5 dB，电脑和弦力度 64，实体 MIDI 力度未修改。结果与 RAM 工程副本在 `/tmp/chordlab-keys-20261016/`；隔离测试结果 `/tmp/chordlab-controls-result.txt`。
+
+## 音点居中与 Royal 125% 布局（2026-10-17）
+
+- 钢琴黑键宽度改为奇数整像素，地图音点填充直径与黑键一致，钢琴与吉他共用该尺寸；音名字号随音点缩放。白键音点按实际绘制边界居中，黑键圆心与键中心共用坐标；分数像素圆心使用透明图像插值，避免圆点取整而文字未取整的错位。谱表继续使用独立 `note_radius`，不跟随地图放大。
+- 在用户加宽的 `1040×780` Chord Lab 截图中，检查上图 16 个黑键音点：黑键宽 19 px，音点左右对称且没有越出黑键。恢复 884 px 宽后音点自动适配较窄黑键，不保留会溢出的 19 px。截图与像素检查位于 `/tmp/chordlab-dots-20261017/`。
+- pytest **85 passed**，`git diff --check` 通过。正式 JSFX 安全重载通过，当前参数、完整 `JS_SER`、各轨增益和 Master 不变；最终重载记录位于 `/tmp/chordlab-dots-final-20261017/`。未重新运行实体 MIDI 或全量宿主录音验收。
+- 确认 Surge XT 1.3.4 官方 `SurgeGUIEditor::setZoomFactor` 在 Linux 将 150 强制转换成 149；之前只把外框拉至 150% 尺寸并不能固定内部缩放。用户改选 Royal 原生 **125%**。读取当前实例的 `dawExtraState/instanceZoomFactor=125`，关闭／重开仍为 125；默认配置落盘为 125，Sway 仅在开窗时设置匹配的原生 125% 尺寸，不添加持续改尺寸服务。
+- 最终布局：Chord Lab `884×631@(684,335)`，VKB `884×139@(684,966)`，Surge `1187×770@(1568,335)`；三窗同在 workspace 2，左列上下相接、左右等高，整组 `2071×770` 在 `3440×1440` 屏幕中央（横向余量 684/685，纵向 335/335）。恢复原宽度，左列高度按更小的 Surge 重新分配，并非恢复旧 875 px 总高。
+- Surge 缩放前后原始音源 payload 唯一差异为 `instanceZoomFactor 149→125`；全部 778 个暴露参数、engine XML 和二进制 wavetable 均保持。125% 原像素截图检查标题较 149% 清晰；不声称主题 PNG 小字能变成矢量字。验证与截图位于 `/tmp/surge-zoom-source/`。未覆盖保存 `synth.rpp`。

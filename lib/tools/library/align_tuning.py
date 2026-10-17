@@ -40,6 +40,8 @@ def align_project(text: str) -> tuple[str, tuple[str, ...]]:
         if identity in identities:
             raise ValueError(f'Duplicate library patch: {identity}')
         identities.add(identity)
+        if 'http://sfztools.github.io/sfizz "' in block:
+            continue  # sfizz does not contain Surge host tuning state.
         if 'org.surge-synth-team.surge-xt "' not in block:
             raise ValueError(f'Expected Surge CLAP track: {identity}')
         states = list(re.finditer(r'(?m)^([ \t]*)<STATE\r?\n([A-Za-z0-9+/= \t\r\n]+?)^[ \t]*>', block))

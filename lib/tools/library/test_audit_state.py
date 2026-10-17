@@ -65,3 +65,13 @@ def test_audit_reports_conflict_despite_equal_patch_and_waveforms(tmp_path: Path
     row, = audit(project)
     assert row.engine_equal and row.wavetables_equal
     assert row.tuning_conflict
+    # Mixed library: known sampled pianos are outside the Surge binary audit.
+    with project.open('a') as stream:
+        stream.write('  <TRACK {piano}\n    utrp_patch basic/piano\n'
+                     '    utrp_patch_source /samples/piano.sfz\n'
+                     '    <LV2 "LV2i: sfizz" http://sfztools.github.io/sfizz ""\n'
+                     '    >\n  >\n')
+    assert audit(project) == (row,)
+    project.write_text(project.read_text().replace('http://sfztools.github.io/sfizz', 'unknown'))
+    with pytest.raises(ValueError, match='Expected sfizz'):
+        audit(project)

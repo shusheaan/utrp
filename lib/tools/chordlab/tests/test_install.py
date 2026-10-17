@@ -75,6 +75,7 @@ def test_mapping_is_exact_and_unique() -> None:
     assert len(mapping) == len(rows) == 24
     assert sorted(mapping.values()) == list(range(23)) + [25]
     assert mapping[ord("D")] == 14 and mapping[13] == 22 and mapping[9] == 25
+    assert mapping[ord(";")] == 21  # Reset; Enter's command 22 now toggles sustain.
 
 
 def test_install_and_restore_without_map(tmp_path: Path) -> None:

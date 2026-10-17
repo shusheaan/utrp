@@ -1,7 +1,32 @@
 # Synth Library — 单音色试听工程
 
-当前：88 个仓库 FXP 按五个 collection 分组，保留 Storage 中一个参数不同的版本；
-89 条 synth 轨共用一个 Chord Lab 输入。不是多层叠加演奏器。
+当前：95 条音色轨共用一个 Chord Lab 输入，其中 93 条 Surge、2 条 sfizz。
+保留原来的 89 条 Surge 音色，新增 6 条基础键盘音色。不是多层叠加演奏器。
+
+## Basic Keys（最前面的音色组）
+
+共享输入轨仍在第一轨，其后是 `Basic Keys - 基础键盘` 文件夹：
+
+| 轨道 | 音源与来源 |
+| --- | --- |
+| 01 Acoustic Piano | sfizz + Alexander Holm 的 Salamander Grand Piano V3 |
+| 02 Soft Piano | 相同采样，加 3800 Hz 二阶低通；不是独立钢琴录音 |
+| 03 Suitcase EP | Surge Factory / Keys / Soft Suitcase |
+| 04 DX EP | Surge Factory / Keys / DX EP |
+| 05 Organ | Surge Factory / Keys / Organ 1 |
+| 06 Church Organ | Surge Factory / Keys / Church |
+
+钢琴使用 [FreePats 原始采样包](https://freepats.zenvoid.org/Piano/acoustic-grand-piano.html)，
+44.1 kHz / 16 bit，作者 Alexander Holm，CC-BY-3.0；安装于
+`~/storage/daw/samples/SalamanderGrandPianoV3_44.1khz16bit/`，原 README 和署名保留。
+`SoftPiano.sfz` 用 include 引用原映射，不修改原始采样。大采样文件不放进 Git。
+
+`01 Acoustic Piano` 标记 `P_EXT:utrp_library_default=1`。
+默认启动入口运行 `Start library.lua` 时，无论上次选了什么，都先激活并选中钢琴。
+重复运行 Start 不打断正在进行的试听；没有默认标记的旧工程维持原行为。
+直接打开 RPP 而未运行启动脚本时，遵循工程保存的状态。
+选 sfizz 轨时显示 sfizz，选 Surge 轨时显示 Surge；都复用同一个 Chord Lab。
+音源离线时不能用 `TrackFX_GetInstrument` 判断类型，须读取保存的 FX 名称。
 
 - `Crying in a Loop`：3 个音色（01、02、03）。
 
@@ -17,7 +42,7 @@
 
 运行 `Start library.lua` 启动；重复运行不会关闭会话。
 启动时仅建立 MIDI 监听与试听路由，不主动打开 Chord Lab 或 Surge；工程保存的窗口状态由 REAPER 恢复。
-**选中另一条音色轨即可切换试听，并同时打开该轨 Surge 与共享 Chord Lab**，并打开原生 VKB。
+**选中另一条音色轨即可切换试听，并同时打开该轨音源与共享 Chord Lab**，并打开原生 VKB。
 切到文件夹／公共输入轨后再选回当前音色，也会重新打开编辑器，但不重新加载音色。
 只响应选中轨道的变化：手动关窗后不会被轮询立即打开；重复点击已选中的同一轨不算新的选择。
 所有音色轨共用输入，不逐轨复制 Chord Lab。点击专辑文件夹或公共输入轨不切音色。
@@ -26,11 +51,11 @@
 - **Surge**：选中音色轨时自动显示，也可从音色轨的普通 **FX** 单独打开／关闭；手动开关 Surge 不带动 Chord Lab 或 VKB。
 - **显示与处理独立**：关闭编辑器不是 bypass。隐藏 Chord Lab 后 Input FX、arm／monitor 和实体 MIDI 通路保持运行；隐藏编辑器只到期释放鼠标持音；电脑输入仍由打开的 VKB 提供，关闭 VKB 才停止电脑控制。
 - 插件是否处理由各自 FX 的启用／bypass 控制；重新打开 Chord Lab 不会自动取消 bypass。
-- 音色切换关闭旧 Surge 浮窗并将旧实例离线，再加载新实例；选轨时打开新 Surge 与共享 Chord Lab。保持单个音色在线，不改其保存参数。
+- 音色切换关闭旧音源浮窗并将旧实例离线，再加载新实例；选轨时打开新音源与共享 Chord Lab。Surge 和 sfizz 使用同一路由，保持单个音色在线，不改其保存参数。
 - VKB 随打开 Chord Lab／选中音色轨显示，也可通过 **View → Virtual MIDI Keyboard** 手动开关。手动关闭后稳定轮询不强制重开；隐藏 Chord Lab 不关闭 VKB，关闭 VKB 也不隐藏 Chord Lab。
 
-点击某条音色轨的 **Solo** 也可以切换，管理器自动取消上一个 Solo：只保持当前 Surge 在线、
-只把公共 MIDI 发给它，其余 Surge 离线但状态仍保存在 RPP 中。仅改变 Solo、不改变选中轨道时，不自动打开编辑器。
+点击某条音色轨的 **Solo** 也可以切换，管理器自动取消上一个 Solo：只保持当前音源在线、
+只把公共 MIDI 发给它，其余音源离线但状态仍保存在 RPP 中。仅改变 Solo、不改变选中轨道时，不自动打开编辑器。
 不选任何 Solo 就没有 synth 发声。不要 Solo 专辑文件夹，不要额外 arm synth 轨。
 
 先松开琴键再换轨／音色。离线切换会切断旧音色尾音，不支持跨音色连续长音。
@@ -74,6 +99,7 @@ VKB 随选轨／打开 Chord Lab 显示，与 Chord Lab 同宽，琴键不再压
 python -m pytest -q lib/tools/library/test_*.py lib/tools/chordlab/tests/test_install.py
 luac -p 'lib/tools/library/Library mode.lua'
 lua lib/tools/library/test_mode.lua
+lua lib/tools/library/test_start.lua
 lua lib/tools/chordlab/tests/test_mode.lua
 ```
 
@@ -105,3 +131,15 @@ python -m lib.tools.library.align_tuning /path/to/saved-backup.rpp /path/to/new-
 它拒绝覆盖目标，不直接修改源工程。应用流程必须先保存当前 RAM 编辑、正常关闭工程、
 备份最新 RPP，验证新副本后再替换并重开；不能用早先候选覆盖最新编辑。
 本机已按此流程完成 72 处字段修正，详情与回滚副本见 `VALIDATION.md`。
+
+### Basic Keys 共用混响（2026-10-16）
+
+本机工程的 `Basic Keys - 基础键盘` 文件夹普通 FX 已加入一个 ReaVerbate；六条子轨经原有 parent send 共用，不加到 Chord Lab MIDI 输入轨或 Master，也不影响其他组。文件夹轨高 160 px，轨道面板直接显示 `Wet`（混响量）与 `Room size`（空间大小）两个旋钮；更详细的设置点该文件夹的 FX。
+
+初始值：Wet -18 dB、Dry 0 dB、Room size 70、Dampening 50、Delay 20 ms；插件启用。平时主要调 Wet，Dry 保持 0 dB；插件 wrapper 的 Wet 保持 100%，不要与混响本身的 Wet 混淆。音源内原有 FX 未修改，因此若某个 Surge 音色自身已有混响，会与文件夹混响叠加。设置随用户保存 `.rpp` 保留，不修改源 FXP，也没有修改一次性 builder。
+
+### MIDI 键盘断电／重连后无声
+
+本机曾出现 Linux 与 PipeWire 已识别 Keystation，但 `Keystation (USB MIDI) (capture) → REAPER:MIDI Input 2` 连接丢失的情况。REAPER 菜单 `Actions → Show action list` 搜索并执行 `Reset all MIDI devices`，或在 `Preferences → Audio → MIDI Inputs/MIDI Devices` 执行同名重置。此操作关闭再打开 MIDI 设备，不是恢复工程／音色默认设置；应先松键并停止录音。若系统根本看不到设备，则先检查 USB 连接，不能靠 REAPER 重置解决。
+
+2026-10-16 现场：执行 `midi_reinit()` 后 PipeWire 连接恢复，REAPER 收到 device 65 的新 Note On/Off；未注入测试音符、未重启 managers、未改音量或工程路由。检查记录在 `/tmp/utrp-midi-reconnect/`。这次恢复不代表已经实现断电后的自动重连。

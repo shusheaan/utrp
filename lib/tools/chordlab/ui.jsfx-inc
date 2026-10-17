@@ -39,48 +39,55 @@ function role_ink(role,lit) local(color) (
     .55+.45*((color>>8)&255)/255,
     .55+.45*(color&255)/255,1);
 );
-// Filled gfx_circle rounds its centre to an integer pixel. Interpolate a small
-// transparent sprite for half-pixel centres instead of rounding a staff-line note.
-function note_circle(x,y,radius) local(destination,top) (
-  y==floor(y) ? gfx_circle(x,y,radius,1,1) : (
-    destination=gfx_dest; top=floor(y);
-    gfx_setimgdim(1,24,24); gfx_dest=1;
-    gfx_muladdrect(0,0,24,24,0,0,0,0,gfx_r,gfx_g,gfx_b,0);
-    gfx_circle(12,12,radius,1,1);
+// Preserve fractional centres on both axes, including even-width white keys.
+// The scratch image grows with the marker so larger windows cannot clip it.
+function note_circle(x,y,radius) local(destination,left,top,half,side) (
+  x==floor(x) && y==floor(y) ? gfx_circle(x,y,radius,1,1) : (
+    destination=gfx_dest; left=floor(x); top=floor(y);
+    half=ceil(radius)+3; side=half*2;
+    gfx_setimgdim(1,side,side); gfx_dest=1;
+    gfx_muladdrect(0,0,side,side,0,0,0,0,gfx_r,gfx_g,gfx_b,0);
+    gfx_circle(half,half,radius,1,1);
     gfx_dest=destination;
-    gfx_blit(1,1,0,0,top-y,24,24,x-12,top-12,24,24);
+    gfx_blit(1,1,0,left-x,top-y,side,side,left-half,top-half,side,side);
   );
 );
 // One circle/text renderer shared by staff, keyboard and guitar.
-function note_dot(x,y,role,note,scale_view) local(lit,hw,radius,tw,th,size) (
+function note_dot(x,y,role,note,scale_view,radius) local(lit,hw,tw,th,size,fit) (
   hw=hardware_held(note); lit=(sounding && own[note]) || hw>0;
-  radius=note_radius; x=floor(x+.5); // Preserve the staff's half-pixel space centres.
   role>=0 ? role_ink(role,lit) : ink(external_color,1);
   note_circle(x,y,radius);
   role>=0 && !scale_view ? spell_note(#tone,key,degree+role*2) : spell_pitch(#tone,key,note);
   // Measure the actual string, not a guessed rectangle; shrink accidentals to fit.
-  size=note_font_size;
+  size=note_font_size*radius/note_radius;
   gfx_setfont(5,"DejaVu Sans",size,'b');
   gfx_measurestr(#tone,tw,th);
-  tw>radius*1.85 ? (
-    size*=radius*1.85/tw; gfx_setfont(5,"DejaVu Sans",size,'b'); gfx_measurestr(#tone,tw,th);
+  fit=min(1,radius*1.85/max(1,tw));
+  fit<1 ? (
+    size*=fit; gfx_setfont(5,"DejaVu Sans",size,'b'); gfx_measurestr(#tone,tw,th);
   );
   ink($x111111,1);
   gfx_x=x-tw/2; gfx_y=y-th/2; gfx_drawstr(#tone);
 );
-function dot(x,y,role,note,scale_view) (note_dot(x,floor(y+.5),role,note,scale_view););
-function external_dot(x,y,note,scale_view) (hardware_held(note)>0 ? note_dot(x,floor(y+.5),-1,note,scale_view););
+// An odd, integer black-key width has one exact centre pixel. gfx_circle's
+// filled diameter is 2*r+1 pixels, matching that key without spilling over.
+function keyboard_black_width(w) (2*floor(w/29*.33)+1;);
+function dot(x,y,role,note,scale_view) (
+  note_dot(x,y,role,note,scale_view,(keyboard_black_width(layout_map_width)-1)/2);
+);
+function external_dot(x,y,note,scale_view) (hardware_held(note)>0 ? dot(x,y,-1,note,scale_view););
 function is_black(pc) (pc==1 || pc==3 || pc==6 || pc==8 || pc==10;);
-function draw_keyboard(x,y,w,h,scale_view) local(i,n,pc,white,kx,kw,role,ch,hw) (
-  kw=w/29; white=0; i=0;
+function draw_keyboard(x,y,w,h,scale_view) local(i,n,pc,white,kx,kw,bw,left,right,cx,role,ch,hw) (
+  kw=w/29; bw=keyboard_black_width(w); white=0; i=0;
   loop(49,
     n=38+i; pc=n%12;
     !is_black(pc) ? (
       kx=x+white*kw;
-      ink(diagram_background_color,1); gfx_rect(kx+.8,y,kw-1.6,h);
+      left=floor(kx+.8); right=floor(kx+kw-.8); cx=(left+right-1)/2;
+      ink(diagram_background_color,1); gfx_rect(left,y,right-left,h);
       role=diagram_role(pc,key,degree,voice_count,scale_view);
-      role>=0 ? dot(kx+kw/2,y+h-27,role,n,scale_view);
-      role<0 ? external_dot(kx+kw/2,y+h-27,n,scale_view);
+      role>=0 ? dot(cx,y+h-27,role,n,scale_view);
+      role<0 ? external_dot(cx,y+h-27,n,scale_view);
       (pc==0 || i==0 || i==48) ? (sprintf(#oct,pc==0 ? "C%d" : "D%d",floor(n/12)-1); centered(kx,y+h-15,kw,12,#oct,8,$x6d7984););
       white+=1;
     );
@@ -90,12 +97,12 @@ function draw_keyboard(x,y,w,h,scale_view) local(i,n,pc,white,kx,kw,role,ch,hw) 
   loop(49,
     n=38+i; pc=n%12;
     is_black(pc) ? (
-      kx=x+white*kw-kw*.33;
-      ink($x101820,1); gfx_rect(kx,y,kw*.66,h*.61);
-      ink($x25313b,1); gfx_rect(kx+2,y+2,kw*.66-4,h*.61-6);
+      cx=floor(x+white*kw+.5); kx=cx-(bw-1)/2;
+      ink($x101820,1); gfx_rect(kx,y,bw,h*.61);
+      ink($x25313b,1); gfx_rect(kx+2,y+2,bw-4,h*.61-6);
       role=diagram_role(pc,key,degree,voice_count,scale_view);
-      role>=0 ? dot(x+white*kw,y+h*.61-18,role,n,scale_view);
-      role<0 ? external_dot(x+white*kw,y+h*.61-18,n,scale_view);
+      role>=0 ? dot(cx,floor(y+h*.61-18+.5),role,n,scale_view);
+      role<0 ? external_dot(cx,floor(y+h*.61-18+.5),n,scale_view);
     ) : white+=1;
     i+=1;
   );
@@ -145,10 +152,12 @@ function draw_key_choices(y) local(i,x,w,locked) (
   locked=sounding || (play_state&1) || play_state==5;
   i=0; loop(12,
     key_name(#text,i);
-    x=floor(18+i*(gfx_w-36)/12); w=floor(18+(i+1)*(gfx_w-36)/12)-x;
+    x=floor(18+i*(gfx_w-172)/12); w=floor(18+(i+1)*(gfx_w-172)/12)-x;
     button(x,y,w,25,#text,key==i,locked) ? ui_command(i);
     i+=1;
   );
+  strcpy(#text,sustain_on ? "Sustain ON" : "Sustain OFF");
+  button(gfx_w-148,y,130,25,#text,sustain_on,!enabled && !sustain_on) ? ui_command(sustain_on ? 27 : 26);
 );
 function draw_chord_choices(y) local(i,d,x,w,selected,index,bass,text_width,text_height,text_size) (
   i=0; loop(7,

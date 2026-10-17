@@ -201,3 +201,29 @@ VKB 初始位置更新为 `(560,150)`、尺寸 `884×150`；双层 Chord Lab 仍
 - Surge 开窗规则增加 `resize set width 1359 px height 875 px`；实际截图确认内容等比例放大，无空白扩框。当前与默认位置仍 `(1444,282)`，三窗无缝、整体居中不变。
 - 现场切轨 `A2b-fmpad-dark → A1-bellpad → A2b-fmpad-dark`，两次新浮窗均实测 `1359×875`、`(1444,282)`；返回后原实例所有暴露音色参数一致。未保存工程、未 Git commit，未跑全 89 实例遍历。
 - 结果：`/tmp/chordlab-surge-size-20261016/result.txt` 与 `switch-geometry.json`。本次只修改本机 Sway 规则和说明，不改 Lua／MIDI 逻辑。
+
+## 2026-10-16 — Basic Keys / sfizz
+
+- 正式 `~/storage/daw/synth.rpp`：102 轨，95 个音色；共享输入之后即为 Basic Keys，含普通钢琴、Soft Piano、Suitcase EP、DX EP、Organ、Church Organ。
+- 原工程备份：`~/storage/daw/Backups/synth-before-basic-keys-20261016-221019.rpp`。
+- Salamander 原始包 SHA-256：`58750eb1366761e187f71ddb9b932355ea894d28ec4331e74ab8acb44c819936`；保留作者 Alexander Holm 和 CC-BY-3.0 README，采样未加入仓库。
+- 新建 sfizz 两轨各成功读取 641 regions；Soft Piano 使用独立 include 映射和 3800 Hz 二阶低通。
+- 临时工程自动验收：六个新音色 → 旧 A2-fmpad → 普通钢琴，共 8 次选择。每次普通 MIDI 消息及 Chord Lab 电脑控制消息均有输出，且只有 1 个在线音源、1 个 Solo 音色、1 条 armed 输入轨。测试时主输出静音，结束恢复 -3 dB；这不是实体键盘验收。
+- 核对原有 89 个 Surge：构建后 raw state 全部一致；GUI 切换测试后 musical XML、wavetable 和 tuning conflict 状态仍与原工程一致。
+- 发现并修复：离线插件的 `TrackFX_GetInstrument` 返回 -1，不能据此拒绝合法音色；现按保存的 Surge / sfizz FX 名称校验，增加离线启动回归测试。
+- 正式工程重新打开后：默认 Acoustic Piano 在线、Solo；共享输入 `6112`（All MIDI / all channels）、arm=1、monitor=1；主输出音量 `0.70794578438414`。PipeWire 中实体 Keystation 输入及 Spark GO 左右声道连接均存在。已请用户确认实际听感。
+- 验证：相关 pytest **83 passed**；Library lifecycle **31 assertions**；startup 三场景通过；Chord Lab lifecycle **43 assertions**；Lua syntax 和 `git diff --check` 通过。
+
+## Sustain 路由复位增量（2026-10-16）
+
+- 新音源接通后，向共享 Chord Lab 提交 force-OFF（command 27），使保存过 CC64=127 的音源重新上线时也释放延音；稳定轮询不反复发送。
+- Library lifecycle mock 34 assertions、Chord Lab mock 46 assertions，合并 pytest 85 passed。Chord Lab 独立宿主 controls 验收 42 checks，详情见 `../chordlab/tests/README.md`。
+- 正式 Library manager 已重启加载新逻辑，保留当前音色选择及所有音量；未保存正式工程。真实切换不同音源的 CC64 通路未在本轮额外插入探针实测，路由触发由 mock 验证。
+
+## Basic Keys 文件夹共享 Reverb（2026-10-16）
+
+- 现场核实 index 1 是 Basic Keys 文件夹，index 2–7 六个音源均启用 parent send，index 7 关闭该文件夹层级，index 8 属于下一组。
+- 文件夹原无 FX，添加单个 ReaVerbate，并验证实际格式化参数为 Wet -18.0 dB、Dry +0.0 dB、Room size 70、Dampening 50、Delay 20 ms、Bypass normal。房间／延时通过插件自己的格式化 API 求值，不假设参数原始值是毫秒或百分数。
+- `CountTCPFXParms` 回报 2，截图确认 Wet 与 Room size 在左侧文件夹轨可见。没有切换音色、重新启动 managers 或修改键盘控制。
+- 比较当前 RAM 工程的 before/after 副本：102 条轨保留，除 Basic Keys 文件夹新增 FX 和 track height 外，其他 101 条轨逐字一致；工程头仅时间戳变化。Master、各轨音量、音色状态及 Chord Lab 记忆未改。
+- 副本、参数回读与截图在 `/tmp/basic-keys-reverb-20261016/`。未覆盖正式 `synth.rpp`；用户需保存工程。没有注入演奏音符，也未把路由／参数验证冒称为人耳试听或全音色混响音频验收。

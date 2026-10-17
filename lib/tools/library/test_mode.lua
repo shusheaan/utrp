@@ -9,6 +9,7 @@ local sends={{target=tracks[2],mute=0},{target=tracks[3],mute=0}}
 local ext,events,shown={},{},{}
 local now,project,vkb=0,1,0
 local selected,deferred,cleanup
+local params={[6]=0,[7]=23}
 local function key(section,name) return section..'/'..name end
 reaper={
  GetExtState=function(s,k) return ext[key(s,k)] or '' end,
@@ -19,9 +20,13 @@ reaper={
  GetTrack=function(_,i) return tracks[i+1] end,
  GetSelectedTrack=function() return selected end,
  GetSetMediaTrackInfo_String=function(t,k) return true,k=='P_EXT:utrp_library_input' and t.input or t.patch end,
- TrackFX_GetFXName=function() return true,'CLAPi: Surge XT' end,
+ -- Mixed library: the first sound is Surge, the second can be sfizz.
+ TrackFX_GetFXName=function(t) return true,t==tracks[3] and 'LV2i: sfizz (SFZTools)' or 'CLAPi: Surge XT' end,
+ TrackFX_GetInstrument=function() error('Offline FX cannot be identified by GetInstrument') end,
  TrackFX_GetFXGUID=function(t) return t.guid end,
  TrackFX_GetRecCount=function(t) assert(t==tracks[1]);return 1 end,
+ TrackFX_GetParam=function(_,_,i) return assert(params[i]) end,
+ TrackFX_SetParam=function(_,_,i,v) params[i]=v end,
  TrackFX_GetNamedConfigParm=function(t,fx,k)
   assert(t==tracks[1] and fx==0x1000000 and k=='fx_ident')
   return true,'ChordLab/chordlab.jsfx'
@@ -66,6 +71,7 @@ dofile('lib/tools/library/Library mode.lua')
 check(table.concat(events,',')=='mute0:1,mute1:1,two:true,mute0:0')
 check(not tracks[2].offline and tracks[3].offline)
 check(#shown==0 and vkb==0)
+check(params[7]==27 and params[6]==1)
 -- Selection loads the sound, then opens Surge and the shared Chord Lab.
 selected=tracks[3];events={};shown={};tick()
 check(table.concat(events,',')=='mute0:1,mute1:1,one:true,two:false,mute1:0')
@@ -75,11 +81,13 @@ check(table.concat(shown,',')=='two:3,input:3')
 check(tracks[3].floating and tracks[1].floating)
 -- A new selection includes VKB, even if the shared editor was already open.
 check(vkb==1)
+check(params[7]==27 and params[6]==2)
 -- Polling must not reload synths, reopen a closed window or steal focus.
 tracks[3].floating=false;tracks[1].floating=false
 events={};shown={};vkb=0;tick()
 check(#events==0 and #shown==0 and vkb==0)
 check(not tracks[3].floating and not tracks[1].floating)
+check(params[6]==2)
 -- Album folders and the shared input do not change the sound.
 selected=tracks[4];tick();selected=tracks[1];tick()
 check(#events==0 and #shown==0 and tracks[3].solo==2)

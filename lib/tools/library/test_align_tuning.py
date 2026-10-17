@@ -50,6 +50,15 @@ def test_matching_state_is_byte_identical() -> None:
     assert align_state(raw) == raw
 
 
+def test_sampled_piano_is_not_rewritten() -> None:
+    piano = ('  <TRACK {piano}\n    utrp_patch basic/piano\n'
+             '    <LV2 "LV2i: sfizz" http://sfztools.github.io/sfizz ""\n'
+             '      P http://sfztools.github.io/sfizz:sfzfile /samples/piano.sfz 1\n'
+             '    >\n  >\n')
+    text = project(payload(host=0)) + piano
+    assert align_project(text) == (text, ())
+
+
 @pytest.mark.parametrize('newline', ['\n', '\r\n'])
 def test_project_changes_only_state_body(newline: str) -> None:
     text = project(payload(), newline)

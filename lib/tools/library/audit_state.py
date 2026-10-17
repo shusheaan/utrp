@@ -70,6 +70,11 @@ def audit(project: Path, loaded: Path | None = None) -> tuple[PatchAudit, ...]:
         if marker is None:
             continue
         source = re.search(r'utrp_patch_source (.+)', block)
+        # Sampled pianos have no Surge patch/tuning payload to compare.
+        if source is not None and Path(source[1].strip().strip('"')).suffix == '.sfz':
+            if 'http://sfztools.github.io/sfizz "' not in block:
+                raise ValueError('Expected sfizz for SFZ library track')
+            continue
         state = re.search(r'<STATE\n(.*?)\n\s*>', block, re.S)
         if source is None or state is None:
             raise ValueError('Incomplete library track')

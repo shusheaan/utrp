@@ -7,14 +7,22 @@ slider5:0<0,1000000,1>-Note ons
 slider6:0<0,1000000,1>-Note offs
 slider7:0<0,127,1>-Last CC
 slider8:0<0,127,1>-Last CC value
+slider9:0<0,127,1>-Last note on velocity
+slider10:0<0,15,1>-Last note on channel
+slider11:0<0,65535,1>-Sustain channel mask
+slider12:0<0,1000000,1>-Sustain events
 @init
 ext_noinit=1;
 @block
 while(midirecv(o,s,n,v)) (
   ch=s&15; type=s&240;
-  type==144 && v>0 ? (state[ch*128+n]=1; slider5+=1;);
+  type==144 && v>0 ? (state[ch*128+n]=1; slider5+=1; slider9=v; slider10=ch;);
   type==128 || (type==144 && v==0) ? (state[ch*128+n]=0; slider6+=1;);
   type==176 ? (slider7=n; slider8=v;);
+  type==176 && n==64 ? (
+    slider12+=1;
+    v>=64 ? slider11=slider11|(1<<ch) : slider11=slider11&(65535-(1<<ch));
+  );
   midisend(o,s,n,v);
 );
 slider1=slider2=slider3=slider4=0;

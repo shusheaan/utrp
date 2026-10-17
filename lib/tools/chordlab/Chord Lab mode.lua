@@ -93,12 +93,13 @@ local function tick()
   last_visible = visible
   local keyboard_open = reaper.GetToggleCommandState(VKB) == 1
   if bypass_pending then
-    if reaper.TrackFX_GetParam(track, fx, 8) < 0.5 then
+    if reaper.TrackFX_GetParam(track, fx, 8) < 0.5 and reaper.TrackFX_GetParam(track, fx, 17) < 0.5 then
       reaper.TrackFX_SetEnabled(track, fx, false); bypass_pending = false
     end
     reaper.defer(tick); return
   end
-  if not reaper.TrackFX_GetEnabled(track, fx) and reaper.TrackFX_GetParam(track, fx, 8) > 0.5 then
+  if not reaper.TrackFX_GetEnabled(track, fx)
+    and (reaper.TrackFX_GetParam(track, fx, 8) > 0.5 or reaper.TrackFX_GetParam(track, fx, 17) > 0.5) then
     -- Flush only our own notes before honoring the user's bypass request.
     reaper.TrackFX_SetEnabled(track, fx, true); send_stop(); bypass_pending = true
     reaper.defer(tick); return

@@ -10,8 +10,10 @@ for i=0,reaper.CountTracks(project)-1 do
   local _,patch=reaper.GetSetMediaTrackInfo_String(t,'P_EXT:utrp_patch','',false)
   if is_input=='1' then assert(not input,'Multiple library inputs');input=t end
   if patch~='' then
+    -- GetInstrument returns -1 for offline FX; inspect the saved name instead.
     local ok,name=reaper.TrackFX_GetFXName(t,0)
-    assert(ok and name:find('Surge XT',1,true),'Expected Surge XT as first FX: '..patch)
+    assert(ok and (name:find('Surge XT',1,true) or name:find('LV2i: sfizz',1,true)),
+      'Expected Surge XT or sfizz as first FX: '..patch)
     entries[#entries+1]={track=t,solo=false,guid=reaper.TrackFX_GetFXGUID(t,0)}
   end
 end
@@ -41,6 +43,17 @@ local function route(target)
   for i=0,reaper.GetTrackNumSends(input,0)-1 do
     local dest=reaper.GetTrackSendInfo_Value(input,0,i,'P_DESTTRACK')
     if dest==target then reaper.SetTrackSendInfo_Value(input,0,i,'B_MUTE',0) end
+  end
+  -- Reset after connecting: a reloaded instrument may remember CC64=127.
+  for i=0,reaper.TrackFX_GetRecCount(input)-1 do
+    local fx=i|0x1000000
+    local ok,ident=reaper.TrackFX_GetNamedConfigParm(input,fx,'fx_ident')
+    if ok and ident=='ChordLab/chordlab.jsfx' then
+      reaper.TrackFX_SetParam(input,fx,7,27)
+      local serial=reaper.TrackFX_GetParam(input,fx,6)
+      reaper.TrackFX_SetParam(input,fx,6,(serial+1)%1000001)
+      break
+    end
   end
 end
 local function show_editors(target)

@@ -72,9 +72,12 @@ local function tick()
         log:write(current.index,'\t',current.id,'\t',computer_peak,'\t',peak,'\t',
           reaper.TrackFX_GetParam(source,0x1000000,8),'\t',online,'\t',solo,'\t',armed,'\t',
           windows,'\t',audio_xrun,'\t',media_xrun,'\n');log:flush()
-        local ok,state=reaper.TrackFX_GetNamedConfigParm(current.track,0,'clap_chunk');assert(ok)
-        local f=assert(io.open('/tmp/synth-build-stage/loaded-'..current.index..'.b64','w'))
-        f:write(state);f:close()
+        local _,fxname=reaper.TrackFX_GetFXName(current.track,0)
+        if fxname:find('Surge XT',1,true) then
+          local ok,state=reaper.TrackFX_GetNamedConfigParm(current.track,0,'clap_chunk');assert(ok)
+          local f=assert(io.open('/tmp/synth-build-stage/loaded-'..current.index..'.b64','w'))
+          f:write(state);f:close()
+        end
         release();phase='release';deadline=now+.3
       end
     end

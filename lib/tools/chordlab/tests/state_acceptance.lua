@@ -35,7 +35,7 @@ local cases={
   function() hold() end,
   function()
     check(p(15)==2 and p(2)==1 and p(3)==72,'Type/register lost across keys')
-    voices({63,65,68,72,73}); tap(82)
+    voices({63,65,68,72,73}); tap(81)
   end,
   function() voices({61,63,65,68,72}); release() end,
   function() tap(60) end,
@@ -46,7 +46,7 @@ local cases={
   function() voices({60,64,67}); tap(79) end,
   function() voices({55,60,64}) end,
   function() release() end,
-  -- Idle K/L movement also persists, without pressing the semicolon save key.
+  -- Idle K/L movement also persists, without a separate save key.
   function() tap(80) end,
   function() tap(79) end,
   function()
