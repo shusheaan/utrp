@@ -1,26 +1,91 @@
-# Study-compatible role dots; fifth is deliberately orange rather than salmon.
-root = "#CE303A"
-third = "#258448"
-fifth = "#DC872C"
-seventh = "#477CEC"
-ninth = "#8B3DB8"
-external = "#707070"
-background = "#B3B3B3"
-# One shared light surface for staff, piano white keys and guitar fretboards.
+# Saturated active fills with >=4.5:1 contrast against white note labels.
+root = "#B44352"
+third = "#267A50"
+fifth = "#986322"
+seventh = "#3D68AF"
+ninth = "#8052A4"
+external = "#65656B"
+# Lighter neutral sampled from the existing Bitwig-matched toolbar palette.
+background = "#585858"
+# Bright diagram surfaces; piano keys have a separate Dark fill.
 diagram_background = "#E9EDF0"
-button = "#A5A5A5"
-button_hover = "#969696"
-button_selected = "#707070"
-text = "#202020"
-text_muted = "#505050"
+key_white = "#E9EDF0"
+button = "#494949"
+button_hover = "#585858"
+button_selected = "#686868"
+text = "#E5E5E5"
+text_muted = "#D1D5DA"
 text_selected = "#FFFFFF"
+# Bright mode preserves the previous light diagrams.
+key_black = "#101820"
+key_black_inner = "#25313B"
+key_divider = "#323232"
+octave_label = "#6D7984"
+staff_line = "#777777"
+notation = "#222222"
+guitar_nut = "#52606C"
+guitar_fret = "#9AA7B1"
+guitar_string = "#7D8B97"
+note_text = "#FFFFFF"
+# Dark separators match the staff line weight.
+dark_diagram_line_width = 2
+# Idle fills are softer/desaturated, with only a small luminance change on press.
+note_idle_base = "#99999F"
+note_idle_mix = 0.8
 font_scale = 1.45
 # Equal heights inside both diagram groups, sharing the staff's total height.
 piano_height_ratio = 0.50
 guitar_height_ratio = 0.50
 staff_clef_scale = 0.56
+active_note_ring = "#FFFFFF"
+active_note_ring_width = 0.8
+active_note_glow_width = 3.5
+active_note_glow_mix = 0.45
+active_note_glow_outer_alpha = 0.13
+active_note_glow_inner_alpha = 0.30
 note_radius = 7
 note_font_size = 12
 # Temporary accidentals only: smaller than the signature, farther left of notes.
 staff_accidental_scale = 0.75
 staff_accidental_gap = 34
+
+[dark]
+# Both modes keep white labels on the same legible note palette.
+root = "#B44352"
+third = "#267A50"
+fifth = "#986322"
+seventh = "#3D68AF"
+ninth = "#8052A4"
+external = "#65656B"
+diagram_background = "#585858"
+key_white = "#585858"
+key_black = "#000000"
+key_black_inner = "#000000"
+key_divider = "#B2B8C0"
+octave_label = "#D1D5DA"
+staff_line = "#B2B8C0"
+notation = "#D1D5DA"
+guitar_nut = "#C3C9D0"
+guitar_fret = "#B2B8C0"
+guitar_string = "#B2B8C0"
+note_text = "#FFFFFF"
+
+[controls]
+off = "#94646A"
+on = "#567962"
+foreground = "#FFFFFF"
+font_size = 14
+size = 29
+gap = 0
+margin = 18
+key_gap = 0
+
+[choices]
+height = 29
+font_size = 10
+inset = 3
+
+[editor]
+# Extra outer whitespace; keep the embedded canvas and controls at their original size.
+padding_x = 18
+padding_y = 10

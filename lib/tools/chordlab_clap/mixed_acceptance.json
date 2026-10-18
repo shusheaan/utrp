@@ -1,0 +1,26 @@
+{
+  "plugin_sha256": "7e412d08b576f56245c5cb59ff45b4a5c77f8441059a27f619dd4f545ec21088",
+  "unchanged_binary": true,
+  "mixed_midi": {
+    "track": {
+      "passed": 42,
+      "total": 42,
+      "log_sha256": "a0205558bf03a816c358eb512c4604f2a104f525d2d945668c74b5a2306234c4"
+    },
+    "input": {
+      "passed": 42,
+      "total": 42,
+      "log_sha256": "a0205558bf03a816c358eb512c4604f2a104f525d2d945668c74b5a2306234c4"
+    }
+  },
+  "recording": "PASS JSFX and CLAP Input FX: 6 recorded notes each; exact pitches/channels/velocities; positive lengths",
+  "gui": "Manual inspection: F# gray in both groups, D gray only in chord group, shared C colored; synthetic input",
+  "hardware": {
+    "device": "Keystation 61 MK3",
+    "reaper_input": "hw:MK3",
+    "opened_device": "/dev/snd/midiC4D0",
+    "physical_key_events_observed": false,
+    "status": "Device enumeration/open verified; actual user playing pending"
+  },
+  "production_project_modified": false
+}

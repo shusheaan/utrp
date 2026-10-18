@@ -220,10 +220,10 @@ def index_text(items: tuple[Entry, ...], root: Path, slots: int) -> str:
     lines += ['', '## 维护', '',
               '- 每首 TOML 的 `[library].rank`：`1–5` 在榜，`0` 仅存档。替换时旧曲改 `0`，新曲承接其名次；已有资料直接复用。',
               '- 不自动删除文件，也不拿未核实曲目冒充已完成转录。没有合适替补时检查会报缺额，不静默凑数。', '',
-              '```sh', 'python scripts/cover_library.py --check',
-              'python scripts/cover_library.py --check --check-images',
-              'python scripts/cover_library.py --write-index',
-              'python scripts/render_cover.py covers/A-center--frank-ocean--pink-white/A-major--frank-ocean--pink-white.toml --force',
+              '```sh', 'python study/cover_library.py --check',
+              'python study/cover_library.py --check --check-images',
+              'python study/cover_library.py --write-index',
+              'python study/render_cover.py covers/A-center--frank-ocean--pink-white/A-major--frank-ocean--pink-white.toml --force',
               '```', '', '绘图依赖：`fontTools`、`rsvg-convert`、`FreeSerif`、`Noto Sans CJK SC`。来源及证据限制见各曲 MD。', '']
     return '\n'.join(lines)
 

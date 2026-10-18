@@ -1,0 +1,49 @@
+# Offline configurations only; no plugin installation and no production defaults edits.
+[[variants]]
+name = "baseline"
+frame_ms = 64
+hop_ms = 8
+stability_ms = 24
+
+[[variants]]
+name = "48-8-16"
+frame_ms = 48
+hop_ms = 8
+stability_ms = 16
+
+[[variants]]
+name = "48-4-8"
+frame_ms = 48
+hop_ms = 4
+stability_ms = 8
+
+[[variants]]
+name = "40-4-16"
+frame_ms = 40
+hop_ms = 4
+stability_ms = 16
+
+[[variants]]
+name = "40-4-8"
+frame_ms = 40
+hop_ms = 4
+stability_ms = 8
+
+[[variants]]
+name = "32-4-8"
+frame_ms = 32
+hop_ms = 4
+stability_ms = 8
+
+# Keep full spectral resolution; isolate the confirmation-time tradeoff.
+[[variants]]
+name = "64-4-16"
+frame_ms = 64
+hop_ms = 4
+stability_ms = 16
+
+[[variants]]
+name = "64-4-8"
+frame_ms = 64
+hop_ms = 4
+stability_ms = 8

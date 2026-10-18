@@ -1,0 +1,4 @@
+   Compiling ratatui v0.29.0
+   Compiling utrp v0.3.0 (/home/shu/work/utrp)
+   Compiling utrp-sim v0.2.0 (/home/shu/work/utrp/lib/tools/simulate)
+    Finished `release` profile [optimized] target(s) in 2.64s

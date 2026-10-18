@@ -1,0 +1,23 @@
+Test project /home/shu/work/utrp/target/chordlab-clap-build/build
+    Start 1: keyboard
+1/9 Test #1: keyboard .........................   Passed    0.00 sec
+    Start 2: control_queue
+2/9 Test #2: control_queue ....................   Passed    0.00 sec
+    Start 3: control_tap
+3/9 Test #3: control_tap ......................   Passed    0.00 sec
+    Start 4: relative_minor_labels
+4/9 Test #4: relative_minor_labels ............   Passed    0.01 sec
+    Start 5: guitar_catalog
+5/9 Test #5: guitar_catalog ...................   Passed    0.04 sec
+    Start 6: voicing_engine
+6/9 Test #6: voicing_engine ...................   Passed    3.77 sec
+    Start 7: capsule_pixels
+7/9 Test #7: capsule_pixels ...................   Passed    0.03 sec
+    Start 8: mixed_retrigger
+8/9 Test #8: mixed_retrigger ..................   Passed    0.04 sec
+    Start 9: pedal_baseline
+9/9 Test #9: pedal_baseline ...................   Passed    0.03 sec
+
+100% tests passed out of 9
+
+Total Test time (real) =   3.92 sec

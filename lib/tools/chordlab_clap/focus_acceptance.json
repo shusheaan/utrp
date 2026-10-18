@@ -1,0 +1,22 @@
+{
+  "version": "0.1.4",
+  "sha256": "a78863519b4d17703ab620b1175e5e4d72b1bc50bf8e07b7f08a359e31460b47",
+  "pytest_passed": 113,
+  "ctest_passed": 2,
+  "gui_checks_passed": 14,
+  "production_focus_colors_passed": true,
+  "production_keyboard_peak": 0.3699069917202,
+  "original_state_restored_except_safe_sustain_reset": true,
+  "preservation": {
+    "tracks_preserved": 102,
+    "surge_engine_and_wavetables_preserved": 93,
+    "piano_state_preserved": 2,
+    "folder_effects_preserved": 1,
+    "all_track_and_master_gains_preserved": true,
+    "single_clap_no_legacy_jsfx": true
+  },
+  "limits": [
+    "No Bitwig runtime test",
+    "No physical hardware MIDI certification in this focus-only fix"
+  ]
+}

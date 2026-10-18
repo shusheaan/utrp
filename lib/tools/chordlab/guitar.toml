@@ -1,0 +1,30 @@
+# Standard tuning, low E to high E. Play all unique pitches in the hand region.
+open_notes = [40, 45, 50, 55, 59, 64]
+max_fret = 17
+fret_span = 2 # Anchor plus two higher frets: three frets total.
+min_anchor = 1
+max_anchor = 14
+preferred_anchor = 11
+min_anchor_gap = 2 # Remove one-fret neighbours, keep two-fret moves.
+
+# User's seventh-chord anchor families; reference frets repeat every octave.
+# Fret 0 is a separate open-position exception, not a movable index barre.
+[seventh.major]
+degrees = [0, 3]
+reference_root = 0 # Cmaj7
+anchors = [0, 3, 5, 8, 10, 12]
+
+[seventh.minor]
+degrees = [1, 2, 5]
+reference_root = 2 # Dm7
+anchors = [2, 5, 7, 10, 12, 14]
+
+[seventh.dominant]
+degrees = [4]
+reference_root = 7 # G7
+anchors = [0, 3, 5, 7, 10, 12]
+
+[seventh.half_diminished]
+degrees = [6]
+reference_root = 11 # Bm7b5; provisional user-recalled candidates; coverage ranking removes adjacent anchors
+anchors = [2, 3, 6, 7, 9, 10, 12]

@@ -1,0 +1,15 @@
+# Pinned upstream wrapper; this is not a native Chord Lab implementation.
+[wrapper]
+version = "0.0.47"
+url = "https://github.com/JoepVanlier/ysfx/releases/download/v0.0.47/YSFX.Linux.64-bit.CLAP.zip"
+sha256 = "bf78174b9b620842334a647b04243d5198057499d492c9d891ec9b3a4341888e"
+member = "CLAP/ysfx-s FX.clap"
+plugin_id = "org.saike.ysfx-s-fx"
+plugin_name = "CLAP: ysfx-s FX (Jean Pierre Cimalando / Joep Vanlier)"
+
+[source]
+assets = ["chordlab.jsfx", "harmony.jsfx-inc", "guitar_table.jsfx-inc", "guitar.jsfx-inc", "midi.jsfx-inc", "ui.jsfx-inc", "staff.jsfx-inc", "theme.jsfx-inc", "notation.png", "notation-license.txt"]
+
+[audio]
+sample_rate = 48000
+block_size = 256

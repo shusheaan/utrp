@@ -1,0 +1,18 @@
+desc:Chord Lab A-B ordered MIDI capture (scratch only)
+options:gmem=ChordLab_AB_Prototype
+slider1:0<0,1,1>Lane
+@init
+serial=-1;
+@block
+base=1000+slider1*50000;
+serial!=gmem[0] ? (
+  serial=gmem[0]; gmem[base]=0; gmem[base+1]=0;
+);
+while(midirecv(offset,status,note,value)) (
+  count=gmem[base];
+  count>=10000 ? gmem[base+1]=1 : (
+    p=base+2+4*count;
+    gmem[p]=offset; gmem[p+1]=status; gmem[p+2]=note; gmem[p+3]=value;
+    gmem[base]=count+1;
+  );
+);

@@ -1,0 +1,52 @@
+{
+  "plugin_id": "org.utrp.chordlab",
+  "version": "0.1.0",
+  "plugin_sha256": "7e412d08b576f56245c5cb59ff45b4a5c77f8441059a27f619dd4f545ec21088",
+  "midi_cases_passed": 2379,
+  "midi_log_sha256": "df1d4f0351d9fae5d7b5a1ce6ea170240b24458af94fc064d89d01b98bde73d8",
+  "project_reload_checks": 7,
+  "host_parameter_cases": 22,
+  "gui_checks": [
+    "key hold/release",
+    "inversion/reset",
+    "Tab",
+    "long hold no retrigger",
+    "release after long hold",
+    "Space contained",
+    "Enter/Escape sustain",
+    "focus loss",
+    "first press after refocus",
+    "mouse-sustain-on.txt",
+    "closed-editor.txt"
+  ],
+  "abi_probe": [
+    "ports, 18 parameters, default computer mode, X11 GUI: PASS",
+    "8 host parameter writes survive process before main-thread callbacks: PASS",
+    "12 sample-rate/block-size combinations, reset/reactivation: PASS",
+    "12 sample-rate/block-size combinations, reset/reactivation: PASS",
+    "portable state, two independent instances, lifecycle: PASS"
+  ],
+  "python_tests": 81,
+  "keyboard_unit_checks": 206,
+  "control_queue_checks": 9,
+  "source_sha256": {
+    "chordlab.jsfx": "53af5ac23d9ed54fb5d6dddc50b84bc3b9a9e81cb263ec00bcf0f004ff3be29c",
+    "harmony.jsfx-inc": "53e2ce1ab245e9f82339a91569252842042715fa3dfeda12e5073b308c953cb0",
+    "midi.jsfx-inc": "252e3f0b97ffab1c21f1eab56a5dd3e3361405b7258326b6736b86d427d47425",
+    "ui.jsfx-inc": "da876f71d3e25f7a0cb1e6d6e8633dcf965dc88a5fea9418f83c5777af4ff4ff",
+    "staff.jsfx-inc": "99403848e8cec52c0b6129ee22bc33fde14902f8990cda26293c7f4d8ed3f62e",
+    "theme.jsfx-inc": "743be90ea985f4df7499fb73a6ad5fdb154d5d1ecb4b81cdb2a3749adc90d187",
+    "notation.png": "8b191162d9e7656123e7982465fa304c061c3a846ac417f8495a7849e8b3a33a",
+    "notation-license.txt": "bdca252186865f3b2c0e76da4a4e335c14ba1d37f80194fca254ddfa88e84fbf"
+  },
+  "environment": "Linux x86_64, REAPER 7.78, Dummy Audio 48000/256, headless Sway/XWayland",
+  "focus_test_note": "X server auto-repeat disabled only during focus round trip, restored afterwards; long-hold test uses normal repeat",
+  "limits": [
+    "Bitwig runtime untested",
+    "physical MIDI/audio hardware untested",
+    "macOS/Windows unbuilt",
+    "not a universal 100-percent equivalence proof",
+    "GUI focus scope, not global DAW shortcut interception",
+    "MIDI offsets compared within blocks, not absolute latency"
+  ]
+}

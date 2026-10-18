@@ -1,0 +1,30 @@
+F....................................................................... [ 16%]
+........................................................................ [ 32%]
+........................................................................ [ 49%]
+........................................................................ [ 65%]
+........................................................................ [ 82%]
+........................................................................ [ 98%]
+.....                                                                    [100%]
+=================================== FAILURES ===================================
+________________ test_exact_twelve_by_five_and_index_is_current ________________
+
+    def test_exact_twelve_by_five_and_index_is_current() -> None:
+        root = Path('covers')
+        items = entries(root)
+        validate(items, 5)
+>       assert (root/'readme.md').read_text() == index_text(items, root, 5)
+E       AssertionError: assert '# Covers\n\n...证据限制见各曲 MD。\n' == '# Covers\n\n...证据限制见各曲 MD。\n'
+E         
+E         Skipping 22609 identical leading characters in diff, use -v to show
+E           h
+E         - python study/cover_library.py --check
+E         ?          ^^^
+E         + python scripts/cover_library.py --check
+E         ?         ++++ ^...
+E         
+E         ...Full output truncated (15 lines hidden), use '-vv' to show
+
+tests/test_cover_library.py:23: AssertionError
+=========================== short test summary info ============================
+FAILED tests/test_cover_library.py::test_exact_twelve_by_five_and_index_is_current
+1 failed, 436 passed in 10.08s

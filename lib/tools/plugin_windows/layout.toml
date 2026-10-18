@@ -1,0 +1,11 @@
+# Logical Sway pixels. Never changes plugin zoom, parameters or audio routing.
+[layout]
+left_reserved = 400
+right_margin = 16
+top_margin = 80
+bottom_margin = 48
+gap = 16
+poll_seconds = 0.4
+# FX editor can remember a tiled/full-height size across track activation.
+surge_effects_width = 600
+surge_effects_height = 490

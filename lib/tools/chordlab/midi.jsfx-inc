@@ -1,9 +1,9 @@
 @init
 // State is private to each JSFX instance, never gmem/global across instances.
-// Channel 16 is the reserved computer-control channel; hardware uses 1..15.
+// Channel 16: computer controls. Channel 15: display-only analysis. Hardware: 1..14.
 function release_chord(offset) local(i,n) (
   i=0;
-  loop(5,
+  loop(guitar_voice_capacity,
     n=voices[i];
     n>=0 ? (
       own[n]=0;
@@ -14,17 +14,28 @@ function release_chord(offset) local(i,n) (
   );
   sounding=0;
 );
-function start_chord(offset) local(i,n) (
-  // Release first, always using the old note set, not the newly chosen key.
+function start_chord(offset) local(i,n,region,count) (
+  // Release the old note set first; duplicate pitches on two strings emit once.
   release_chord(offset);
-  i=0;
-  loop(voice_count,
-    n=chord_note(key,degree,inversion,i,centre,voice_count);
-    voices[i]=n; own[n]=1;
-    held[n]==0 ? midisend(offset,$x90,n,velocity);
+  i=0; count=0; region=guitar_current();
+  loop(voicing_mode ? region[1] : voice_count,
+    n=voicing_mode ? region[i+2] :
+      chord_note(key,degree,inversion,i,centre,voice_count);
+    n>=0 ? !own[n] ? (
+      voices[count]=n; count+=1; own[n]=1;
+      // Rearticulate a shared pitch without stacking unmatched synth voices.
+      held[n]>0 ? midisend(offset,$x80,n,0);
+      midisend(offset,$x90,n,velocity);
+    );
     i+=1;
   );
-  sounding=1;
+  sounding=count>0;
+);
+function select_voicing_mode(value,offset) (
+  voicing_mode!=value ? (
+    voicing_mode=value; slider20=value; sliderchange(524288); slider_automate(524288);
+    sounding ? start_chord(offset);
+  );
 );
 function publish_voicing() (
   voice_count=3+kind;
@@ -40,6 +51,12 @@ function save_voicing() local(index) (
   slider15=(slider15+1)%1000001; sliderchange(16384);
 );
 function move_voicing(direction,offset) local(oldlow,nextinv,nextlow,nextcentre) (
+  voicing_mode ? (
+    guitar_move(direction) ? (
+      slider15=(slider15+1)%1000001; sliderchange(16384);
+      sounding ? start_chord(offset);
+    );
+  ) : (
   oldlow=chord_note(key,degree,inversion,0,centre,voice_count);
   nextinv=(inversion+direction+voice_count)%voice_count;
   nextlow=chord_note(key,degree,nextinv,0,centre,voice_count);
@@ -50,6 +67,7 @@ function move_voicing(direction,offset) local(oldlow,nextinv,nextlow,nextcentre)
   nextcentre>=12 && nextcentre<=115 && (nextlow-oldlow)*direction>0 ? (
     inversion=nextinv; centre=nextcentre; publish_voicing(); save_voicing();
     sounding ? start_chord(offset);
+  );
   );
 );
 function cycle_kind(offset) (
@@ -79,19 +97,27 @@ function press_degree(slot,offset) (
 function release_degree(slot,offset) (
   chord_held[slot]=0; update_gate(offset);
 );
+function emit_sustain(ch,offset) (
+  // S is the pedal-up baseline; CC64 temporarily inverts it on its channel.
+  midisend(offset,$xb0+ch,64,sustain_on!=pedal_down[ch] ? 127 : 0);
+);
 function set_sustain(value,offset) local(ch) (
   sustain_on=value; slider18=value; sliderchange(131072);
-  ch=0; loop(15,midisend(offset,$xb0+ch,64,value ? 127 : 0); ch+=1;);
+  ch=0; loop(14,emit_sustain(ch,offset); ch+=1;);
 );
-function stop_controls(offset) (
+function release_controls(offset) (
   memset(chord_held,0,8); memset(control_held,0,128);
   active_slot=-1; gate_serial=0; release_chord(offset);
+  // Focus/visibility changes release keys, not the user's pedal-up baseline.
+);
+function stop_controls(offset) (
+  release_controls(offset);
   set_sustain(0,offset);
 );
 function command(cmd,offset) (
   cmd>=0 && cmd<12 ? (
     !sounding && !(play_state&1) && play_state!=5 ? (
-      key=cmd; slider1=key; sliderchange(1); recall_voicing();
+      key=cmd; slider1=key; sliderchange(1); slider_automate(1); recall_voicing();
     );
   ) : cmd>=12 && cmd<19 ? (
     mouse_degree=(cmd-12+5)%7;
@@ -99,14 +125,21 @@ function command(cmd,offset) (
   ) : cmd==19 ? move_voicing(-1,offset)
     : cmd==20 ? move_voicing(1,offset)
     : cmd==21 ? (
-      // Semicolon replaces the former Enter reset; type is preserved.
-      inversion=0; centre=60; publish_voicing(); save_voicing();
+      // Enter resets only this degree in the current mode; type is preserved.
+      voicing_mode ? (
+        guitar_saved[degree]=guitar_default_anchor;
+        slider15=(slider15+1)%1000001; sliderchange(16384);
+      ) : (
+        inversion=0; centre=60; publish_voicing(); save_voicing();
+      );
       sounding ? start_chord(offset);
-    ) : cmd==23 ? stop_controls(offset)
+    ) : cmd==23 ? release_controls(offset)
     : cmd==24 ? release_degree(7,offset)
     : cmd==25 ? cycle_kind(offset)
     : cmd==22 || cmd==26 ? set_sustain(!sustain_on,offset)
-    : cmd==27 ? set_sustain(0,offset);
+    : cmd==27 ? set_sustain(0,offset)
+    : cmd==28 ? select_voicing_mode(0,offset)
+    : cmd==29 ? select_voicing_mode(1,offset);
 );
 function receive_midi(offset,status,note,value) local(type,ch,index) (
   type=status&$xf0; ch=status&15;
@@ -123,23 +156,39 @@ function receive_midi(offset,status,note,value) local(type,ch,index) (
       control_held[note]=0;
       index>=12 && index<19 ? release_degree(index-12,offset);
     );
-    type==$xb0 && (note==120 || note==123) ? stop_controls(offset);
+    type==$xb0 && (note==120 || note==123) ? release_controls(offset);
+  ) : ch==14 ? (
+    // Analysis notes share the visual held map, never the instrument ownership.
+    // Swallow all channel messages, including Sustain, bend and channel reset.
+    index=ch*128+note;
+    type==$x90 && value>0 ? held[index]+=1
+      : type==$x80 || (type==$x90 && value==0) ? held[index]=max(0,held[index]-1)
+      : type==$xb0 && (note==120 || note==123) ? memset(held+ch*128,0,128);
   ) : (
     index=ch*128+note;
     type==$x90 && value>0 ? (
+      // Every physical attack sounds, even when the computer owns this pitch.
+      // Logical owners survive the off/on pair until their own input releases.
+      held[index]>0 || (ch==0 && own[note]) ? midisend(offset,$x80+ch,note,0);
       held[index]+=1;
-      !(ch==0 && own[note]) && held[index]==1 ? midisend(offset,status,note,value);
+      midisend(offset,status,note,value);
     ) : type==$x80 || (type==$x90 && value==0) ? (
       held[index]=max(0,held[index]-1);
       held[index]==0 && !(ch==0 && own[note]) ? midisend(offset,status,note,value);
     ) : type==$xb0 && (note==120 || note==123) ? (
       memset(held+ch*128,0,128);
+      pedal_down[ch]=0;
       sustain_on ? set_sustain(0,offset);
       ch==0 ? stop_controls(offset);
       midisend(offset,status,note,value);
-    ) : type==$xb0 && note==64 && sustain_on ? (
-      // A physical pedal cannot release the manually locked sustain.
-      midisend(offset,status,note,127);
+      emit_sustain(ch,offset);
+    ) : type==$xb0 && note==121 ? (
+      pedal_down[ch]=0;
+      midisend(offset,status,note,value);
+      emit_sustain(ch,offset);
+    ) : type==$xb0 && note==64 ? (
+      pedal_down[ch]=value>=64;
+      emit_sustain(ch,offset);
     ) : (
       midisend(offset,status,note,value);
     );

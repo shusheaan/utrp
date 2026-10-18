@@ -1,0 +1,10 @@
+desc:Guitar Frontend synthetic audio source (test only)
+slider1:-1<-1,127,1>Test MIDI pitch (-1 silence)
+@init
+phase=0;
+@sample
+frequency=440*2^((slider1-69)/12);
+phase+=2*$pi*frequency/srate;
+phase>=2*$pi ? phase-=2*$pi;
+spl0=slider1<0 ? 0 : 0.2*(sin(phase)+0.25*sin(2*phase)+0.1*sin(3*phase));
+spl1=spl0;

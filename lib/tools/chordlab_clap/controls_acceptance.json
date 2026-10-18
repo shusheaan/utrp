@@ -1,0 +1,31 @@
+{
+  "version": "0.1.2",
+  "plugin_sha256": "86f6e695abcd325e02681529128c132ac33b3459ec48c6ee4749b731a6dbd264",
+  "product": "CLAP only; retired native JSFX/Lua/VKB is not a parallel product",
+  "changes": [
+    "Fixed-label Sustain and Keyboard; pale green enabled, pale red disabled",
+    "Removed top toolbar/help; retained errors and tooltips",
+    "Panic in Keyboard right-click menu; content click restores focus",
+    "CMake synchronizes editor header to prevent stale-size allocation corruption"
+  ],
+  "keyboard_colour": "enabled flag, not OS focus; hardware MIDI unaffected",
+  "pytest_passed": 113,
+  "ctest_passed": 2,
+  "gui_probe": "X11 create, resize at minimum/default/maximum, destroy and recreate passed",
+  "desktop": "REAPER 7.78: Sustain mouse/Enter, Keyboard off/on, Panic and click-to-refocus passed",
+  "desktop_audio_peak": 0.41799539327621,
+  "preservation": {
+    "tracks_preserved": 102,
+    "surge_engine_and_wavetables_preserved": 93,
+    "piano_state_preserved": 2,
+    "folder_effects_preserved": 1,
+    "all_track_and_master_gains_preserved": true,
+    "single_clap_no_legacy_jsfx": true
+  },
+  "voicing_memory": "byte-for-byte preserved",
+  "all_95_audio": "previous migration audit; not rerun for this UI-only update",
+  "bitwig": "not runtime tested",
+  "physical_keyboard": "hardware MIDI routing retained; no human keypress claim",
+  "backup": "/home/shu/storage/daw/Backups/synth-clap-ui-20261017-164145",
+  "evidence_directory": "target/chordlab-clap-0.1.2/evidence"
+}

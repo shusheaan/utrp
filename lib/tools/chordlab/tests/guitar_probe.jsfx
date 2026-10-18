@@ -1,0 +1,85 @@
+desc:All guitar region unions, navigation and constraints
+in_pin:none
+out_pin:none
+import ../harmony.jsfx-inc
+import ../guitar_table.jsfx-inc
+import ../guitar.jsfx-inc
+@init
+failures=0; guitar_saved=3100; key=0;
+loop(12,
+  degree=0; loop(7,
+    kind=0; loop(3,
+      record=guitar_record(key,degree,kind);
+      record[1]<1 ? failures+=1;
+      i=0; previous=-1;
+      loop(record[1],
+        shape=record[0]+i*guitar_record_stride; anchor=shape[0];
+        i>0 && anchor-previous<2 ? failures+=1; previous=anchor;
+        guitar_saved[degree]=anchor;
+        guitar_current()!=shape ? failures+=1;
+        // Independent brute-force oracle: enumerate every chord tone in the region,
+        // not just the selected sounding strings. Compare all absolute MIDI pitches.
+        expected_pitches=4000; memset(expected_pitches,0,128); s=0;
+        loop(6,
+          f=anchor; loop(guitar_fret_span+1,
+            n=guitar_open_low(s)+f; member=0; r=0;
+            loop(3+kind,(key+major_step(degree+2*r))%12==n%12 ? member=1; r+=1;);
+            f<=guitar_max_fret && member ? expected_pitches[n]=1;
+            f+=1;
+          ); s+=1;
+        );
+        count=0; n=0; loop(128,count+=expected_pitches[n]; n+=1;);
+        shape[1]!=count || count>guitar_voice_capacity ? failures+=1;
+        previous_pitch=-1; j=0; loop(shape[1],
+          n=shape[j+2]; n<=previous_pitch || !expected_pitches[n] ? failures+=1;
+          previous_pitch=n; j+=1;
+        );
+        guitar_bass(shape)!=shape[2] ? failures+=1;
+        n=0; loop(128,
+          guitar_region_contains(n,key,degree,kind,anchor)!=expected_pitches[n] ? failures+=1;
+          n+=1;
+        );
+        guitar_region_contains(-1,key,degree,kind,anchor) ? failures+=1;
+        guitar_region_contains(128,key,degree,kind,anchor) ? failures+=1;
+        // Every catalog anchor is hollow except the one resolved for this chord.
+        fret=-1; filled=0; marked=0; loop(20,
+          expected=0; j=0; loop(record[1],
+            candidate=record[0]+j*guitar_record_stride;
+            candidate[0]==fret ? expected=candidate==shape ? 2 : 1;
+            j+=1;
+          );
+          state=guitar_anchor_state(fret);
+          state!=expected ? failures+=1;
+          filled+=state==2; marked+=state>0; fret+=1;
+        );
+        filled!=1 || marked!=record[1] ? failures+=1;
+        guitar_move(1); guitar_current()!=record[0]+min(i+1,record[1]-1)*guitar_record_stride ? failures+=1;
+        moved=guitar_current(); guitar_anchor_state(moved[0])!=2 ? failures+=1;
+        guitar_saved[degree]=anchor;
+        guitar_move(-1); guitar_current()!=record[0]+max(i-1,0)*guitar_record_stride ? failures+=1;
+        i+=1;
+      );
+      shape=guitar_region_record(key,degree,kind,guitar_default_anchor);
+      // Saved anchors may not exist after changing key or chord type.
+      guitar_saved[degree]=guitar_default_anchor;
+      guitar_anchor_state(shape[0])!=2 ? failures+=1;
+      i=0; loop(record[1],
+        other=record[0]+i*guitar_record_stride; abs(other[0]-guitar_default_anchor)<abs(shape[0]-guitar_default_anchor) ? failures+=1;
+        i+=1;
+      );
+      kind+=1;
+    ); degree+=1;
+  ); key+=1;
+);
+// Emaj7 at fret 12 includes E4 (D14) and it must actually sound.
+!guitar_region_contains(64,4,0,1,12) ? failures+=1;
+// Do not light E2/E6 merely because they share the same pitch class.
+guitar_region_contains(40,4,0,1,12) || guitar_region_contains(88,4,0,1,12) ? failures+=1;
+// The seventh disappears when the chord becomes a triad; non-chord F# stays absent.
+guitar_region_contains(63,4,0,0,12) || guitar_region_contains(66,4,0,1,12) ? failures+=1;
+// Previously saved non-family anchors resolve deterministically to the nearest marker.
+key=0; degree=0; kind=1; guitar_saved[degree]=11;
+shape=guitar_current(); shape[0]!=10 || guitar_anchor_state(10)!=2 ? failures+=1;
+guitar_move(1); shape=guitar_current(); shape[0]!=12 ? failures+=1;
+// Explicit open position includes open-string chord tones but not non-chord D2.
+!guitar_region_contains(64,0,0,1,0) || guitar_region_contains(50,0,0,1,0) ? failures+=1;

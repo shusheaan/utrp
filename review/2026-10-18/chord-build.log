@@ -1,0 +1,13 @@
+[0/2] Re-checking globbed directories...
+[1/13] Building CXX object CMakeFiles/ChordLab_Standalone.dir/home/shu/work/utrp/target/chordlab-clap-build/deps/juce/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX.cpp.o
+[2/13] Building CXX object CMakeFiles/ChordLab_Standalone.dir/home/shu/work/utrp/target/chordlab-clap-build/deps/juce/modules/juce_audio_plugin_client/juce_audio_plugin_client_AAX_utils.cpp.o
+[3/13] Building CXX object CMakeFiles/ChordLab_Standalone.dir/home/shu/work/utrp/target/chordlab-clap-build/deps/juce/modules/juce_audio_plugin_client/juce_audio_plugin_client_ARA.cpp.o
+[4/13] Building CXX object CMakeFiles/ChordLab_Standalone.dir/home/shu/work/utrp/target/chordlab-clap-build/deps/juce/modules/juce_audio_plugin_client/juce_audio_plugin_client_LV2.cpp.o
+[5/13] Building CXX object CMakeFiles/ChordLab_Standalone.dir/home/shu/work/utrp/target/chordlab-clap-build/deps/juce/modules/juce_audio_plugin_client/juce_audio_plugin_client_Unity.cpp.o
+[6/13] Building CXX object CMakeFiles/ChordLab_Standalone.dir/home/shu/work/utrp/target/chordlab-clap-build/deps/juce/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST2.cpp.o
+[7/13] Building CXX object CMakeFiles/ChordLab_Standalone.dir/home/shu/work/utrp/target/chordlab-clap-build/deps/juce/modules/juce_audio_plugin_client/juce_audio_plugin_client_VST3.cpp.o
+[8/13] Building CXX object CMakeFiles/keyboard_tests.dir/keyboard_tests.cpp.o
+[9/13] Linking CXX shared module "ChordLab_artefacts/Release/CLAP/Chord Lab.clap"
+[10/13] Linking CXX executable keyboard_tests
+[11/13] Building CXX object CMakeFiles/ChordLab_Standalone.dir/home/shu/work/utrp/target/chordlab-clap-build/deps/juce/modules/juce_audio_plugin_client/juce_audio_plugin_client_Standalone.cpp.o
+[12/13] Linking CXX executable "ChordLab_artefacts/Release/Standalone/Chord Lab"

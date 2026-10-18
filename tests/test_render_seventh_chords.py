@@ -8,8 +8,8 @@ from xml.etree import ElementTree as ET
 from hypothesis import given, strategies as st
 import pytest
 
-from scripts import render_key_atlas as atlas
-from scripts.render_seventh_chords import (
+from study import render_key_atlas as atlas
+from study.render_seventh_chords import (
     Chord, Settings, diatonic_chords, guitar, keyboard, load_settings,
     render_guitar, render_keyboard, tone_color,
 )
@@ -177,7 +177,7 @@ def test_guitar_dots_do_not_overlap_or_clip(settings: Settings) -> None:
 
 @pytest.mark.parametrize('theme', ['light', 'dark'])
 def test_cli_writes_two_pngs_and_protects_all_outputs(tmp_path: Path, theme: str) -> None:
-    command = [sys.executable, 'scripts/render_seventh_chords.py', '--output', str(tmp_path),
+    command = [sys.executable, 'study/render_seventh_chords.py', '--output', str(tmp_path),
                '--theme', theme]
     first = subprocess.run(command, capture_output=True, text=True, check=False)
     assert first.returncode == 0, first.stderr

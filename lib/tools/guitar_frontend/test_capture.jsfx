@@ -1,0 +1,17 @@
+desc:Guitar Frontend routed MIDI capture (test only)
+options:gmem=UTRP_Guitar_Frontend_Test
+slider1:0<0,1,1>Lane
+@init
+serial=-1;
+@block
+base=100+slider1*10000;
+serial!=gmem[0] ? (serial=gmem[0];gmem[base]=0;);
+while(midirecv(offset,status,note,value)) (
+  count=gmem[base];
+  count<2000 ? (
+    p=base+1+4*count;
+    gmem[p]=offset;gmem[p+1]=status;gmem[p+2]=note;gmem[p+3]=value;
+    gmem[base]=count+1;
+  );
+  midisend(offset,status,note,value);
+);

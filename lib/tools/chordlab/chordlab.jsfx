@@ -11,7 +11,7 @@ slider4:60<12,115,1>-Voicing centre (MIDI)
 slider5:64<1,127,1>-Velocity
 slider6:1<0,1,1>-Enabled
 slider7:0<0,1000000,1>-Command serial
-slider8:23<0,27,1>-Command
+slider8:23<0,29,1>-Command
 slider9:0<0,1,1>-Sounding (read only)
 slider10:0<0,127,1>-Voice 1 (read only)
 slider11:0<0,127,1>-Voice 2 (read only)
@@ -23,8 +23,14 @@ slider15:0<0,1000000,1>-Voicing memory revision
 slider16:1<0,2,1{Triad,Seventh,Ninth}>-Chord type
 slider17:0<0,127,1>-Voice 5 (read only)
 slider18:0<0,1,1>-Sustain lock (read only)
+slider19:0<0,1,1{Dark,Bright}>-Appearance
+
+slider20:0<0,1,1{Piano,Guitar}>-Voicing mode
+slider21:0<0,127,1>-Voice 6 (read only)
 
 import harmony.jsfx-inc
+import guitar_table.jsfx-inc
+import guitar.jsfx-inc
 import midi.jsfx-inc
 import theme.jsfx-inc
 import ui.jsfx-inc
@@ -33,13 +39,15 @@ import staff.jsfx-inc
 @init
 ext_noinit=1;
 ext_midi_bus=1;
-held=0; own=2048; voices=2200; control_held=2300; chord_held=2440;
+held=0; own=2048; voices=2200; control_held=2300; chord_held=2440; pedal_down=2480;
 memset(held,0,2560);
 saved=3000; memory_index=0; loop(7,
   cell=saved+memory_index*4; cell[0]=0; cell[1]=1; cell[2]=0; cell[3]=60;
   memory_index+=1;
 );
-memset(voices,-1,5);
+guitar_saved=3100; memory_index=0; loop(7,guitar_saved[memory_index]=guitar_default_anchor; memory_index+=1;);
+voicing_mode=slider20;
+memset(voices,-1,guitar_voice_capacity);
 key=slider1; degree=slider2; inversion=slider3; kind=slider16; voice_count=3+kind;
 centre=slider4; velocity=slider5; enabled=slider6;
 sounding=0; slider9=0; serial=slider7;
@@ -67,7 +75,9 @@ settings_dirty ? (
   slider5=min(127,max(1,floor(slider5)));
   key_locked=sounding || (play_state&1) || play_state==5;
   key_locked ? slider1=key : key=slider1;
-  changed=(degree!=slider2 || inversion!=slider3 || centre!=slider4 || kind!=slider16);
+  slider20=min(1,max(0,floor(slider20)));
+  changed=(voicing_mode!=slider20 || degree!=slider2 || inversion!=slider3 || centre!=slider4 || kind!=slider16);
+  voicing_mode=slider20;
   degree=slider2; inversion=slider3; centre=slider4; velocity=slider5;
   kind=slider16; voice_count=3+kind;
   enabled=slider6;
@@ -90,10 +100,10 @@ while(midirecv(offset,status,note,value)) (
 slider9=sounding;
 slider18=sustain_on;
 slider10=max(0,voices[0]); slider11=max(0,voices[1]);
-slider12=max(0,voices[2]); slider13=max(0,voices[3]); slider17=max(0,voices[4]);
+slider12=max(0,voices[2]); slider13=max(0,voices[3]); slider17=max(0,voices[4]); slider21=max(0,voices[5]);
 
 @serialize
-// v2: seven degree records shared across keys. v1 migrates the current key.
+// v3 appends independent guitar anchors. v1/v2 projects default to Piano.
 file_avail(0)>=0 ? (
   file_var(0,memory_version);
   memory_version==1 ? (
@@ -103,7 +113,8 @@ file_avail(0)>=0 ? (
       oldcell[0]==1 ? (cell[0]=1; cell[1]=1; cell[2]=oldcell[1]; cell[3]=oldcell[2];);
       memory_index+=1;
     );
-  ) : memory_version==2 ? file_mem(0,saved,28);
+  ) : memory_version==2 || memory_version==3 ? file_mem(0,saved,28);
+  memory_version==3 ? file_mem(0,guitar_saved,7);
   memory_index=0; loop(7,
     cell=saved+memory_index*4;
     !((cell[0]==0 || cell[0]==1) && cell[1]>=0 && cell[1]<=2 && cell[1]==floor(cell[1]) &&
@@ -111,13 +122,17 @@ file_avail(0)>=0 ? (
       cell[3]>=12 && cell[3]<=115 && cell[3]==floor(cell[3])) ? (
         cell[0]=0; cell[1]=1; cell[2]=0; cell[3]=60;
       );
+    !(guitar_saved[memory_index]>=0 && guitar_saved[memory_index]<=14 &&
+      guitar_saved[memory_index]==floor(guitar_saved[memory_index])) ? guitar_saved[memory_index]=guitar_default_anchor;
     memory_index+=1;
   );
 ) : (
-  memory_version=2; file_var(0,memory_version); file_mem(0,saved,28);
+  memory_version=3; file_var(0,memory_version); file_mem(0,saved,28); file_mem(0,guitar_saved,7);
 );
 
 @gfx 884 683
+theme_dark=slider19<0.5;
+apply_theme(theme_dark);
 // Two equal diagram groups: major-scale context above, selected chord below.
 // No internal title row: reserve the reclaimed 36px for the external VKB.
 layout_group_height=max(160,floor((gfx_h-142)/2));
@@ -129,6 +144,7 @@ layout_map_x=18+layout_staff_width+14;
 layout_map_width=max(1,gfx_w-layout_map_x-18);
 layout_chord_y=72+layout_group_height;
 ui_begin();
+measure_choice_text();
 draw_key_choices(10);
 draw_maps(layout_map_x,47,layout_map_width,layout_piano_height,layout_guitar_height,1);
 draw_staff(18,47,layout_staff_width,layout_group_height,1);

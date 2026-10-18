@@ -1,0 +1,29 @@
+# Experimental speed candidate only; never loaded by the installed CLAP.
+# Relax fundamental balance, not single-series rejection or independent-partial evidence.
+[analysis]
+sample_rate = 48000
+frame_ms = 48
+hop_ms = 4
+stable_frames = 3
+gate_db = -48.0
+min_note = 40
+max_note = 88
+max_harmonic = 12
+minimum_independent_partials = 2
+peak_floor = 0.08
+cents_tolerance = 35.0
+minimum_balance = 0.20
+minimum_coverage = 0.97
+ambiguity_margin = 0.02
+minimum_separation_bins = 1.5
+
+[study]
+frame_variants_ms = [48]
+holdout_cents = 12.0
+holdout_balance = 0.85
+holdout_noise_rms = 0.0003
+open_notes = [40, 45, 50, 55, 59, 64]
+max_fret = 24
+hold_ms = 160
+silence_ms = 80
+seed = 20261018

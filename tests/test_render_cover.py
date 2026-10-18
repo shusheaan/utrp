@@ -10,7 +10,7 @@ from xml.etree import ElementTree as ET
 from hypothesis import given, strategies as st
 import pytest
 
-from scripts.render_cover import (
+from study.render_cover import (
     Card, Song, Style, atlas, atlas_settings, load_style, melody_staff, midi_note,
     note_color, parse_card, parse_song, parse_style, pitch_class, position_midi, render_svg, visible_anchor,
 )
@@ -143,7 +143,7 @@ def test_six_cards_and_exact_melody_positions(path: Path) -> None:
 
 
 def test_catalog_keeps_all_36_candidates() -> None:
-    from scripts.cover_library import entries, validate
+    from study.cover_library import entries, validate
     items = entries(Path("covers"))
     validate(items, 5)
     assert sum(bool(item.original) for item in items) == 36
@@ -178,7 +178,7 @@ def test_cli_preserves_existing_output(tmp_path: Path) -> None:
     config.write_bytes(next(Path("covers").rglob("*.toml")).read_bytes())
     output = config.with_suffix(".png")
     output.write_bytes(b"existing user file")
-    command = [sys.executable, "scripts/render_cover.py", str(config)]
+    command = [sys.executable, "study/render_cover.py", str(config)]
     result = subprocess.run(command, capture_output=True, text=True, check=False)
     assert result.returncode == 1
     assert "--force" in result.stderr

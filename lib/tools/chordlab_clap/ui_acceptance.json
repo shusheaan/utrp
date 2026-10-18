@@ -1,0 +1,18 @@
+{
+  "version": "0.1.1",
+  "plugin_sha256": "f7a36bc6342a4dd693ef5229166027e2d26b7f5274bc31508fe7fb42ba6259a2",
+  "change": "Backport SWELL Linux positive font-height pixel metrics; JSFX music logic and palette unchanged",
+  "evidence_directory": "target/chordlab-clap-0.1.1/evidence",
+  "pytest_passed": 82,
+  "ctest_passed": 2,
+  "midi_ab_passed": 2379,
+  "midi_ab_failed": 0,
+  "state_ab_passed": 7,
+  "parameter_ab_passed": 22,
+  "visual": "Native JSFX and CLAP compared side by side at equal gfx dimensions on desktop; not a pixel-perfect equivalence claim",
+  "core_project": "/home/shu/storage/daw/Core.RPP",
+  "core_stopped_keyboard_audio_peak": 0.12166615575552,
+  "hardware_midi": "Keystation USB MIDI routed; human keypress acceptance pending",
+  "bitwig": "Not tested",
+  "previous_evidence": "acceptance.json and mixed_acceptance.json describe version 0.1.0, not this binary"
+}

@@ -1,0 +1,12 @@
+[Unit]
+Description=Float Bitwig editors around a centered Chord Lab and primary editor
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 %h/work/utrp/lib/tools/plugin_windows/layout.py
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=default.target

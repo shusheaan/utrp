@@ -1,0 +1,73 @@
+
+==================================== ERRORS ====================================
+_________________ ERROR collecting tests/test_cover_library.py _________________
+ImportError while importing test module '/home/shu/work/utrp/tests/test_cover_library.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_cover_library.py:12: in <module>
+    from scripts.cover_library import (
+E   ModuleNotFoundError: No module named 'scripts'
+_________________ ERROR collecting tests/test_render_cover.py __________________
+ImportError while importing test module '/home/shu/work/utrp/tests/test_render_cover.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_render_cover.py:13: in <module>
+    from scripts.render_cover import (
+E   ModuleNotFoundError: No module named 'scripts'
+_______________ ERROR collecting tests/test_render_fretboard.py ________________
+ImportError while importing test module '/home/shu/work/utrp/tests/test_render_fretboard.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_render_fretboard.py:13: in <module>
+    from scripts.render_fretboard import (
+E   ModuleNotFoundError: No module named 'scripts'
+_______________ ERROR collecting tests/test_render_key_atlas.py ________________
+ImportError while importing test module '/home/shu/work/utrp/tests/test_render_key_atlas.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_render_key_atlas.py:15: in <module>
+    from scripts.render_key_atlas import (
+E   ModuleNotFoundError: No module named 'scripts'
+_____________ ERROR collecting tests/test_render_seventh_chords.py _____________
+ImportError while importing test module '/home/shu/work/utrp/tests/test_render_seventh_chords.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+tests/test_render_seventh_chords.py:11: in <module>
+    from scripts import render_key_atlas as atlas
+E   ModuleNotFoundError: No module named 'scripts'
+______________ ERROR collecting lib/tools/harmony/test_perform.py ______________
+ImportError while importing test module '/home/shu/work/utrp/lib/tools/harmony/test_perform.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.14/importlib/__init__.py:88: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+lib/tools/harmony/test_perform.py:13: in <module>
+    from perform import SIM_BIN, Turing, euclid, pitch_pool
+lib/tools/harmony/perform.py:23: in <module>
+    import soundfile as sf
+E   ModuleNotFoundError: No module named 'soundfile'
+=========================== short test summary info ============================
+ERROR tests/test_cover_library.py
+ERROR tests/test_render_cover.py
+ERROR tests/test_render_fretboard.py
+ERROR tests/test_render_key_atlas.py
+ERROR tests/test_render_seventh_chords.py
+ERROR lib/tools/harmony/test_perform.py
+!!!!!!!!!!!!!!!!!!! Interrupted: 6 errors during collection !!!!!!!!!!!!!!!!!!!!
+6 errors in 2.05s

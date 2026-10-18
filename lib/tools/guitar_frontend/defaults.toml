@@ -1,0 +1,24 @@
+[analysis]
+frame_ms = 64.0
+hop_ms = 8.0
+target_rate = 12000.0
+min_sample_rate = 32000.0
+max_sample_rate = 192000.0
+min_note = 38
+max_note = 88
+lowpass_hz = 2200.0
+retrigger_ratio = 2.8
+retrigger_cooldown_ms = 120.0
+fundamental_power_ratio = 0.02
+subharmonic_confidence = 0.60
+spectral_margin = 1.20
+spectral_peak_cents = 30.0
+
+[parameters]
+enabled = 1.0
+gate_db = -48.0
+confidence = 0.88
+stability_ms = 24.0
+release_ms = 40.0
+velocity = 90.0
+input_channel = 0.0

@@ -1,0 +1,147 @@
+{
+  "version": "0.1.2",
+  "status": "deployed monophonic prototype; targeted A3/D4 regression and live topology/toggle checks passed; broader real-guitar accuracy and latency not certified",
+  "binary_sha256": "4ecc3b85f4fc2428741196bfb647cacc5ac4f051e407b3cda5c051c31d902de6",
+  "synthetic_pitch_cases": 510,
+  "synthetic_ringing_cases": 45,
+  "synthetic_nearby_low_cases": 160,
+  "independent_clap_host_matrix_cases": 40,
+  "release_ctest": "2/2 passed",
+  "ubsan_ctest": "2/2 passed",
+  "python_config_study_tests": 31,
+  "timing_changed": false,
+  "frame_hop_stability_ms": [
+    64,
+    8,
+    24
+  ],
+  "offline_replays": [
+    {
+      "case": "d4",
+      "wav_sha256": "104be816aa8e3b8a3d4ed5ea5296858c6a235f81f7d348bc689378d905dc1769",
+      "range_seconds": [
+        13.9,
+        45
+      ],
+      "expected_dominant_midi": 62,
+      "baseline": {
+        "current": {
+          "-1": 219,
+          "43": 3,
+          "62": 3665
+        },
+        "observed": {
+          "-1": 259,
+          "38": 1,
+          "43": 8,
+          "50": 1,
+          "62": 3618
+        },
+        "wrong_output_hops": 3
+      },
+      "candidate": {
+        "current": {
+          "-1": 219,
+          "62": 3668
+        },
+        "observed": {
+          "-1": 262,
+          "50": 1,
+          "62": 3624
+        },
+        "wrong_output_hops": 0
+      }
+    },
+    {
+      "case": "a3",
+      "wav_sha256": "c8e2318582c00cd61b39fb66ecf86918cd3adcf58575acf17ef109ef0beb7cce",
+      "range_seconds": [
+        0,
+        38.2
+      ],
+      "expected_dominant_midi": 57,
+      "baseline": {
+        "current": {
+          "-1": 975,
+          "57": 3785,
+          "58": 7
+        },
+        "observed": {
+          "-1": 1013,
+          "57": 3746,
+          "58": 8
+        },
+        "wrong_output_hops": 7
+      },
+      "candidate": {
+        "current": {
+          "-1": 987,
+          "57": 3780
+        },
+        "observed": {
+          "-1": 1038,
+          "57": 3726,
+          "58": 3
+        },
+        "wrong_output_hops": 0
+      }
+    },
+    {
+      "case": "ringing",
+      "wav_sha256": "acab13bbe18672c6c1e14b4bd3413d850cb5e98e86630d5703cfed15d95c9b3a",
+      "range_seconds": [
+        27.9,
+        29.2
+      ],
+      "expected_dominant_midi": 64,
+      "baseline": {
+        "current": {
+          "-1": 40,
+          "64": 122
+        },
+        "observed": {
+          "-1": 48,
+          "45": 1,
+          "64": 113
+        },
+        "wrong_output_hops": 0
+      },
+      "candidate": {
+        "current": {
+          "-1": 40,
+          "64": 122
+        },
+        "observed": {
+          "-1": 52,
+          "45": 1,
+          "64": 109
+        },
+        "wrong_output_hops": 0
+      }
+    }
+  ],
+  "live_reaper": {
+    "project": "/home/shu/storage/daw/Guitar Lab.rpp",
+    "version_loaded": "0.1.2",
+    "raw_input_topology": "no input FX, no receives, no media items; detector only FX; Spark capture to REAPER in1",
+    "detect_toggle": "Off clears detected note, On restored and saved; wait for asynchronous parameter application",
+    "midi_route": "source MIDI-only send to Chord Lab display",
+    "instrument_audio": "none; Spark direct monitoring only",
+    "full_pitch_chain_retest_this_version": false
+  },
+  "startup": {
+    "entry": "Guitar Lab",
+    "launcher": "/home/shu/.local/bin/reaper",
+    "original_synth_default_unchanged": true,
+    "raw_binary_autoconnection_safe": false,
+    "requires": "Spark connected before launch; relaunch routing entry after hotplug"
+  },
+  "limitations": [
+    "monophonic only",
+    "upstream Spark FX cannot be undone",
+    "raw observed candidates may still be wrong",
+    "no zero-error or keyboard-like latency guarantee",
+    "Bitwig untested"
+  ],
+  "evidence_directory": "target/guitar-d4-validation"
+}

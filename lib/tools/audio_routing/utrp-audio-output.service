@@ -1,0 +1,14 @@
+[Unit]
+Description=Prefer Spark GO, then WooAudio, for desktop and DAW playback
+After=pipewire.service wireplumber.service pipewire-pulse.service
+Wants=pipewire.service wireplumber.service pipewire-pulse.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 %h/work/utrp/lib/tools/audio_routing/policy.py
+Restart=on-failure
+RestartSec=2
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,3762 @@
+[
+  {
+    "chords": [
+      {
+        "kind": "diatonic",
+        "notes": [
+          50,
+          53,
+          57
+        ],
+        "role": "target",
+        "root_pc": 2,
+        "symbol": "Dm"
+      }
+    ],
+    "degree": 1,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 3,
+            "midi": 62,
+            "string": 2
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 1,
+            "midi": 65,
+            "string": 1
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 5,
+            "midi": 69,
+            "string": 1
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          0,
+          5
+        ],
+        "shape": {
+          "barre": null,
+          "family": "close",
+          "inversion": 2,
+          "muted": [
+            4,
+            5,
+            6
+          ],
+          "positions": [
+            {
+              "degree": 5,
+              "finger": 2,
+              "fret": 2,
+              "midi": 57,
+              "string": 3
+            },
+            {
+              "degree": 1,
+              "finger": 3,
+              "fret": 3,
+              "midi": 62,
+              "string": 2
+            },
+            {
+              "degree": 3,
+              "finger": 1,
+              "fret": 1,
+              "midi": 65,
+              "string": 1
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5
+          ],
+          "quality": "m",
+          "root": {
+            "name": "D",
+            "pc": 2
+          },
+          "tones": [
+            {
+              "name": "D",
+              "pc": 2
+            },
+            {
+              "name": "F",
+              "pc": 5
+            },
+            {
+              "name": "A",
+              "pc": 9
+            }
+          ]
+        },
+        "cycle": {
+          "lap": 1,
+          "step": 1,
+          "total": 40
+        },
+        "degree": 1,
+        "id": 0,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 0,
+        "previous_key": null,
+        "reason": "Original degree cycle; preserve ordered backbone transitions",
+        "role": "diatonic"
+      },
+      "piano_notes": [
+        50,
+        53,
+        57
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 0,
+    "modulation": "diatonic",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "diatonic",
+        "notes": [
+          57,
+          60,
+          65
+        ],
+        "role": "target",
+        "root_pc": 5,
+        "symbol": "F"
+      }
+    ],
+    "degree": 3,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 1,
+            "midi": 65,
+            "string": 1
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 5,
+            "midi": 69,
+            "string": 1
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 1,
+            "midi": 60,
+            "string": 2
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          0,
+          5
+        ],
+        "shape": {
+          "barre": {
+            "fret": 1,
+            "from_string": 2,
+            "to_string": 1
+          },
+          "family": "close",
+          "inversion": 1,
+          "muted": [
+            4,
+            5,
+            6
+          ],
+          "positions": [
+            {
+              "degree": 3,
+              "finger": 2,
+              "fret": 2,
+              "midi": 57,
+              "string": 3
+            },
+            {
+              "degree": 5,
+              "finger": 1,
+              "fret": 1,
+              "midi": 60,
+              "string": 2
+            },
+            {
+              "degree": 1,
+              "finger": 1,
+              "fret": 1,
+              "midi": 65,
+              "string": 1
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5
+          ],
+          "quality": "",
+          "root": {
+            "name": "F",
+            "pc": 5
+          },
+          "tones": [
+            {
+              "name": "F",
+              "pc": 5
+            },
+            {
+              "name": "A",
+              "pc": 9
+            },
+            {
+              "name": "C",
+              "pc": 0
+            }
+          ]
+        },
+        "cycle": {
+          "lap": 1,
+          "step": 2,
+          "total": 40
+        },
+        "degree": 3,
+        "id": 1,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 0,
+        "previous_key": null,
+        "reason": "Original degree cycle; preserve ordered backbone transitions",
+        "role": "diatonic"
+      },
+      "piano_notes": [
+        57,
+        60,
+        65
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 1,
+    "modulation": "diatonic",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "diatonic",
+        "notes": [
+          57,
+          62,
+          65
+        ],
+        "role": "target",
+        "root_pc": 2,
+        "symbol": "Dm"
+      }
+    ],
+    "degree": 1,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 3,
+            "midi": 62,
+            "string": 2
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 1,
+            "midi": 65,
+            "string": 1
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 5,
+            "midi": 69,
+            "string": 1
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          0,
+          5
+        ],
+        "shape": {
+          "barre": null,
+          "family": "close",
+          "inversion": 1,
+          "muted": [
+            1,
+            5,
+            6
+          ],
+          "positions": [
+            {
+              "degree": 3,
+              "finger": 2,
+              "fret": 3,
+              "midi": 53,
+              "string": 4
+            },
+            {
+              "degree": 5,
+              "finger": 1,
+              "fret": 2,
+              "midi": 57,
+              "string": 3
+            },
+            {
+              "degree": 1,
+              "finger": 3,
+              "fret": 3,
+              "midi": 62,
+              "string": 2
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5
+          ],
+          "quality": "m",
+          "root": {
+            "name": "D",
+            "pc": 2
+          },
+          "tones": [
+            {
+              "name": "D",
+              "pc": 2
+            },
+            {
+              "name": "F",
+              "pc": 5
+            },
+            {
+              "name": "A",
+              "pc": 9
+            }
+          ]
+        },
+        "cycle": {
+          "lap": 1,
+          "step": 3,
+          "total": 40
+        },
+        "degree": 1,
+        "id": 2,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 0,
+        "previous_key": null,
+        "reason": "Original degree cycle; preserve ordered backbone transitions",
+        "role": "diatonic"
+      },
+      "piano_notes": [
+        57,
+        62,
+        65
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 2,
+    "modulation": "diatonic",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "ssd25_ii",
+        "notes": [
+          49,
+          51,
+          54,
+          58
+        ],
+        "role": "target",
+        "root_pc": 3,
+        "symbol": "Ebm7"
+      }
+    ],
+    "degree": null,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 4,
+            "midi": 63,
+            "string": 2
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 2,
+            "midi": 66,
+            "string": 1
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 3,
+            "midi": 58,
+            "string": 3
+          },
+          {
+            "degree": 7,
+            "finger": null,
+            "fret": 2,
+            "midi": 61,
+            "string": 2
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          0,
+          5
+        ],
+        "shape": {
+          "barre": null,
+          "family": "drop2",
+          "inversion": 3,
+          "muted": [
+            1,
+            6
+          ],
+          "positions": [
+            {
+              "degree": 7,
+              "finger": 2,
+              "fret": 4,
+              "midi": 49,
+              "string": 5
+            },
+            {
+              "degree": 3,
+              "finger": 3,
+              "fret": 4,
+              "midi": 54,
+              "string": 4
+            },
+            {
+              "degree": 5,
+              "finger": 1,
+              "fret": 3,
+              "midi": 58,
+              "string": 3
+            },
+            {
+              "degree": 1,
+              "finger": 4,
+              "fret": 4,
+              "midi": 63,
+              "string": 2
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "quality": "m7",
+          "root": {
+            "name": "Eb",
+            "pc": 3
+          },
+          "tones": [
+            {
+              "name": "Eb",
+              "pc": 3
+            },
+            {
+              "name": "Gb",
+              "pc": 6
+            },
+            {
+              "name": "Bb",
+              "pc": 10
+            },
+            {
+              "name": "Db",
+              "pc": 1
+            }
+          ]
+        },
+        "cycle": null,
+        "degree": null,
+        "id": 3,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 0,
+        "previous_key": null,
+        "reason": "SSD25: Ebm7 -> Ab7 -> Gm (degree 4); no key change",
+        "role": "ssd25_ii"
+      },
+      "piano_notes": [
+        49,
+        51,
+        54,
+        58
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 3,
+    "modulation": "ssd25_ii",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "ssd25_v",
+        "notes": [
+          56,
+          60,
+          63,
+          66
+        ],
+        "role": "target",
+        "root_pc": 8,
+        "symbol": "Ab7"
+      }
+    ],
+    "degree": null,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 4,
+            "midi": 68,
+            "string": 1
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 1,
+            "midi": 60,
+            "string": 2
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 4,
+            "midi": 63,
+            "string": 2
+          },
+          {
+            "degree": 7,
+            "finger": null,
+            "fret": 2,
+            "midi": 66,
+            "string": 1
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          0,
+          5
+        ],
+        "shape": {
+          "barre": null,
+          "family": "drop2",
+          "inversion": 1,
+          "muted": [
+            1,
+            6
+          ],
+          "positions": [
+            {
+              "degree": 3,
+              "finger": 2,
+              "fret": 3,
+              "midi": 48,
+              "string": 5
+            },
+            {
+              "degree": 7,
+              "finger": 3,
+              "fret": 4,
+              "midi": 54,
+              "string": 4
+            },
+            {
+              "degree": 1,
+              "finger": 1,
+              "fret": 1,
+              "midi": 56,
+              "string": 3
+            },
+            {
+              "degree": 5,
+              "finger": 4,
+              "fret": 4,
+              "midi": 63,
+              "string": 2
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "quality": "7",
+          "root": {
+            "name": "Ab",
+            "pc": 8
+          },
+          "tones": [
+            {
+              "name": "Ab",
+              "pc": 8
+            },
+            {
+              "name": "C",
+              "pc": 0
+            },
+            {
+              "name": "Eb",
+              "pc": 3
+            },
+            {
+              "name": "Gb",
+              "pc": 6
+            }
+          ]
+        },
+        "cycle": null,
+        "degree": null,
+        "id": 4,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 0,
+        "previous_key": null,
+        "reason": "SSD25: Ebm7 -> Ab7 -> Gm (degree 4); no key change",
+        "role": "ssd25_v"
+      },
+      "piano_notes": [
+        56,
+        60,
+        63,
+        66
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 4,
+    "modulation": "ssd25_v",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "diatonic",
+        "notes": [
+          50,
+          55,
+          58
+        ],
+        "role": "target",
+        "root_pc": 7,
+        "symbol": "Gm"
+      }
+    ],
+    "degree": 4,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 3,
+            "midi": 67,
+            "string": 1
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 3,
+            "midi": 58,
+            "string": 3
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 3,
+            "midi": 62,
+            "string": 2
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          0,
+          5
+        ],
+        "shape": {
+          "barre": {
+            "fret": 3,
+            "from_string": 3,
+            "to_string": 2
+          },
+          "family": "close",
+          "inversion": 0,
+          "muted": [
+            1,
+            5,
+            6
+          ],
+          "positions": [
+            {
+              "degree": 1,
+              "finger": 2,
+              "fret": 5,
+              "midi": 55,
+              "string": 4
+            },
+            {
+              "degree": 3,
+              "finger": 1,
+              "fret": 3,
+              "midi": 58,
+              "string": 3
+            },
+            {
+              "degree": 5,
+              "finger": 1,
+              "fret": 3,
+              "midi": 62,
+              "string": 2
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5
+          ],
+          "quality": "m",
+          "root": {
+            "name": "G",
+            "pc": 7
+          },
+          "tones": [
+            {
+              "name": "G",
+              "pc": 7
+            },
+            {
+              "name": "Bb",
+              "pc": 10
+            },
+            {
+              "name": "D",
+              "pc": 2
+            }
+          ]
+        },
+        "cycle": {
+          "lap": 1,
+          "step": 4,
+          "total": 40
+        },
+        "degree": 4,
+        "id": 5,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 0,
+        "previous_key": null,
+        "reason": "Original degree cycle; preserve ordered backbone transitions",
+        "role": "diatonic"
+      },
+      "piano_notes": [
+        50,
+        55,
+        58
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 5,
+    "modulation": "diatonic",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "diatonic",
+        "notes": [
+          52,
+          55,
+          58
+        ],
+        "role": "target",
+        "root_pc": 4,
+        "symbol": "Edim"
+      }
+    ],
+    "degree": 2,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 0,
+            "midi": 64,
+            "string": 1
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 3,
+            "midi": 67,
+            "string": 1
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 3,
+            "midi": 58,
+            "string": 3
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          0,
+          5
+        ],
+        "shape": {
+          "barre": null,
+          "family": "close",
+          "inversion": 1,
+          "muted": [
+            1,
+            5,
+            6
+          ],
+          "positions": [
+            {
+              "degree": 3,
+              "finger": 2,
+              "fret": 5,
+              "midi": 55,
+              "string": 4
+            },
+            {
+              "degree": 5,
+              "finger": 1,
+              "fret": 3,
+              "midi": 58,
+              "string": 3
+            },
+            {
+              "degree": 1,
+              "finger": 3,
+              "fret": 5,
+              "midi": 64,
+              "string": 2
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5
+          ],
+          "quality": "dim",
+          "root": {
+            "name": "E",
+            "pc": 4
+          },
+          "tones": [
+            {
+              "name": "E",
+              "pc": 4
+            },
+            {
+              "name": "G",
+              "pc": 7
+            },
+            {
+              "name": "Bb",
+              "pc": 10
+            }
+          ]
+        },
+        "cycle": {
+          "lap": 1,
+          "step": 5,
+          "total": 40
+        },
+        "degree": 2,
+        "id": 6,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 0,
+        "previous_key": null,
+        "reason": "Original degree cycle; preserve ordered backbone transitions",
+        "role": "diatonic"
+      },
+      "piano_notes": [
+        52,
+        55,
+        58
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 6,
+    "modulation": "diatonic",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "diatonic",
+        "notes": [
+          55,
+          57,
+          60,
+          64
+        ],
+        "role": "target",
+        "root_pc": 9,
+        "symbol": "Am7"
+      }
+    ],
+    "degree": 5,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 5,
+            "midi": 69,
+            "string": 1
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 1,
+            "midi": 60,
+            "string": 2
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 0,
+            "midi": 64,
+            "string": 1
+          },
+          {
+            "degree": 7,
+            "finger": null,
+            "fret": 3,
+            "midi": 67,
+            "string": 1
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          0,
+          5
+        ],
+        "shape": {
+          "barre": null,
+          "family": "close",
+          "inversion": 3,
+          "muted": [
+            5,
+            6
+          ],
+          "positions": [
+            {
+              "degree": 7,
+              "finger": 3,
+              "fret": 5,
+              "midi": 55,
+              "string": 4
+            },
+            {
+              "degree": 1,
+              "finger": 2,
+              "fret": 2,
+              "midi": 57,
+              "string": 3
+            },
+            {
+              "degree": 3,
+              "finger": 1,
+              "fret": 1,
+              "midi": 60,
+              "string": 2
+            },
+            {
+              "degree": 5,
+              "finger": 0,
+              "fret": 0,
+              "midi": 64,
+              "string": 1
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "quality": "m7",
+          "root": {
+            "name": "A",
+            "pc": 9
+          },
+          "tones": [
+            {
+              "name": "A",
+              "pc": 9
+            },
+            {
+              "name": "C",
+              "pc": 0
+            },
+            {
+              "name": "E",
+              "pc": 4
+            },
+            {
+              "name": "G",
+              "pc": 7
+            }
+          ]
+        },
+        "cycle": {
+          "lap": 1,
+          "step": 6,
+          "total": 40
+        },
+        "degree": 5,
+        "id": 7,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 1,
+        "previous_key": null,
+        "reason": "Original degree cycle; preserve ordered backbone transitions",
+        "role": "diatonic"
+      },
+      "piano_notes": [
+        55,
+        57,
+        60,
+        64
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 7,
+    "modulation": "diatonic",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "diatonic",
+        "notes": [
+          58,
+          62,
+          65,
+          69
+        ],
+        "role": "target",
+        "root_pc": 10,
+        "symbol": "Bbmaj7"
+      }
+    ],
+    "degree": 6,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 3,
+            "midi": 58,
+            "string": 3
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 3,
+            "midi": 62,
+            "string": 2
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 1,
+            "midi": 65,
+            "string": 1
+          },
+          {
+            "degree": 7,
+            "finger": null,
+            "fret": 5,
+            "midi": 69,
+            "string": 1
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          0,
+          5
+        ],
+        "shape": {
+          "barre": {
+            "fret": 3,
+            "from_string": 4,
+            "to_string": 2
+          },
+          "family": "drop2",
+          "inversion": 2,
+          "muted": [
+            5,
+            6
+          ],
+          "positions": [
+            {
+              "degree": 5,
+              "finger": 1,
+              "fret": 3,
+              "midi": 53,
+              "string": 4
+            },
+            {
+              "degree": 1,
+              "finger": 1,
+              "fret": 3,
+              "midi": 58,
+              "string": 3
+            },
+            {
+              "degree": 3,
+              "finger": 1,
+              "fret": 3,
+              "midi": 62,
+              "string": 2
+            },
+            {
+              "degree": 7,
+              "finger": 2,
+              "fret": 5,
+              "midi": 69,
+              "string": 1
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "quality": "maj7",
+          "root": {
+            "name": "Bb",
+            "pc": 10
+          },
+          "tones": [
+            {
+              "name": "Bb",
+              "pc": 10
+            },
+            {
+              "name": "D",
+              "pc": 2
+            },
+            {
+              "name": "F",
+              "pc": 5
+            },
+            {
+              "name": "A",
+              "pc": 9
+            }
+          ]
+        },
+        "cycle": {
+          "lap": 1,
+          "step": 7,
+          "total": 40
+        },
+        "degree": 6,
+        "id": 8,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 1,
+        "previous_key": null,
+        "reason": "Original degree cycle; preserve ordered backbone transitions",
+        "role": "diatonic"
+      },
+      "piano_notes": [
+        58,
+        62,
+        65,
+        69
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 8,
+    "modulation": "diatonic",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "sd25_ii",
+        "notes": [
+          58,
+          62,
+          65,
+          67
+        ],
+        "role": "target",
+        "root_pc": 7,
+        "symbol": "Gm7"
+      }
+    ],
+    "degree": null,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 3,
+            "midi": 67,
+            "string": 1
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 3,
+            "midi": 58,
+            "string": 3
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 3,
+            "midi": 62,
+            "string": 2
+          },
+          {
+            "degree": 7,
+            "finger": null,
+            "fret": 1,
+            "midi": 65,
+            "string": 1
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          0,
+          5
+        ],
+        "shape": {
+          "barre": {
+            "fret": 3,
+            "from_string": 4,
+            "to_string": 1
+          },
+          "family": "drop2",
+          "inversion": 3,
+          "muted": [
+            5,
+            6
+          ],
+          "positions": [
+            {
+              "degree": 7,
+              "finger": 1,
+              "fret": 3,
+              "midi": 53,
+              "string": 4
+            },
+            {
+              "degree": 3,
+              "finger": 1,
+              "fret": 3,
+              "midi": 58,
+              "string": 3
+            },
+            {
+              "degree": 5,
+              "finger": 1,
+              "fret": 3,
+              "midi": 62,
+              "string": 2
+            },
+            {
+              "degree": 1,
+              "finger": 1,
+              "fret": 3,
+              "midi": 67,
+              "string": 1
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "quality": "m7",
+          "root": {
+            "name": "G",
+            "pc": 7
+          },
+          "tones": [
+            {
+              "name": "G",
+              "pc": 7
+            },
+            {
+              "name": "Bb",
+              "pc": 10
+            },
+            {
+              "name": "D",
+              "pc": 2
+            },
+            {
+              "name": "F",
+              "pc": 5
+            }
+          ]
+        },
+        "cycle": null,
+        "degree": null,
+        "id": 9,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 1,
+        "previous_key": null,
+        "reason": "SD25: Gm7 -> C7 -> Fmaj7 (degree 3); no key change",
+        "role": "sd25_ii"
+      },
+      "piano_notes": [
+        58,
+        62,
+        65,
+        67
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 9,
+    "modulation": "sd25_ii",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "sd25_v",
+        "notes": [
+          55,
+          58,
+          60,
+          64
+        ],
+        "role": "target",
+        "root_pc": 0,
+        "symbol": "C7"
+      }
+    ],
+    "degree": null,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 1,
+            "midi": 60,
+            "string": 2
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 0,
+            "midi": 64,
+            "string": 1
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 3,
+            "midi": 67,
+            "string": 1
+          },
+          {
+            "degree": 7,
+            "finger": null,
+            "fret": 3,
+            "midi": 58,
+            "string": 3
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          0,
+          5
+        ],
+        "shape": {
+          "barre": null,
+          "family": "drop2",
+          "inversion": 1,
+          "muted": [
+            5,
+            6
+          ],
+          "positions": [
+            {
+              "degree": 3,
+              "finger": 2,
+              "fret": 2,
+              "midi": 52,
+              "string": 4
+            },
+            {
+              "degree": 7,
+              "finger": 3,
+              "fret": 3,
+              "midi": 58,
+              "string": 3
+            },
+            {
+              "degree": 1,
+              "finger": 1,
+              "fret": 1,
+              "midi": 60,
+              "string": 2
+            },
+            {
+              "degree": 5,
+              "finger": 4,
+              "fret": 3,
+              "midi": 67,
+              "string": 1
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "quality": "7",
+          "root": {
+            "name": "C",
+            "pc": 0
+          },
+          "tones": [
+            {
+              "name": "C",
+              "pc": 0
+            },
+            {
+              "name": "E",
+              "pc": 4
+            },
+            {
+              "name": "G",
+              "pc": 7
+            },
+            {
+              "name": "Bb",
+              "pc": 10
+            }
+          ]
+        },
+        "cycle": null,
+        "degree": null,
+        "id": 10,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 1,
+        "previous_key": null,
+        "reason": "SD25: Gm7 -> C7 -> Fmaj7 (degree 3); no key change",
+        "role": "sd25_v"
+      },
+      "piano_notes": [
+        55,
+        58,
+        60,
+        64
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 10,
+    "modulation": "sd25_v",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "diatonic",
+        "notes": [
+          52,
+          53,
+          57,
+          60
+        ],
+        "role": "target",
+        "root_pc": 5,
+        "symbol": "Fmaj7"
+      }
+    ],
+    "degree": 3,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 1,
+            "midi": 65,
+            "string": 1
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 5,
+            "midi": 69,
+            "string": 1
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 1,
+            "midi": 60,
+            "string": 2
+          },
+          {
+            "degree": 7,
+            "finger": null,
+            "fret": 0,
+            "midi": 64,
+            "string": 1
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          0,
+          5
+        ],
+        "shape": {
+          "barre": {
+            "fret": 1,
+            "from_string": 2,
+            "to_string": 1
+          },
+          "family": "drop2",
+          "inversion": 3,
+          "muted": [
+            5,
+            6
+          ],
+          "positions": [
+            {
+              "degree": 7,
+              "finger": 2,
+              "fret": 2,
+              "midi": 52,
+              "string": 4
+            },
+            {
+              "degree": 3,
+              "finger": 3,
+              "fret": 2,
+              "midi": 57,
+              "string": 3
+            },
+            {
+              "degree": 5,
+              "finger": 1,
+              "fret": 1,
+              "midi": 60,
+              "string": 2
+            },
+            {
+              "degree": 1,
+              "finger": 1,
+              "fret": 1,
+              "midi": 65,
+              "string": 1
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "quality": "maj7",
+          "root": {
+            "name": "F",
+            "pc": 5
+          },
+          "tones": [
+            {
+              "name": "F",
+              "pc": 5
+            },
+            {
+              "name": "A",
+              "pc": 9
+            },
+            {
+              "name": "C",
+              "pc": 0
+            },
+            {
+              "name": "E",
+              "pc": 4
+            }
+          ]
+        },
+        "cycle": {
+          "lap": 1,
+          "step": 8,
+          "total": 40
+        },
+        "degree": 3,
+        "id": 11,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 1,
+        "previous_key": null,
+        "reason": "Original degree cycle; preserve ordered backbone transitions",
+        "role": "diatonic"
+      },
+      "piano_notes": [
+        52,
+        53,
+        57,
+        60
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 11,
+    "modulation": "diatonic",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "diatonic",
+        "notes": [
+          48,
+          52,
+          55,
+          58
+        ],
+        "role": "target",
+        "root_pc": 0,
+        "symbol": "C7"
+      }
+    ],
+    "degree": 7,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 1,
+            "midi": 60,
+            "string": 2
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 0,
+            "midi": 64,
+            "string": 1
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 3,
+            "midi": 67,
+            "string": 1
+          },
+          {
+            "degree": 7,
+            "finger": null,
+            "fret": 3,
+            "midi": 58,
+            "string": 3
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          0,
+          5
+        ],
+        "shape": {
+          "barre": null,
+          "family": "close",
+          "inversion": 2,
+          "muted": [
+            5,
+            6
+          ],
+          "positions": [
+            {
+              "degree": 5,
+              "finger": 3,
+              "fret": 5,
+              "midi": 55,
+              "string": 4
+            },
+            {
+              "degree": 7,
+              "finger": 2,
+              "fret": 3,
+              "midi": 58,
+              "string": 3
+            },
+            {
+              "degree": 1,
+              "finger": 1,
+              "fret": 1,
+              "midi": 60,
+              "string": 2
+            },
+            {
+              "degree": 3,
+              "finger": 0,
+              "fret": 0,
+              "midi": 64,
+              "string": 1
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "quality": "7",
+          "root": {
+            "name": "C",
+            "pc": 0
+          },
+          "tones": [
+            {
+              "name": "C",
+              "pc": 0
+            },
+            {
+              "name": "E",
+              "pc": 4
+            },
+            {
+              "name": "G",
+              "pc": 7
+            },
+            {
+              "name": "Bb",
+              "pc": 10
+            }
+          ]
+        },
+        "cycle": {
+          "lap": 1,
+          "step": 9,
+          "total": 40
+        },
+        "degree": 7,
+        "id": 12,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 1,
+        "previous_key": null,
+        "reason": "Original degree cycle; preserve ordered backbone transitions",
+        "role": "diatonic"
+      },
+      "piano_notes": [
+        48,
+        52,
+        55,
+        58
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 12,
+    "modulation": "diatonic",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "diatonic",
+        "notes": [
+          53,
+          57,
+          60,
+          62
+        ],
+        "role": "target",
+        "root_pc": 2,
+        "symbol": "Dm7"
+      }
+    ],
+    "degree": 1,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 3,
+            "midi": 62,
+            "string": 2
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 1,
+            "midi": 65,
+            "string": 1
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 5,
+            "midi": 69,
+            "string": 1
+          },
+          {
+            "degree": 7,
+            "finger": null,
+            "fret": 1,
+            "midi": 60,
+            "string": 2
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          0,
+          5
+        ],
+        "shape": {
+          "barre": {
+            "fret": 1,
+            "from_string": 2,
+            "to_string": 1
+          },
+          "family": "drop2",
+          "inversion": 0,
+          "muted": [
+            5,
+            6
+          ],
+          "positions": [
+            {
+              "degree": 1,
+              "finger": 0,
+              "fret": 0,
+              "midi": 50,
+              "string": 4
+            },
+            {
+              "degree": 5,
+              "finger": 2,
+              "fret": 2,
+              "midi": 57,
+              "string": 3
+            },
+            {
+              "degree": 7,
+              "finger": 1,
+              "fret": 1,
+              "midi": 60,
+              "string": 2
+            },
+            {
+              "degree": 3,
+              "finger": 1,
+              "fret": 1,
+              "midi": 65,
+              "string": 1
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "quality": "m7",
+          "root": {
+            "name": "D",
+            "pc": 2
+          },
+          "tones": [
+            {
+              "name": "D",
+              "pc": 2
+            },
+            {
+              "name": "F",
+              "pc": 5
+            },
+            {
+              "name": "A",
+              "pc": 9
+            },
+            {
+              "name": "C",
+              "pc": 0
+            }
+          ]
+        },
+        "cycle": {
+          "lap": 1,
+          "step": 10,
+          "total": 40
+        },
+        "degree": 1,
+        "id": 13,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 1,
+        "previous_key": null,
+        "reason": "Original degree cycle; preserve ordered backbone transitions",
+        "role": "diatonic"
+      },
+      "piano_notes": [
+        53,
+        57,
+        60,
+        62
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 13,
+    "modulation": "diatonic",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "diatonic",
+        "notes": [
+          50,
+          55,
+          58
+        ],
+        "role": "target",
+        "root_pc": 7,
+        "symbol": "Gm"
+      }
+    ],
+    "degree": 4,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 8,
+            "midi": 67,
+            "string": 2
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 6,
+            "midi": 70,
+            "string": 1
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 7,
+            "midi": 62,
+            "string": 3
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          4,
+          9
+        ],
+        "shape": {
+          "barre": null,
+          "family": "close",
+          "inversion": 1,
+          "muted": [
+            1,
+            5,
+            6
+          ],
+          "positions": [
+            {
+              "degree": 3,
+              "finger": 2,
+              "fret": 8,
+              "midi": 58,
+              "string": 4
+            },
+            {
+              "degree": 5,
+              "finger": 1,
+              "fret": 7,
+              "midi": 62,
+              "string": 3
+            },
+            {
+              "degree": 1,
+              "finger": 3,
+              "fret": 8,
+              "midi": 67,
+              "string": 2
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5
+          ],
+          "quality": "m",
+          "root": {
+            "name": "G",
+            "pc": 7
+          },
+          "tones": [
+            {
+              "name": "G",
+              "pc": 7
+            },
+            {
+              "name": "Bb",
+              "pc": 10
+            },
+            {
+              "name": "D",
+              "pc": 2
+            }
+          ]
+        },
+        "cycle": {
+          "lap": 1,
+          "step": 11,
+          "total": 40
+        },
+        "degree": 4,
+        "id": 14,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 2,
+        "previous_key": null,
+        "reason": "Original degree cycle; preserve ordered backbone transitions",
+        "role": "diatonic"
+      },
+      "piano_notes": [
+        50,
+        55,
+        58
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 14,
+    "modulation": "diatonic",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "diatonic",
+        "notes": [
+          57,
+          60,
+          64
+        ],
+        "role": "target",
+        "root_pc": 9,
+        "symbol": "Am"
+      }
+    ],
+    "degree": 5,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 5,
+            "midi": 69,
+            "string": 1
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 8,
+            "midi": 72,
+            "string": 1
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 5,
+            "midi": 64,
+            "string": 2
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          4,
+          9
+        ],
+        "shape": {
+          "barre": {
+            "fret": 5,
+            "from_string": 3,
+            "to_string": 2
+          },
+          "family": "close",
+          "inversion": 0,
+          "muted": [
+            1,
+            5,
+            6
+          ],
+          "positions": [
+            {
+              "degree": 1,
+              "finger": 2,
+              "fret": 7,
+              "midi": 57,
+              "string": 4
+            },
+            {
+              "degree": 3,
+              "finger": 1,
+              "fret": 5,
+              "midi": 60,
+              "string": 3
+            },
+            {
+              "degree": 5,
+              "finger": 1,
+              "fret": 5,
+              "midi": 64,
+              "string": 2
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5
+          ],
+          "quality": "m",
+          "root": {
+            "name": "A",
+            "pc": 9
+          },
+          "tones": [
+            {
+              "name": "A",
+              "pc": 9
+            },
+            {
+              "name": "C",
+              "pc": 0
+            },
+            {
+              "name": "E",
+              "pc": 4
+            }
+          ]
+        },
+        "cycle": {
+          "lap": 1,
+          "step": 12,
+          "total": 40
+        },
+        "degree": 5,
+        "id": 15,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 2,
+        "previous_key": null,
+        "reason": "Original degree cycle; preserve ordered backbone transitions",
+        "role": "diatonic"
+      },
+      "piano_notes": [
+        57,
+        60,
+        64
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 15,
+    "modulation": "diatonic",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "sd25_ii",
+        "notes": [
+          55,
+          58,
+          62,
+          65
+        ],
+        "role": "target",
+        "root_pc": 7,
+        "symbol": "Gm7"
+      }
+    ],
+    "degree": null,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 8,
+            "midi": 67,
+            "string": 2
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 6,
+            "midi": 70,
+            "string": 1
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 7,
+            "midi": 62,
+            "string": 3
+          },
+          {
+            "degree": 7,
+            "finger": null,
+            "fret": 6,
+            "midi": 65,
+            "string": 2
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          4,
+          9
+        ],
+        "shape": {
+          "barre": null,
+          "family": "drop2",
+          "inversion": 3,
+          "muted": [
+            1,
+            6
+          ],
+          "positions": [
+            {
+              "degree": 7,
+              "finger": 2,
+              "fret": 8,
+              "midi": 53,
+              "string": 5
+            },
+            {
+              "degree": 3,
+              "finger": 3,
+              "fret": 8,
+              "midi": 58,
+              "string": 4
+            },
+            {
+              "degree": 5,
+              "finger": 1,
+              "fret": 7,
+              "midi": 62,
+              "string": 3
+            },
+            {
+              "degree": 1,
+              "finger": 4,
+              "fret": 8,
+              "midi": 67,
+              "string": 2
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "quality": "m7",
+          "root": {
+            "name": "G",
+            "pc": 7
+          },
+          "tones": [
+            {
+              "name": "G",
+              "pc": 7
+            },
+            {
+              "name": "Bb",
+              "pc": 10
+            },
+            {
+              "name": "D",
+              "pc": 2
+            },
+            {
+              "name": "F",
+              "pc": 5
+            }
+          ]
+        },
+        "cycle": null,
+        "degree": null,
+        "id": 16,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 2,
+        "previous_key": null,
+        "reason": "SD25: Gm7 -> C7 -> F (degree 3); no key change",
+        "role": "sd25_ii"
+      },
+      "piano_notes": [
+        55,
+        58,
+        62,
+        65
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 16,
+    "modulation": "sd25_ii",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "sd25_v",
+        "notes": [
+          52,
+          55,
+          58,
+          60
+        ],
+        "role": "target",
+        "root_pc": 0,
+        "symbol": "C7"
+      }
+    ],
+    "degree": null,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 8,
+            "midi": 72,
+            "string": 1
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 5,
+            "midi": 64,
+            "string": 2
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 8,
+            "midi": 67,
+            "string": 2
+          },
+          {
+            "degree": 7,
+            "finger": null,
+            "fret": 6,
+            "midi": 70,
+            "string": 1
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          4,
+          9
+        ],
+        "shape": {
+          "barre": null,
+          "family": "drop2",
+          "inversion": 1,
+          "muted": [
+            1,
+            6
+          ],
+          "positions": [
+            {
+              "degree": 3,
+              "finger": 2,
+              "fret": 7,
+              "midi": 52,
+              "string": 5
+            },
+            {
+              "degree": 7,
+              "finger": 3,
+              "fret": 8,
+              "midi": 58,
+              "string": 4
+            },
+            {
+              "degree": 1,
+              "finger": 1,
+              "fret": 5,
+              "midi": 60,
+              "string": 3
+            },
+            {
+              "degree": 5,
+              "finger": 4,
+              "fret": 8,
+              "midi": 67,
+              "string": 2
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "quality": "7",
+          "root": {
+            "name": "C",
+            "pc": 0
+          },
+          "tones": [
+            {
+              "name": "C",
+              "pc": 0
+            },
+            {
+              "name": "E",
+              "pc": 4
+            },
+            {
+              "name": "G",
+              "pc": 7
+            },
+            {
+              "name": "Bb",
+              "pc": 10
+            }
+          ]
+        },
+        "cycle": null,
+        "degree": null,
+        "id": 17,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 2,
+        "previous_key": null,
+        "reason": "SD25: Gm7 -> C7 -> F (degree 3); no key change",
+        "role": "sd25_v"
+      },
+      "piano_notes": [
+        52,
+        55,
+        58,
+        60
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 17,
+    "modulation": "sd25_v",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "diatonic",
+        "notes": [
+          53,
+          57,
+          60
+        ],
+        "role": "target",
+        "root_pc": 5,
+        "symbol": "F"
+      }
+    ],
+    "degree": 3,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 6,
+            "midi": 65,
+            "string": 2
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 5,
+            "midi": 69,
+            "string": 1
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 8,
+            "midi": 72,
+            "string": 1
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          4,
+          9
+        ],
+        "shape": {
+          "barre": null,
+          "family": "close",
+          "inversion": 0,
+          "muted": [
+            1,
+            2,
+            6
+          ],
+          "positions": [
+            {
+              "degree": 1,
+              "finger": 3,
+              "fret": 8,
+              "midi": 53,
+              "string": 5
+            },
+            {
+              "degree": 3,
+              "finger": 2,
+              "fret": 7,
+              "midi": 57,
+              "string": 4
+            },
+            {
+              "degree": 5,
+              "finger": 1,
+              "fret": 5,
+              "midi": 60,
+              "string": 3
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5
+          ],
+          "quality": "",
+          "root": {
+            "name": "F",
+            "pc": 5
+          },
+          "tones": [
+            {
+              "name": "F",
+              "pc": 5
+            },
+            {
+              "name": "A",
+              "pc": 9
+            },
+            {
+              "name": "C",
+              "pc": 0
+            }
+          ]
+        },
+        "cycle": {
+          "lap": 1,
+          "step": 13,
+          "total": 40
+        },
+        "degree": 3,
+        "id": 18,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 2,
+        "previous_key": null,
+        "reason": "Original degree cycle; preserve ordered backbone transitions",
+        "role": "diatonic"
+      },
+      "piano_notes": [
+        53,
+        57,
+        60
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 18,
+    "modulation": "diatonic",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "diatonic",
+        "notes": [
+          55,
+          58,
+          64
+        ],
+        "role": "target",
+        "root_pc": 4,
+        "symbol": "Edim"
+      }
+    ],
+    "degree": 2,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 5,
+            "midi": 64,
+            "string": 2
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 8,
+            "midi": 67,
+            "string": 2
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 6,
+            "midi": 70,
+            "string": 1
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          4,
+          9
+        ],
+        "shape": {
+          "barre": null,
+          "family": "close",
+          "inversion": 2,
+          "muted": [
+            1,
+            2,
+            3
+          ],
+          "positions": [
+            {
+              "degree": 5,
+              "finger": 2,
+              "fret": 6,
+              "midi": 46,
+              "string": 6
+            },
+            {
+              "degree": 1,
+              "finger": 3,
+              "fret": 7,
+              "midi": 52,
+              "string": 5
+            },
+            {
+              "degree": 3,
+              "finger": 1,
+              "fret": 5,
+              "midi": 55,
+              "string": 4
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5
+          ],
+          "quality": "dim",
+          "root": {
+            "name": "E",
+            "pc": 4
+          },
+          "tones": [
+            {
+              "name": "E",
+              "pc": 4
+            },
+            {
+              "name": "G",
+              "pc": 7
+            },
+            {
+              "name": "Bb",
+              "pc": 10
+            }
+          ]
+        },
+        "cycle": {
+          "lap": 1,
+          "step": 14,
+          "total": 40
+        },
+        "degree": 2,
+        "id": 19,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 2,
+        "previous_key": null,
+        "reason": "Original degree cycle; preserve ordered backbone transitions",
+        "role": "diatonic"
+      },
+      "piano_notes": [
+        55,
+        58,
+        64
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 19,
+    "modulation": "diatonic",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "sd25_ii",
+        "notes": [
+          57,
+          60,
+          63,
+          67
+        ],
+        "role": "target",
+        "root_pc": 9,
+        "symbol": "Am7b5"
+      }
+    ],
+    "degree": null,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 5,
+            "midi": 69,
+            "string": 1
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 8,
+            "midi": 72,
+            "string": 1
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 4,
+            "midi": 63,
+            "string": 2
+          },
+          {
+            "degree": 7,
+            "finger": null,
+            "fret": 8,
+            "midi": 67,
+            "string": 2
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          4,
+          9
+        ],
+        "shape": {
+          "barre": {
+            "fret": 5,
+            "from_string": 6,
+            "to_string": 3
+          },
+          "family": "drop2",
+          "inversion": 0,
+          "muted": [
+            1,
+            2
+          ],
+          "positions": [
+            {
+              "degree": 1,
+              "finger": 1,
+              "fret": 5,
+              "midi": 45,
+              "string": 6
+            },
+            {
+              "degree": 5,
+              "finger": 2,
+              "fret": 6,
+              "midi": 51,
+              "string": 5
+            },
+            {
+              "degree": 7,
+              "finger": 1,
+              "fret": 5,
+              "midi": 55,
+              "string": 4
+            },
+            {
+              "degree": 3,
+              "finger": 1,
+              "fret": 5,
+              "midi": 60,
+              "string": 3
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "quality": "m7b5",
+          "root": {
+            "name": "A",
+            "pc": 9
+          },
+          "tones": [
+            {
+              "name": "A",
+              "pc": 9
+            },
+            {
+              "name": "C",
+              "pc": 0
+            },
+            {
+              "name": "Eb",
+              "pc": 3
+            },
+            {
+              "name": "G",
+              "pc": 7
+            }
+          ]
+        },
+        "cycle": null,
+        "degree": null,
+        "id": 20,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 2,
+        "previous_key": null,
+        "reason": "SD25: Am7b5 -> D7 -> Gm (degree 4); no key change",
+        "role": "sd25_ii"
+      },
+      "piano_notes": [
+        57,
+        60,
+        63,
+        67
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 20,
+    "modulation": "sd25_ii",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "sd25_v",
+        "notes": [
+          54,
+          57,
+          60,
+          62
+        ],
+        "role": "target",
+        "root_pc": 2,
+        "symbol": "D7"
+      }
+    ],
+    "degree": null,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 7,
+            "midi": 62,
+            "string": 3
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 7,
+            "midi": 66,
+            "string": 2
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 5,
+            "midi": 69,
+            "string": 1
+          },
+          {
+            "degree": 7,
+            "finger": null,
+            "fret": 8,
+            "midi": 72,
+            "string": 1
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          4,
+          9
+        ],
+        "shape": {
+          "barre": null,
+          "family": "drop2",
+          "inversion": 2,
+          "muted": [
+            1,
+            2
+          ],
+          "positions": [
+            {
+              "degree": 5,
+              "finger": 2,
+              "fret": 5,
+              "midi": 45,
+              "string": 6
+            },
+            {
+              "degree": 1,
+              "finger": 3,
+              "fret": 5,
+              "midi": 50,
+              "string": 5
+            },
+            {
+              "degree": 3,
+              "finger": 1,
+              "fret": 4,
+              "midi": 54,
+              "string": 4
+            },
+            {
+              "degree": 7,
+              "finger": 4,
+              "fret": 5,
+              "midi": 60,
+              "string": 3
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "quality": "7",
+          "root": {
+            "name": "D",
+            "pc": 2
+          },
+          "tones": [
+            {
+              "name": "D",
+              "pc": 2
+            },
+            {
+              "name": "F#",
+              "pc": 6
+            },
+            {
+              "name": "A",
+              "pc": 9
+            },
+            {
+              "name": "C",
+              "pc": 0
+            }
+          ]
+        },
+        "cycle": null,
+        "degree": null,
+        "id": 21,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 2,
+        "previous_key": null,
+        "reason": "SD25: Am7b5 -> D7 -> Gm (degree 4); no key change",
+        "role": "sd25_v"
+      },
+      "piano_notes": [
+        54,
+        57,
+        60,
+        62
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 21,
+    "modulation": "sd25_v",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "diatonic",
+        "notes": [
+          58,
+          62,
+          67
+        ],
+        "role": "target",
+        "root_pc": 7,
+        "symbol": "Gm"
+      }
+    ],
+    "degree": 4,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 8,
+            "midi": 67,
+            "string": 2
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 6,
+            "midi": 70,
+            "string": 1
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 7,
+            "midi": 62,
+            "string": 3
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          4,
+          9
+        ],
+        "shape": {
+          "barre": {
+            "fret": 5,
+            "from_string": 5,
+            "to_string": 4
+          },
+          "family": "close",
+          "inversion": 1,
+          "muted": [
+            1,
+            2,
+            3
+          ],
+          "positions": [
+            {
+              "degree": 3,
+              "finger": 2,
+              "fret": 6,
+              "midi": 46,
+              "string": 6
+            },
+            {
+              "degree": 5,
+              "finger": 1,
+              "fret": 5,
+              "midi": 50,
+              "string": 5
+            },
+            {
+              "degree": 1,
+              "finger": 1,
+              "fret": 5,
+              "midi": 55,
+              "string": 4
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5
+          ],
+          "quality": "m",
+          "root": {
+            "name": "G",
+            "pc": 7
+          },
+          "tones": [
+            {
+              "name": "G",
+              "pc": 7
+            },
+            {
+              "name": "Bb",
+              "pc": 10
+            },
+            {
+              "name": "D",
+              "pc": 2
+            }
+          ]
+        },
+        "cycle": {
+          "lap": 1,
+          "step": 15,
+          "total": 40
+        },
+        "degree": 4,
+        "id": 22,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 2,
+        "previous_key": null,
+        "reason": "Original degree cycle; preserve ordered backbone transitions",
+        "role": "diatonic"
+      },
+      "piano_notes": [
+        58,
+        62,
+        67
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 22,
+    "modulation": "diatonic",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  },
+  {
+    "chords": [
+      {
+        "kind": "secondary",
+        "notes": [
+          53,
+          55,
+          59,
+          62
+        ],
+        "role": "target",
+        "root_pc": 7,
+        "symbol": "G7"
+      }
+    ],
+    "degree": null,
+    "event": {
+      "guitar": {
+        "arpeggio": [
+          {
+            "degree": 1,
+            "finger": null,
+            "fret": 8,
+            "midi": 67,
+            "string": 2
+          },
+          {
+            "degree": 3,
+            "finger": null,
+            "fret": 7,
+            "midi": 71,
+            "string": 1
+          },
+          {
+            "degree": 5,
+            "finger": null,
+            "fret": 7,
+            "midi": 62,
+            "string": 3
+          },
+          {
+            "degree": 7,
+            "finger": null,
+            "fret": 6,
+            "midi": 65,
+            "string": 2
+          }
+        ],
+        "note": "Constraint-checked fingering; mute unused strings; adjust if uncomfortable",
+        "region": [
+          4,
+          9
+        ],
+        "shape": {
+          "barre": null,
+          "family": "drop2",
+          "inversion": 1,
+          "muted": [
+            1,
+            2
+          ],
+          "positions": [
+            {
+              "degree": 3,
+              "finger": 2,
+              "fret": 7,
+              "midi": 47,
+              "string": 6
+            },
+            {
+              "degree": 7,
+              "finger": 4,
+              "fret": 8,
+              "midi": 53,
+              "string": 5
+            },
+            {
+              "degree": 1,
+              "finger": 1,
+              "fret": 5,
+              "midi": 55,
+              "string": 4
+            },
+            {
+              "degree": 5,
+              "finger": 3,
+              "fret": 7,
+              "midi": 62,
+              "string": 3
+            }
+          ]
+        },
+        "task": "chord"
+      },
+      "music": {
+        "chord": {
+          "degrees": [
+            1,
+            3,
+            5,
+            7
+          ],
+          "quality": "7",
+          "root": {
+            "name": "G",
+            "pc": 7
+          },
+          "tones": [
+            {
+              "name": "G",
+              "pc": 7
+            },
+            {
+              "name": "B",
+              "pc": 11
+            },
+            {
+              "name": "D",
+              "pc": 2
+            },
+            {
+              "name": "F",
+              "pc": 5
+            }
+          ]
+        },
+        "cycle": null,
+        "degree": null,
+        "id": 23,
+        "key": {
+          "mode": "aeolian",
+          "tonic": {
+            "name": "D",
+            "pc": 2
+          }
+        },
+        "phrase": 3,
+        "previous_key": null,
+        "reason": "V7/7 -> C7; tonicization, not modulation",
+        "role": "secondary"
+      },
+      "piano_notes": [
+        53,
+        55,
+        59,
+        62
+      ]
+    },
+    "key": "D aeolian",
+    "measure": 23,
+    "modulation": "secondary",
+    "scale": [
+      2,
+      4,
+      5,
+      7,
+      9,
+      10,
+      0
+    ]
+  }
+]

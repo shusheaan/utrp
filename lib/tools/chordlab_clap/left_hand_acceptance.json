@@ -1,0 +1,77 @@
+{
+  "version": "0.1.5",
+  "date": "2026-10-17",
+  "plugin_id": "org.utrp.chordlab",
+  "sha256": "069b1063817835ff384e5ee4c69e74b58b27c44e8aa3b10b7b0d35989ed44b4b",
+  "environment": "Linux x86_64, REAPER 7.78, X11/XWayland",
+  "status": "passed within the recorded scope; deployed to shared synth.rpp input",
+  "controls": {
+    "degrees": {
+      "Z": 6,
+      "X": 7,
+      "C": 1,
+      "A": 2,
+      "S": 3,
+      "D": 4,
+      "F": 5
+    },
+    "Escape": "left; keeps Keyboard active",
+    "left Ctrl standalone release": "right",
+    "Space": "default voicing",
+    "left Shift standalone release": "toggle Sustain",
+    "Tab": "triad/seventh/ninth",
+    "removed": [
+      "G",
+      "H",
+      "J",
+      "K",
+      "L",
+      "semicolon",
+      "Enter"
+    ],
+    "first_row": "unchanged",
+    "scope": "enabled and focused only; overlapping key combinations cancel modifier taps"
+  },
+  "tests": {
+    "pytest": 114,
+    "ctest_suites": 3,
+    "modifier_combination_sequences": 2040,
+    "real_host_keyboard_focus_checks": 135,
+    "tonality_and_repeat_release_checks": 82,
+    "midi_ab_cases": 2379,
+    "midi_ab_failed": 0,
+    "saved_project_state_checks": 7,
+    "host_parameter_cases": 22,
+    "mixed_track_fx_cases": 42,
+    "mixed_input_fx_cases": 42,
+    "recorded_notes_per_baseline_and_clap": 6,
+    "sample_rate_block_configurations_per_instance": 12,
+    "clap_probe": "PASS ports, 18 parameters, GUI recreate, host writes, state, two instances, lifecycle",
+    "library_mock_assertions": 36,
+    "startup": "PASS wait/start/idempotency/timeout",
+    "library_audio_patches": 95,
+    "production_computer_C_key_peak": 0.41799539327621
+  },
+  "preservation": {
+    "tracks_preserved": 102,
+    "surge_engine_and_wavetables_preserved": 93,
+    "piano_state_preserved": 2,
+    "folder_effects_preserved": 1,
+    "all_track_and_master_gains_preserved": true,
+    "single_clap_no_legacy_jsfx": true,
+    "clap_musical_state_preserved": true,
+    "clap_state_byte_identical": true,
+    "sustain_reload_policy": "OFF",
+    "audit_fixture_removed": true
+  },
+  "test_note": "Preliminary GUI runs exposed a focused key-up cache issue; final binary queries physical state on every release sweep. Final A/B uses fresh isolated profiles, not preliminary runs.",
+  "evidence": "target/chordlab-full-0.1.5/",
+  "not_certified": [
+    "Physical finger MIDI performance (synthetic MIDI is not physical hardware acceptance)",
+    "Bitwig",
+    "macOS/Windows",
+    "native Wayland editor",
+    "arbitrary host-global shortcuts",
+    "all hardware and timing conditions"
+  ]
+}

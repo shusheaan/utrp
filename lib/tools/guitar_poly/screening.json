@@ -1,0 +1,37 @@
+{
+  "upstream_commit": "dc4565b3827afd34db47d8ecc770a29b1aed61f0",
+  "scope": "synthetic screening; algorithm unchanged, logging disabled, 48 kHz build",
+  "cases": 108,
+  "cases_with_any_spurious_note": 16,
+  "cases_ever_exact_for_20ms": 42,
+  "overlap_cases": 18,
+  "voice_counts": {
+    "1": {
+      "cases": 36,
+      "ever_exact_20ms": 19,
+      "any_spurious_note": 12
+    },
+    "2": {
+      "cases": 48,
+      "ever_exact_20ms": 16,
+      "any_spurious_note": 4
+    },
+    "3": {
+      "cases": 24,
+      "ever_exact_20ms": 7,
+      "any_spurious_note": 0
+    }
+  },
+  "overlap_mean_exact_time_fraction": 0.1271825396825397,
+  "decision": "Do not integrate this upstream revision into the production CLAP; not adequate for low-latency polyphonic input.",
+  "scope_limitations": [
+    "synthetic only",
+    "single fixed upstream threshold; not tuned to each input",
+    "48 kHz only",
+    "no real-guitar comparison",
+    "not a benchmark of all open-source solutions",
+    "20ms exact interval is a weak screening condition, not a full case pass"
+  ],
+  "production_frontend_sha256": "a6bac5529830710656e3fc06d724eda80fe24d34d1e66075c30f55a6c890d945",
+  "production_unchanged": true
+}

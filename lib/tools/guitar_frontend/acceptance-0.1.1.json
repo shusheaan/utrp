@@ -1,0 +1,65 @@
+{
+  "version": "0.1.1",
+  "status": "monophonic prototype; real-guitar accuracy pending user-labeled test",
+  "binary_sha256": "b122bc9dea07178e890db45635889e2a492eec8cd54299f2cf26eebbe4cfe15f",
+  "synthetic_detector_cases": 510,
+  "synthetic_max_attack_ms": 80.2494,
+  "synthetic_max_release_ms": 95.1474,
+  "synthetic_max_cents": 10.5709,
+  "independent_clap_host_matrix_cases": 40,
+  "isolated_reaper": {
+    "pitches": 14,
+    "events_per_capture": 28,
+    "before_after_chordlab": "exact match"
+  },
+  "python_regression": {
+    "passed": 116,
+    "new_config_tests": 16
+  },
+  "hardware": {
+    "device": "Spark GO",
+    "route": "capture_MONO -> REAPER:in1",
+    "observed": "non-silent audio and detected notes",
+    "accuracy": "not certified; no synchronized ground-truth labels"
+  },
+  "preservation": {
+    "synth_rpp": "identical except first-line save timestamp",
+    "chord_lab_binary": "unchanged 0.1.6"
+  },
+  "not_supported": [
+    "polyphony",
+    "ringing/overlapping arpeggios",
+    "pitch bend/MPE",
+    "velocity estimation"
+  ],
+  "bitwig": "not tested",
+  "asan": "unavailable: system AppProtection preload prevents ASan initialization; explicit runtime preload also failed",
+  "evidence_directory": "target/guitar-low-note-fix",
+  "ubsan": "2/2 CTest targets passed",
+  "ringing_note_regression_cases": 45,
+  "previous_acceptance": "acceptance-0.1.0.json",
+  "recording_regression": {
+    "clip_sha256": "acab13bbe18672c6c1e14b4bd3413d850cb5e98e86630d5703cfed15d95c9b3a",
+    "interval_seconds": [
+      27.9,
+      29.2
+    ],
+    "counts_per_8ms_observation": {
+      "before": {
+        "40": 83,
+        "45": 22,
+        "64": 57
+      },
+      "after": {
+        "-1": 40,
+        "64": 122
+      }
+    },
+    "scope": "Specific real-audio regression; not labeled polyphonic or end-to-end latency certification"
+  },
+  "deployment": {
+    "project": "/home/shu/storage/daw/Guitar Lab.rpp",
+    "saved_and_restarted": true,
+    "fresh_user_playing": "pending"
+  }
+}

@@ -1,0 +1,16 @@
+desc:Chord Lab key label regression
+in_pin:none
+out_pin:none
+import ../harmony.jsfx-inc
+@init
+failures=0;
+function check_label(key,expected) instance(#actual) (
+  key_pair_name(#actual,key);
+  strcmp(#actual,expected)!=0 ? failures+=1;
+);
+check_label(0,"Am/C"); check_label(1,"Bbm/Db");
+check_label(2,"Bm/D"); check_label(3,"Cm/Eb");
+check_label(4,"C#m/E"); check_label(5,"Dm/F");
+check_label(6,"Ebm/Gb"); check_label(7,"Em/G");
+check_label(8,"Fm/Ab"); check_label(9,"F#m/A");
+check_label(10,"Gm/Bb"); check_label(11,"G#m/B");

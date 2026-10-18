@@ -1,0 +1,207 @@
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.16s
+     Running unittests src/lib.rs (target/debug/deps/utrp-333f4af76c3aa81f)
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running unittests src/main.rs (target/debug/deps/utrp-3270d0428259c321)
+
+running 34 tests
+test input::tests::control_c_still_stops ... ok
+test input::tests::controls_and_repeat ... ok
+test input::tests::scrolling_never_triggers_training_actions ... ok
+test input::tests::midi_boundaries_and_noteoff ... ok
+test input::tests::tab_toggles_timer_only_on_press ... ok
+test input::tests::sustain_and_inversion_matching ... ok
+test ui::notation::tests::accidentals_determine_written_octave_including_double_accidentals ... ok
+test ui::notation::tests::grand_staff_and_local_ledgers_have_exact_diatonic_positions ... ok
+test ui::notation::tests::unicode_note_markers_use_terminal_columns_not_utf8_bytes ... ok
+test ui::piano::tests::black_white_rows_share_octave_stride_and_total_width ... ok
+test app::tests::midi_history_navigation_resets_fresh_note_gate_on_every_visit ... ok
+test app::tests::midi_correcting_extra_note_matches_current_target ... ok
+test app::tests::midi_poll_batch_cannot_credit_or_arm_successor ... ok
+test app::tests::midi_correction_at_deadline_is_timeout_and_paused_notes_do_not_arm ... ok
+test app::tests::scrolling_clamps_without_changing_practice ... ok
+test app::tests::midi_releasing_sustain_can_complete_target ... ok
+test ui::notation::tests::all_138_standard_guitar_positions_retain_written_pitch_and_octave ... ok
+test ui::notation::tests::mobile_staff_groups_preserve_every_pitch_and_note_number ... ok
+test ui::tests::small_terminal_shows_content_and_scroll_hint ... ok
+test ui::notation::tests::detached_path_order_is_preserved_in_independent_columns ... ok
+test ui::notation::tests::actual_e2_c4_d6_are_not_pitch_class_folded ... ok
+test ui::notation::tests::small_area_warns_instead_of_silently_cropping_notes ... ok
+test ui::notation::tests::unavailable_or_incomplete_targets_report_no_notes ... ok
+test ui::notation::tests::piano_uses_actual_notes_including_distinct_octaves ... ok
+test ui::notation::tests::extreme_midi_0_and_127_extend_the_staff_without_folding ... ok
+test ui::notation::tests::adjacent_notes_and_accidentals_never_overwrite_or_clip ... ok
+test ui::tests::existing_panel_layout_and_controls_render ... ok
+test app::tests::summary_coverage_excludes_hidden_detached_grips ... ok
+test ui::tests::resizing_and_tiny_viewports_clamp_scroll_without_panicking ... ok
+test ui::tests::manual_pending_and_controls_fit_minimum_terminal ... ok
+test ui::tests::full_layout_renders_staff_and_text_without_cropping_over_many_targets ... ok
+test ui::progression::tests::migrated_routes_and_return_have_distinct_readable_labels ... ok
+test ui::tests::minimum_supported_size_keeps_action_feedback_visible ... ok
+test ui::tests::phone_scrolling_exposes_all_panels_and_full_details ... ok
+
+test result: ok. 34 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 5.37s
+
+     Running tests/approaches.rs (target/debug/deps/approaches-3e7a9c0054c6a841)
+
+running 6 tests
+test ii_v_spelling_and_quality_follow_target_not_global_mode ... ok
+test major_v7_resolution_is_not_interrupted_across_preview_chunks ... ok
+test approach_parameters_are_validated_at_config_and_generator_boundaries ... ok
+test defaults_emit_all_approaches_without_ambient_or_borrowing_and_can_disable_them ... ok
+test chains_are_atomic_and_preserve_every_backbone_step_across_chunks_and_modulations ... ok
+test inserted_targets_use_real_guitar_paths_and_normal_scoring ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 3.70s
+
+     Running tests/core.rs (target/debug/deps/core-e87d7f9a26155f6b)
+
+running 26 tests
+test chord_degrees_show_accidentals_not_just_member_numbers ... ok
+test manual_no_deadline_and_stop_has_no_total_limit ... ok
+test enter_is_not_lost_after_space_in_same_poll_batch ... ok
+test deadline_space_is_timeout_not_confirmation_of_successor ... ok
+test enter_after_deadline_counts_timeout_without_generating_successor ... ok
+test impossible_guitar_region_is_reported_not_faked ... ok
+test pause_does_not_timeout_and_keeps_remaining_time ... ok
+test navigation_resets_deadline_without_reroll ... ok
+test paused_navigation_does_not_count_pause_as_practice_time ... ok
+test substitutes_and_diminished_spelling ... ok
+test invalid_config_is_explicit ... ok
+test same_tonic_mode_change_is_labelled_separately ... ok
+test all_keys_modes_degrees_have_correct_chord_members ... ok
+test score_speed_bounds_and_stale_batches ... ok
+test modulation_has_preparation_arrival_and_stable_new_phrase ... ok
+test score_only_space_and_no_history_farming ... ok
+test speed_change_applies_to_next_chord_only ... ok
+test stop_does_not_award_current_target ... ok
+test storage_is_append_only_and_records_unique_attempts ... ok
+test guitar_regions_rotate_and_arpeggio_is_separate ... ok
+test public_stream_rejects_invalid_configuration_before_generation ... ok
+test stable_music_independent_of_speed_and_history ... ok
+test diatonic_core_no_accidental_detours ... ok
+test extensions_and_ambient_are_explicit_not_unlabelled_accidentals ... ok
+test all_modes_modulate_without_false_modal_dominants ... ok
+test guitar_pitches_members_fingers_and_all_inversions ... ok
+
+test result: ok. 26 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.15s
+
+     Running tests/coverage.rs (target/debug/deps/coverage-2e78201e7934d1cc)
+
+running 3 tests
+test daily_cycle_convergence ... ignored, current daily two-mode cycle: three independent seeds, exact bucket and physical-grip coverage
+test large_training_coverage ... ignored, 3.2 million event finite coverage audit; writes coverage evidence under target/coverage/
+test multi_seed_convergence ... ignored, per-seed exact finite coverage; at most five million events each
+
+test result: ok. 0 passed; 0 failed; 3 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+     Running tests/cycle.rs (target/debug/deps/cycle-9148353208b5fd2a)
+
+running 8 tests
+test daily_defaults_are_two_modes_and_core_chords ... ok
+test disabled_minor_dominant_retains_natural_minor_and_extensions_keep_backbone ... ok
+test modal_options_do_not_relabel_original_cycle_as_modal_function ... ok
+test invalid_cycle_configuration_fails_explicitly ... ok
+test minor_v7_resolves_across_chunks_without_color_or_inserted_approach ... ok
+test original_sequence_and_every_edge_survive_all_chunk_sizes_and_lap_boundaries ... ok
+test modulation_waits_for_closure_and_arrival_is_new_opening_tonic ... ok
+test default_cycle_covers_each_key_edge_and_each_task_degree_region ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 12.33s
+
+     Running tests/guitar_regressions.rs (target/debug/deps/guitar_regressions-6dbd5155b96f6cfd)
+
+running 5 tests
+test add9_drop2_uses_actual_closed_pitch_order ... ok
+test add9_drop3_uses_actual_closed_pitch_order ... ok
+test sharp11_drop2_uses_actual_closed_pitch_order ... ok
+test tertian_seventh_drop2_classification_is_preserved ... ok
+test each_enabled_task_rotates_every_region_without_period_locking ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
+
+     Running tests/key_balance.rs (target/debug/deps/key_balance-bba92962e7f1ba72)
+
+running 6 tests
+test preview_history_pause_speed_and_stop_do_not_inflate_key_amounts ... ok
+test log_summary_exposes_counts_without_resuming_them_in_new_session ... ok
+test excess_practice_leaves_at_cycle_boundary_but_zero_probability_still_disables_modulation ... ok
+test counts_track_consumed_targets_not_planned_phrases_and_reset_per_run ... ok
+test exploration_chooses_least_practiced_and_back_respects_tolerance ... ok
+test default_scope_balances_actual_amounts_even_with_high_return_probability ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 8.54s
+
+     Running tests/manual_modulation.rs (target/debug/deps/manual_modulation-eb0722c62a2a083c)
+
+running 12 tests
+test same_tonic_major_minor_are_reachable_and_single_key_fails_explicitly ... ok
+test pause_stale_batch_deadline_and_stop_preserve_scoring_semantics ... ok
+test manual_waits_one_chord_discards_old_cycle_and_restarts_new_cycle ... ok
+test next_chord_and_remaining_preview_are_not_replaced_until_boundary ... ok
+test pending_request_suppresses_automatic_change_at_old_cycle_end ... ok
+test pending_during_bridge_waits_for_arrival_even_when_replaced ... ok
+test manual_actions_and_discarded_preview_do_not_corrupt_log_target_ids ... ok
+test back_overrides_balance_and_replacement_preserves_ready_boundary ... ok
+test unavailable_back_does_not_cancel_pending_and_repetition_does_not_delay_it ... ok
+test all_four_approaches_and_primary_dominants_finish_before_manual_modulation ... ok
+test manual_sessions_keep_real_guitar_targets_and_contiguous_log_ids ... ok
+test balanced_manual_stress_chooses_least_practiced_and_all_routes ... ok
+
+test result: ok. 12 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 21.61s
+
+     Running tests/modulation.rs (target/debug/deps/modulation-f11be5556b86b520)
+
+running 8 tests
+test diminished_reinterpretation_preserves_all_four_pitches_and_correct_spelling ... ok
+test unreachable_method_pool_stays_put_without_fake_pivots ... ok
+test invalid_route_config_rejected_and_legacy_config_preserved ... ok
+test common_chords_match_complete_members_and_both_degrees_for_all_key_pairs ... ok
+test each_migrated_route_is_used_and_resolves_before_resuming_the_cycle ... ok
+test forced_return_goes_to_previous_key_not_permanent_start_and_has_a_bridge ... ok
+test all_routes_default_cover_24_keys_and_return_does_not_trap_exploration ... ok
+test migrated_pivots_have_playable_guitar_targets_and_complete_detached_paths ... ok
+
+test result: ok. 8 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 11.76s
+
+     Running tests/preview.rs (target/debug/deps/preview-2c90ddfd09ffd986)
+
+running 5 tests
+test scientific_spelling_respects_accidental_octave_boundaries ... ok
+test every_builtin_mode_template_covers_every_scale_degree ... ok
+test guitar_export_uses_actual_detached_path_not_hidden_grip ... ok
+test phrase_preview_never_advances_generator_or_counts_unpresented_targets ... ok
+test restricted_pool_reports_missing_modulation_path_instead_of_faking_a_bridge ... ok
+
+test result: ok. 5 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+
+     Running tests/sampling.rs (target/debug/deps/sampling-55e84cba84dabedd)
+
+running 3 tests
+test configurable_dwell_rotates_each_enabled_task_without_locking ... ok
+test every_concrete_configured_grip_is_selected_not_only_nearest_representative ... ok
+test detached_exploration_exhausts_finite_cyclic_position_products ... ok
+
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 4.76s
+
+     Running tests/timing.rs (target/debug/deps/timing-d23c7d4753504d24)
+
+running 6 tests
+test enabling_starts_ten_seconds_from_now_then_times_out_without_credit ... ok
+test speed_changes_affect_next_target_and_survive_toggle ... ok
+test enabling_while_paused_waits_for_resume_and_disabling_removes_timer ... ok
+test default_is_untimed_space_scores_and_navigation_does_not ... ok
+test toggle_at_deadline_cannot_apply_to_successor_or_erase_timeout ... ok
+test disabling_cancels_deadline_without_advancing_or_scoring ... ok
+
+test result: ok. 6 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+   Doc-tests utrp
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

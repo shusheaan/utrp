@@ -1,0 +1,16 @@
+# Whole directories: atomic file replacement stays inside the Storage target.
+root = "storage/daw/UserData"
+directories = [
+  ".BitwigStudio/prefs",
+  ".BitwigStudio/view-settings",
+  ".BitwigStudio/library",
+  ".BitwigStudio/installed-packages",
+  "Bitwig Studio",
+  ".clap",
+  ".Surge XT",
+  ".Surge Synth Team",
+  ".config/SFZTools",
+  ".config/REAPER",
+]
+# Linux comm values; ps truncates long names to 15 characters.
+blocked_processes = ["bitwig-studio", "BitwigStudio", "BitwigAudioEngi", "BitwigPluginHos", "reaper", "surge-xt", "Surge XT", "Surge XT Effect"]

@@ -1,0 +1,13 @@
+desc:UTRP Library CLAP audit input (temporary test fixture)
+options:gmem=UTRP_Library_CLAP_Audit
+in_pin:none
+out_pin:none
+@init
+serial=-1;
+@block
+while(midirecv(offset,status,note,value));
+serial!=gmem[0] ? (
+  serial=gmem[0];
+  count=gmem[1]; i=0;
+  loop(count,p=10+i*4;midisend(gmem[p],gmem[p+1],gmem[p+2],gmem[p+3]);i+=1;);
+);

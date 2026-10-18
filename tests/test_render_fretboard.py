@@ -10,7 +10,7 @@ from xml.etree import ElementTree
 from hypothesis import given, strategies as st
 import pytest
 
-from scripts.render_fretboard import (
+from study.render_fretboard import (
     Position, Settings, coordinates, parse_settings, pitch_class, render_svg, scale_positions,
 )
 
@@ -94,7 +94,7 @@ def test_bad_diagram_is_rejected(field: str, value: object) -> None:
 
 
 def test_cli_refuses_overwrite(tmp_path: Path) -> None:
-    command = [sys.executable, "scripts/render_fretboard.py",
+    command = [sys.executable, "study/render_fretboard.py",
                "sheets/NLND_TABS/drown-matrices.toml", "--output", str(tmp_path)]
     first = subprocess.run(command, capture_output=True, text=True, check=False)
     assert first.returncode == 0, first.stderr

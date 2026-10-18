@@ -1,0 +1,9 @@
+Test project /home/shu/work/utrp/target/mono-pill-wrapup/guitar-ubsan
+    Start 1: detector
+1/2 Test #1: detector .........................   Passed   20.38 sec
+    Start 2: clap_host
+2/2 Test #2: clap_host ........................   Passed    0.86 sec
+
+100% tests passed out of 2
+
+Total Test time (real) =  21.25 sec

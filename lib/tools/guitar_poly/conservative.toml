@@ -1,0 +1,22 @@
+# Offline hypothesis only. These are evidence thresholds, not calibrated probabilities.
+[analysis]
+sample_rate = 48000
+frame_ms = 128
+hop_ms = 8
+fft_padding = 4
+min_note = 38
+max_note = 88
+max_frequency = 3500.0
+harmonics = 8
+peak_floor_ratio = 0.035
+fundamental_floor_ratio = 0.12
+harmonic_tolerance_cents = 28.0
+pitch_tolerance_cents = 22.0
+minimum_harmonics = 3
+minimum_coverage = 0.97
+minimum_concentration = 0.97
+gate_db = -48.0
+clipping_level = 0.98
+max_voices = 3
+stable_frames = 5
+quiet_rearm_frames = 10

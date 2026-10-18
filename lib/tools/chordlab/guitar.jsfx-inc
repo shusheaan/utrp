@@ -1,0 +1,48 @@
+@init
+// Immutable catalog starts at 6000; mutable anchors are separate at 3100.
+function guitar_open_low(string) (
+  string==0 ? 40 : string==1 ? 45 : string==2 ? 50 :
+  string==3 ? 55 : string==4 ? 59 : 64;
+);
+function guitar_record(k,d,t) (6000+(k*21+d*3+t)*2;);
+function guitar_region_record(k,d,t,anchor) local(record,i,best,distance,p) (
+  record=guitar_record(k,d,t); i=0; best=record[0]; distance=1000;
+  loop(record[1],
+    p=record[0]+i*guitar_record_stride;
+    abs(p[0]-anchor)<distance ? (best=p; distance=abs(p[0]-anchor););
+    i+=1;
+  );
+  best;
+);
+function guitar_bass(region) (region[2];);
+function guitar_current() (guitar_region_record(key,degree,kind,guitar_saved[degree]););
+// Exact-pitch union across all strings. Shared display oracle for the sounding region.
+function guitar_region_contains(note,k,d,t,anchor) local(string,fret,found) (
+  found=0;
+  note>=0 && note<=127 && chord_role(note%12,k,d,3+t)>=0 ? (
+    string=0; loop(6,
+      fret=note-guitar_open_low(string);
+      fret>=anchor && fret<=min(anchor+guitar_fret_span,guitar_max_fret) ? found=1;
+      string+=1;
+    );
+  );
+  found;
+);
+// 0 = unavailable, 1 = alternative anchor, 2 = selected anchor.
+// Use the same catalog and nearest-anchor resolution as MIDI and H/L.
+function guitar_anchor_state(fret) local(record,i,shape,state,current) (
+  record=guitar_record(key,degree,kind); current=guitar_current(); state=0; i=0;
+  loop(record[1],
+    shape=record[0]+i*guitar_record_stride;
+    shape[0]==fret ? state=shape==current ? 2 : 1;
+    i+=1;
+  );
+  state;
+);
+function guitar_move(direction) local(record,shape,index,next) (
+  record=guitar_record(key,degree,kind); shape=guitar_current();
+  index=min(record[1]-1,max(0,(shape-record[0])/guitar_record_stride+direction));
+  next=record[0]+index*guitar_record_stride;
+  next!=shape ? guitar_saved[degree]=next[0];
+  next!=shape;
+);

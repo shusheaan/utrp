@@ -12,6 +12,18 @@ utrp 的声音资产层:合成器 patch 以小文件形式进 git,宿主通过 s
 3. **和声探索**:选调后在普通电脑键盘上单键触发级数和弦,快速轮换
    十几种 piano/guitar voicing,探索复杂和弦进行并导出。
 
+
+## 当前入口（2026-10-18；以下旧 REAPER 工作流为历史资料）
+
+- 当前音色工程：`~/storage/daw/Library/Library.bwproject`。
+- Chord Lab **CLAP 0.2.12**、Guitar Frontend **0.2.1 单音**；不再独立安装旧 JSFX/VKB 产品。
+- Bitwig Library controller **0.7**；互斥试听只用于 Library，不用于正式录音工程。
+- 插件浮窗以 Chord Lab 和主音源/效果器为中央组，再向周围排布，不是旧版右侧锚点。
+- 实际用户偏好/资源在 `~/storage/daw/UserData/`，home 为目录链接。重装先按
+  [实时存储与恢复说明](tools/daw_backup/README.cn.md) 重建入口，不能仅运行 `link.sh`。
+- [本轮收尾验证](../review/2026-10-18/project-health.cn.md)；
+  [Bitwig 使用/历史记录](tools/bitwig_library/README.cn.md)。
+
 ## 布局与约定
 
 ```
@@ -26,7 +38,11 @@ lib/
     pipeline/      # 支柱 1+2:spec TOML -> 分析/browse/渲染/评分/鼓 MIDI/RPP
     harmony/       # 支柱 3:voicing 键盘探索 + simulation 表演层(YAML 驱动)
     library/       # synth.rpp 一次性迁移 + 单音色在线试听管理
-    chordlab/      # 纯 REAPER 实时七和弦工具：电脑键盘 + 钢琴/吉他音位图
+    chordlab/      # CLAP 内嵌的共享 JSFX 引擎源码，不再独立部署
+    chordlab_clap/ # 当前 Chord Lab CLAP 产品（Bitwig / REAPER 共用）
+    guitar_frontend/ # 单音吉他识别 CLAP，仅显示支路
+    bitwig_library/ # Library controller、音色迁移、吉他链和使用说明
+    daw_backup/    # Storage 实时目录链接、备份与恢复
     simulate/      # Rust 薄适配器:path dependency 复用根 utrp::simulator,
                    # 与 TUI 共享进行/指板引擎，headless 输出事件 JSON
     <collection>/  # 各专辑的提取数据(data/)+ 未泛化的特例脚本(存档)

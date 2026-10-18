@@ -1,0 +1,16 @@
+eq_woo_in:playback_FL
+  |<- Bitwig Studio:out1
+eq_woo_in:playback_FR
+  |<- Bitwig Studio:out2
+eq_woo_out:output_FL
+  |-> alsa_output.usb-XMOS_WooAudio-00.analog-stereo:playback_FL
+eq_woo_out:output_FR
+  |-> alsa_output.usb-XMOS_WooAudio-00.analog-stereo:playback_FR
+alsa_output.usb-XMOS_WooAudio-00.analog-stereo:playback_FL
+  |<- eq_woo_out:output_FL
+alsa_output.usb-XMOS_WooAudio-00.analog-stereo:playback_FR
+  |<- eq_woo_out:output_FR
+Bitwig Studio:out1
+  |-> eq_woo_in:playback_FL
+Bitwig Studio:out2
+  |-> eq_woo_in:playback_FR

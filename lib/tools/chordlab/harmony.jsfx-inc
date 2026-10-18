@@ -61,6 +61,11 @@ function spell_note(dest,key,step) local(letter,pc,natural,delta) (
   dest;
 );
 function key_name(dest,key) (spell_note(dest,key,0););
+// Relative minor first; pitch classes and major-based chord engine are unchanged.
+function key_pair_name(dest,key) instance(#minor,#major) (
+  spell_note(#minor,key,5); key_name(#major,key);
+  sprintf(dest,"%sm/%s",#minor,#major);
+);
 function pitch_letter(key,note) local(pc,step,found,flats) (
   pc=note%12; step=0; found=-1;
   loop(7,(key+major_step(step))%12==pc ? found=(key_letter(key)+step)%7; step+=1;);

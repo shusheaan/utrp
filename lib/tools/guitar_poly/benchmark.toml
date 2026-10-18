@@ -1,0 +1,14 @@
+# Synthetic screening only; not a true-guitar accuracy benchmark.
+[fixtures]
+sample_rate = 48000
+onset_ms = 100
+sustain_ms = 400
+silence_after_ms = 300
+stable_ms = 20
+levels = [0.03, 0.1, 0.3]
+shapes = ["sine", "harmonic"]
+notes = [[40], [45], [50], [55], [59], [64], [40,47], [45,52], [50,57], [55,59], [59,64], [64,67], [40,52], [45,46], [48,52,55], [45,52,57], [55,59,62], [40,47,52]]
+
+[overlap]
+offsets_ms = [0, 80, 160]
+notes = [[40, 47, 52], [48, 52, 55], [55, 59, 64]]

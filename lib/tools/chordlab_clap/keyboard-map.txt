@@ -1,0 +1,28 @@
+; CLAP computer keys -> internal MIDI offset (channel 16).
+; Space press: offset 22, Sustain toggle (no modifier tap commands).
+81 0
+87 1
+69 2
+82 3
+84 4
+89 5
+85 6
+73 7
+79 8
+80 9
+91 10
+93 11
+90 12
+88 13
+67 14
+65 15
+83 16
+68 17
+70 18
+72 19
+76 20
+74 28
+75 29
+32 22
+9 25
+13 21

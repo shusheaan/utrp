@@ -1,0 +1,23 @@
+# All paths are relative to the current user's home unless noted.
+# Snapshots are private and intentionally outside Git.
+backup_root = "storage/daw/Recovery"
+required = [
+  ".zshrc", # Includes the gral-managed bitwig/bw Library launch commands.
+  ".clap", ".BitwigStudio/prefs", ".BitwigStudio/view-settings",
+  "Bitwig Studio", ".config/REAPER", ".config/Surge XT.settings",
+  ".Surge XT", ".Surge Synth Team", ".config/SFZTools/sfizz",
+  ".config/pipewire", ".config/sway/config", ".config/sway/utrp-plugin-windows.conf",
+  ".config/systemd/user/utrp-audio-output.service",
+  ".config/systemd/user/utrp-plugin-windows.service",
+  ".local/share/applications/com.bitwig.BitwigStudio.desktop",
+  ".local/share/applications/utrp-bitwig-library.desktop",
+  ".local/share/applications/utrp-guitar-lab.desktop",
+  ".local/bin/audio-eq-toggle", ".local/bin/audio-governor", ".local/bin/audio-output",
+  ".local/bin/reaper"
+]
+optional = [".config/wireplumber", ".local/state/wireplumber", ".BitwigStudio/plugin-states"]
+# Large redistributable/runtime assets: opt-in, not duplicated in every settings snapshot.
+assets = [".BitwigStudio/installed-packages", "opt/bitwig-studio-6.1.4"]
+system_assets = ["/usr/lib/clap", "/usr/lib/vst3", "/usr/share/surge-xt"]
+# Already on persistent storage; these are inventoried, not copied into themselves.
+persistent = ["storage/daw", "storage/daw/samples", "storage/daw/Library/Library.bwproject"]

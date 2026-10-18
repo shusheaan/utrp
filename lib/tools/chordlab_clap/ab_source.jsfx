@@ -1,0 +1,15 @@
+desc:Chord Lab A-B test input (scratch only)
+options:gmem=ChordLab_AB_Prototype
+slider1:0<0,1,1>Lane
+@init
+serial=-1;
+@block
+serial!=gmem[0] ? (
+  serial=gmem[0]; count=gmem[1]; i=0;
+  loop(count,
+    p=30+i*4;
+    midisend(gmem[p],gmem[p+1],gmem[p+2],gmem[p+3]);
+    i+=1;
+  );
+  gmem[10+slider1]=serial;
+);

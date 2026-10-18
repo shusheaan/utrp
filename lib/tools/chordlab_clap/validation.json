@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-17",
+  "environment": {
+    "os": "Linux x86_64",
+    "reaper": "7.78",
+    "sample_rate": 48000,
+    "block_size": 256,
+    "audio": "Dummy",
+    "desktop": "isolated headless Sway"
+  },
+  "manifest": {
+    "wrapper_version": "0.0.47",
+    "wrapper_url": "https://github.com/JoepVanlier/ysfx/releases/download/v0.0.47/YSFX.Linux.64-bit.CLAP.zip",
+    "wrapper_archive_sha256": "bf78174b9b620842334a647b04243d5198057499d492c9d891ec9b3a4341888e",
+    "source_sha256": {
+      "chordlab.jsfx": "53af5ac23d9ed54fb5d6dddc50b84bc3b9a9e81cb263ec00bcf0f004ff3be29c",
+      "harmony.jsfx-inc": "53e2ce1ab245e9f82339a91569252842042715fa3dfeda12e5073b308c953cb0",
+      "midi.jsfx-inc": "252e3f0b97ffab1c21f1eab56a5dd3e3361405b7258326b6736b86d427d47425",
+      "ui.jsfx-inc": "da876f71d3e25f7a0cb1e6d6e8633dcf965dc88a5fea9418f83c5777af4ff4ff",
+      "staff.jsfx-inc": "99403848e8cec52c0b6129ee22bc33fde14902f8990cda26293c7f4d8ed3f62e",
+      "theme.jsfx-inc": "743be90ea985f4df7499fb73a6ad5fdb154d5d1ecb4b81cdb2a3749adc90d187",
+      "notation.png": "8b191162d9e7656123e7982465fa304c061c3a846ac417f8495a7849e8b3a33a",
+      "notation-license.txt": "bdca252186865f3b2c0e76da4a4e335c14ba1d37f80194fca254ddfa88e84fbf"
+    },
+    "computer_mode": "enabled through initial state, not source edits",
+    "status": "prototype; not a full-equivalence certification"
+  },
+  "midi_cases": 2377,
+  "matched": 2376,
+  "failed": 1,
+  "differences": [
+    {
+      "case": 2368,
+      "label": "pitchbend CC pressure",
+      "native": "7:e0:3:65,9:b0:1:91,65:d0:45:0",
+      "clap": "7:e0:3:65,9:b0:1:91"
+    }
+  ],
+  "nonempty_control_cases_checked": 1764,
+  "state_result": "PASS checks=7\nexpected=13:90:62:64,13:90:64:64,13:90:67:64,13:90:71:64,13:90:72:64",
+  "python_tests_passed": 70,
+  "event_log_sha256": "6fd080c3ca8f9597a61e0f0f25cbc84d29138fc303b94af5d78beab6b6125bc4",
+  "scope": "MIDI bytes/order/block-relative offset; no full-equivalence claim; Bitwig untested"
+}

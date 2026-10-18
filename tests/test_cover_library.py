@@ -9,11 +9,11 @@ import tomllib
 
 import pytest
 
-from scripts.cover_library import (
+from study.cover_library import (
     entries, index_text, load_entry, validate, validate_chord_label,
     validate_content, validate_evidence, validate_rendered,
 )
-from scripts.render_cover import load_style, parse_song, position_midi, midi_note
+from study.render_cover import load_style, parse_song, position_midi, midi_note
 
 
 def test_exact_twelve_by_five_and_index_is_current() -> None:
@@ -215,7 +215,7 @@ def test_check_cli_detects_stale_index(tmp_path: Path) -> None:
         if directory.is_dir():
             (tmp_path/directory.name).symlink_to(directory.resolve(), target_is_directory=True)
     (tmp_path/'readme.md').write_text('stale index')
-    command = [sys.executable, 'scripts/cover_library.py', '--root', str(tmp_path), '--check']
+    command = [sys.executable, 'study/cover_library.py', '--root', str(tmp_path), '--check']
     result = subprocess.run(command, capture_output=True, text=True, check=False)
     assert result.returncode == 1
     assert 'Stale cover index' in result.stderr

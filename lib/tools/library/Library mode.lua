@@ -48,24 +48,23 @@ local function route(target)
   for i=0,reaper.TrackFX_GetRecCount(input)-1 do
     local fx=i|0x1000000
     local ok,ident=reaper.TrackFX_GetNamedConfigParm(input,fx,'fx_ident')
-    if ok and ident=='ChordLab/chordlab.jsfx' then
-      reaper.TrackFX_SetParam(input,fx,7,27)
-      local serial=reaper.TrackFX_GetParam(input,fx,6)
-      reaper.TrackFX_SetParam(input,fx,6,(serial+1)%1000001)
+    if ok and ident=='org.utrp.chordlab' then
+      reaper.TrackFX_SetParamNormalized(input,fx,7,1)
+      local serial=math.floor(reaper.TrackFX_GetParamNormalized(input,fx,6)*1000000+.5)
+      reaper.TrackFX_SetParamNormalized(input,fx,6,((serial+1)%1000001)/1000000)
       break
     end
   end
 end
 local function show_editors(target)
   -- Only an explicit selection change requests focus, never the polling loop.
-  -- Include VKB even when Chord Lab was already open on the previous track.
+  -- CLAP owns focused computer keys; never open the legacy VKB.
   reaper.TrackFX_Show(target,0,3)
   for i=0,reaper.TrackFX_GetRecCount(input)-1 do
     local fx=i|0x1000000
     local ok,ident=reaper.TrackFX_GetNamedConfigParm(input,fx,'fx_ident')
-    if ok and ident=='ChordLab/chordlab.jsfx' then
+    if ok and ident=='org.utrp.chordlab' then
       reaper.TrackFX_Show(input,fx,3)
-      if reaper.GetToggleCommandState(40377) ~= 1 then reaper.Main_OnCommand(40377,0) end
       return
     end
   end
@@ -73,8 +72,6 @@ local function show_editors(target)
 end
 local function cleanup()
   if reaper.GetExtState(section,'running')~=token then return end
-  local chord=reaper.GetExtState('utrp.chordlab','running')
-  if chord~='' then reaper.SetExtState('utrp.chordlab','stop',chord,false) end
   reaper.DeleteExtState(section,'running',false)
   reaper.DeleteExtState(section,'stop',false)
 end
@@ -102,12 +99,17 @@ local function tick()
   if clicked then show_editors(clicked) end
   reaper.defer(tick)
 end
--- The fixed source remains the only armed track. Selecting synths never adds Input FX.
-reaper.SetOnlyTrackSelected(input)
-local chord=reaper.GetExtState('utrp.chordlab','running')
-if chord=='' then
-  -- Start monitoring without requesting any editor windows.
-  local action=reaper.AddRemoveReaScript(true,0,reaper.GetResourcePath()..'/Scripts/ChordLab/Chord Lab mode.lua',true)
-  assert(action>0);reaper.Main_OnCommand(action,0)
+-- One shared CLAP and one armed hardware input; no legacy keyboard session.
+local found=false
+for i=0,reaper.TrackFX_GetRecCount(input)-1 do
+  local ok,ident=reaper.TrackFX_GetNamedConfigParm(input,i|0x1000000,'fx_ident')
+  if ok and ident=='org.utrp.chordlab' then found=true end
 end
+assert(found,'Migrate the shared input to Chord Lab CLAP first')
+assert(reaper.GetMediaTrackInfo_Value(input,'I_RECINPUT')>=4096,'Select a MIDI input on the shared track')
+for _,e in ipairs(entries) do reaper.SetMediaTrackInfo_Value(e.track,'I_RECARM',0) end
+reaper.SetTrackUIInputMonitor(input,0,0)
+reaper.SetMediaTrackInfo_Value(input,'I_RECARM',1)
+reaper.SetTrackUIInputMonitor(input,1,0)
+reaper.SetOnlyTrackSelected(input)
 tick()

@@ -152,10 +152,10 @@
 - 不自动删除文件，也不拿未核实曲目冒充已完成转录。没有合适替补时检查会报缺额，不静默凑数。
 
 ```sh
-python scripts/cover_library.py --check
-python scripts/cover_library.py --check --check-images
-python scripts/cover_library.py --write-index
-python scripts/render_cover.py covers/A-center--frank-ocean--pink-white/A-major--frank-ocean--pink-white.toml --force
+python study/cover_library.py --check
+python study/cover_library.py --check --check-images
+python study/cover_library.py --write-index
+python study/render_cover.py covers/A-center--frank-ocean--pink-white/A-major--frank-ocean--pink-white.toml --force
 ```
 
 绘图依赖：`fontTools`、`rsvg-convert`、`FreeSerif`、`Noto Sans CJK SC`。来源及证据限制见各曲 MD。

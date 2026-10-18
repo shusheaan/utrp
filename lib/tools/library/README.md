@@ -1,5 +1,7 @@
 # Synth Library — 单音色试听工程
 
+> **2026-10-17：已切换为 CLAP 单产品路线。以下 JSFX/VKB 说明属于历史实现，不再是日常操作方式。当前使用见 [CLAP 迁移指南](CLAP_MIGRATION.cn.md)。
+
 当前：95 条音色轨共用一个 Chord Lab 输入，其中 93 条 Surge、2 条 sfizz。
 保留原来的 89 条 Surge 音色，新增 6 条基础键盘音色。不是多层叠加演奏器。
 
@@ -96,11 +98,10 @@ VKB 随选轨／打开 Chord Lab 显示，与 Chord Lab 同宽，琴键不再压
 ## 验证与保护
 
 ```sh
-python -m pytest -q lib/tools/library/test_*.py lib/tools/chordlab/tests/test_install.py
+python -m pytest -q lib/tools/library/test_*.py lib/tools/chordlab/tests/test_theme.py
 luac -p 'lib/tools/library/Library mode.lua'
 lua lib/tools/library/test_mode.lua
 lua lib/tools/library/test_start.lua
-lua lib/tools/chordlab/tests/test_mode.lua
 ```
 
 `host_audit.lua` 只允许 `/tmp/` 工程副本，且必须先启动 Library mode。

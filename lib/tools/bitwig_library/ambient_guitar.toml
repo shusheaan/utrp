@@ -1,0 +1,108 @@
+# Bitwig Library audio presets; CLAP effects can also be loaded in REAPER.
+# Input: copied Spark GO mono source, NOT the guitar detector's MIDI output.
+group = "Ambient Guitar"
+track_gain_normalized = 0.5 # approximately -12 dB; safe initial audition level
+
+[[presets]]
+name = "AG - 01 Glass Air"
+character = "Clear pick attack, bright open hall"
+[presets.hall]
+dry = 90
+early = 8
+late = 28
+size = 28
+width = 110
+predelay = 22
+low_cut = 150
+low_mult = 0.8
+high_cut = 13000
+high_mult = 0.8
+spin = 1.5
+wander = 8
+decay = 3.8
+modulation = 12
+
+[[presets]]
+name = "AG - 02 Soft Prism"
+character = "Gentle chorus, wide soft halo"
+[presets.chorus]
+rate_normalized = 0.28
+depth = 0.20
+time_normalized = 0.40
+feedback = 0.08
+mix = 0.25
+[presets.hall]
+dry = 85
+early = 6
+late = 40
+size = 35
+width = 120
+predelay = 28
+low_cut = 160
+low_mult = 0.8
+high_cut = 11500
+high_mult = 0.7
+spin = 2
+wander = 12
+decay = 5.6
+modulation = 20
+
+[[presets]]
+name = "AG - 03 Echo Bloom"
+character = "375/500 ms stereo echoes into a bright hall"
+[presets.delay]
+left_ms = 375
+right_ms = 500
+feedback = 0.32
+crossfeed = 0.10
+low_cut_hz = 180
+high_cut_hz = 8500
+mix = 0.28
+[presets.hall]
+dry = 90
+early = 7
+late = 32
+size = 32
+width = 115
+predelay = 25
+low_cut = 160
+low_mult = 0.8
+high_cut = 12000
+high_mult = 0.75
+spin = 1.2
+wander = 10
+decay = 4.4
+modulation = 15
+
+[[presets]]
+name = "AG - 04 Cloud Halo"
+character = "Slow chorus, floating echoes, long luminous tail"
+[presets.chorus]
+rate_normalized = 0.24
+depth = 0.30
+time_normalized = 0.40
+feedback = 0.05
+mix = 0.33
+[presets.delay]
+left_ms = 600
+right_ms = 800
+feedback = 0.38
+crossfeed = 0.12
+low_cut_hz = 200
+high_cut_hz = 9000
+mix = 0.20
+[presets.hall]
+dry = 72
+early = 5
+late = 50
+size = 48
+width = 130
+predelay = 40
+low_cut = 180
+low_mult = 0.7
+high_cut = 12500
+high_mult = 0.85
+spin = 1
+wander = 16
+decay = 8.2
+modulation = 28

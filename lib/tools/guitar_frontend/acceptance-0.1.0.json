@@ -1,0 +1,39 @@
+{
+  "version": "0.1.0",
+  "status": "monophonic prototype; real-guitar accuracy pending user-labeled test",
+  "binary_sha256": "a6bac5529830710656e3fc06d724eda80fe24d34d1e66075c30f55a6c890d945",
+  "synthetic_detector_cases": 510,
+  "synthetic_max_attack_ms": 80.2494,
+  "synthetic_max_release_ms": 95.1474,
+  "synthetic_max_cents": 10.5709,
+  "independent_clap_host_matrix_cases": 40,
+  "isolated_reaper": {
+    "pitches": 14,
+    "events_per_capture": 28,
+    "before_after_chordlab": "exact match"
+  },
+  "python_regression": {
+    "passed": 109,
+    "new_config_tests": 13
+  },
+  "hardware": {
+    "device": "Spark GO",
+    "route": "capture_MONO -> REAPER:in1",
+    "observed": "non-silent audio and detected notes",
+    "accuracy": "not certified; no synchronized ground-truth labels"
+  },
+  "preservation": {
+    "synth_rpp": "identical except first-line save timestamp",
+    "chord_lab_binary": "unchanged 0.1.6"
+  },
+  "not_supported": [
+    "polyphony",
+    "ringing/overlapping arpeggios",
+    "pitch bend/MPE",
+    "velocity estimation"
+  ],
+  "bitwig": "not tested",
+  "asan": "unavailable: system AppProtection preload prevents ASan initialization; explicit runtime preload also failed",
+  "evidence_directory": "target/guitar-frontend-acceptance",
+  "ubsan": "2/2 CTest targets passed"
+}

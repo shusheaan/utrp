@@ -1,0 +1,14 @@
+ports, 21 parameters, default Dark/computer mode, X11 GUI create/resize/recreate: PASS
+Display-only channel: 128 pitches, controller isolation, same-note real MIDI ownership: PASS
+Mixed retrigger: velocities 1/43/96/127, sustain, both release orders, display isolation, exact offsets: PASS
+7 held degrees: L/L/H/H audible voicing, exact return and full release: PASS
+CLAP pedal baseline: both defaults, 14 channels, threshold, repeat, held toggle, reserved isolation: PASS
+Performance controls: CC1/7/11 all values, 14-bit bend, 14 musical + 2 reserved channels: PASS
+Space command: toggle on press, no repeat/release toggle, no chord reset: PASS
+16 host parameter writes including Appearance/Voicing mode survive process before callbacks: PASS
+Key selection emits globally targeted CLAP parameter notification: PASS
+12 sample-rate/block-size combinations, reset/reactivation: PASS
+Dark/Bright switching preserves held mixed MIDI without generated events: PASS
+Guitar/Piano CLAP switches, held H/L across catalog, exact recall, no stuck/duplicate notes: PASS
+12 sample-rate/block-size combinations, reset/reactivation: PASS
+portable state, two independent instances, lifecycle: PASS

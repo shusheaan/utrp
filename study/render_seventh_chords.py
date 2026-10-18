@@ -252,7 +252,7 @@ def main() -> None:
     root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--config', type=Path, default=root / 'config/seventh-chords.toml')
-    parser.add_argument('--output', type=Path, default=root / 'scripts')
+    parser.add_argument('--output', type=Path, default=root / 'study')
     parser.add_argument('--theme', choices=('light', 'dark'), default='light')
     parser.add_argument('--force', action='store_true')
     args = parser.parse_args()

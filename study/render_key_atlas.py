@@ -621,7 +621,7 @@ def main() -> None:
                     "major-scales-atlas.svg" if args.all_keys else "c-major-atlas.svg")
             if args.theme == "dark":
                 name = name.removesuffix(".svg") + "-dark.svg"
-            args.output = root / "scripts" / name
+            args.output = root / "study" / name
         if args.output.suffix.lower() != ".svg":
             raise ValueError("Output must have an .svg extension")
         args.output.parent.mkdir(parents=True, exist_ok=True)

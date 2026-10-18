@@ -12,7 +12,7 @@ from xml.etree import ElementTree as ET
 from hypothesis import given, strategies as st
 import pytest
 
-from scripts.render_key_atlas import (
+from study.render_key_atlas import (
     MajorKey, Note, Settings, block_positions, blocks_svg, fret_inlays, guitar_positions, guitar_svg,
     key_signature_svg, ledger_lines, parse_settings, render_svg, staff_svg,
     pitch_label, render_overview, scale_notes, staff_y, transpose_settings,
@@ -360,7 +360,7 @@ def test_reject_bad_config(field: str, value: object) -> None:
 
 def test_cli_protects_existing_output(tmp_path: Path) -> None:
     output = tmp_path / "atlas.svg"
-    command = [sys.executable, "scripts/render_key_atlas.py", "--output", str(output)]
+    command = [sys.executable, "study/render_key_atlas.py", "--output", str(output)]
     first = subprocess.run(command, capture_output=True, text=True, check=False)
     assert first.returncode == 0, first.stderr
     original = output.read_bytes()
@@ -469,7 +469,7 @@ def test_overview_is_four_by_three_with_unique_ids_and_g_flat() -> None:
 @pytest.mark.parametrize('mode', ['--all-keys', '--stacked'])
 def test_overview_cli(tmp_path: Path, mode: str, theme: str) -> None:
     output = tmp_path / 'all.svg'
-    result = subprocess.run([sys.executable, 'scripts/render_key_atlas.py', mode,
+    result = subprocess.run([sys.executable, 'study/render_key_atlas.py', mode,
                              '--theme', theme, '--output', str(output)],
                             capture_output=True, text=True, check=False)
     assert result.returncode == 0, result.stderr
