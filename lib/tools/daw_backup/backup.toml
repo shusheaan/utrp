@@ -8,6 +8,7 @@ required = [
   ".Surge XT", ".Surge Synth Team", ".config/SFZTools/sfizz",
   ".config/pipewire", ".config/sway/config", ".config/sway/utrp-plugin-windows.conf",
   ".config/systemd/user/utrp-audio-output.service",
+  ".config/systemd/user/utrp-guitar-input.service",
   ".config/systemd/user/utrp-plugin-windows.service",
   ".local/share/applications/com.bitwig.BitwigStudio.desktop",
   ".local/share/applications/utrp-bitwig-library.desktop",

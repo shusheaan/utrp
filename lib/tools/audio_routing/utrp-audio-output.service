@@ -1,7 +1,7 @@
 [Unit]
-Description=Prefer Spark GO, then WooAudio, for desktop and DAW playback
-After=pipewire.service wireplumber.service pipewire-pulse.service
-Wants=pipewire.service wireplumber.service pipewire-pulse.service
+Description=Prefer Spark GO playback and maintain the dedicated Bitwig guitar input
+After=pipewire.service wireplumber.service pipewire-pulse.service utrp-guitar-input.service
+Wants=pipewire.service wireplumber.service pipewire-pulse.service utrp-guitar-input.service
 StartLimitIntervalSec=0
 
 [Service]

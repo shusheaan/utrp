@@ -1,4 +1,4 @@
-"""Enforce one desktop output policy without restarting audio or touching inputs."""
+"""Maintain playback priority and a fail-closed Spark GO input for Bitwig."""
 from __future__ import annotations
 
 import argparse
@@ -27,6 +27,24 @@ def sequence(value: Json) -> list[Json]:
 
 
 @dataclass(frozen=True)
+class GuitarInput:
+    source: str
+    source_port: str
+    client: str
+    destination_port: str
+
+    @classmethod
+    def read(cls, data: object) -> GuitarInput:
+        if not isinstance(data, dict):
+            raise ValueError('guitar_input must be a table')
+        keys = ('source', 'source_port', 'client', 'destination_port')
+        values = tuple(data.get(key) for key in keys)
+        if not all(isinstance(value, str) and value.strip() for value in values):
+            raise ValueError('Guitar input names must be nonempty strings')
+        return cls(*(cast(str, value) for value in values))
+
+
+@dataclass(frozen=True)
 class Config:
     interval: float
     spark: str
@@ -34,6 +52,7 @@ class Config:
     eq: str
     backend: str
     jack: tuple[tuple[str, tuple[str, ...]], ...]
+    guitar: GuitarInput
 
     @classmethod
     def load(cls, path: Path) -> Config:
@@ -48,7 +67,8 @@ class Config:
         if not all(isinstance(v, list) and len(v) == 2 and
                    all(isinstance(p, str) and p for p in v) for v in jack.values()):
             raise ValueError('Each JACK client needs two master port names')
-        return cls(interval, *names, tuple((k, tuple(v)) for k, v in jack.items()))
+        return cls(interval, *names, tuple((k, tuple(v)) for k, v in jack.items()),
+                   GuitarInput.read(data['guitar_input']))
 
 
 @dataclass(frozen=True)
@@ -151,10 +171,33 @@ def jack_commands(snapshot: Snapshot, config: Config, target: Node) -> tuple[Com
     return tuple(commands)
 
 
+def guitar_commands(snapshot: Snapshot, route: GuitarInput) -> tuple[Command, ...]:
+    """Only the designated virtual input backend receives the exact Spark capture."""
+    sources = [n for n in snapshot.nodes if n.name == route.source and n.kind == 'Audio/Source']
+    if len(sources) > 1:
+        raise ValueError('Ambiguous Spark GO capture node')
+    source_ports = [p for p in snapshot.ports if sources and p.node == sources[0].id
+                    and p.direction == 'out' and p.name == route.source_port]
+    if len(source_ports) > 1:
+        raise ValueError('Ambiguous Spark GO capture port')
+    source = source_ports[0] if source_ports else None
+    clients = {n.id for n in snapshot.nodes if n.name == route.client}
+    commands: list[Command] = []
+    for destination in (p for p in snapshot.ports if p.node in clients and p.direction == 'in'
+                        and p.name == route.destination_port):
+        links = [link for link in snapshot.links if link.destination_port == destination.id]
+        for link in links:
+            if source is None or link.source_port != source.id:
+                commands.append(('pw-link', '-d', str(link.id)))
+        if source is not None and not any(link.source_port == source.id for link in links):
+            commands.append(('pw-link', str(source.id), str(destination.id)))
+    return tuple(commands)
+
+
 def plan(snapshot: Snapshot, config: Config) -> tuple[Command, ...]:
     target = choose(snapshot, config)
     if target is None:
-        return ()
+        return guitar_commands(snapshot, config.guitar)
     commands: list[Command] = []
     if snapshot.default != target.name:
         commands.append(('wpctl', 'set-default', str(target.id)))
@@ -166,6 +209,7 @@ def plan(snapshot: Snapshot, config: Config) -> tuple[Command, ...]:
         if targets.get(node.id) not in (target.name, target.serial):
             commands.append(('pw-metadata', '-n', 'default', str(node.id), 'target.object', target.serial, 'Spa:Id'))
     commands.extend(jack_commands(snapshot, config, target))
+    commands.extend(guitar_commands(snapshot, config.guitar))
     return tuple(commands)
 
 

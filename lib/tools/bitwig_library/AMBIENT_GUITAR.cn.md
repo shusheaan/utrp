@@ -104,3 +104,12 @@ TOML 是可读配方，**不会在启动时自动覆盖你的手动调整**。
 - 当前 `AG - 01 Glass Air` 轨推子由初始 −12 dB 提高至 −9 dB；其他 AG 轨保持 −12 dB。Master −1.5 dB、效果器与识别路由不变。工程已于 15:53:50 保存。
 - 128 / 48000 的 2.67 ms 仅为单块时长，不是监听往返总延迟。实际手感、最大力度下的削波及音箱失真仍需用户试弹；若持续爆音，回退 256 samples 并重启音频引擎。
 - 手动音量优先用所选 AG 轨推子，少量递增并检查轨道、group、Master 峰值；不要提高 raw detection 推子或 Spark Guitar Volume 来放大软件效果。证据：`target/guitar-latency-check/`。
+
+
+## 2026-10-19：唯一固定输入方案
+
+以上直接选择 Spark GO USB／Mono capture_MONO 的恢复步骤由[固定音频路由](../audio_routing/README.cn.md)取代。
+最终为 PipeWire / System Out / 手动 128 samples；四条 AG 与 raw detection 统一选择
+`Applications → pw-loopback → Spark-GO-Guitar → capture_MONO`。
+raw detection 推子保持 −∞。Keystation、共享识别与 Library 互斥试听不变。
+硬件先开、USB 正常识别后再打开 Bitwig；无需每次重选 Input。

@@ -102,3 +102,12 @@ This supersedes the earlier missing-input status. Bitwig Audio Selected Device(s
 - Raised only `AG - 01 Glass Air` from its initial −12 dB to −9 dB. Other AG tracks remain −12 dB; Master remains −1.5 dB. Effects and detection routing are unchanged. Saved the project at 15:53:50.
 - 2.67 ms is one block, not total monitoring latency. Playing feel, clipping under hard playing and speaker distortion still require user audition. Revert to 256 and restart the audio engine if persistent crackling occurs.
 - Adjust the selected AG track fader gradually while watching track, group and Master peaks. Do not raise raw detection or Spark Guitar Volume to amplify software effects. Evidence: `target/guitar-latency-check/`.
+
+
+## 2026-10-19: single persistent input setup
+
+The direct Spark GO USB / Mono capture_MONO recovery instructions above are superseded by [fixed audio routing](../audio_routing/README.md).
+Final configuration: PipeWire / System Out / manual 128 samples. All four AG tracks and raw detection use
+`Applications → pw-loopback → Spark-GO-Guitar → capture_MONO`.
+The raw-detection fader remains at −∞. Keystation, shared detection and Library exclusive audition are unchanged.
+Power on and connect the hardware before starting Bitwig; normal use needs no repeated Input selection.

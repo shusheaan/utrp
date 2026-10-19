@@ -69,7 +69,7 @@ Snapshots never overwrite earlier ones. All tar payloads are read back and SHA-2
 are recorded in `manifest.json`; a remaining `INCOMPLETE` marker means failure.
 The Chinese companion includes a checksum verification command. **Close audio applications
 normally before the final pre-reinstall snapshot**: running applications may have unsaved
-in-memory preferences. Current desired settings are Spark GO USB and manual 128 samples
+in-memory preferences. Current desired settings are PipeWire / System Out and manual 128 samples
 (revert to 256 if unstable); verify explicitly after restoration. Glass Air is saved at
 −9 dB, other AG defaults −12 dB; future user saves take precedence.
 
@@ -86,12 +86,12 @@ in-memory preferences. Current desired settings are Spark GO USB and manual 128 
    For snapshot rollback only, extract to staging and review before restoring physical targets,
    not replacing home symlinks. Restore `.clap`, controller scripts, prefs, skins, presets, and persistent samples.
    Legacy REAPER configuration is retained, but CLAP remains the active product line.
-5. Restore the two UTRP user services and audio/window rules; check Sway includes and
+5. Restore `utrp-plugin-windows`, `utrp-audio-output` and `utrp-guitar-input` user services and audio/window rules; check Sway includes and
    `focus_follows_mouse no`. Reload user systemd and enable the services. Old WirePlumber
    device IDs/volumes may not match new hardware.
 6. Log in/activate again; Bitwig activation and REAPER licenses are not archived. Private
    prefs can still contain device identifiers and local paths; never publish them.
-7. Open Library; check Spark input/output, buffer, both Keystation ports, pedal polarity
+7. Open Library; check the [fixed routing](../audio_routing/README.md) (`Spark-GO-Guitar` input, Spark playback), buffer, both Keystation ports, pedal polarity
    (power on with pedal released), all plugins/AG recipes, and guitar channel 2→15 display routing.
 8. Recording projects must not use the reserved Library names. The existing controller
    allows exactly `Library` and historical `Library-migration`, with matching shared-track
@@ -119,3 +119,24 @@ Large runtime assets use uncompressed `.tar` and preserve vendor symlinks, inclu
   setting was restored, followed by normal Ctrl+S / Ctrl+Q shutdown; all 10 links remained valid.
 - Only storage deployment changed; instruments, MIDI routing and audition behavior were not
   modified. No commit/push was performed.
+
+### 2026-10-19 project and recent-list cleanup
+
+- With user confirmation, removed `Grid Lab`, `utrp-lab`, `Library-migration` and their automatic backups. The canonical `Library`, its resources and automatic backups remain intact.
+- With Bitwig closed, reduced the saved recent-project list from 10 entries to only `~/storage/daw/Library/Library.bwproject`. Unrelated preference bytes and the Library project SHA-256 were verified unchanged; no GUI reopen verification was performed for this cleanup.
+- Pre-cleanup prefs are at `~/storage/daw/Backups/library-only-recents-20261019T160620.835576Z/6.1.4.prefs.before`. Restoring this preference backup brings back stale recent entries, not deleted projects. The existing `backup.toml` already covers prefs; no additional path is required.
+
+### 2026-10-19 guitar input recovery and reopen verification
+
+- With no input level, Audio's Selected Device(s) was `GB203 High Definition Audio Controller`, providing no input ports. Spark GO was present in the system, but Bitwig only had playback connections. The failure was device selection, not missing guitar effects.
+- Selected `Spark GO USB` through the GUI and restarted the audio engine, restoring `capture_MONO → Bitwig in1`. After normal save, exit and reopen, Audio retained Spark GO and manual 128 samples; capture reconnected automatically, and `AG - 02 Soft Prism` and Master showed signal. No effect parameters or controller code were changed; listening confirmation remains with the user.
+- Returned to Soft Prism and saved Library. Recent projects still contain only the canonical Library. Before/after project files, prefs and evidence are in `target/guitar-input-20261019/`; existing recovery paths already cover the changes. If `[missing]` recurs, check Audio's selected device rather than assuming the system's Spark GO default output also supplies input. Physical hot-plug behavior and the earlier switch to HDMI were not established.
+
+
+### 2026-10-19 persistent input (supersedes direct hardware selection above)
+
+- Single deployed configuration: PipeWire / System Out / manual 128 samples. All four Library AG tracks and raw detection use `Spark-GO-Guitar → capture_MONO`. `Spark-GO-Internal-Capture` is the backend of the same loopback, not a duplicate device. No temporary JACK or null-source rule is deployed.
+- Required recovery entry added: `~/.config/systemd/user/utrp-guitar-input.service`. Both routing services are enabled at login; source, TOML and unit recipes live under `lib/tools/audio_routing/`. SF-558 remains the default microphone; missing Spark never falls back to a microphone.
+- After normal exit, virtual-source recreation and Bitwig reopen, the saved input reconnected by name: Spark → persistent source → Bitwig, at 128 samples. Piano/guitar selection retained exclusive Arm; controller and MIDI bindings are unchanged. Raw detection remains at −∞.
+- Temporarily disabling/restoring the Spark profile retained the virtual-source-to-Bitwig connection, left the backend disconnected while absent and automatically reconnected Spark after return. This is not physical USB unplugging, a system reboot or human listening.
+- 66 routing, backup and controller regression tests passed; all 10 Storage directory links are valid; policy dry-run is empty. Screenshots/graphs are under `target/input-autoconnect/`. Physical guitar/keyboard listening still needs user confirmation. No commit/push.
