@@ -1,7 +1,31 @@
 #!/usr/bin/env bash
 set -euo pipefail
+
+refresh_stream_auth() {
+    local stream_enabled
+    stream_enabled=$(python3 - "$HOME/storage/home/UserData/.config/portal/config.toml" <<'PY'
+import sys
+import tomllib
+from pathlib import Path
+
+config = tomllib.loads(Path(sys.argv[1]).read_text())
+print("yes" if "stream" in config else "no")
+PY
+    ) || return
+    [[ "$stream_enabled" == yes ]] || return 0
+    # Reuse GRAL's browser/account selection and validated credential refresh.
+    # Run outside the read-only service sandbox; never give cookies to the web UI.
+    if "$HOME/.local/bin/ytmusic" --auth; then
+        return 0
+    else
+        local result=$?
+        echo 'Portal authentication refresh failed; service unchanged. Check the signed-in browser account and retry portal.' >&2
+        return "$result"
+    fi
+}
+
 case "${1:-start}" in
-    start) systemctl --user start portal.service ;;
+    start) refresh_stream_auth; systemctl --user start portal.service ;;
     stop)
         result=0
         # Stop HTTP first so no new playback requests can race with shutdown.
@@ -11,13 +35,13 @@ case "${1:-start}" in
         "$HOME/.local/bin/utrp-portal" stop-playback "$HOME/storage/home/UserData/.config/portal/config.toml" || result=1
         exit "$result"
         ;;
-    restart) systemctl --user restart portal.service ;;
+    restart) refresh_stream_auth; systemctl --user restart portal.service ;;
     status)
         systemctl --user status portal.service --no-pager
         tailscale serve status
         ;;
     logs) journalctl --user -u portal.service -n 60 --no-pager ;;
-    enable) systemctl --user enable --now portal.service ;;
+    enable) refresh_stream_auth; systemctl --user enable --now portal.service ;;
     disable) systemctl --user disable portal.service ;;
     *) echo 'Usage: portal [start|stop|restart|status|logs|enable|disable]' >&2; exit 2 ;;
 esac

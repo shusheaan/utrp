@@ -52,7 +52,11 @@ cargo clippy --locked --all-targets -- -D warnings
 
 ## Stream 使用与边界
 
-会话失效后在电脑执行 `ytm -auth`，网页 Refresh；每次读取列表重新载入现有认证文件并验证账号。Cookie 不发给手机、不另存密码。Rust API 固定为自己 fork 的 `09114f3076422756811c62889b605429df704813`。
+配置了 Stream 时，每次执行 `portal` / `portal start` / `portal restart` 都先调用 GRAL 的 `ytmusic --auth`，从已登录 Chromium 刷新并验证账号，然后才启动或重启服务；`enable` 同样先刷新。浏览器与账号索引统一由 GRAL 的 `arch/ytmusic/launcher.toml` 决定，不在 Portal 再维护一份。刷新失败时返回错误，不启动、停止或重启现有服务。纯 Local 配置不需要认证。
+
+已运行时再次执行 `portal` 也会刷新凭据，但不重启服务、不停止音乐；手机点 Refresh 重新读取列表即可。`stop` / `status` / `logs` / `disable` 不刷新认证。直接 `systemctl start/restart`、systemd 崩溃重启以及仅打开手机网页不会触发此启动器逻辑。长时间运行后会话失效可再执行 `portal` 或 `ytm -auth`，网页 Refresh；浏览器本身退出登录时仍需先在 Chromium 登录。每次读取列表重新载入认证文件；Cookie 不发给手机、不另存密码。Rust API 固定为自己 fork 的 `09114f3076422756811c62889b605429df704813`。
+
+2026-10-20 启动认证修复验收：Portal/YTM/安装策略共 33 项测试通过；实机重复 `portal` 保持后端 PID 不变，Playlists 返回 HTTP 200 / 14 项，Liked 首批 HTTP 200 / 100 项。只改启动器，无需重编 Rust；GRAL 安装器仍从 `Portal/ops/portal` 部署到 `~/.local/bin/portal`。
 
 Liked 首次读取 100 首可播放且不重复的歌曲，滚动到底或点 Load 100 more 再追加 100 首，最后一批可能不足 100 首。这是真正的上游分页，不再先读取全表再截断；上游每页数量不固定，剩余歌曲保留到下一批。所有歌单详情入口（含 Playlists → Liked Music）都使用同一增量分页；Search 和歌单库列表受 API 单页返回限制。点歌最多建立当前列表附近的 500 首播放队列。推荐中的专辑/歌单可以打开。本版不提供编辑歌单；播放器爱心支持 Like/Unlike。
 
