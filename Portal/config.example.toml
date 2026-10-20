@@ -1,0 +1,16 @@
+listen = "127.0.0.1:8787"
+music_root = "/home/shu/storage/music"
+cmus_socket = "/run/user/1000/cmus-socket"
+# Deployment derives these from this computer's Tailscale identity.
+public_origin = "https://YOUR-COMPUTER.YOUR-TAILNET.ts.net:8443"
+allowed_login = "YOUR-TAILSCALE-LOGIN"
+request_timeout_seconds = 3
+# Sequential player-only fades; AB clips each fade to at most one third of the range.
+fade_seconds = 0.75
+
+
+[stream]
+auth_file = "/home/shu/.config/ytmusic-tui/browser.json"
+mpv_socket = "/run/user/1000/portal-stream/mpv.sock"
+fetch_timeout_seconds = 45
+list_limit = 5000

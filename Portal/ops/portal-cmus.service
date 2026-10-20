@@ -1,0 +1,18 @@
+[Unit]
+Description=CMUS background terminal for Portal (only when no existing CMUS)
+After=pipewire.service wireplumber.service
+
+[Service]
+Type=simple
+Environment=TERM=xterm-256color
+ExecCondition=/usr/bin/bash -c '! /usr/bin/cmus-remote -Q >/dev/null 2>&1'
+ExecStart=/usr/bin/script --quiet --return --command /usr/bin/cmus /dev/null
+StandardInput=null
+StandardOutput=null
+StandardError=journal
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=5
+UMask=0077
+NoNewPrivileges=true
+

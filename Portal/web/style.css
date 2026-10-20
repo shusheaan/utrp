@@ -1,0 +1,125 @@
+:root {
+  color-scheme: dark;
+  background: #000;
+  --bg: #000; --panel: #000; --selected: #414141; --line: var(--selected); --fg: #d4cfc3;
+  --dim: #aaa69d; --track: #181818; --progress-color: #fff; --player-height: calc(125px + env(safe-area-inset-bottom));
+  --selection-glow: 0 0 3px 0 rgba(160, 160, 160, .32);
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 14px;
+}
+* { box-sizing: border-box; }
+body { height: 100dvh; display: flex; flex-direction: column; overflow: hidden; margin: 0; background: var(--bg); color: var(--fg); -webkit-tap-highlight-color: transparent; }
+button, input { font: inherit; }
+button { color: inherit; background: none; border: 0; cursor: pointer; touch-action: manipulation; min-height: 32px; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--fg); outline-offset: 2px; }
+button:disabled { opacity: .45; cursor: default; }
+[hidden] { display: none !important; }
+header { position: sticky; top: 0; z-index: 2; background: var(--bg); padding: calc(14px + env(safe-area-inset-top)) 12px 6px; }
+nav { display: flex; gap: 3px; background: var(--bg); border: 1px solid #363636; border-radius: 999px; padding: 2px; }
+nav button { border-radius: 999px; font-size: 12px; }
+nav .selected { background: var(--selected); color: #eee9de; }
+/* Glow belongs to the gray surface, never the text or SVG glyphs. */
+nav .selected, .row.current, .transport .play { box-shadow: var(--selection-glow); }
+.source-tabs { width: 172px; margin: auto; }
+.source-tabs button { flex: 1; min-height: 26px; }
+main { width: 100%; max-width: 780px; margin: 0 auto; flex: 1; min-height: 0; padding: 0 12px var(--player-height); overflow: hidden; }
+main > section { height: 100%; display: flex; flex-direction: column; min-height: 0; }
+main > section > :not(.list-scroll) { flex-shrink: 0; }
+/* Only this viewport scrolls. Navigation and titles never move, even for one song. */
+.list-scroll { flex: 1; min-height: 0; overflow: auto; overscroll-behavior-y: contain; scrollbar-width: thin; padding: 2px 0 12px; }
+/* The viewport clips glow at the list edge; each row clips at its half-gap. */
+.list .row { flex-shrink: 0; clip-path: inset(-2px 0); }
+/* Local search replaces the Stream tab strip without changing its outer geometry. */
+#local-search, #stream-search-form { height: 32px; margin: 0 0 8px; padding: 2px 10px; border-color: #363636; }
+/* Readable input text avoids mobile focus zoom without disabling pinch zoom. */
+#local-search input, #stream-search-form input { height: 26px; font-size: 16px; }
+.heading, .stream-heading { display: flex; align-items: center; gap: 8px; height: 44px; min-height: 44px; margin: 0; padding: 6px 0; background: var(--bg); }
+.heading > button { font-size: 18px; flex-shrink: 0; width: 32px; border: 0; background: none; }
+h1 { font-size: 18px; font-weight: 600; margin: 0 0 3px; overflow-wrap: anywhere; }
+p { margin: 0; color: var(--dim); line-height: 1.4; }
+#subtitle, #stream-count, #stream-message { color: var(--dim); font-size: 11px; overflow-wrap: anywhere; }
+.search { position: relative; display: flex; align-items: center; gap: 7px; background: var(--panel); border: 1px solid var(--line); border-radius: 999px; padding: 0 10px; margin-bottom: 8px; }
+input[type=search] { width: 100%; height: 36px; border: 0; outline: 0; background: transparent; color: var(--fg); font-size: 16px; min-width: 0; }
+input::placeholder { color: #96938d; }
+/* A small visual hint is independent of the 16px mobile-safe input text. */
+.search-hint { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: #96938d; pointer-events: none; }
+.search:focus-within .search-hint, .search:has(input:not(:placeholder-shown)) .search-hint { visibility: hidden; }
+.list { display: flex; flex-direction: column; gap: 4px; }
+.row { display: flex; align-items: center; text-align: left; padding: 7px 10px; border-radius: 999px; min-height: 34px; width: 100%; border: 1px solid transparent; }
+.row:active { background: var(--line); }
+.row.current { background: var(--selected); border-color: var(--selected); }
+.rowtext, .now { display: flex; align-items: center; gap: 12px; min-width: 0; width: 100%; white-space: nowrap; }
+.rowtitle, #title { flex: 1 1 0; max-width: 75%; min-width: 0; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; line-height: 18px; font-weight: 400; }
+.rowmeta, #artist { flex: 0 1 auto; min-width: 0; max-width: 25%; margin-left: auto; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; line-height: 18px; color: var(--dim); }
+.rowmeta { font-weight: 600; }
+.empty { padding: 18px 4px; font-size: 13px; }
+footer { position: fixed; bottom: 0; left: 0; right: 0; z-index: 3; background: var(--bg); padding: 14px max(12px, calc((100vw - 740px)/2)) calc(11px + env(safe-area-inset-bottom)); }
+.now { height: 18px; }
+.progress { display: flex; gap: 10px; align-items: center; height: 42px; font-size: 11.7px; font-variant-numeric: tabular-nums; color: var(--dim); }
+.progress input { --progress: 0%; width: 100%; height: 32px; min-width: 0; margin: 0; padding: 0; border: 0; background: transparent; appearance: none; -webkit-appearance: none; cursor: pointer; }
+/* Native range behavior, explicit geometry: never a browser-dependent pill thumb. */
+#seek::-webkit-slider-runnable-track { height: 4px; border-radius: 999px; background: linear-gradient(to right, var(--progress-color) 0 var(--progress), var(--track) var(--progress) 100%); }
+#seek::-webkit-slider-thumb { appearance: none; -webkit-appearance: none; width: 14px; height: 14px; margin-top: -5px; border: 0; border-radius: 50%; background: var(--progress-color); box-shadow: none; }
+#seek::-moz-range-track { height: 4px; border: 0; border-radius: 999px; background: var(--track); }
+#seek::-moz-range-progress { height: 4px; border-radius: 999px; background: var(--progress-color); }
+#seek::-moz-range-thumb { width: 14px; height: 14px; border: 0; border-radius: 50%; background: var(--progress-color); box-shadow: none; }
+#seek:disabled { cursor: default; }
+.transport { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); align-items: center; max-width: 430px; margin: auto; }
+.transport button { display: grid; place-items: center; padding: 0; min-width: 0; width: 100%; height: 40px; }
+.transport [data-action=previous] { grid-column: 3; }
+.transport [data-action=backward] { grid-column: 4; }
+.transport .play { grid-column: 5; justify-self: center; width: 36px; height: 36px; min-height: 36px; border-radius: 50%; background: var(--selected); color: #eee9de; appearance: none; line-height: 0; }
+.transport [data-action=forward] { grid-column: 6; }
+.transport [data-action=next] { grid-column: 7; }
+.transport [data-action=repeat] { grid-column: 9; }
+.transport svg { display: block; width: 21px; height: 21px; }
+.transport #repeat, .transport #shuffle[aria-pressed=true] { color: #fff; }
+.transport #shuffle { color: #808080; }
+.transport #shuffle { grid-column: 8; position: relative; }
+.repeat-icon text { font-size: 7px; fill: currentColor; }
+#notice { font-size: 12px; line-height: 1.35; color: #e5cfa4; background: #453f31; padding: 6px 8px; border-radius: 6px; margin-bottom: 6px; }
+body.busy .transport button, body.busy .row { opacity: .6; }
+.stream-tabs, .search-categories { flex-wrap: nowrap; margin: 8px 0; }
+.search-categories { gap: 4px; border: 0; padding: 0; }
+.stream-tabs button, .search-categories button { flex: 1 1 auto; min-width: 0; white-space: nowrap; font-size: 11px; min-height: 26px; padding: 0 6px; }
+.search-categories button { border: 1px solid var(--line); }
+.stream-heading button { padding: 3px 8px; font-size: 11px; border: 1px solid var(--line); border-radius: 999px; }
+#stream-message { margin: 4px 0; }
+.list h3 { font-size: 12px; margin: 12px 6px 4px; color: var(--dim); }
+@media (prefers-reduced-motion: no-preference) { button { transition: background .12s, opacity .12s; } }
+
+#stream-more { display: block; width: 100%; margin-top: 6px; border: 1px solid var(--line); border-radius: 999px; font-size: 12px; min-height: 36px; }
+
+#stream-back { width: 32px; padding: 0; font-size: 18px; border: 0; background: none; }
+
+.heading h1, .stream-heading h2 { flex: 1; min-width: 0; margin: 0; font-size: 13px; line-height: 18px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.heading #subtitle, #stream-count { flex: 0 1 auto; min-width: 0; max-width: 45%; margin-left: auto; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.group-row .rowtitle { font-weight: 600; }
+
+#stream-search-form { width: 100%; gap: 7px; }
+#stream-refresh { display: grid; place-items: center; justify-self: center; width: 32px; height: 32px; padding: 0; border: 0; color: #fff; background: none; }
+#stream-refresh svg { display: block; width: 20px; height: 20px; }
+#stream-message:empty { display: none; }
+
+/* All transport SVGs share 21px geometry; the play triangle centroid is (12,12). */
+
+/* Fixed black top region: no floating title capsule or overlapping scroll layers. */
+#stream-toolbar { display: flow-root; background: var(--bg); }
+.stream-tabs { margin: 0; }
+#stream-toolbar:has(#stream-search-form:not([hidden])) { padding-top: 6px; }
+#stream-heading { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+#like { position: relative; flex: 0 0 28px; width: 28px; height: 18px; min-height: 18px; padding: 0; display: grid; place-items: center; color: #fff; }
+#like::before { content: ""; position: absolute; inset: -7px 0; }
+#like svg { width: 18px; height: 18px; fill: none; }
+#like[aria-pressed=true] svg { fill: currentColor; }
+
+#stream-heading-row #stream-refresh { flex: 0 0 32px; }
+
+/* AB markers occupy existing progress-row space, not an extra panel row. */
+.seek-wrap { position: relative; flex: 1; min-width: 0; height: 42px; display: flex; align-items: center; }
+.ab-marker { position: absolute; top: 29px; transform: translateX(-50%); font-size: 9px; line-height: 11px; color: #fff; pointer-events: none; }
+.transport #fade { grid-column: 2; color: #808080; }
+.transport #fade[aria-pressed=true], .transport #ab { color: #fff; }
+.transport #fade[aria-pressed=true]:disabled { opacity: 1; }
+.transport #ab { grid-column: 1; }
+#ab-mode { font: 9px system-ui, sans-serif; font-weight: 600; fill: currentColor; letter-spacing: -.5px; }

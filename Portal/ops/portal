@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+set -euo pipefail
+case "${1:-start}" in
+    start) systemctl --user start portal.service ;;
+    stop)
+        result=0
+        # Stop HTTP first so no new playback requests can race with shutdown.
+        systemctl --user stop portal.service || result=1
+        systemctl --user stop portal-stream.service portal-cmus.service || result=1
+        # Also silence players reused from existing terminals/custom IPC sockets.
+        "$HOME/.local/bin/utrp-portal" stop-playback "$HOME/storage/home/UserData/.config/portal/config.toml" || result=1
+        exit "$result"
+        ;;
+    restart) systemctl --user restart portal.service ;;
+    status)
+        systemctl --user status portal.service --no-pager
+        tailscale serve status
+        ;;
+    logs) journalctl --user -u portal.service -n 60 --no-pager ;;
+    enable) systemctl --user enable --now portal.service ;;
+    disable) systemctl --user disable portal.service ;;
+    *) echo 'Usage: portal [start|stop|restart|status|logs|enable|disable]' >&2; exit 2 ;;
+esac

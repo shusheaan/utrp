@@ -1,0 +1,21 @@
+[Unit]
+Description=UTRP Portal private music remote
+After=pipewire.service wireplumber.service
+
+[Service]
+ExecStart=%h/.local/bin/utrp-portal %h/storage/home/UserData/.config/portal/config.toml
+ExecStopPost=%h/.local/bin/utrp-portal restore-volume %h/storage/home/UserData/.config/portal/config.toml
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=15
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=read-only
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+
+[Install]
+WantedBy=default.target

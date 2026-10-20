@@ -1,0 +1,23 @@
+[package]
+name = "utrp-portal"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+# Deliberately independent of the parent UTRP package.
+[workspace]
+
+[dependencies]
+anyhow = "1"
+axum = "0.8"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["macros", "rt-multi-thread", "net", "io-util", "time", "sync", "process", "signal"] }
+toml = "0.8"
+
+ytmusic-api = { git = "https://github.com/shusheaan/ytmusic-tui.git", rev = "09114f3076422756811c62889b605429df704813" }
+
+[dev-dependencies]
+tempfile = "3"
+tower = { version = "0.5", features = ["util"] }
+
