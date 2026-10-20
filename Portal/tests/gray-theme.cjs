@@ -11,6 +11,7 @@ const root=path.join(__dirname,'../web');
    const track={id:'abcdefghijk',title:'Selected song',artist:'Artist',album:'Album'};
    let current={status:'playing',track_id:track.id,title:track.title,artist:track.artist,position:120,duration:240,repeat:'one'};
    await page.route('http://portal.test/**',async route=>{
+    const glowFixture=require('./soft-glow-fixture.cjs')(route);if(glowFixture)return glowFixture;
     const url=new URL(route.request().url());
     if(url.pathname==='/api/library')return route.fulfill({json:[track]});
     if(url.pathname==='/api/status')return route.fulfill({json:current});
@@ -40,26 +41,26 @@ const root=path.join(__dirname,'../web');
      height:footer.getBoundingClientRect().height,mainPadding:parseFloat(getComputedStyle(document.querySelector('main')).paddingBottom),
      progress:getComputedStyle(document.documentElement).getPropertyValue('--progress-color').trim()};
    });
-   assert.equal(spacing.top,14);assert.equal(spacing.bottom,11);assert.equal(spacing.gap,14);assert.equal(spacing.height,125);assert.equal(spacing.mainPadding,spacing.height);assert.equal(spacing.progress,'#fff');
+   assert.equal(spacing.top,14);assert.equal(spacing.bottom,11);assert.equal(spacing.gap,32);assert.equal(spacing.height,143);assert.equal(spacing.mainPadding,spacing.height);assert.equal(spacing.progress,'#fff');
    const clipping=await page.evaluate(()=>({gap:parseFloat(getComputedStyle(document.querySelector('.list')).gap),
     clip:getComputedStyle(document.querySelector('.row')).clipPath,overflow:getComputedStyle(document.querySelector('#local-scroll')).overflowY}));
-   assert.equal(clipping.gap,4);assert.equal(clipping.clip,'inset(-2px 0px)');assert.equal(clipping.overflow,'auto');
-   const glyphs=await page.locator('nav button, .rowtitle, .rowmeta, #title, #artist, .transport, .transport button, .transport svg').evaluateAll(elements=>elements.map(e=>{
-    const s=getComputedStyle(e);return {textShadow:s.textShadow,filter:s.filter};
-   }));
-   assert(glyphs.every(s=>s.textShadow==='none'&&s.filter==='none'),'Text and icons must never glow or blur');
+   assert.equal(clipping.gap,4);assert.equal(clipping.clip,'none');assert.equal(clipping.overflow,'auto');
+   const glyphs=await page.locator('nav .selected,.row.current .rowtitle,#title').evaluateAll(es=>es.map(e=>{const s=getComputedStyle(e);return s.textShadow!=='none'||s.filter!=='none';}));
+   assert(glyphs.every(Boolean),'Selected text and now-playing labels have static soft glow');
    const glows=await page.evaluate(()=>['.source-tabs .selected','.row.current','#play'].map(s=>getComputedStyle(document.querySelector(s)).boxShadow));
-   assert(glows.every(s=>s===glows[0] && s!=='none'));assert.equal(glows[0],'rgba(160, 160, 160, 0.32) 0px 0px 3px 0px');
+   assert(glows.every(s=>s===glows[0] && s!=='none'));assert.equal(glows[0],'rgba(180, 180, 180, 0.28) 0px 0px 2px 0px');
    assert.equal(await page.locator('#stream').evaluate(e=>getComputedStyle(e).boxShadow),'none');
    const rules=await page.evaluate(()=>Array.from(document.styleSheets).flatMap(s=>Array.from(s.cssRules)).filter(r=>r.selectorText?.startsWith('#seek::')).map(r=>({selector:r.selectorText,width:r.style.width,height:r.style.height,radius:r.style.borderRadius,background:r.style.background})));
    for(const suffix of ['-webkit-slider-thumb']){
     const rule=rules.find(r=>r.selector===`#seek::${suffix}`);assert(rule);
-    assert.equal(rule.width,'14px');assert.equal(rule.height,'14px');assert.equal(rule.radius,'50%');assert.equal(rule.background,'var(--progress-color)');
+    assert.equal(rule.width,'var(--seek-thumb-size)');assert.equal(rule.height,'var(--seek-thumb-size)');assert.equal(rule.radius,'50%');assert.equal(rule.background,'var(--progress-color)');
    }
+   assert.equal(await page.locator('#seek').evaluate(e=>getComputedStyle(e).getPropertyValue('--seek-thumb-size').trim()),'14px');
+   assert.equal(await page.locator('#seek').evaluate(e=>getComputedStyle(e).getPropertyValue('--seek-track-size').trim()),'4px');
    assert(rules.find(r=>r.selector==='#seek::-webkit-slider-runnable-track').background.includes('var(--progress-color)'));
    assert.equal(await page.locator('#seek').evaluate(e=>e.style.getPropertyValue('--progress')),'50%');
    // Compare rendered pixels with/without the row glow: visible beyond the capsule,
-   // but never beyond the 2px half-gap. Blurring text is prohibited above.
+   // with enough gutter for a natural fade instead of a hard clip.
    await page.locator('#search').blur();
    const bounds=await page.locator('.row.current').boundingBox();
    const clip={x:0,y:Math.floor(bounds.y)-4,width,height:Math.ceil(bounds.height)+8};
@@ -80,12 +81,12 @@ const root=path.join(__dirname,'../web');
      if(difference<2)continue;
      const y=clip.y+(Math.floor(i/4/data[0].width)+.5)/scale(data[0].width);
      if(y<bounds.y||y>=bounds.y+bounds.height)visible++;
-     if(y<bounds.y-2||y>=bounds.y+bounds.height+2)spill++;
+     if(y<bounds.y-4||y>=bounds.y+bounds.height+4)spill++;
     }
     return {visible,spill};
    },{images:[glowing.toString('base64'),plain.toString('base64')],bounds,clip});
    assert(pixels.visible>0,'Glow must be visible outside the selected capsule');
-   assert.equal(pixels.spill,0,'Glow must stop at the midpoint between rows');
+   assert.equal(pixels.spill,0,'Small glow must fade inside the reserved gutter');
    await page.screenshot({path:`/tmp/portal-gray-${width}.png`});
    await page.locator('#seek').screenshot({path:`/tmp/portal-gray-seek-${width}.png`});
    // Drag preview updates fill immediately, without a playback command until change.
@@ -109,7 +110,7 @@ const root=path.join(__dirname,'../web');
    assert.equal(await page.locator('#local').evaluate(e=>getComputedStyle(e).boxShadow),'none');
    assert.equal(await page.locator('.stream-tabs .selected').evaluate(e=>getComputedStyle(e).boxShadow),glows[0]);
    assert.equal(await page.locator('#stream-list .row.current').evaluate(e=>getComputedStyle(e).boxShadow),glows[0]);
-   assert.deepEqual(errors,[]);console.log(`PASS ${width}px: subtle shared gray glow, 14px player inset, white round thumb/progress, seek and keyboard`);await page.close();
+   assert.deepEqual(errors,[]);console.log(`PASS ${width}px: subtle shared gray glow, 32px player inset, white round thumb/progress, seek and keyboard`);await page.close();
   }
  }finally{await browser.close();}
 })().catch(e=>{console.error(e);process.exit(1)});

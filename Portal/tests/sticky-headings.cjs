@@ -10,6 +10,7 @@ const songs=Array.from({length:100},(_,i)=>({id:String(i).padStart(11,'0'),kind:
    const page=await browser.newPage({viewport:{width,height:844},isMobile:true,hasTouch:true,reducedMotion:"reduce"});const errors=[];
    page.on('pageerror',e=>errors.push(e.message));
    await page.route('http://portal.test/**',route=>{
+    const glowFixture=require('./soft-glow-fixture.cjs')(route);if(glowFixture)return glowFixture;
     const u=new URL(route.request().url());
     if(u.pathname==='/api/library')return route.fulfill({json:songs});
     if(u.pathname.endsWith('/status'))return route.fulfill({json:{status:'stopped',track_id:null,title:'',artist:'',position:0,duration:0,repeat:'one'}});

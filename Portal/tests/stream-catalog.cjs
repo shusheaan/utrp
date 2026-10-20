@@ -13,6 +13,7 @@ const search=[item('track','00000000001','Matching song','Songs'),item('artist',
    const calls=[],errors=[];let failArtist=true;
    page.on('pageerror',e=>errors.push(e.message));
    await page.route('http://portal.test/**',async route=>{
+    const glowFixture=require('./soft-glow-fixture.cjs')(route);if(glowFixture)return glowFixture;
     const request=route.request();assert.equal(request.method(),'GET');const url=new URL(request.url());
     if(url.pathname==='/api/library')return route.fulfill({json:[]});
     if(url.pathname.endsWith('/status'))return route.fulfill({json:{status:'stopped',title:'',artist:'',position:0,duration:0,repeat:'one'}});

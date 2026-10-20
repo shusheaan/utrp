@@ -13,6 +13,7 @@ const items=start=>Array.from({length:100},(_,i)=>({kind:'track',id:String(start
    page.on('pageerror',e=>errors.push(e.message));
    await page.addInitScript(()=>localStorage.setItem('portal-source','stream'));
    await page.route('http://portal.test/**',async route=>{
+    const glowFixture=require('./soft-glow-fixture.cjs')(route);if(glowFixture)return glowFixture;
     const req=route.request(),url=new URL(req.url());
     if(url.pathname==='/api/library')return route.fulfill({json:[]});
     if(url.pathname.endsWith('/status'))return route.fulfill({json:status});

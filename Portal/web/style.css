@@ -2,8 +2,10 @@
   color-scheme: dark;
   background: #000;
   --bg: #000; --panel: #000; --selected: #414141; --line: var(--selected); --fg: #d4cfc3;
-  --dim: #aaa69d; --track: #181818; --progress-color: #fff; --player-height: calc(125px + env(safe-area-inset-bottom));
-  --selection-glow: 0 0 3px 0 rgba(160, 160, 160, .32);
+  --dim: #aaa69d; --track: #181818; --progress-color: #fff;
+  --player-top-padding: 32px;
+  --player-height: calc(111px + var(--player-top-padding) + env(safe-area-inset-bottom));
+  --selection-glow: 0 0 2px 0 rgba(180, 180, 180, .28);
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 14px;
 }
@@ -18,7 +20,7 @@ header { position: sticky; top: 0; z-index: 2; background: var(--bg); padding: c
 nav { display: flex; gap: 3px; background: var(--bg); border: 1px solid #363636; border-radius: 999px; padding: 2px; }
 nav button { border-radius: 999px; font-size: 12px; }
 nav .selected { background: var(--selected); color: #eee9de; }
-/* Glow belongs to the gray surface, never the text or SVG glyphs. */
+/* Static surface glow; static text glow lives in soft-glow.css. */
 nav .selected, .row.current, .transport .play { box-shadow: var(--selection-glow); }
 .source-tabs { width: 172px; margin: auto; }
 .source-tabs button { flex: 1; min-height: 26px; }
@@ -26,9 +28,9 @@ main { width: 100%; max-width: 780px; margin: 0 auto; flex: 1; min-height: 0; pa
 main > section { height: 100%; display: flex; flex-direction: column; min-height: 0; }
 main > section > :not(.list-scroll) { flex-shrink: 0; }
 /* Only this viewport scrolls. Navigation and titles never move, even for one song. */
-.list-scroll { flex: 1; min-height: 0; overflow: auto; overscroll-behavior-y: contain; scrollbar-width: thin; padding: 2px 0 12px; }
-/* The viewport clips glow at the list edge; each row clips at its half-gap. */
-.list .row { flex-shrink: 0; clip-path: inset(-2px 0); }
+.list-scroll { flex: 1; min-height: 0; overflow: auto; overscroll-behavior-y: contain; scrollbar-width: thin; margin: 0 -4px; padding: 4px 4px 12px; }
+/* Reserve a soft-shadow gutter; never hard-clip an individual capsule. */
+.list .row { flex-shrink: 0; }
 /* Local search replaces the Stream tab strip without changing its outer geometry. */
 #local-search, #stream-search-form { height: 32px; margin: 0 0 8px; padding: 2px 10px; border-color: #363636; }
 /* Readable input text avoids mobile focus zoom without disabling pinch zoom. */
@@ -45,24 +47,26 @@ input::placeholder { color: #96938d; }
 .search-hint { position: absolute; left: 13px; top: 50%; transform: translateY(-50%); width: 14px; height: 14px; color: #96938d; pointer-events: none; }
 .search:focus-within .search-hint, .search:has(input:not(:placeholder-shown)) .search-hint { visibility: hidden; }
 .list { display: flex; flex-direction: column; gap: 4px; }
-.row { display: flex; align-items: center; text-align: left; padding: 7px 10px; border-radius: 999px; min-height: 34px; width: 100%; border: 1px solid transparent; }
+.row { display: flex; align-items: center; text-align: left; padding: 7px 14px; border-radius: 999px; min-height: 34px; width: 100%; border: 1px solid transparent; }
 .row:active { background: var(--line); }
 .row.current { background: var(--selected); border-color: var(--selected); }
 .rowtext, .now { display: flex; align-items: center; gap: 12px; min-width: 0; width: 100%; white-space: nowrap; }
 .rowtitle, #title { flex: 1 1 0; max-width: 75%; min-width: 0; color: #fff; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 13px; line-height: 18px; font-weight: 400; }
 .rowmeta, #artist { flex: 0 1 auto; min-width: 0; max-width: 25%; margin-left: auto; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 12px; line-height: 18px; color: var(--dim); }
-.rowmeta { font-weight: 600; }
+.rowmeta, #artist { font-weight: 400; }
+#title { font-weight: 600; }
 .empty { padding: 18px 4px; font-size: 13px; }
-footer { position: fixed; bottom: 0; left: 0; right: 0; z-index: 3; background: var(--bg); padding: 14px max(12px, calc((100vw - 740px)/2)) calc(11px + env(safe-area-inset-bottom)); }
+/* Extend the black region upward without moving the bottom-anchored controls. */
+footer { position: fixed; bottom: 0; left: 0; right: 0; z-index: 3; background: var(--bg); padding: var(--player-top-padding) max(12px, calc((100vw - 740px)/2)) calc(11px + env(safe-area-inset-bottom)); }
 .now { height: 18px; }
 .progress { display: flex; gap: 10px; align-items: center; height: 42px; font-size: 11.7px; font-variant-numeric: tabular-nums; color: var(--dim); }
-.progress input { --progress: 0%; width: 100%; height: 32px; min-width: 0; margin: 0; padding: 0; border: 0; background: transparent; appearance: none; -webkit-appearance: none; cursor: pointer; }
+.progress input { --progress: 0%; --seek-thumb-size: 14px; --seek-track-size: 4px; width: 100%; height: 32px; min-width: 0; margin: 0; padding: 0; border: 0; background: transparent; appearance: none; -webkit-appearance: none; cursor: pointer; }
 /* Native range behavior, explicit geometry: never a browser-dependent pill thumb. */
-#seek::-webkit-slider-runnable-track { height: 4px; border-radius: 999px; background: linear-gradient(to right, var(--progress-color) 0 var(--progress), var(--track) var(--progress) 100%); }
-#seek::-webkit-slider-thumb { appearance: none; -webkit-appearance: none; width: 14px; height: 14px; margin-top: -5px; border: 0; border-radius: 50%; background: var(--progress-color); box-shadow: none; }
-#seek::-moz-range-track { height: 4px; border: 0; border-radius: 999px; background: var(--track); }
-#seek::-moz-range-progress { height: 4px; border-radius: 999px; background: var(--progress-color); }
-#seek::-moz-range-thumb { width: 14px; height: 14px; border: 0; border-radius: 50%; background: var(--progress-color); box-shadow: none; }
+#seek::-webkit-slider-runnable-track { height: var(--seek-track-size); border-radius: 999px; background: linear-gradient(to right, var(--progress-color) 0 var(--progress), var(--track) var(--progress) 100%); }
+#seek::-webkit-slider-thumb { appearance: none; -webkit-appearance: none; width: var(--seek-thumb-size); height: var(--seek-thumb-size); margin-top: calc((var(--seek-track-size) - var(--seek-thumb-size)) / 2); border: 0; border-radius: 50%; background: var(--progress-color); box-shadow: none; }
+#seek::-moz-range-track { height: var(--seek-track-size); border: 0; border-radius: 999px; background: var(--track); }
+#seek::-moz-range-progress { height: var(--seek-track-size); border-radius: 999px; background: var(--progress-color); }
+#seek::-moz-range-thumb { width: var(--seek-thumb-size); height: var(--seek-thumb-size); border: 0; border-radius: 50%; background: var(--progress-color); box-shadow: none; }
 #seek:disabled { cursor: default; }
 .transport { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); align-items: center; max-width: 430px; margin: auto; }
 .transport button { display: grid; place-items: center; padding: 0; min-width: 0; width: 100%; height: 40px; }
@@ -78,7 +82,7 @@ footer { position: fixed; bottom: 0; left: 0; right: 0; z-index: 3; background: 
 .transport #shuffle { grid-column: 8; position: relative; }
 .repeat-icon text { font-size: 7px; fill: currentColor; }
 #notice { font-size: 12px; line-height: 1.35; color: #e5cfa4; background: #453f31; padding: 6px 8px; border-radius: 6px; margin-bottom: 6px; }
-body.busy .transport button, body.busy .row { opacity: .6; }
+body.busy .transport button, body.busy .row { cursor: progress; }
 .stream-tabs, .search-categories { flex-wrap: nowrap; margin: 8px 0; }
 .search-categories { gap: 4px; border: 0; padding: 0; }
 .stream-tabs button, .search-categories button { flex: 1 1 auto; min-width: 0; white-space: nowrap; font-size: 11px; min-height: 26px; padding: 0 6px; }
@@ -94,7 +98,6 @@ body.busy .transport button, body.busy .row { opacity: .6; }
 
 .heading h1, .stream-heading h2 { flex: 1; min-width: 0; margin: 0; font-size: 13px; line-height: 18px; font-weight: 600; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .heading #subtitle, #stream-count { flex: 0 1 auto; min-width: 0; max-width: 45%; margin-left: auto; text-align: right; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.group-row .rowtitle { font-weight: 600; }
 
 #stream-search-form { width: 100%; gap: 7px; }
 #stream-refresh { display: grid; place-items: center; justify-self: center; width: 32px; height: 32px; padding: 0; border: 0; color: #fff; background: none; }

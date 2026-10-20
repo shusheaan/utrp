@@ -3,6 +3,16 @@ const fs=require('fs');const assert=require('node:assert/strict');
 const root=require('node:path').join(__dirname,'../web');
 const longTitle='A very long song title that should stay on one line even on the smallest phone screen and remain truncated on a wide tablet screen too';
 const artist='An artist with an exceptionally long name';
+async function checkListInset(page, selector) {
+ const inset=await page.locator(selector).first().evaluate(row=>{
+  const r=row.getBoundingClientRect(),t=row.querySelector('.rowtitle').getBoundingClientRect(),a=row.querySelector('.rowmeta').getBoundingClientRect();
+  const now=document.querySelector('.now').getBoundingClientRect(),title=document.querySelector('#title').getBoundingClientRect(),artist=document.querySelector('#artist').getBoundingClientRect();
+  return {left:t.left-r.left,right:r.right-a.right,padding:getComputedStyle(row).padding,
+   playerLeft:title.left-now.left,playerRight:now.right-artist.right};
+ });
+ assert.equal(inset.left,15);assert.equal(inset.right,15);assert.equal(inset.padding,'7px 14px');
+ assert.equal(inset.playerLeft,0);assert.equal(inset.playerRight,0);
+}
 (async()=>{
  const browser=await chromium.launch({executablePath:process.env.CHROMIUM_PATH || '/usr/bin/chromium',headless:true});
  for(const width of [320,390,768]) {
@@ -10,6 +20,7 @@ const artist='An artist with an exceptionally long name';
   const commands=[];let current={status:'playing',title:longTitle,artist,album:'Album should not appear',track_id:'track0',position:30,duration:240,repeat:'one'};
   const tracks=Array.from({length:40},(_,i)=>({id:'track'+i,title:longTitle+' '+i,artist,album:'Album'}));
   await page.route('http://portal.test/**',async route=>{
+    const glowFixture=require('./soft-glow-fixture.cjs')(route);if(glowFixture)return glowFixture;
    const path=new URL(route.request().url()).pathname;
    if(path==='/api/library')return route.fulfill({json:tracks});
    if(path==='/api/status')return route.fulfill({json:current});
@@ -31,7 +42,15 @@ const artist='An artist with an exceptionally long name';
    const rect=s=>document.querySelector(s).getBoundingClientRect();
    return {header:rect('header').height,footer:rect('footer').height,row:rect('.row').height,overflow:document.documentElement.scrollWidth>innerWidth,artist:rect('#artist').width,now:rect('.now').width,meta:rect('.rowmeta').width,rowtext:rect('.rowtext').width,playCenter:rect('#play').x+rect('#play').width/2, viewport:innerWidth,titleTruncated:document.querySelector('#title').scrollWidth>rect('#title').width,rowTruncated:document.querySelector('.rowtitle').scrollWidth>rect('.rowtitle').width};
   });
-  assert.equal(dimensions.footer,125);assert(dimensions.header===52);assert(dimensions.row<=36);assert(!dimensions.overflow);
+  await checkListInset(page, '#list .row');
+  assert.equal(dimensions.footer,143);assert(dimensions.header===52);assert(dimensions.row<=36);assert(!dimensions.overflow);
+  const playerSpacing=await page.evaluate(()=>{
+   const rect=s=>document.querySelector(s).getBoundingClientRect();
+   return {topGap:rect('.now').top-rect('footer').top,titleBottom:innerHeight-rect('.now').bottom,
+    progressBottom:innerHeight-rect('.progress').bottom,transportBottom:innerHeight-rect('.transport').bottom};
+  });
+  assert.equal(playerSpacing.topGap,32);
+  assert.equal(playerSpacing.titleBottom,93);assert.equal(playerSpacing.progressBottom,51);assert.equal(playerSpacing.transportBottom,11);
   assert(dimensions.artist<=dimensions.now/4+1);assert(dimensions.meta<=dimensions.rowtext/4+1);
   assert(Math.abs(dimensions.playCenter-width/2)<1);assert(dimensions.titleTruncated && dimensions.rowTruncated);
   assert.equal(await page.locator('.art,.badge,.source,.brand,#connection,.chevron').count(),0);
@@ -50,7 +69,7 @@ const artist='An artist with an exceptionally long name';
   assert(Math.abs(aligned.artistRight)<1 && Math.abs(aligned.metaRight)<1);
   assert(aligned.titleGap>=11 && aligned.rowGap>=11);
   assert.equal(aligned.titleColor,'rgb(255, 255, 255)');assert.equal(aligned.rowColor,'rgb(255, 255, 255)');
-  assert(Number(aligned.artistWeight)>=600);assert(aligned.rowRadius>=18 && aligned.searchRadius>=18);
+  assert(aligned.artistWeight==='400');assert(aligned.rowRadius>=18 && aligned.searchRadius>=18);
   assert.equal(aligned.backBorder,'0px');assert.equal(aligned.streamBackBorder,'0px');
   assert.equal(aligned.backBackground,'rgba(0, 0, 0, 0)');assert.equal(aligned.streamBackBackground,'rgba(0, 0, 0, 0)');
   assert.equal(await page.locator('.separator,#title-dot').count(),0);
@@ -69,6 +88,7 @@ const artist='An artist with an exceptionally long name';
   }
   await page.getByRole('button',{name:'Pause',exact:true}).click();await page.waitForFunction(()=>document.querySelector('#play').getAttribute('aria-label')==='Play');
   await page.locator('#stream').click();await page.waitForFunction(()=>document.querySelectorAll('#stream-list .row').length===40);
+  await checkListInset(page, '#stream-list .row');
   assert.equal(await page.locator('#stream-list .row').first().locator('svg,img').count(),0);
   assert.equal(await page.locator('.stream-tabs .selected').getAttribute('data-view'),'recommended');
   assert.equal(await page.locator('#stream-heading').textContent(),'Recommended');

@@ -1,0 +1,18 @@
+/* Purely static decoration. No capture, animation, timers, masks or duplicate text. */
+:root {
+  --icon-glow: drop-shadow(0 0 1px rgba(245,248,255,.35));
+  --text-glow: 0 0 3px rgba(245,248,255,.6);
+  --text-glow-filter: drop-shadow(0 0 1.5px rgba(245,248,255,.85));
+  --list-text-glow-filter: drop-shadow(0 0 1.5px rgba(245,248,255,.65));
+}
+nav .selected {
+  font-weight: 600;
+  text-shadow: var(--text-glow);
+}
+/* Ellipsize the glyphs first, then glow their rendered silhouette outside the
+   text box. text-shadow inside overflow:hidden cuts off at both text edges. */
+.row.current .rowtitle { filter: var(--list-text-glow-filter); }
+#title { filter: var(--text-glow-filter); }
+.transport svg, #like svg, #stream-refresh svg { filter: var(--icon-glow); }
+#seek::-webkit-slider-thumb { box-shadow: 0 0 2px rgba(245,248,255,.35); }
+#seek::-moz-range-thumb { box-shadow: 0 0 2px rgba(245,248,255,.35); }

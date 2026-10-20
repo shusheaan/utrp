@@ -12,6 +12,7 @@ const root=path.join(__dirname,'../web');
    let current={status:'paused',track_id:null,title:'Test song',artist:'Artist',position:20,duration:240,repeat:'one',shuffle:false};
    let fail=false;
    await page.route('http://portal.test/**',async route=>{
+    const glowFixture=require('./soft-glow-fixture.cjs')(route);if(glowFixture)return glowFixture;
     const url=new URL(route.request().url());
     if(url.pathname==='/api/library')return route.fulfill({json:[]});
     if(url.pathname.endsWith('/status'))return route.fulfill({json:current});
@@ -39,7 +40,7 @@ const root=path.join(__dirname,'../web');
    assert(shape.play.x<shape.shuffle.x && shape.shuffle.x<shape.repeat.x);
    assert(Math.abs(shape.play.x-shape.fade.x-(shape.shuffle.x-shape.play.x))<.1);
    assert(Math.abs(shape.play.x-shape.ab.x-(shape.repeat.x-shape.play.x))<.1);
-   assert(Math.abs(shape.repeat.y-shape.shuffle.y)<.1);assert.equal(shape.footer,125);assert(!shape.overflow);
+   assert(Math.abs(shape.repeat.y-shape.shuffle.y)<.1);assert.equal(shape.footer,143);assert(!shape.overflow);
    assert.equal(await page.locator('#shuffle').getAttribute('aria-pressed'),'false');
    assert.equal((await page.locator('#shuffle').textContent()).trim(),'');
    for(const label of ['On','Off']){

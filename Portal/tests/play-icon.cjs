@@ -10,12 +10,14 @@ const root=path.join(__dirname,'../web');
    let playing=true;const errors=[],commands=[];page.on('pageerror',e=>errors.push(e.message));
    const status=()=>({status:playing?'playing':'paused',title:'A centered player',artist:'Artist',position:30,duration:240,repeat:'one'});
    await page.route('http://portal.test/**',async route=>{
+    const glowFixture=require('./soft-glow-fixture.cjs')(route);if(glowFixture)return glowFixture;
     const url=new URL(route.request().url());
     if(url.pathname==='/api/library')return route.fulfill({json:[]});
     if(url.pathname==='/api/status')return route.fulfill({json:status()});
     if(url.pathname==='/api/stream/status')return route.fulfill({json:{...status(),status:'stopped'}});
     if(url.pathname==='/api/control'){
      const command=route.request().postDataJSON();assert.deepEqual(command,{action:'toggle'});commands.push(command);playing=!playing;
+     await new Promise(resolve=>setTimeout(resolve,300));
      return route.fulfill({json:status()});
     }
     const file=url.pathname==='/'?'index.html':url.pathname.slice(1);assert(['index.html','app.js','style.css'].includes(file));
@@ -45,7 +47,12 @@ const root=path.join(__dirname,'../web');
     assert.equal(geometry.hidden,'none');assert.notEqual(geometry.visible,'none');assert(geometry.stable);assert.equal(geometry.text,'');
     await page.screenshot({path:`/tmp/portal-icon-${width}-${label.toLowerCase()}.png`});
     await page.locator('#play').screenshot({path:`/tmp/portal-button-${width}-${label.toLowerCase()}.png`});
-    if(commands.length<2){await page.locator('#play').click();await page.waitForFunction(()=>!document.body.classList.contains('busy'));}
+    if(commands.length<2){
+     await page.locator('#play').click();await page.waitForFunction(()=>document.body.classList.contains('busy'));
+     await page.waitForTimeout(150);
+     assert.equal(await page.locator('#play').evaluate(e=>getComputedStyle(e).opacity),'1','Pending toggle must not flash/dim the play button');
+     await page.waitForFunction(()=>!document.body.classList.contains('busy'));
+    }
    }
    assert.equal(commands.length,2);assert.deepEqual(errors,[]);
    console.log(`PASS ${width}px @${dpr}x: 36px circle, centered SVG/ink, both states, stable DOM and controls`);await page.close();

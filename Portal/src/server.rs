@@ -76,6 +76,15 @@ pub fn router(app: Arc<App>) -> Router {
             "/api/stream/control",
             post(crate::stream_http::control).layer(DefaultBodyLimit::max(2 * 1024 * 1024)),
         )
+        .route(
+            "/soft-glow.css",
+            get(|| async {
+                (
+                    [("content-type", "text/css; charset=utf-8")],
+                    include_str!("../web/soft-glow.css"),
+                )
+            }),
+        )
         .route("/api/library", get(library_handler))
         .route("/api/status", get(status_handler))
         .route("/api/control", post(control_handler))
@@ -455,7 +464,34 @@ mod tests {
             .await
             .unwrap();
         assert_eq!(denied.status(), StatusCode::FORBIDDEN);
+        for path in ["/soft-glow.css"] {
+            let denied = app
+                .clone()
+                .oneshot(
+                    Request::builder()
+                        .uri(path)
+                        .body(axum::body::Body::empty())
+                        .unwrap(),
+                )
+                .await
+                .unwrap();
+            assert_eq!(denied.status(), StatusCode::FORBIDDEN);
+        }
         for (method, path, body, origin, expected) in [
+            (
+                "GET",
+                "/soft-glow.css",
+                "",
+                "https://music.example:8443",
+                StatusCode::OK,
+            ),
+            (
+                "GET",
+                "/api/music-glow?source=local",
+                "",
+                "https://music.example:8443",
+                StatusCode::NOT_FOUND,
+            ),
             (
                 "POST",
                 "/api/effects",

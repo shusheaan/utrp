@@ -16,6 +16,7 @@ const wait = ms => new Promise(resolve => setTimeout(resolve, ms));
     const status = {status:'stopped',title:'',artist:'',track_id:null,position:0,duration:0,repeat:'one'};
     const items = start => Array.from({length:Math.min(100,250-start)}, (_,i) => ({kind:'track',id:String(start+i).padStart(11,'0'),title:`Song ${start+i}`,subtitle:'Artist',section:''}));
     await page.route('http://portal.test/**', async route => {
+    const glowFixture=require('./soft-glow-fixture.cjs')(route);if(glowFixture)return glowFixture;
       const url = new URL(route.request().url());
       if (url.pathname === '/api/library') return route.fulfill({json:[]});
       if (url.pathname.endsWith('/status')) return route.fulfill({json:status});

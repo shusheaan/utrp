@@ -31,6 +31,7 @@ async function header(page,title,count) {
    const page=await browser.newPage({viewport:{width,height:844},isMobile:true,hasTouch:true});const errors=[];
    page.on('pageerror',e=>errors.push(e.message));
    await page.route('http://portal.test/**',route=>{
+    const glowFixture=require('./soft-glow-fixture.cjs')(route);if(glowFixture)return glowFixture;
     const url=new URL(route.request().url());assert.equal(route.request().method(),'GET');
     if(url.pathname==='/api/library')return route.fulfill({json:tracks});
     if(url.pathname==='/api/stream/browse')return route.fulfill({json:{items:[],next_cursor:null}});
@@ -50,7 +51,7 @@ async function header(page,title,count) {
    assert(!/user-scalable\s*=\s*(no|0)|maximum-scale|minimum-scale/i.test(viewport),'Do not restrict user zoom');
    await page.locator('#search').focus();assert.deepEqual(await pill('#local-search','#search'),searchPill);
    await page.locator('#stream').click();
-   assert.deepEqual(await pill('.stream-tabs','.stream-tabs button'),{...searchPill,font:'11px'});
+   assert.deepEqual(await pill('.stream-tabs','.stream-tabs button'),{...searchPill,font:'11px',weight:'600'});
    await page.locator('[data-view=search]').click();
    const streamSearchPill=await pill('#stream-search-form','#stream-search');
    assert.deepEqual({...streamSearchPill,y:searchPill.y},searchPill);
@@ -82,7 +83,7 @@ async function header(page,title,count) {
    await page.locator('#search').fill('');await page.locator('#search').press('Enter');
    await page.locator('#list .row').filter({hasText:artist}).click();
    await header(page,artist,2);assert(await page.locator('#local-search').isHidden());
-   assert(await page.locator('#list .group-row .rowtitle').first().evaluate(e=>Number(getComputedStyle(e).fontWeight)>=600));
+   assert(await page.locator('#list .group-row .rowtitle').first().evaluate(e=>getComputedStyle(e).fontWeight==='400'));
    await page.locator('#list .row').filter({hasText:album}).click();
    await header(page,album,1);assert(await page.locator('#local-search').isHidden());
    assert.equal(await page.locator('#list .row').count(),1);

@@ -11,6 +11,7 @@ const root=path.join(__dirname,'../web');
   let effects={fade:false,forced:false,a:null,b:null},preference=false,position=60,fail=false;
   const id=source==='stream'?'abcdefghijk':'Artist/Album/Test.wav';
   await page.route('http://portal.test/**',async route=>{
+    const glowFixture=require('./soft-glow-fixture.cjs')(route);if(glowFixture)return glowFixture;
    const url=new URL(route.request().url());
    if(url.pathname==='/api/library')return route.fulfill({json:[]});
    if(url.pathname==='/api/stream/like')return route.fulfill({json:{id,liked:false}});
@@ -45,7 +46,7 @@ const root=path.join(__dirname,'../web');
      height:rect('footer').height,overflow:document.documentElement.scrollWidth>innerWidth,
      colors:['#fade','#ab','#marker-a','#marker-b'].map(s=>getComputedStyle(document.querySelector(s)).color)};
    });
-   assert.equal(layout.icons.length,9);assert(layout.icons.every(([w,h])=>w===21&&h===21));assert.equal(layout.height,125);assert(!layout.overflow);
+   assert.equal(layout.icons.length,9);assert(layout.icons.every(([w,h])=>w===21&&h===21));assert.equal(layout.height,143);assert(!layout.overflow);
    const order=await page.locator('.transport button').evaluateAll(buttons=>buttons.map(b=>({id:b.id||b.dataset.action,x:b.getBoundingClientRect().x,y:b.getBoundingClientRect().y+b.getBoundingClientRect().height/2})));
    assert.deepEqual(order.map(b=>b.id),['ab','fade','previous','backward','play','forward','next','shuffle','repeat']);
    assert(order.every((b,i)=>!i||b.x>order[i-1].x));assert(order.every(b=>Math.abs(b.y-order[0].y)<1));
