@@ -1,5 +1,7 @@
 # 双音／三音低延迟前级：候选筛选
 
+> 历史研究档案，不是当前运行插件。正式产品现为 [Guitar Frontend 0.2.1 单音](../guitar_frontend/README.cn.md)；以下 0.1.0 等描述仅对应当时实验，双音未通过用户验收。
+
 [English](README.md) · [机器可读结果](screening.json)
 
 ## 用户目标与本轮结论

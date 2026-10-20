@@ -75,3 +75,9 @@ This change does not adjust faders, effects or Spark hardware direct monitoring.
 - Spark profile disappearance/return kept the virtual source connected to Bitwig, never fell back to a microphone and automatically restored Spark. Not physical unplugging or a system reboot.
 - SF-558 microphone, Keystation controller and exclusive audition are retained. Physical guitar/keyboard listening awaits user confirmation.
 - Runtime evidence: `target/input-autoconnect/`; recovery manifest includes the new service.
+
+## Beat Lab microphone input (2026-10-20)
+
+`microphone_inputs` in `policy.toml` connects the specific SF-558 USB microphone's `capture_MONO` to Bitwig's named `beat lab mic` L/R ports. Only these named ports are managed; the `in3` guitar input and other projects' Arm/Monitor states are untouched. Missing hardware never falls back to guitar or another microphone. Recreated ports reconnect by name. Bitwig keeps WooAudio playback; the recording track selects `beat lab mic` with Arm and Auto Monitor. Update the explicit configuration when changing microphones.
+
+Validation: `python -m pytest lib/tools/audio_routing -q` passed 38 tests. Disconnecting the live right input was automatically repaired; the plugin showed nonzero input. Real beatbox capture/accuracy remains untested.

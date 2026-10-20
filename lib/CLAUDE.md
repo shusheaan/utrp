@@ -2,26 +2,20 @@
 
 patch 即代码。本目录是 utrp 里唯一的音乐资产层,repo 其余部分(Rust TUI)不相干。
 
-## 三层边界(跨仓库,勿混)
+## 三层边界（2026-10-20 更新）
 
-- **机器配置** → `~/work/gral`:音频包选型 `arch/audio-packages.txt`、REAPER
-  配置纳管 `arch/reaper/`、音频栈文档 `arch/audio/readme.md`、体检
-  `./arch/scripts/61-audio-stack doctor`。重装要还原的都在那边。
-- **音乐资产/实验** → 本目录:合成器 patch、collection、(将来)SFZ/渲染工具。
-  只进文本;**唱片采样与音频物料绝不进**(public repo)。
-- **音频物料/工程** → `~/storage/daw/`:REAPER 工程(.rpp)、demucs stem、
-  渲染产物、从唱片切的采样 kit。当构建产物,不进任何 git。
+- **系统基础配置** → `~/work/gral`：系统包、shell、机器级维护。`bitwig` / `bw` 启动命令由 `arch/zshrc` 管理。
+- **音乐源码与 DAW 定制配方** → 本目录：patch、CLAP 插件源码、controller、音频路由、窗口布局、部署/恢复工具。工具职责见 [tools/README.cn.md](tools/README.cn.md)。
+- **工程、音频与运行资源** → `~/storage/daw/`：Library、录音、采样、已安装插件/主题和恢复快照，不进 Git。音乐偏好实体在 `UserData/`，home 为目录 symlink；以 `tools/daw_backup/live.toml` 为清单，不能用时间点备份替代实时主数据。
 
-音色任务(调 patch / 扒音色 / 写歌实验)在 utrp 开 agent 并主要在本目录工作;
-装包/配置/音频栈问题去 gral 开。宿主接入:`./link.sh`(重装后重跑)。
+重装按 `tools/daw_backup/README.cn.md` 恢复；`link.sh` 只是部分旧资源入口，不能替代完整恢复。真实录音、唱片物料和账号凭据不进公共仓库。
 
-## 项目方向(2026-08 定)
+## 当前项目方向
 
-主攻**工程化/批量化/音乐逆向/音色发现**。用户极少直接操作 DAW——一切走
-工程化自动化(agent 生成工程/渲染/MIDI,人只做试听与决策)。DAW 只用
-REAPER(纯文本 .rpp + ReaScript + 命令行渲染是选它的全部理由;Bitwig
-评估过,因脚本化弱而不用)。做新功能优先考虑"能否无 GUI 批量跑"。
-本仓库只做音乐:3D/视觉管线(Blender 等)在独立 repo,任何相关代码与文档都不进这里。
+Bitwig 是当前交互式音色探索与录音实验宿主，Library 工程在 Storage；REAPER 保留兼容用途，不是唯一宿主。优先复用跨宿主 CLAP 与可测试的计算核心，但不以脚本能力代替真实 GUI/输入输出验收。
+Chord Lab 当前只有一个 CLAP 产品：`tools/chordlab/` 是其内嵌引擎，`tools/chordlab_clap/` 是宿主外壳，不能把引擎误当成可删除的旧产品。
+Beat Lab 独立放在 `tools/beatlab/`。`guitar_frontend/` 是当前单音产品；`guitar_poly/` 仅是历史隔离研究，未通过双音验收。
+本仓库只做音乐；3D/视觉项目留在独立仓库。
 
 ## 工具地图(细节看各自 README,先读再动手)
 

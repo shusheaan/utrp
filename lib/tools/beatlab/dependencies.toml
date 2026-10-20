@@ -1,0 +1,25 @@
+# Independent Beat Lab dependency pins. No ysfx or Chord Lab engine dependency.
+
+[[dependency]]
+name = "juce"
+url = "https://codeload.github.com/juce-framework/JUCE/tar.gz/refs/tags/8.0.6"
+sha256 = "95752f8e8b37d802b4c10182bc757de7d88f0c8899e879afa8798589be306a11"
+destination = "juce"
+
+[[dependency]]
+name = "clap-juce"
+url = "https://codeload.github.com/free-audio/clap-juce-extensions/tar.gz/24e70f7f7cde2842528bb66ff50260b1dc0f4dae"
+sha256 = "d622d7f3b16c706c2229f1906663cfd92efc2d93d09ce9195352d78f0526b1b3"
+destination = "clap-juce"
+
+[[dependency]]
+name = "clap"
+url = "https://codeload.github.com/free-audio/clap/tar.gz/df8f16c69ba1c1a15fb105f0c5a2e5b9ac6be742"
+sha256 = "8d683a56092447b3be59e794e693dee61e2965fb4fbbeb2f97888389a6454818"
+destination = "clap-juce/clap-libs/clap"
+
+[[dependency]]
+name = "clap-helpers"
+url = "https://codeload.github.com/free-audio/clap-helpers/tar.gz/7b53a685e11465154b4ccba3065224dbcbf8a893"
+sha256 = "eaf5869b2b40dcfc71a1e3f73167a2255c2fc2d53f553f813b6c051e54df1374"
+destination = "clap-juce/clap-libs/clap-helpers"

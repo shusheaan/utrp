@@ -75,3 +75,9 @@ MIDI 仍经原来的 Keystation controller 与共享 Chord Lab；Library 互斥�
 - profile 模拟 Spark 消失／返回：固定源仍接 Bitwig，后端无麦克风回退，Spark 返回自动连接。不是物理 USB 拔插或整机重启测试。
 - 系统 SF-558 麦克风、Keystation controller 与互斥试听保留。真人吉他／键盘听音待用户确认。
 - 运行证据在 `target/input-autoconnect/`；恢复清单包含新增服务。
+
+## Beat Lab 麦克风输入（2026-10-20）
+
+`policy.toml` 的 `microphone_inputs` 将固定 SF-558 USB 麦克风的 `capture_MONO` 接入 Bitwig 命名总线 `beat lab mic` 的 L/R 端口。只管理这两个明确命名的端口，不改 `in3` 吉他输入或其他工程的 Arm/Monitor。缺失麦克风时不回退到吉他或其他麦克风；端口重建后按名称重连。Bitwig 的 Audio 设置保留 WooAudio 输出，录音轨输入选 `beat lab mic`，Arm + Auto Monitor 使信号进入 Beat Lab。需要其他设备时修改配置，不自动猜测。
+
+验证：`python -m pytest lib/tools/audio_routing -q` 38 passed；实机断开右输入后自动恢复；插件输入电平非零。没有进行用户口技录音准确率测试。

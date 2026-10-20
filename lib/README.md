@@ -13,6 +13,10 @@ utrp 的声音资产层:合成器 patch 以小文件形式进 git,宿主通过 s
    十几种 piano/guitar voicing,探索复杂和弦进行并导出。
 
 
+## 工具目录导航（2026-10-20）
+
+插件、宿主集成、基础设施与历史实验的职责和保存位置见 [tools 目录地图](tools/README.cn.md)。Beat Lab 当前为 0.3.1，独立位于 `tools/beatlab/`；当前范围与限制见其 [README](tools/beatlab/README.cn.md)。
+
 ## 当前入口（2026-10-18；以下旧 REAPER 工作流为历史资料）
 
 - 当前音色工程：`~/storage/daw/Library/Library.bwproject`。

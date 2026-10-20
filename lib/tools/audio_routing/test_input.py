@@ -3,7 +3,7 @@ from pathlib import Path
 
 import pytest
 
-from lib.tools.audio_routing.policy import Config, GuitarInput, Link, Node, Port, Snapshot, guitar_commands, plan
+from lib.tools.audio_routing.policy import Config, InputRoute, Link, Node, Port, Snapshot, input_commands, plan
 
 
 @pytest.fixture
@@ -29,7 +29,7 @@ def test_input_connects_even_without_output_sink(config: Config) -> None:
 
 def test_correct_input_is_idempotent(config: Config) -> None:
     state = replace(graph(config), links=(Link(100, 1, 2, 11, 21),))
-    assert guitar_commands(state, config.guitar) == ()
+    assert input_commands(state, config.guitar) == ()
 
 
 def test_wrong_input_removed_without_touching_other_inputs(config: Config) -> None:
@@ -51,7 +51,7 @@ def test_missing_capture_never_falls_back_to_microphone(config: Config, missing:
         port = replace(state.ports[0], **({'direction': 'in'} if missing == 'wrong_direction'
                                          else {'name': 'monitor_MONO'}))
         state = replace(state, ports=(port, *state.ports[1:]))
-    assert guitar_commands(state, config.guitar) == (('pw-link', '-d', '100'),)
+    assert input_commands(state, config.guitar) == (('pw-link', '-d', '100'),)
 
 
 def test_hotplug_rebinds_new_ids(config: Config) -> None:
@@ -83,4 +83,24 @@ def test_ambiguous_capture_fails_explicitly(config: Config, duplicate: str) -> N
                                  {'source': 1, 'source_port': 'x', 'client': 'y', 'destination_port': 'z'}])
 def test_invalid_input_config_fails_explicitly(data: object) -> None:
     with pytest.raises(ValueError):
-        GuitarInput.read(data)
+        InputRoute.read(data)
+
+
+def test_microphone_scoped_bus_and_reconnect(config: Config) -> None:
+    route = config.microphone[0]
+    state = Snapshot(
+        (Node(1, '101', route.source, 'Audio/Source', 0, False),
+         Node(2, '102', route.client, 'Audio/Duplex', 0, False)),
+        (Port(11, 1, route.source_port, 'out', 'MONO'),
+         Port(21, 2, config.microphone[0].destination_port, 'in', ''),
+         Port(22, 2, config.microphone[1].destination_port, 'in', ''),
+         Port(23, 2, 'in3', 'in', '')),
+        (Link(103, 9, 2, 99, 23),), '', ())
+    assert plan(state, config) == (('pw-link', '11', '21'), ('pw-link', '11', '22'))
+    connected = replace(state, links=(*state.links, Link(101, 1, 2, 11, 21), Link(102, 1, 2, 11, 22)))
+    assert plan(connected, config) == ()
+    unplugged = replace(connected, nodes=state.nodes[1:], ports=state.ports[1:])
+    assert plan(unplugged, config) == (('pw-link', '-d', '101'), ('pw-link', '-d', '102'))
+    reopened = replace(state, ports=(state.ports[0], replace(state.ports[1], id=121),
+                                    replace(state.ports[2], id=122), state.ports[3]))
+    assert plan(reopened, config) == (('pw-link', '11', '121'), ('pw-link', '11', '122'))

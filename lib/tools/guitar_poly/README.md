@@ -1,5 +1,7 @@
 # Low-latency two/three-note frontend screening
 
+> Historical research archive, not an installed product. Production is now [Guitar Frontend 0.2.1 monophonic](../guitar_frontend/README.md). Version 0.1.0 statements below describe the historical experiment; dyad recognition did not pass user acceptance.
+
 [中文](README.cn.md) · [Machine-readable results](screening.json)
 
 ## Scope and outcome

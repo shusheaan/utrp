@@ -14,3 +14,16 @@ source = "alsa_input.usb-Actions_Spark_GO_USB_ACTIONS-DEV-SN0-01.mono-fallback"
 source_port = "capture_MONO"
 client = "utrp_guitar_capture"
 destination_port = "input_MONO"
+
+# Dedicated Beat Lab bus only: never redirect the guitar or other recording inputs.
+[[microphone_inputs]]
+source = "alsa_input.usb-MUSIC-BOOST_SF-558-00.mono-fallback"
+source_port = "capture_MONO"
+client = "Bitwig Studio"
+destination_port = "beat lab mic L"
+
+[[microphone_inputs]]
+source = "alsa_input.usb-MUSIC-BOOST_SF-558-00.mono-fallback"
+source_port = "capture_MONO"
+client = "Bitwig Studio"
+destination_port = "beat lab mic R"

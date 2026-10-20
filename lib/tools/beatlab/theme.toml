@@ -1,0 +1,16 @@
+# Independent palette, visually derived from Chord Lab. No runtime dependency.
+background = "585858"
+panel = "414141"
+button = "494949"
+selected = "686868"
+foreground = "FFFFFF"
+muted = "D1D5DA"
+kick = "B44352"
+snare = "267A50"
+hat = "3D68AF"
+clap = "9B63BF"
+uncertain = "B29156"
+
+wave_background = "282B30"
+wave_grid = "555B64"
+wave_signal = "8EDBD0"

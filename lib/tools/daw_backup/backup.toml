@@ -3,7 +3,8 @@
 backup_root = "storage/daw/Recovery"
 required = [
   ".zshrc", # Includes the gral-managed bitwig/bw Library launch commands.
-  ".clap", ".BitwigStudio/prefs", ".BitwigStudio/view-settings",
+  ".clap", # Includes Beat Lab (internal recording, state-embedded PCM + Gate), Chord Lab / Guitar Front End.
+  ".BitwigStudio/prefs", ".BitwigStudio/view-settings", # Includes the beat lab mic named input bus.
   "Bitwig Studio", ".config/REAPER", ".config/Surge XT.settings",
   ".Surge XT", ".Surge Synth Team", ".config/SFZTools/sfizz",
   ".config/pipewire", ".config/sway/config", ".config/sway/utrp-plugin-windows.conf",
@@ -21,4 +22,5 @@ optional = [".config/wireplumber", ".local/state/wireplumber", ".BitwigStudio/pl
 assets = [".BitwigStudio/installed-packages", "opt/bitwig-studio-6.1.4"]
 system_assets = ["/usr/lib/clap", "/usr/lib/vst3", "/usr/share/surge-xt"]
 # Already on persistent storage; these are inventoried, not copied into themselves.
-persistent = ["storage/daw", "storage/daw/samples", "storage/daw/Library/Library.bwproject"]
+persistent = ["storage/daw", "storage/daw/samples", "storage/daw/Library/Library.bwproject",
+              "storage/daw/BeatLab", "storage/daw/Tools/BeatLab"]
