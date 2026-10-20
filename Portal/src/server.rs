@@ -72,7 +72,10 @@ pub fn router(app: Arc<App>) -> Router {
             get(crate::ratings::get).post(crate::ratings::set),
         )
         .route("/api/stream/status", get(crate::stream_http::status))
-        .route("/api/stream/control", post(crate::stream_http::control))
+        .route(
+            "/api/stream/control",
+            post(crate::stream_http::control).layer(DefaultBodyLimit::max(2 * 1024 * 1024)),
+        )
         .route("/api/library", get(library_handler))
         .route("/api/status", get(status_handler))
         .route("/api/control", post(control_handler))
@@ -522,6 +525,44 @@ mod tests {
                         .header("x-portal-request", "1")
                         .header("content-type", "application/json")
                         .body(axum::body::Body::from(body))
+                        .unwrap(),
+                )
+                .await
+                .unwrap();
+            assert_eq!(response.status(), expected);
+        }
+        // Metadata queues exceed the generic 16 KiB limit, but only this route
+        // gets a larger bounded body. No player is configured in this fixture.
+        let metadata = vec![
+            serde_json::json!({"id":"abcdefghijk","title":"x".repeat(200),"artist":"Artist","album":""});
+            500
+        ];
+        let body = serde_json::json!({"action":"play","ids":vec!["abcdefghijk";500],"index":0,"metadata":metadata}).to_string();
+        for (path, payload, expected) in [
+            (
+                "/api/stream/control",
+                body.clone(),
+                StatusCode::SERVICE_UNAVAILABLE,
+            ),
+            ("/api/control", body, StatusCode::PAYLOAD_TOO_LARGE),
+            (
+                "/api/stream/control",
+                " ".repeat(2 * 1024 * 1024 + 1),
+                StatusCode::PAYLOAD_TOO_LARGE,
+            ),
+        ] {
+            let response = app
+                .clone()
+                .oneshot(
+                    Request::builder()
+                        .method("POST")
+                        .uri(path)
+                        .header("host", "music.example:8443")
+                        .header("tailscale-user-login", "owner@example")
+                        .header("origin", "https://music.example:8443")
+                        .header("x-portal-request", "1")
+                        .header("content-type", "application/json")
+                        .body(axum::body::Body::from(payload))
                         .unwrap(),
                 )
                 .await

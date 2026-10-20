@@ -24,7 +24,7 @@ fn unavailable(error: anyhow::Error) -> ApiError {
     if error.is::<crate::stream::Expired>() {
         return ApiError(
             StatusCode::CONFLICT,
-            "Stream list changed or expired. Click Refresh to start again.",
+            "Stream continuation expired; reconnect pagination.",
         );
     }
     // Never log auth objects or upstream response bodies.
@@ -90,13 +90,20 @@ pub async fn status(State(app): State<Arc<App>>) -> Result<Json<stream::Status>,
 #[derive(Deserialize)]
 #[serde(tag = "action", rename_all = "snake_case", deny_unknown_fields)]
 pub enum Control {
-    Play { ids: Vec<String>, index: usize },
+    Play {
+        ids: Vec<String>,
+        index: usize,
+        #[serde(default)]
+        metadata: Vec<crate::library::Track>,
+    },
     Toggle {},
     Previous {},
     Next {},
     Backward {},
     Forward {},
-    Seek { seconds: u64 },
+    Seek {
+        seconds: u64,
+    },
     Repeat {},
     Shuffle {},
 }
@@ -160,11 +167,16 @@ pub async fn control(
     let config = config(&app)?;
     let mut state = app.stream.lock().await;
     // Validate before starting services, pausing music or replacing a queue.
-    let selected = if let Control::Play { ids, index } = &control {
-        Some(stream::queue(&state, ids, *index).map_err(|_| {
+    let selected = if let Control::Play {
+        ids,
+        index,
+        metadata,
+    } = &control
+    {
+        Some(stream::queue(&state, ids, *index, metadata).map_err(|_| {
             ApiError(
                 StatusCode::BAD_REQUEST,
-                "Invalid queue. Refresh the list and select a track again.",
+                "Invalid queue selection or metadata.",
             )
         })?)
     } else {

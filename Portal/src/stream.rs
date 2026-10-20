@@ -161,19 +161,47 @@ pub async fn browse(config: &StreamConfig, request: &Browse) -> Result<(Page, Ve
     ))
 }
 
-pub fn queue(state: &StreamState, ids: &[String], index: usize) -> Result<Vec<Track>> {
+pub fn queue(
+    state: &StreamState,
+    ids: &[String],
+    index: usize,
+    metadata: &[Track],
+) -> Result<Vec<Track>> {
     ensure!(
         !ids.is_empty() && ids.len() <= 500 && index < ids.len(),
         "Select between 1 and 500 tracks and a valid index"
     );
+    ensure!(
+        metadata.is_empty() || metadata.len() == ids.len(),
+        "Invalid queue metadata count"
+    );
+    for (track, id) in metadata.iter().zip(ids) {
+        ensure!(track.id == *id, "Queue metadata ID mismatch");
+        ensure!(
+            [&track.title, &track.artist, &track.album]
+                .iter()
+                .all(|s| s.len() <= 1024),
+            "Queue metadata too long"
+        );
+    }
     ids.iter()
-        .map(|id| {
+        .enumerate()
+        .map(|(index, id)| {
             ensure!(valid_video(id), "Invalid video ID");
-            state
+            // A valid video ID is a stable reference, not a capability issued by the catalog.
+            // Old browser pages remain playable after eviction or a web-server restart.
+            Ok(state
                 .catalog
                 .get(id)
+                .or_else(|| state.queue.iter().find(|track| track.id == *id))
+                .or_else(|| metadata.get(index))
                 .cloned()
-                .ok_or_else(|| anyhow::anyhow!("Track no longer cached; refresh this list"))
+                .unwrap_or_else(|| Track {
+                    id: id.clone(),
+                    title: String::new(),
+                    artist: String::new(),
+                    album: String::new(),
+                }))
         })
         .collect()
 }
@@ -208,6 +236,10 @@ fn load_commands(tracks: &[Track], index: usize, shuffle: bool) -> Vec<serde_jso
             "append"
         ])
     }));
+    // The player owns these labels for exactly as long as it owns the queue.
+    // Replace the map rather than accumulating unrelated browse history.
+    let metadata: HashMap<_, _> = tracks.iter().map(|t| (&t.id, t)).collect();
+    commands.push(json!(["set_property", "user-data/portal-tracks", metadata]));
     commands.push(json!(["set_property", "playlist-pos", index]));
     if shuffle {
         commands.push(json!(["playlist-shuffle"]));
@@ -300,8 +332,12 @@ pub async fn status(
         .and_then(|s| s.strip_prefix("https://music.youtube.com/watch?v="));
     status.track_id = id.filter(|id| valid_video(id)).map(str::to_owned);
     status.title = p[9].as_str().unwrap_or("").to_owned();
-    if let Some(track) = id.and_then(|id| state.queue.iter().find(|t| t.id == id)) {
-        status.title = track.title.clone();
+    if let Some(track) =
+        current_metadata(config, state, status.track_id.as_deref(), timeout).await?
+    {
+        if !track.title.is_empty() {
+            status.title = track.title.clone();
+        }
         status.artist = track.artist.clone();
         status.album = track.album.clone();
         status.track_id = Some(track.id.clone());
@@ -314,17 +350,47 @@ pub async fn status(
     Ok(status)
 }
 
+async fn current_metadata(
+    config: &StreamConfig,
+    state: &StreamState,
+    id: Option<&str>,
+    timeout: Duration,
+) -> Result<Option<Track>> {
+    let Some(id) = id else {
+        return Ok(None);
+    };
+    if let Some(track) = state.queue.iter().find(|t| t.id == id) {
+        return Ok(Some(track.clone()));
+    }
+    // Read only one bounded entry, never the whole (potentially 500-song) map.
+    let values = mpv::commands(
+        &config.mpv_socket,
+        vec![json!([
+            "get_property",
+            format!("user-data/portal-tracks/{id}")
+        ])],
+        timeout,
+    )
+    .await?;
+    if values[0].is_null() {
+        return Ok(None);
+    }
+    let track: Track = serde_json::from_value(values[0].clone())?;
+    ensure!(track.id == id, "Player metadata ID mismatch");
+    Ok(Some(track))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
     #[test]
-    fn reject_urls_paths_and_uncached_tracks() {
+    fn reject_urls_and_paths_but_accept_uncached_video_ids() {
         assert!(valid_video("dQw4w9WgXcQ"));
         for id in ["../secret", "https://evil", "abc\nquit", ""] {
             assert!(!valid_video(id));
         }
-        assert!(queue(&StreamState::default(), &["dQw4w9WgXcQ".into()], 0).is_err());
-        assert!(queue(&StreamState::default(), &[], 0).is_err());
+        assert!(queue(&StreamState::default(), &["dQw4w9WgXcQ".into()], 0, &[]).is_ok());
+        assert!(queue(&StreamState::default(), &[], 0, &[]).is_err());
     }
     fn track() -> Track {
         Track {
@@ -336,18 +402,18 @@ mod tests {
     }
 
     #[test]
-    fn bounded_queue_requires_valid_selection_and_cached_tracks() {
+    fn bounded_queue_requires_valid_selection() {
         let track = track();
         let state = StreamState {
             catalog: HashMap::from([(track.id.clone(), track.clone())]),
             queue: vec![],
         };
         assert_eq!(
-            queue(&state, std::slice::from_ref(&track.id), 0).unwrap()[0].id,
+            queue(&state, std::slice::from_ref(&track.id), 0, &[]).unwrap()[0].id,
             track.id
         );
-        assert!(queue(&state, std::slice::from_ref(&track.id), 1).is_err());
-        assert!(queue(&state, &vec![track.id.clone(); 501], 0).is_err());
+        assert!(queue(&state, std::slice::from_ref(&track.id), 1, &[]).is_err());
+        assert!(queue(&state, &vec![track.id.clone(); 501], 0, &[]).is_err());
     }
 
     #[test]
@@ -384,3 +450,7 @@ mod tests {
         );
     }
 }
+
+#[cfg(test)]
+#[path = "stream_reliability_tests.rs"]
+mod reliability_tests;

@@ -14,7 +14,10 @@ async function api(path, body) {
     const response = await fetch(path, { method: body ? 'POST' : 'GET', cache: 'no-store', signal: controller.signal,
       headers: body ? { 'Content-Type': 'application/json', 'X-Portal-Request': '1' } : {}, body: body ? JSON.stringify(body) : undefined });
     const result = await response.json();
-    if (!response.ok) throw new Error(result.error || `Request failed (${response.status})`);
+    if (!response.ok) {
+      const error = new Error(result.error || `Request failed (${response.status})`);
+      error.status = response.status; throw error;
+    }
     return result;
   } finally { clearTimeout(timeout); }
 }
@@ -75,6 +78,12 @@ function paintSeek() {
 }
 
 function update(status) {
+  // Partial loading responses must not erase labels for the same song/source.
+  const previous = state.displayStatus;
+  if (status.track_id && previous?.source === state.source && previous.track_id === status.track_id) {
+    status = {...status, title:status.title || previous.title, artist:status.artist || previous.artist};
+  }
+  state.displayStatus = {...status, source:state.source};
   syncLike(status);
   state.current = status.track_id;
   $('title').textContent = status.title || 'Choose a track';
@@ -233,7 +242,10 @@ function playStream(id) {
   const selected = tracks.findIndex(t => t.id === id);
   // Bound the queue around the selection, not by silently omitting the selected song.
   const start = Math.max(0, selected - 100);
-  control({action:'play', ids:tracks.slice(start, start + 500).map(t=>t.id), index:selected - start}, 'stream');
+  if (selected < 0) return;
+  const queue = tracks.slice(start, start + 500);
+  const metadata = queue.map(t => ({id:t.id, title:t.title.slice(0, 200), artist:(t.subtitle || '').slice(0, 200), album:''}));
+  control({action:'play', ids:queue.map(t=>t.id), metadata, index:selected - start}, 'stream');
 }
 function streamSnapshot() {
   return {page:state.streamPage, request:state.streamRequest, title:$('stream-heading').textContent,
@@ -317,16 +329,40 @@ function updateMore() {
   button.disabled = state.streamMoreBusy;
   button.textContent = state.streamMoreBusy ? 'Loading…' : state.streamMoreFailed ? 'Retry loading more' : isPagedPlaylist(state.streamRequest) ? 'Load 100 more' : 'Load more';
 }
+const streamItemKey = item => JSON.stringify([item.kind, item.id, item.section || '']);
+async function continuationPage(cursor, generation) {
+  const request = {...state.streamRequest};
+  const fetchPage = cursor => api(`/api/stream/browse?${new URLSearchParams({...request, ...(cursor ? {cursor} : {})})}`);
+  try { return await fetchPage(cursor); }
+  catch (error) { if (error.status !== 409) throw error; }
+  // Rebuild only enough of the continuation chain to reach new rows. Keep the
+  // displayed snapshot and its DOM/scroll position; never replay a control POST.
+  const known = new Set(state.streamPage.items.map(streamItemKey));
+  const visited = new Set();
+  let next = '', page;
+  for (let attempt = 0; attempt < 101; attempt++) {
+    if (generation !== state.streamGeneration) return null;
+    page = await fetchPage(next);
+    if (!page.next_cursor || page.items.some(item => !known.has(streamItemKey(item)))) return page;
+    if (visited.has(page.next_cursor)) throw new Error('Pagination did not advance. Retry loading more.');
+    visited.add(page.next_cursor); next = page.next_cursor;
+  }
+  throw new Error('Pagination recovery limit reached. Retry loading more.');
+}
 async function loadMore() {
   const cursor = state.streamPage?.next_cursor;
   if (state.tab !== 'stream' || !cursor || state.streamBusy || state.streamMoreBusy) return;
   const generation = state.streamGeneration;
   state.streamMoreBusy = true; state.streamMoreFailed = false; updateMore();
   try {
-    const page = await api(`/api/stream/browse?${new URLSearchParams({...state.streamRequest, cursor})}`);
-    if (generation !== state.streamGeneration) return;
-    const ids = new Set(state.streamPage.items.map(item => item.id));
-    const items = isPagedPlaylist(state.streamRequest) ? page.items.filter(item => !ids.has(item.id)) : page.items;
+    const page = await continuationPage(cursor, generation);
+    if (!page || generation !== state.streamGeneration) return;
+    const itemKey = isPagedPlaylist(state.streamRequest) ? item => item.id : streamItemKey;
+    const ids = new Set(state.streamPage.items.map(itemKey));
+    const items = page.items.filter(item => {
+      const key = itemKey(item); if (ids.has(key)) return false; ids.add(key); return true;
+    });
+    $('stream-message').textContent = '';
     state.streamPage = {...page, items:[...state.streamPage.items, ...items]};
     renderStream({...page, items}, true);
   } catch (error) {

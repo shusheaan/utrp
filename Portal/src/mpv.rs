@@ -33,7 +33,13 @@ async fn exchange(path: &Path, commands: Vec<Value>) -> Result<Vec<Value>> {
                 continue;
             }
             // A property can be unavailable while a track is loading or stopped.
-            if response["error"] == "property unavailable" && command[0] == "get_property" {
+            let missing_portal_metadata = response["error"] == "property not found"
+                && command[1]
+                    .as_str()
+                    .is_some_and(|p| p.starts_with("user-data/portal-tracks/"));
+            if command[0] == "get_property"
+                && (response["error"] == "property unavailable" || missing_portal_metadata)
+            {
                 results.push(Value::Null);
             } else {
                 ensure!(response["error"] == "success", "mpv rejected a command");

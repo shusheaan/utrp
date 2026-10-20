@@ -108,7 +108,7 @@ body.busy .transport button, body.busy .row { opacity: .6; }
 .stream-tabs { margin: 0; }
 #stream-toolbar:has(#stream-search-form:not([hidden])) { padding-top: 6px; }
 #stream-heading { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-#like { position: relative; flex: 0 0 28px; width: 28px; height: 18px; min-height: 18px; padding: 0; display: grid; place-items: center; color: #fff; }
+#like { margin-left: auto; position: relative; flex: 0 0 28px; width: 28px; height: 18px; min-height: 18px; padding: 0; display: grid; place-items: center; color: #fff; }
 #like::before { content: ""; position: absolute; inset: -7px 0; }
 #like svg { width: 18px; height: 18px; fill: none; }
 #like[aria-pressed=true] svg { fill: currentColor; }
