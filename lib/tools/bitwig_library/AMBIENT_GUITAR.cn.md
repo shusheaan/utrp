@@ -108,10 +108,6 @@ TOML 是可读配方，**不会在启动时自动覆盖你的手动调整**。
 - 手动音量优先用所选 AG 轨推子，少量递增并检查轨道、group、Master 峰值；不要提高 raw detection 推子或 Spark Guitar Volume 来放大软件效果。证据：`target/guitar-latency-check/`。
 
 
-## 2026-10-19：唯一固定输入方案
+## 2026-10-21：改用 Bitwig 内设置
 
-以上直接选择 Spark GO USB／Mono capture_MONO 的恢复步骤由[固定音频路由](../audio_routing/README.cn.md)取代。
-最终为 PipeWire / System Out / 手动 128 samples；四条 AG 与 raw detection 统一选择
-`Applications → pw-loopback → Spark-GO-Guitar → capture_MONO`。
-raw detection 推子保持 −∞。Keystation、共享识别与 Library 互斥试听不变。
-硬件先开、USB 正常识别后再打开 Bitwig；无需每次重选 Input。
+自定义音频服务已删除，不再使用 `Spark-GO-Guitar` 虚拟输入。请按[当前路由说明](../audio_routing/README.cn.md)在 Bitwig 内选择实体 Spark GO 输入与所需输出；四条 AG 和 raw detection 映射待硬件连接后现场完成。本次未改工程；raw detection 保持 −∞，不改 Keystation、共享识别或两组独立试听。

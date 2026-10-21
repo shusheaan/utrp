@@ -109,12 +109,12 @@ PY
    只有需要快照回退时，才把 tar 解压到**临时目录**，检查后恢复至对应实体目录；不覆盖 home 链接。
    先恢复自制 `.clap` 和 `Bitwig Studio/Controller Scripts/UTRP`；恢复 prefs、主题、音色和采样。
    REAPER 的旧路径兼容资料也保留，但本项目仍以 CLAP 产品线为准。
-5. 恢复三个用户服务 `utrp-plugin-windows`、`utrp-audio-output`、`utrp-guitar-input`、PipeWire 规则和插件浮窗规则；核对 Sway 的
+5. 只恢复 `utrp-plugin-windows` 用户服务、现有 PipeWire EQ 规则和插件浮窗规则；不要恢复已移除的两个自定义音频服务；核对 Sway 的
    `focus_follows_mouse no` 及 `include` 路径，再 `systemctl --user daemon-reload` 并启用服务。
    不要把旧 WirePlumber 的设备 ID 或音量状态视为新硬件上必然有效。
 6. Bitwig 自行重新登录/激活。**不备份 Bitwig `.activation-*`、REAPER license、遥测或登录凭据**。
    私有 prefs 仍可能包含本机路径/设备标识，不发布到 Git。
-7. 打开 Storage 中 Library，按[固定音频路由](../audio_routing/README.cn.md)检查 `Spark-GO-Guitar` 输入、Spark 输出、128 buffer、两个 Keystation 端口、踏板极性；
+7. 打开 Storage 中 Library，按[Bitwig 内音频设置](../audio_routing/README.cn.md)检查实体 Spark GO 输入、手动所选输出、128 buffer、两个 Keystation 端口、踏板极性；
    脚松开时开机。检查 Chord Lab/Surge/sfizz、四条 AG 音色及吉他只显示的 channel 2→15 路由。
 8. 正式录音工程不要命名为 Library。当前 controller 的历史白名单为 `Library` 与
    `Library-migration`，还要求共享轨及 Chord Lab 结构匹配。其他名字不执行自动停轨、Arm、
@@ -191,6 +191,10 @@ PY
 - 旧控制器／偏好／工程备份：`~/storage/daw/Backups/library-no-auto-arm-20261021T171311.609945Z/`。40 项回归通过；实际 MIDI／吉他切换及恢复证据：`target/library-no-auto-arm/`。
 - 部署在既有 Storage-backed controller 目录，源码未 commit/push；快照保存当前源码、已落盘偏好和工程。
 
-## 2026-10-21：输出自动接替响应
+## 2026-10-21：输出自动接替响应（历史，随后已移除）
 
 保留 Spark GO → Woo Audio（EQ）→ 其他实体输出的规则；`audio_routing/policy.toml` 的轮询改为 0.25 秒，服务已重读配置并 enabled/active。39 项音频路由测试通过；重载前后所有实时连接相同、dry-run 无操作。移除 Spark 的内存图模拟选择 Woo EQ；本轮未进行物理拔插或无爆音听感验收。证据：`target/audio-fallback-20261021/`。源码未 commit/push，恢复快照保留当前源码配置。
+
+## 2026-10-21：移除自定义音频服务（当前恢复规则）
+
+用户要求仅在 Bitwig 内选择输入与输出。两个音频服务已停用、删除，恢复清单不再包含它们；旧快照及上方历史中的虚拟输入、自启与自动回退方案均不应恢复。系统音频、Woo EQ、插件窗口服务不变。Bitwig 未运行且 Spark 缺席，未改工程/偏好；四条 AG 与 raw detection 的实体 Spark 输入映射仍待现场完成，Beat Lab 输入总线也需在宿主中核对。详见 [当前路由说明](../audio_routing/README.cn.md)。删除前备份位于 `~/storage/daw/Backups/retire-audio-services-20261021T191202Z/`。

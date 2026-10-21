@@ -13,6 +13,14 @@ def test_configuration() -> None:
     assert not any('.activation' in name for name in config.required)
 
 
+def test_retired_audio_services_are_not_restored() -> None:
+    config = Config.read(Path(__file__).with_name('backup.toml'))
+    entries = (*config.required, *config.optional)
+    for name in ('utrp-audio-output.service', 'utrp-guitar-input.service'):
+        assert not any(name in entry for entry in entries)
+    assert '.config/systemd/user/utrp-plugin-windows.service' in config.required
+
+
 @pytest.mark.parametrize('name', ['reaper-license.rk', '.activation-12', '__pycache__', 'cache.pyc'])
 def test_private_or_generated_excluded(name: str) -> None:
     assert allowed(tarfile.TarInfo(name)) is None

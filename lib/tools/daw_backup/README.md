@@ -86,12 +86,12 @@ in-memory preferences. Current desired settings are PipeWire / System Out and ma
    For snapshot rollback only, extract to staging and review before restoring physical targets,
    not replacing home symlinks. Restore `.clap`, controller scripts, prefs, skins, presets, and persistent samples.
    Legacy REAPER configuration is retained, but CLAP remains the active product line.
-5. Restore `utrp-plugin-windows`, `utrp-audio-output` and `utrp-guitar-input` user services and audio/window rules; check Sway includes and
+5. Restore only the `utrp-plugin-windows` user service and existing EQ/window rules; do not restore either removed custom audio service; check Sway includes and
    `focus_follows_mouse no`. Reload user systemd and enable the services. Old WirePlumber
    device IDs/volumes may not match new hardware.
 6. Log in/activate again; Bitwig activation and REAPER licenses are not archived. Private
    prefs can still contain device identifiers and local paths; never publish them.
-7. Open Library; check the [fixed routing](../audio_routing/README.md) (`Spark-GO-Guitar` input, Spark playback), buffer, both Keystation ports, pedal polarity
+7. Open Library; check the [Bitwig audio settings](../audio_routing/README.md) (physical Spark GO input, manually selected output), buffer, both Keystation ports, pedal polarity
    (power on with pedal released), all plugins/AG recipes, and guitar channel 2→15 display routing.
 8. Recording projects must not use the reserved Library names. The existing controller
    allows exactly `Library` and historical `Library-migration`, with matching shared-track
@@ -133,7 +133,7 @@ Large runtime assets use uncompressed `.tar` and preserve vendor symlinks, inclu
 - Returned to Soft Prism and saved Library. Recent projects still contain only the canonical Library. Before/after project files, prefs and evidence are in `target/guitar-input-20261019/`; existing recovery paths already cover the changes. If `[missing]` recurs, check Audio's selected device rather than assuming the system's Spark GO default output also supplies input. Physical hot-plug behavior and the earlier switch to HDMI were not established.
 
 
-### 2026-10-19 persistent input (supersedes direct hardware selection above)
+### 2026-10-19 persistent input (historical; removed on 2026-10-21)
 
 - Single deployed configuration: PipeWire / System Out / manual 128 samples. All four Library AG tracks and raw detection use `Spark-GO-Guitar → capture_MONO`. `Spark-GO-Internal-Capture` is the backend of the same loopback, not a duplicate device. No temporary JACK or null-source rule is deployed.
 - Required recovery entry added: `~/.config/systemd/user/utrp-guitar-input.service`. Both routing services are enabled at login; source, TOML and unit recipes live under `lib/tools/audio_routing/`. SF-558 remains the default microphone; missing Spark never falls back to a microphone.
@@ -174,3 +174,7 @@ Large runtime assets use uncompressed `.tar` and preserve vendor symlinks, inclu
 ## 2026-10-21: output fallback responsiveness
 
 Preserved Spark GO → Woo Audio (EQ) → other physical outputs. `audio_routing/policy.toml` now polls every 0.25 seconds; policy service reloaded and enabled/active. All 39 audio-routing tests passed. Live links were identical across service reload and dry-run was a no-op. Removing Spark from an in-memory graph selects Woo EQ; no physical unplug/click-free listening acceptance was performed this round. Evidence: `target/audio-fallback-20261021/`. Source remains uncommitted/unpushed; recovery snapshot preserves the current source/configuration.
+
+## 2026-10-21: remove custom audio services (current recovery rule)
+
+The user requested input/output selection inside Bitwig only. Both audio services are stopped and deleted and excluded from the recovery manifest. Do not restore the virtual source, login services or automatic fallback described in older snapshots or historical entries above. System audio, Woo EQ and plugin-window service are unchanged. Bitwig was not running and Spark was absent; project/preferences were not edited. Remapping four AG tracks and raw detection to physical Spark input remains pending; verify the Beat Lab input bus inside the host as well. See [current routing notes](../audio_routing/README.md). Pre-removal backup: `~/storage/daw/Backups/retire-audio-services-20261021T191202Z/`.

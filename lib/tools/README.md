@@ -18,7 +18,7 @@ Beat Lab 0.3.1 is deployed for recording/analysis/file-export prototyping. Actua
 ## Host integration and infrastructure
 
 - [bitwig_library/](bitwig_library/README.md): Library controller; exclusive audition is Library-only.
-- [audio_routing/](audio_routing/README.md): output priorities and dedicated guitar/microphone routing.
+- [audio_routing/](audio_routing/README.md): retired custom routing; current Bitwig-only setup and historical diagnostics.
 - [plugin_windows/](plugin_windows/README.md): floating plugin window layout.
 - [daw_backup/](daw_backup/README.md): live Storage directory links, recovery inventory and private snapshots.
 - [library/](library/README.md), `reaper/`: original library and REAPER support; historical compatibility tools are retained.

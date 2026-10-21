@@ -106,10 +106,6 @@ This supersedes the earlier missing-input status. Bitwig Audio Selected Device(s
 - Adjust the selected AG track fader gradually while watching track, group and Master peaks. Do not raise raw detection or Spark Guitar Volume to amplify software effects. Evidence: `target/guitar-latency-check/`.
 
 
-## 2026-10-19: single persistent input setup
+## 2026-10-21: use Bitwig settings
 
-The direct Spark GO USB / Mono capture_MONO recovery instructions above are superseded by [fixed audio routing](../audio_routing/README.md).
-Final configuration: PipeWire / System Out / manual 128 samples. All four AG tracks and raw detection use
-`Applications → pw-loopback → Spark-GO-Guitar → capture_MONO`.
-The raw-detection fader remains at −∞. Keystation, shared detection and Library exclusive audition are unchanged.
-Power on and connect the hardware before starting Bitwig; normal use needs no repeated Input selection.
+Custom audio services are removed; do not use the old `Spark-GO-Guitar` virtual source. Follow [current routing notes](../audio_routing/README.md) to select physical Spark GO input and the desired output inside Bitwig. Four AG tracks and raw detection still need live remapping after hardware connection. This removal did not edit the project; preserve raw detection at −∞, Keystation, shared detection and independent two-group audition.

@@ -18,7 +18,7 @@ Beat Lab 0.3.1 已部署，当前录音/分析/文件导出原型可试用。真
 ## 宿主与基础设施
 
 - [bitwig_library/](bitwig_library/README.cn.md)：Library controller 与宿主集成；互斥试听仅对 Library 有效。
-- [audio_routing/](audio_routing/README.cn.md)：音频输出优先级与专用吉他/麦克风路由。
+- [audio_routing/](audio_routing/README.cn.md)：已移除的自定义路由；当前 Bitwig 内设置与历史诊断。
 - [plugin_windows/](plugin_windows/README.cn.md)：插件浮动窗口布局。
 - [daw_backup/](daw_backup/README.cn.md)：实时 Storage 目录链接、恢复清单、私有快照。
 - [library/](library/README.md)、`reaper/`：原音色库与 REAPER 配套脚本；本轮不删除历史兼容用途。
