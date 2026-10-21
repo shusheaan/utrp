@@ -140,3 +140,37 @@ Large runtime assets use uncompressed `.tar` and preserve vendor symlinks, inclu
 - After normal exit, virtual-source recreation and Bitwig reopen, the saved input reconnected by name: Spark → persistent source → Bitwig, at 128 samples. Piano/guitar selection retained exclusive Arm; controller and MIDI bindings are unchanged. Raw detection remains at −∞.
 - Temporarily disabling/restoring the Spark profile retained the virtual-source-to-Bitwig connection, left the backend disconnected while absent and automatically reconnected Spark after return. This is not physical USB unplugging, a system reboot or human listening.
 - 66 routing, backup and controller regression tests passed; all 10 Storage directory links are valid; policy dry-run is empty. Screenshots/graphs are under `target/input-autoconnect/`. Physical guitar/keyboard listening still needs user confirmation. No commit/push.
+
+### 2026-10-21 Library two-group audition
+
+- Deployed controller 0.8: known MIDI sounds and the four AG guitar tracks are exclusive within separate groups; cross-group Active / Arm / Monitor states are retained. Select one track in each group initially. No track creation, patch changes or production project-file edits; editors still follow the latest selection.
+- The existing `Bitwig Studio` recovery entry covers these controllers. Previous files: `~/storage/daw/Backups/library-two-groups-20261021T163556.713740Z/`. All 10 live Storage directory links remain valid; preserve this layout during recovery.
+- 40 related tests passed and deployment matches source byte-for-byte. No accessible Bitwig/Sway session was found; host reload, simultaneous live audio and save/reopen acceptance remain pending. After recovery, select one MIDI sound and one AG guitar track in Library and confirm both remain Active / Arm / Monitor ON; ordinary projects must remain unaffected.
+- No commit/push. Run `snapshot.py` at closeout to retain deployment and uncommitted source. A snapshot covers on-disk state only and is not live host acceptance.
+
+### 2026-10-21 Spark GO capture runtime recovery
+
+- Recovered a continuously increasing capture-error state; see [routing investigation](../audio_routing/README.md). No new configuration or recovery paths. Original Spark duplex profile, mic links and routing maintenance were restored. Do not turn the temporary clock-isolation experiment into a permanent Beat Lab microphone disconnection.
+- Library was not saved; patches, gains and controller were unchanged. Snapshot protects on-disk contents, not unsaved project state. No commit/push; listening and restart stability remain unverified.
+
+### 2026-10-21 Monitor-only guitar audition (controller 0.9)
+
+- Deployed and live-verified: selecting AG does not arm recording; Monitor ON remains, MIDI behavior unchanged. Beat Lab track arm and internal recording were confirmed off in the UI. User reports strong noise resolved; no diagnostic audio captured.
+- Existing `Bitwig Studio` recovery entry covers the controller. Previous controller 0.8 and on-disk project: `~/storage/daw/Backups/library-monitor-only-20261021T165825.279088Z/`. 40 related tests passed. Save current Library and run Recovery snapshot at closeout; no commit/push.
+
+## 2026-10-21: Chord Lab twenty-fret deployment
+
+- Installed Chord Lab 0.2.13 into the existing Storage-backed `.clap` directory, preserving its symlink. Both boards show 20 frets; complete hand regions reach anchor 18, sharing upper-octave candidates with navigation and v3 state validation.
+- With user approval, saved and gracefully restarted Bitwig. Library's selected sound and key were retained. Chord Lab was restored to 920×703 and reopened at that size; global layout policy is unchanged.
+- Old plugin/project backup: `~/storage/daw/Backups/chordlab-twenty-frets-20261021T170800.635371Z/`. Evidence: `target/chordlab-twenty-frets/`; 569 Chord Lab Python tests, 396 related regressions, nine CTests, built and installed CLAP probes all passed. All ten live Storage links are valid.
+- Source remains uncommitted/unpushed; the recovery snapshot includes current working source and the installed plugin. The previous maximum-sized window alone does not establish its trigger.
+
+## 2026-10-21: disable auto-arm in both groups
+
+- Library controller 0.10 uses Monitor ON / Arm OFF in both groups. Host Recording Instrument tracks Auto-arm is off; Audio tracks was already off. The global selection preference changes, but the controller still leaves ordinary recording-project states untouched.
+- Previous controller/preferences/project: `~/storage/daw/Backups/library-no-auto-arm-20261021T171311.609945Z/`. Forty regressions passed; live MIDI/guitar switching evidence: `target/library-no-auto-arm/`.
+- Deployed into the existing Storage-backed controller directory. Source is uncommitted/unpushed; the snapshot captures working source, saved preferences and project.
+
+## 2026-10-21: output fallback responsiveness
+
+Preserved Spark GO → Woo Audio (EQ) → other physical outputs. `audio_routing/policy.toml` now polls every 0.25 seconds; policy service reloaded and enabled/active. All 39 audio-routing tests passed. Live links were identical across service reload and dry-run was a no-op. Removing Spark from an in-memory graph selects Woo EQ; no physical unplug/click-free listening acceptance was performed this round. Evidence: `target/audio-fallback-20261021/`. Source remains uncommitted/unpushed; recovery snapshot preserves the current source/configuration.

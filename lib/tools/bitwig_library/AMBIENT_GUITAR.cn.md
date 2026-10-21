@@ -1,5 +1,7 @@
 # Ambient Guitar — 四条实时吉他音色
 
+> 当前行为更新：controller 0.8 将 MIDI 与吉他分为两组，组内互斥、组间可同时演奏。下文 0.6 的全局互斥及旧验收属于历史记录；见 [当前说明](README.cn.md)。
+
 [English](AMBIENT_GUITAR.md)
 
 ## 工程与路由

@@ -2,7 +2,7 @@
 
 Strict policy: **Spark GO → Woo Audio (existing EQ) → another physical output**.
 
-This is system routing, not plugin DSP. It checks once per second and corrects stored defaults and per-stream targets without restarting Bitwig or the audio server. Device discovery may add its own delay.
+This is system routing, not plugin DSP. It checks every 250 milliseconds and corrects stored defaults and per-stream targets without restarting Bitwig or the audio server. Device discovery may add its own delay.
 
 ## Files and service
 
@@ -47,7 +47,7 @@ See the official [Loopback module](https://docs.pipewire.org/page_module_loopbac
 Reason: starting Bitwig without Spark reproduced an HDMI selection with no input ports even after Spark returned.
 The persistent source remains available; the policy reconnects its backend by device name rather than transient node IDs.
 Missing Spark means silence, **never a microphone fallback**. SF-558 remains the default voice source.
-The policy checks every second after device discovery; reconnection is not instantaneous.
+The policy checks every 250 milliseconds after device discovery; reconnection is not instantaneous.
 
 ### Installation and recovery
 
@@ -81,3 +81,18 @@ This change does not adjust faders, effects or Spark hardware direct monitoring.
 `microphone_inputs` in `policy.toml` connects the specific SF-558 USB microphone's `capture_MONO` to Bitwig's named `beat lab mic` L/R ports. Only these named ports are managed; the `in3` guitar input and other projects' Arm/Monitor states are untouched. Missing hardware never falls back to guitar or another microphone. Recreated ports reconnect by name. Bitwig keeps WooAudio playback; the recording track selects `beat lab mic` with Arm and Auto Monitor. Update the explicit configuration when changing microphones.
 
 Validation: `python -m pytest lib/tools/audio_routing -q` passed 38 tests. Disconnecting the live right input was automatically repaired; the plugin showed nonzero input. Real beatbox capture/accuracy remains untested.
+
+## 2026-10-21 Spark GO capture-noise investigation
+
+- Live Spark capture `pw-top ERR` increased by roughly 187/s; ALSA reported `hw_ptr=0` and implausibly large `avail`. Bitwig BUSY was about 0.1–0.3 ms per 256-sample cycle, not evidence of plugin CPU overload. SF-558 drove the graph and Spark followed it. A 48 kHz graph and 44.1 kHz hardware are not inherently a failure.
+- Source suspend/resume and recreating capture via output-only → original duplex profile did not recover it. Temporarily stopping routing maintenance and unlinking only SF-558 → Bitwig `beat lab mic L/R` let Spark become the driver; capture pointers advanced and errors stopped increasing. Routing maintenance and both mic links were restored. SF-558 became driver again, while Spark remained stable. The system default voice source was unchanged; no audio was recorded.
+- Final roughly 20-second observation, 21 valid samples: capture ERR stayed at 4610, Spark output at 1, SF-558 at 7, Bitwig at 2; all deltas zero. Both services active, policy dry-run empty, all 10 Storage links valid. Evidence: `target/guitar-noise-20261021/`.
+- This is runtime recovery, suggesting a startup/clock-transition state problem, not a proven driver root cause or restart-proof fix. User listening remains pending. No permanent clock-priority rule, buffer/patch/gain/controller changes or project-file edits were made.
+
+Mechanism reference: [WirePlumber ALSA configuration](https://pipewire.pages.freedesktop.org/wireplumber/daemon/configuration/alsa.html). Different hardware rates alone do not justify changing global rate/buffer settings.
+
+## 2026-10-21: Spark priority and automatic Woo fallback
+
+- Woo is `alsa_output.usb-XMOS_WooAudio-00.analog-stereo`. Preserve Spark GO → Woo (via `eq_woo_in` when available) → other physical outputs; Spark automatically takes precedence when it returns.
+- Reduced `poll_seconds` from 1.0 to 0.25 to reduce policy wait after discovery. Correct routes remain a no-op. Restarting this policy service does not restart audio/DAW or change volume, Arm or capture routes.
+- 250 ms is the polling interval, not an end-to-end hotplug guarantee. USB enumeration, driver/clock changes and EQ backend readiness take additional time. This does not guarantee gapless or click-free switching.

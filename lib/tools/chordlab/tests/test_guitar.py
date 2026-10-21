@@ -38,6 +38,28 @@ def test_generated_catalog_is_current() -> None:
     assert (SOURCE / "guitar_table.jsfx-inc").read_text() == GUITAR.make_guitar(SOURCE)
 
 
+def test_twenty_frets_share_render_navigation_and_state_limits() -> None:
+    rules = GUITAR.Rules.read(SOURCE / "guitar.toml")
+    assert rules.max_fret == 20
+    assert rules.max_anchor + rules.fret_span == rules.max_fret
+    ui = (SOURCE / "ui.jsfx-inc").read_text()
+    assert "fw=(w-open_w)/guitar_max_fret" in ui
+    assert ui.count("fret=0; loop(guitar_max_fret+1,") == 3
+    assert "guitar_saved[memory_index]<=guitar_max_anchor" in (SOURCE / "chordlab.jsfx").read_text()
+
+
+@pytest.mark.parametrize("root", range(12))
+def test_upper_octave_candidates_repeat_and_fit(root: int) -> None:
+    rules = GUITAR.Rules.read(SOURCE / "guitar.toml")
+    for family in rules.seventh:
+        anchors = family.positions(root, rules.max_anchor)
+        assert any(a > 12 for a in anchors)
+        for anchor in anchors:
+            assert anchor + rules.fret_span <= rules.max_fret
+            if 1 <= anchor <= rules.max_anchor - 12:
+                assert anchor + 12 in anchors
+
+
 def test_no_clef_mode_controls_but_anchor_markers_remain() -> None:
     ui = (SOURCE / "ui.jsfx-inc").read_text()
     engine = (SOURCE / "chordlab.jsfx").read_text()
@@ -68,10 +90,10 @@ def test_invalid_chord_rejected(values: tuple[int, int, int]) -> None:
 
 
 @pytest.mark.parametrize("degree,expected", [
-    (0, (0, 3, 5, 8, 10, 12)),
-    (1, (2, 5, 7, 10, 12, 14)),
-    (4, (0, 3, 5, 7, 10, 12)),
-    (6, (3, 6, 10, 12, 14)),
+    (0, (0, 3, 5, 8, 10, 12, 15, 17)),
+    (1, (2, 5, 7, 10, 12, 14, 17)),
+    (4, (0, 3, 5, 7, 10, 12, 15, 17)),
+    (6, (3, 6, 10, 12, 15, 18)),
 ])
 def test_user_reference_seventh_anchors(degree: int, expected: tuple[int, ...]) -> None:
     rules = GUITAR.Rules.read(SOURCE / "guitar.toml")
@@ -88,11 +110,11 @@ def test_seventh_anchors_only_use_transposed_user_candidates(key: int, degree: i
         (7, (0, 3, 5, 7, 10, 12)) if degree == 4 else
         (11, (2, 3, 6, 7, 9, 10, 12)))
     root = (key + (0, 2, 4, 5, 7, 9, 11)[degree]) % 12
-    candidates = tuple(a for a in range(15) if (
+    candidates = tuple(a for a in range(rules.max_anchor + 1) if (
         (a > 0 and any((a-base-root+reference_root) % 12 == 0 for base in anchors)) or
         (a == 0 and 0 in anchors and root == reference_root)))
     family = next(f for f in rules.seventh if degree in f.degrees)
-    assert family.positions(root, 14) == candidates
+    assert family.positions(root, rules.max_anchor) == candidates
     selected = GUITAR.catalog(rules, key, degree, 1)
     pcs = GUITAR.chord_pcs(key, degree, 1)
     assert {r.anchor for r in selected} <= set(candidates)
@@ -131,7 +153,7 @@ def test_seventh_degree_partition_validated(tmp_path: Path) -> None:
         GUITAR.Rules.read(path)
 
 
-@pytest.mark.parametrize("anchor", [-1, 15])
+@pytest.mark.parametrize("anchor", [-1, 19])
 def test_invalid_region_anchor_rejected(anchor: int) -> None:
     rules = GUITAR.Rules.read(SOURCE / "guitar.toml")
     with pytest.raises(ValueError, match="Anchor"):

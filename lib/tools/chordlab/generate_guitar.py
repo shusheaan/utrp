@@ -68,7 +68,7 @@ class Rules:
                 not 1 <= rules.min_anchor <= rules.preferred_anchor <= rules.max_anchor or
                 not 0 < rules.fret_span <= 3 or
                 rules.max_anchor + rules.fret_span > rules.max_fret or
-                rules.max_fret > 17 or rules.min_anchor_gap != 2):
+                rules.max_fret > 20 or rules.min_anchor_gap != 2):
             raise ValueError("Unsupported guitar layout or fingering limits")
         return rules
 
@@ -144,6 +144,7 @@ def make_guitar(source: Path) -> str:
     lines.append(f"guitar_default_anchor={rules.preferred_anchor};")
     lines.append(f"guitar_fret_span={rules.fret_span};")
     lines.append(f"guitar_max_fret={rules.max_fret};")
+    lines.append(f"guitar_max_anchor={rules.max_anchor};")
     return "\n".join(lines) + "\n"
 
 

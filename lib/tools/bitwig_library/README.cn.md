@@ -1,5 +1,32 @@
 # Bitwig Library 完整迁移（进行中）
 
+## 当前：两组都不自动 Arm（2026-10-21，controller 0.10）
+
+- 取代 0.9 的 MIDI 自动 Arm：已选 MIDI／吉他音色都是 Active ON、Monitor ON、Arm OFF；同组其他音色关闭，组间仍独立。激活后的延迟回调也只清除 Arm，不再写入 true。
+- 宿主 Settings → Recording → Auto-arm：Instrument tracks 与 Audio tracks 均关闭。检查时前者开启、后者已关闭；仅取消前者。这是全局选轨偏好，不只针对 Library，其他工程需要手动 Arm。
+- Arm 只是允许轨道参与录音，并不等于已开始录音。实时演奏使用显式 Monitor ON；若以后要在 Library 录音，先关闭控制器的 Exclusive audition + editors，再手动 Arm，以免再次选轨时被试听规则清除。
+- 40 项相关 pytest 通过（含 Node 模型中的启动、激活旧状态、跨组切换及没有瞬间 Arm true 写入）；普通工程的 Active／Arm／Monitor／窗口状态保护不变。实际检查 B2-juno60、Suitcase EP、Glass Air、Soft Prism 均未 Arm，Monitor ON；原 B2-juno60 + Glass Air 已恢复。
+- 证据：`target/library-no-auto-arm/`。默认 Chord Lab 窗口及 20 品没有再改。
+
+## 历史记录
+
+
+## 当前：吉他只监听，不自动 Arm（2026-10-21，controller 0.9）
+
+- 用户只需实时演奏：选中 AG 吉他轨时 Active ON、Monitor ON、Arm OFF；同组其他轨仍关闭，已选 MIDI 音色不变。激活后恢复的旧 Arm 状态也会在延迟回调中清除。
+- MIDI 组仍沿用原先选轨/Arm 行为。分组是互斥规则，不新增可见文件夹；原有 MIDI 文件夹与 Ambient Guitar 布局不动。
+- 40 项相关 pytest 通过。已部署并在实际 Library 选中 Glass Air，确认 Arm 灰色、输入监听开启、轨道与 Master 有电平。Beat Lab 轨 Arm 已关，插件 Record 可用、Stop 禁用、Input silent，未在录音；未删除已有录音或 MIDI。
+- 用户报告 Spark 强杂音已消失；此次未额外录制诊断音频。此前采集异常的具体根因及重开稳定性仍未证明，见 [音频路由记录](../audio_routing/README.cn.md)。
+
+## 当前：MIDI 与吉他独立试听（2026-10-21，controller 0.8）
+
+本节取代下方历史记录中的“钢琴与吉他全局互斥”。已知 MIDI 音色与四条 `AG - ...` 吉他音色分成两组：选轨只改变本组的 Active / Arm / Monitor，另一组保留。因此可同时保留一个钢琴/合成器和一个吉他效果轨。首次使用时分别点一次两组想用的轨；不自动挑选另一组音色，也不创建新轨。
+
+- 组内仍停用未选音色（不是只按 Mute），切换会截断该组旧音色尾音；音量、输入和插件参数不变。
+- 插件窗口仍跟随最新选择；关闭另一组窗口不代表停止其声音。共享输入、raw detection、自定义非白名单轨和普通工程不纳入组内互斥。
+- 两组激活后的延迟 Arm 修复独立，快速跨组切换不会取消另一组的修复；换工程/关闭控制器设置仍取消两组待执行动作。
+- 验证：`python -m pytest -q lib/tools/bitwig_library/tests lib/tools/daw_backup/test_live.py lib/tools/daw_backup/test_snapshot.py`：40 passed；Node 包含组内互斥、跨组保留、快速切换、辅助轨及普通工程状态不变。当前执行环境未发现可访问的 Bitwig/Sway 会话，未做宿主实时选轨或真人吉他＋MIDI 同时发声验收。
+
 ## 当前：Keystation 硬件控制
 
 独立 Transport 控制器、播放/录音/方向键、CC7 滑杆与轮子用法及验证边界，见 [Keystation 使用说明](KEYSTATION.cn.md)。保留原 Generic 演奏输入和 Library controller，不修改 Chord Lab 发声代码。

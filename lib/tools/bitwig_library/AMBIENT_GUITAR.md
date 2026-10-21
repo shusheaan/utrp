@@ -1,5 +1,7 @@
 # Ambient Guitar — four live guitar tones
 
+> Current behavior: controller 0.8 separates MIDI and guitar audition, exclusive within each group but simultaneous across groups. The global 0.6 policy and acceptance below are historical; see [current documentation](README.md).
+
 [中文](AMBIENT_GUITAR.cn.md)
 
 ## Project and routing

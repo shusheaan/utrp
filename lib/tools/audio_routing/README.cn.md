@@ -2,7 +2,7 @@
 
 固定策略：**Spark GO → Woo Audio（保留 EQ）→ 其他实体输出**。
 
-这是系统路由工具，不是 Chord Lab/Guitar Frontend 的 DSP 功能。每秒检查一次设备及连接，修正旧的默认输出与应用单独记忆的设备；设备发现本身可能另需时间。无需重启 Bitwig 或音频服务器。
+这是系统路由工具，不是 Chord Lab/Guitar Frontend 的 DSP 功能。每 250 毫秒检查一次设备及连接，修正旧的默认输出与应用单独记忆的设备；设备发现本身可能另需时间。无需重启 Bitwig 或音频服务器。
 
 ## 文件与启动
 
@@ -47,7 +47,7 @@ Library 的四条 AG 音色轨与 `GUITAR - raw detection` 固定选择
 为什么需要固定入口：已复现 Bitwig 启动时 Spark 不在场会选中 HDMI，之后 Spark 返回也没有输入端口。
 固定虚拟入口始终存在，后端按设备名称重新接 Spark，不依赖每次变化的节点 ID。
 Spark 缺席时保持静音，**不回退到系统麦克风**。默认语音输入 SF-558 不变。
-设备发现完成后，策略每秒检查；这不是零延迟热插拔保证。
+设备发现完成后，策略每 250 毫秒检查；这不是零延迟热插拔保证。
 
 ### 安装与恢复
 
@@ -81,3 +81,18 @@ MIDI 仍经原来的 Keystation controller 与共享 Chord Lab；Library 互斥�
 `policy.toml` 的 `microphone_inputs` 将固定 SF-558 USB 麦克风的 `capture_MONO` 接入 Bitwig 命名总线 `beat lab mic` 的 L/R 端口。只管理这两个明确命名的端口，不改 `in3` 吉他输入或其他工程的 Arm/Monitor。缺失麦克风时不回退到吉他或其他麦克风；端口重建后按名称重连。Bitwig 的 Audio 设置保留 WooAudio 输出，录音轨输入选 `beat lab mic`，Arm + Auto Monitor 使信号进入 Beat Lab。需要其他设备时修改配置，不自动猜测。
 
 验证：`python -m pytest lib/tools/audio_routing -q` 38 passed；实机断开右输入后自动恢复；插件输入电平非零。没有进行用户口技录音准确率测试。
+
+## 2026-10-21 Spark GO 采集异响排查
+
+- 现场发现 Spark capture 的 `pw-top ERR` 每秒增加约 187，ALSA `hw_ptr=0`、`avail` 异常大；Bitwig BUSY 约 0.1–0.3 ms / 256 samples，不能将此次异常归因于插件 CPU 过载。图中 SF-558 是 driver，Spark 是 follower；48 kHz graph 与 44.1 kHz Spark 硬件共存本身不等于故障。
+- suspend/resume Spark source 以及 output-only → 原 duplex profile 重建 source 均未解决。随后短暂停止自动路由服务，仅断开 SF-558 → Bitwig `beat lab mic L/R` 两条连接，使 Spark 独立成为 driver；其采集指针恢复推进，错误停止增长。服务随后恢复，麦克风两条连接重新接回，SF-558 再次成为 driver，Spark 仍稳定。系统默认语音输入未改，也未采录音频。
+- 最后约 20 秒、21 个有效观测：Spark capture ERR 固定 4610、输出 1、SF-558 7、Bitwig 2，全部增量为 0。两项路由服务 active，policy dry-run 无修正项，10 个 Storage 链接通过。证据：`target/guitar-noise-20261021/`。
+- 这是一次采集运行状态恢复，支持“启动/时钟切换状态异常”的怀疑，但未证明具体驱动根因或重开后不复发。不能将短期计数稳定写成用户听感已确认。未加永久时钟优先级规则、未改 buffer、音色、音量、Library controller 或工程文件；真实异响是否消失等待用户试听。
+
+机制参考：[WirePlumber ALSA 配置](https://pipewire.pages.freedesktop.org/wireplumber/daemon/configuration/alsa.html)。不要仅看到两设备采样率不同就盲目统一采样率或更改全局 buffer。
+
+## 2026-10-21：确认 Spark 优先、Woo 自动接替
+
+- 当前 Woo 设备名为 `alsa_output.usb-XMOS_WooAudio-00.analog-stereo`。保留 Spark GO → Woo（存在时走 `eq_woo_in`）→ 其他实体输出顺序；Spark 回来后自动优先使用。
+- `poll_seconds` 从 1.0 缩短至 0.25，减少设备枚举后策略的额外等待；正确路由仍为空操作，不反复重接。服务重启只重读策略，不重启音频服务器／DAW，不改音量、Arm 或输入。
+- 250 毫秒是轮询间隔，不是物理热插拔到有声的保证；USB 枚举、驱动、时钟和 EQ 后端就绪另需时间。不能据此保证零断声或无爆音。

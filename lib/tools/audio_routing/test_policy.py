@@ -124,3 +124,7 @@ def test_parse_metadata_and_ports() -> None:
 def test_malformed_snapshot_fails_explicitly(text: str) -> None:
     with pytest.raises((ValueError, KeyError)):
         Snapshot.parse(text)
+
+
+def test_live_policy_checks_hotplug_every_quarter_second(config: Config) -> None:
+    assert config.interval == 0.25

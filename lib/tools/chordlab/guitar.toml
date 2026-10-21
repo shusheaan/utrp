@@ -1,9 +1,9 @@
 # Standard tuning, low E to high E. Play all unique pitches in the hand region.
 open_notes = [40, 45, 50, 55, 59, 64]
-max_fret = 17
+max_fret = 20
 fret_span = 2 # Anchor plus two higher frets: three frets total.
 min_anchor = 1
-max_anchor = 14
+max_anchor = 18 # Leave room for the full three-fret hand region.
 preferred_anchor = 11
 min_anchor_gap = 2 # Remove one-fret neighbours, keep two-fret moves.
 

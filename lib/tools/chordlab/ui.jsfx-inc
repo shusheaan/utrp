@@ -152,10 +152,10 @@ function fret_marker(fret) (
   fret==15 || fret==17 || fret==19 ? 1 : 0;
 );
 function draw_guitar(x,y,w,h,scale_view) local(open_w,fw,fret,string,kx,sy,n,role,marker,ch,hw,radius,marker_radius,anchor_state) (
-  open_w=26; fw=(w-open_w)/17;
+  open_w=26; fw=(w-open_w)/guitar_max_fret;
   radius=(keyboard_black_width(w)-1)/2; marker_radius=2.5;
   ink(diagram_background_color,1); gfx_rect(x,y,w,h);
-  fret=0; loop(18,
+  fret=0; loop(guitar_max_fret+1,
     kx=x+open_w+fret*fw;
     ink(fret==0 ? guitar_nut_color : guitar_fret_color,1);
     gfx_rect(theme_dark ? floor(kx)-1 : kx-1,y,fret==0 ? 3 : theme_dark ? dark_diagram_line_width : 1,h);
@@ -168,7 +168,7 @@ function draw_guitar(x,y,w,h,scale_view) local(open_w,fw,fret,string,kx,sy,n,rol
   );
   string=0; loop(6,
     sy=floor(y+11+string*(h-22)/5+.5);
-    fret=0; loop(18,
+    fret=0; loop(guitar_max_fret+1,
       kx=fret==0 ? x+open_w/2 : x+open_w+(fret-.5)*fw;
       n=guitar_open(string)+fret;
       role=diagram_role(n%12,key,degree,voice_count,scale_view);
@@ -177,7 +177,7 @@ function draw_guitar(x,y,w,h,scale_view) local(open_w,fw,fret,string,kx,sy,n,rol
     );
     string+=1;
   );
-  fret=0; loop(18,
+  fret=0; loop(guitar_max_fret+1,
     kx=fret==0 ? x+open_w/2 : x+open_w+(fret-.5)*fw;
     // Upper row = selectable index anchors for this chord, not fixed fret inlays.
     // Keep it in the existing 12px gap, clear of both keyboard and top string.

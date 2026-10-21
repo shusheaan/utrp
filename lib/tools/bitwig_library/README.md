@@ -1,5 +1,32 @@
 # Full Bitwig Library migration — in progress
 
+## Current: neither group auto-arms (2026-10-21, controller 0.10)
+
+- Supersedes 0.9 MIDI arming: selected MIDI/guitar sounds use Active ON, Monitor ON, Arm OFF. Other sounds in the same group are disabled; the other group remains independent. Deferred activation also clears Arm and never writes true.
+- Host Settings → Recording → Auto-arm: both Instrument tracks and Audio tracks are off. Instruments were enabled, audio was already disabled; only the former changed. This is a global selection preference, so other projects now require manual arming.
+- Arm makes a track eligible for recording, not already recording. Live audition uses explicit Monitor ON. To record in Library later, disable Exclusive audition + editors first, then arm manually so reselection does not clear it.
+- 40 related pytest cases passed, including Node startup/activation-restore/cross-group models and no transient Arm true writes. Controller protection of ordinary projects' Active/Arm/Monitor/editor states remains. Live checks of B2-juno60, Suitcase EP, Glass Air and Soft Prism confirmed Arm OFF and Monitor ON; original B2-juno60 + Glass Air restored.
+- Evidence: `target/library-no-auto-arm/`. Default Chord Lab dimensions and twenty frets are unchanged.
+
+## History
+
+
+## Current: guitar monitoring without auto-arm (2026-10-21, controller 0.9)
+
+- AG selection now sets Active ON, Monitor ON and Arm OFF. Other guitar tracks are disabled; the selected MIDI sound is preserved. Deferred activation also clears any restored historical arm state.
+- MIDI selection/arming is unchanged. These are logical exclusivity groups, not new folders; existing MIDI folders and Ambient Guitar layout remain intact.
+- 40 related pytest cases passed. Deployed and checked live in Library: Glass Air arm gray, input monitoring on, track and Master meters active. Beat Lab track arm is off; plugin Record enabled, Stop disabled, Input silent: not recording. Existing audio/MIDI was not deleted.
+- User reports the strong Spark noise is gone. No diagnostic audio was recorded. The earlier capture failure's exact root cause and restart stability remain unproven; see [routing investigation](../audio_routing/README.md).
+
+## Current: independent MIDI and guitar audition (2026-10-21, controller 0.8)
+
+This supersedes the historical global piano/guitar exclusivity below. Known MIDI sounds and the four `AG - ...` guitar tracks are separate groups: selection changes Active / Arm / Monitor only within its group, preserving the other group. One piano/synth and one guitar chain can therefore remain enabled together. Select the desired track in each group once to initialize; the controller neither chooses a counterpart automatically nor creates tracks.
+
+- Other sounds in the selected group are deactivated, not merely muted; switching cuts that group's previous tail. Gains, inputs and plugin parameters are unchanged.
+- Editors still follow the latest selection; closing the other group's window does not stop its audio. Shared input, raw detection, non-allowlisted custom tracks and ordinary projects are outside group exclusivity.
+- Deferred arm restoration is independent per group. Rapid cross-group selection preserves both pending restores; project/setting changes cancel both.
+- Validation: `python -m pytest -q lib/tools/bitwig_library/tests lib/tools/daw_backup/test_live.py lib/tools/daw_backup/test_snapshot.py`: 40 passed. Node covers within-group exclusivity, cross-group preservation, rapid selection, auxiliary tracks and ordinary-project state preservation. No accessible Bitwig/Sway session was found in this execution environment; live host selection and simultaneous physical guitar/MIDI audio remain unverified.
+
 ## Current: Keystation hardware controls
 
 See [Keystation controls](KEYSTATION.md) for the separate Transport controller, transport/navigation buttons, CC7 slider, wheels and validation limits. Existing Generic musical input and Library controller remain; no Chord Lab sound-engine change.

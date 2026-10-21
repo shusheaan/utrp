@@ -160,3 +160,37 @@ PY
 - 正常退出、重新创建虚拟源并重开 Bitwig 后，保存的输入按名称恢复；实际 graph 为 Spark → 固定源 → Bitwig，buffer 128。切换钢琴／吉他时 Arm 互斥；controller 和 MIDI 绑定未修改。raw detection 保持 −∞。
 - 通过 profile 暂时关闭／恢复 Spark 验证：虚拟源始终接到 Bitwig，缺席时后端无输入，恢复后自动接回 Spark。不是物理拔插／整机重启／真人听音测试。
 - 66 项音频路由、备份及 controller 回归测试通过；10 个 Storage 目录链接有效；策略 dry-run 无待修正项。截图和 graph 在 `target/input-autoconnect/`。真实吉他和键盘试听仍待用户确认；未 commit/push。
+
+### 2026-10-21 Library 两组试听
+
+- 已部署 controller 0.8：已知 MIDI 音色与四条 AG 吉他轨分别组内互斥，跨组保留 Active / Arm / Monitor。首次分别选一条；不创建轨道、不改音色参数或正式工程文件。窗口仍跟随最新选择。
+- `backup.toml` 的 `Bitwig Studio` 项已覆盖控制器；旧版备份在 `~/storage/daw/Backups/library-two-groups-20261021T163556.713740Z/`。实时主目录和 10 个 home 目录链接保持；恢复时沿用该结构。
+- 40 项相关回归通过，部署文件与源码逐字节一致。当前环境未发现可访问的 Bitwig/Sway 会话，宿主重载、实际双组发声和保存重开待用户验证。恢复后在 Library 分别选择一条 MIDI 音色和 AG 吉他轨，再检查二者均 Active / Arm / Monitor ON；普通工程不得受此互斥影响。
+- 未 commit/push；收尾运行 `snapshot.py` 保存部署文件与未提交源码。快照只覆盖已写盘状态，不能代替实际宿主验收。
+
+### 2026-10-21 Spark GO 采集状态恢复
+
+- 排查并恢复采集错误持续增加的运行状态，详见 [音频路由记录](../audio_routing/README.cn.md)。未新增配置或改变恢复路径；Spark 原 duplex profile、麦克风连接、自动路由服务均已恢复。不要把临时时钟隔离测试固化为断开 Beat Lab 麦克风的恢复步骤。
+- Library 工程未保存，音色、音量及 controller 未修改。快照只保护已写盘内容，不含当前未保存工程状态；未 commit/push。用户听感及重开稳定性待确认。
+
+### 2026-10-21 吉他仅监听（controller 0.9）
+
+- 已部署并实机确认 AG 选轨不自动 Arm，Monitor ON 保持；MIDI 行为不变。Beat Lab 轨 Arm 及插件内部录音经界面确认均未开启；用户确认强杂音已消失，本轮不再采集诊断音频。
+- 恢复清单沿用 `Bitwig Studio` 项；修改前 controller 0.8 和磁盘工程备份位于 `~/storage/daw/Backups/library-monitor-only-20261021T165825.279088Z/`。现行源代码 40 项相关测试通过。收尾保存当前 Library 并执行 Recovery 快照；未 commit/push。
+
+## 2026-10-21：Chord Lab 20 品部署
+
+- 安装 Chord Lab 0.2.13 至 `.clap` 的既有 Storage 实体目录；未替换目录 symlink。指板 20 品、最高完整手位 18 品，高八度候选与导航／v3 状态验证同步。
+- 用户批准后保存并正常退出／重启 Bitwig；Library 原音色、调性保留。Chord Lab 恢复 920×703，重开后仍为该尺寸；未改全局布局策略。
+- 旧插件及工程备份：`~/storage/daw/Backups/chordlab-twenty-frets-20261021T170800.635371Z/`。验证证据在 `target/chordlab-twenty-frets/`：569 项 Chord Lab Python 测试、396 项相关回归、9 项 CTest、构建和安装后二进制 probe 全部通过；10 个实时 Storage 链接有效。
+- 本次源码未 commit/push；恢复快照包含当前未提交源码和新插件。大窗口仅确认曾达到最大尺寸，未断言其具体触发原因。
+
+## 2026-10-21：关闭两组自动 Arm
+
+- Library controller 0.10 两组均 Monitor ON／Arm OFF；宿主 Recording 的 Instrument tracks Auto-arm 关闭，Audio tracks 原本已关闭。全局选轨偏好改变，但 controller 不改普通录音工程状态。
+- 旧控制器／偏好／工程备份：`~/storage/daw/Backups/library-no-auto-arm-20261021T171311.609945Z/`。40 项回归通过；实际 MIDI／吉他切换及恢复证据：`target/library-no-auto-arm/`。
+- 部署在既有 Storage-backed controller 目录，源码未 commit/push；快照保存当前源码、已落盘偏好和工程。
+
+## 2026-10-21：输出自动接替响应
+
+保留 Spark GO → Woo Audio（EQ）→ 其他实体输出的规则；`audio_routing/policy.toml` 的轮询改为 0.25 秒，服务已重读配置并 enabled/active。39 项音频路由测试通过；重载前后所有实时连接相同、dry-run 无操作。移除 Spark 的内存图模拟选择 Woo EQ；本轮未进行物理拔插或无爆音听感验收。证据：`target/audio-fallback-20261021/`。源码未 commit/push，恢复快照保留当前源码配置。

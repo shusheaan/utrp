@@ -42,7 +42,7 @@ loop(12,
         guitar_region_contains(-1,key,degree,kind,anchor) ? failures+=1;
         guitar_region_contains(128,key,degree,kind,anchor) ? failures+=1;
         // Every catalog anchor is hollow except the one resolved for this chord.
-        fret=-1; filled=0; marked=0; loop(20,
+        fret=-1; filled=0; marked=0; loop(guitar_max_fret+3,
           expected=0; j=0; loop(record[1],
             candidate=record[0]+j*guitar_record_stride;
             candidate[0]==fret ? expected=candidate==shape ? 2 : 1;

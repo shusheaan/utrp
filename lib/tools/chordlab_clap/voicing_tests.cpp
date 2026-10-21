@@ -48,7 +48,7 @@ void validate(ysfx_t* fx, const Notes& notes) {
     check(pcs==expected,"All and only chord pitch classes, including ninth");
     if (ysfx_slider_get_value(fx,19)==1) {
         bool found=false;
-        for (int anchor=0;anchor<=14;++anchor) {
+        for (int anchor=0;anchor<=18;++anchor) {
             Notes region;
             for (int open : {40,45,50,55,59,64})
                 for (int fret=anchor;fret<anchor+3;++fret)
@@ -92,6 +92,22 @@ void persistence(ysfx_config_t* config, const char* path, ysfx_t* fx, Notes& not
     midi(restored,actual,0x9f,74); check(actual==guitar,"Guitar position persists");
     midi(restored,actual,0x8f,74,0); check(actual.empty(),"Restored notes release");
     ysfx_state_free(saved); ysfx_free(restored);
+}
+void upper_position_persistence(ysfx_config_t* config, const char* path) {
+    auto* fx=load(config,path); Notes notes; process(fx,notes);
+    command(fx,notes,1); command(fx,notes,29); midi(fx,notes,0x9f,74);
+    for (int i=0;i<20;++i) command(fx,notes,20);
+    check(ysfx_read_vmem_single(fx,3100)==18,"Dbmaj7 reaches anchor 18");
+    check(notes.count(84)==1,"Twentieth fret high E string sounds C6");
+    const Notes upper=notes; midi(fx,notes,0x8f,74,0);
+    auto* saved=ysfx_save_state(fx); check(saved!=nullptr,"Save high anchor");
+    auto* restored=load(config,path);
+    check(ysfx_load_state(restored,saved),"Restore high anchor");
+    process(restored,notes); check(notes.empty(),"High anchor does not replay notes");
+    check(ysfx_read_vmem_single(restored,3100)==18,"Anchor 18 survives v3 validation");
+    midi(restored,notes,0x9f,74); check(notes==upper,"Restored upper region matches");
+    midi(restored,notes,0x8f,74,0); check(notes.empty(),"Upper region releases cleanly");
+    ysfx_state_free(saved); ysfx_free(restored); ysfx_free(fx);
 }
 void mixed(ysfx_t* fx, Notes& notes) {
     command(fx,notes,29); midi(fx,notes,0x9f,74);
@@ -239,6 +255,7 @@ int main(int argc,char** argv) {
         ysfx_set_log_reporter(config,[](intptr_t,ysfx_log_level,const char* s){std::fprintf(stderr,"%s\n",s);});
         auto* fx=load(config,argv[1]); Notes notes; process(fx,notes);
         matrix(fx,notes); persistence(config,argv[1],fx,notes); mixed(fx,notes);
+        upper_position_persistence(config,argv[1]);
         automatic_position_recall(config,argv[1]);
         current_chord_reset(config,argv[1]);
         display_only_notes(config,argv[1]);

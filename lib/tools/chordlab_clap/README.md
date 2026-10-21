@@ -1,3 +1,19 @@
+# Chord Lab CLAP 0.2.13
+
+## Twenty frets and upper positions (2026-10-21)
+
+- Both boards use `guitar.toml`'s `max_fret = 20`, retaining the default 920×703 editor and existing font/note sizes rather than enlarging the window.
+- Seventh-chord index candidates repeat every 12 frets. The anchor limit grows from 14 to 18, leaving two higher frets for the complete three-fret region. Coverage-based adjacent-candidate filtering remains; not every fret is marked.
+- In Guitar mode, the chord board's upper edge shows hollow alternatives and the filled current anchor. Upper positions share the catalog used by H/L navigation, MIDI output and v3 state restoration. Piano mode does not show hand-position dots.
+- The live window had reached its permitted maximum of 1636×1220 and was restored through the window manager. Plugin zoom, default dimensions and global window policy are unchanged; dimensions alone do not establish what triggered enlargement.
+- Stable CLAP ID, 21 parameters and v3 state format are unchanged. Older valid anchors remain readable and resolve to the nearest current catalog entry.
+
+Validation evidence: `target/chordlab-twenty-frets/`, including board bounds, octave candidates in all 12 keys, held navigation and persistence of anchor 18 with a sounding twentieth-fret pitch.
+
+Acceptance: 569 Python tests, nine CTests and built/installed CLAP probes passed, plus 396 related layout/controller/backup regressions. Library was saved, backed up and restarted; live inspection confirmed 920×703, twenty frets and upper-position dots.
+
+## History
+
 # Chord Lab CLAP 0.2.12
 
 ## Momentary pedal and focus fix (2026-10-18)
