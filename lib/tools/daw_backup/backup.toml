@@ -3,12 +3,12 @@
 backup_root = "storage/daw/Recovery"
 required = [
   ".zshrc", # Includes the gral-managed bitwig/bw Library launch commands.
-  ".clap", # Includes Beat Lab (internal recording, state-embedded PCM + Gate), Chord Lab 0.2.13 (20 frets, upper anchors) / Guitar Front End.
-  ".BitwigStudio/prefs", ".BitwigStudio/view-settings", # Includes beat lab mic input bus; instrument/audio Auto-arm OFF.
-  "Bitwig Studio", # UTRP Library 0.10: independent MIDI/guitar monitoring without record arm.
+  ".clap", # Includes Beat Lab (internal recording, state-embedded PCM + Gate), Chord Lab 0.2.14 (startup Sustain/Focus, 20 frets, upper anchors) / Guitar Front End.
+  ".BitwigStudio/prefs", ".BitwigStudio/view-settings", # Native Spark+Woo Combined Device, 128 samples; instrument/audio Auto-arm OFF.
+  "Bitwig Studio", # UTRP Library 0.10: no auto-arm; Keystation 1.1: folders and manual Arm.
   ".config/REAPER", ".config/Surge XT.settings",
   ".Surge XT", ".Surge Synth Team", ".config/SFZTools/sfizz",
-  ".config/pipewire", ".config/sway/config", ".config/sway/utrp-plugin-windows.conf",
+  ".config/pipewire", ".config/sway/config", ".config/sway/utrp-plugin-windows.conf", # Workspace 2, Chord Lab map-time 920x703 floating rule, plugin layout startup.
   ".config/systemd/user/utrp-plugin-windows.service",
   ".local/share/applications/com.bitwig.BitwigStudio.desktop",
   ".local/share/applications/utrp-bitwig-library.desktop",
@@ -21,5 +21,6 @@ optional = [".config/wireplumber", ".local/state/wireplumber", ".BitwigStudio/pl
 assets = [".BitwigStudio/installed-packages", "opt/bitwig-studio-6.1.4"]
 system_assets = ["/usr/lib/clap", "/usr/lib/vst3", "/usr/share/surge-xt"]
 # Already on persistent storage; these are inventoried, not copied into themselves.
+# Library levels: audible -2 dB, buses/master 0 dB; raw detection stays silent.
 persistent = ["storage/daw", "storage/daw/samples", "storage/daw/Library/Library.bwproject",
               "storage/daw/BeatLab", "storage/daw/Tools/BeatLab"]

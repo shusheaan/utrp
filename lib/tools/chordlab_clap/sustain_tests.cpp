@@ -33,6 +33,26 @@ void cc(const Event& event, int channel, int value) {
 void baseline(ysfx_t* fx, int value) {
     require(ysfx_slider_get_value(fx,17)==value,"S indicator remains the pedal-up baseline");
 }
+void startup(ysfx_t* fx) {
+    baseline(fx,1);
+    // Hosts restore old parameter values after @init, including a stale command.
+    ysfx_slider_set_value(fx,17,0,true);
+    ysfx_slider_set_value(fx,7,22,true);
+    ysfx_slider_set_value(fx,6,99,true);
+    const ysfx_time_info_t stopped{120,ysfx_playback_stopped,0,0,{4,4}};
+    ysfx_set_time_info(fx,&stopped); // Host transport may only arrive on first block.
+    const auto out=command(fx,23);
+    require(out.size()==28,"Startup clears stale sustain then enables all musical channels");
+    for (int i=0;i<28;++i)
+        require(out[i].frame==0 && out[i].bytes==std::array<uint8_t,3>{
+            uint8_t(0xb0+i%14),64,uint8_t(i<14?0:127)},"Ordered startup CC64 at sample zero");
+    baseline(fx,1);
+    require(command(fx,23).empty(),"Focus cleanup neither repeats startup nor disables sustain");
+    baseline(fx,1);
+    command(fx,27); baseline(fx,0);
+    require(command(fx,23).empty(),"Manual OFF survives subsequent blocks and focus cleanup");
+    baseline(fx,0);
+}
 void truth_table(ysfx_t* fx) {
     for (int base : {0,1}) {
         if (base) command(fx,22);
@@ -114,16 +134,25 @@ void focus_and_reset(ysfx_t* fx) {
         command(fx,22);
     }
 }
+void transport_stop(ysfx_t* fx) {
+    command(fx,22); baseline(fx,1);
+    const ysfx_time_info_t playing{120,ysfx_playback_playing,0,0,{4,4}};
+    ysfx_set_time_info(fx,&playing); command(fx,23); baseline(fx,1);
+    const ysfx_time_info_t stopped{120,ysfx_playback_stopped,0,0,{4,4}};
+    ysfx_set_time_info(fx,&stopped); command(fx,23); baseline(fx,0);
+}
 int main(int argc,char** argv) {
     if (argc!=2) return 2;
     auto* config=ysfx_config_new(); auto* fx=ysfx_new(config); int result=0;
     try {
         require(ysfx_load_file(fx,argv[1],0) && ysfx_compile(fx,0),"Compile actual engine");
-        ysfx_set_sample_rate(fx,48000); ysfx_set_block_size(fx,256); ysfx_init(fx);
+        ysfx_set_sample_rate(fx,48000); ysfx_set_block_size(fx,256);
+        const ysfx_time_info_t playing{120,ysfx_playback_playing,0,0,{4,4}};
+        ysfx_set_time_info(fx,&playing); ysfx_init(fx);
         ysfx_slider_set_value(fx,13,1,true);
-        command(fx,23);
+        startup(fx);
         truth_table(fx); toggling_while_pressed(fx); sustained_hold(fx);
-        held_notes_and_reserved_channels(fx); focus_and_reset(fx);
+        held_notes_and_reserved_channels(fx); focus_and_reset(fx); transport_stop(fx);
         std::puts("Pedal baseline: 224 threshold/channel cases, mid-pedal toggles, indicator, held notes, reset and isolation: PASS");
     } catch (const std::exception& error) { std::fprintf(stderr,"FAIL: %s\n",error.what()); result=1; }
     ysfx_free(fx); ysfx_config_free(config); return result;

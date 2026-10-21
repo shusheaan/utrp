@@ -58,7 +58,7 @@ def test_dark_palette_rejects_invalid_colors(tmp_path: Path, value: str) -> None
 
 def test_appearance_parameter_is_appended_and_defaults_dark() -> None:
     source = (SOURCE / "chordlab.jsfx").read_text()
-    assert 'slider18:0<0,1,1>-Sustain lock (read only)' in source
+    assert 'slider18:1<0,1,1>-Sustain lock (read only)' in source
     assert 'slider19:0<0,1,1{Dark,Bright}>-Appearance' in source
     assert 'theme_dark=slider19<0.5;' in source
 

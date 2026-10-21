@@ -1,4 +1,26 @@
+# Chord Lab CLAP 0.2.14
+
+## 默认 Sustain 与启动 Focus（2026-10-21）
+
+- 新建或重载插件时默认 Sustain On，包括保存过 Off 的旧工程。首次音频块先发 CC64 Off 清理旧延音，再向 14 个音乐通道发 On；不重放旧命令，也不把首次到达的宿主停止状态误认为真正的播放停止。
+- 编辑器默认开启电脑键盘接管，等原生父窗口实际可见后获取一次 Focus。关闭后重新打开也获取一次；用户切到其他窗口后不持续抢焦点，手动关闭 A 在当前编辑器中保持关闭。实体 MIDI 不依赖界面焦点。
+- Space/S 仍可手动关掉 Sustain；失焦、隐藏或关闭界面不改变当前 Sustain。真正的 transport Stop 和紧急清理仍关闭延音。仅重新打开界面不重置用户手动选择。
+- 保留 920×703 默认大小、20 品与高把位白点、21 个参数和 v3 状态格式。没有新增服务，也没有修改音频路由、音量、Arm 或 Library 互斥策略。
+
+验证记录见 `target/chordlab-startup/`。新增真实 CLAP 新建/旧状态恢复及 X11 延迟映射、失焦不抢回、关闭/重建测试；实体键盘和音箱的最终听感由用户确认。
+
+
+验收：975 项 Python 测试、9 项 CTest、构建与安装 CLAP 探针通过。额外 `clap_probe <plugin> --focus` 在隔离的 rootful Xwayland 中验证原生延迟映射及一次性 Focus；普通 rootless Sway 会重定向测试用 unmanaged 窗口的焦点，不能替代隔离测试。测试服务器未监听网络，结束后关闭；JUCE 所需 WM atom 名称已在测试服务器预先注册。
+
+已保存、备份并重启 Bitwig Library，Workspace 2 实际窗口为 920×703，启动 S/A 均绿色；未点击插件即向当前原生焦点发送和弦键，sfizz 显示 4 voices，松开后清理并恢复 Sustain On。XTest 在此 rootless 会话未产生有效按键，实际证据使用 XSendEvent，不冒充真人实体键盘验收。
+安装 SHA-256：`39492f9bdf064aaa50aed63cc9df3bf695e847e23866edeb085f3e0e4c65a7ac`。
+
+## 历史版本
+
 # Chord Lab CLAP 0.2.13
+
+> 2026-10-21 窗口复发修复：已通过[原生开窗规则](../plugin_windows/README.cn.md)消除先平铺后浮动的尺寸竞争，新建共享/吉他实例均为 920×703；下面“未改窗口策略”是较早的临时恢复记录。插件二进制和 20 品功能不变。
+
 
 ## 20 品指板与高把位（2026-10-21）
 

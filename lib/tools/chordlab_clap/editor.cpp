@@ -36,6 +36,7 @@ YsfxEditor::YsfxEditor(YsfxProcessor& p) : AudioProcessorEditor(p), processor(p)
     capture.onClick = [this] {
         if (ignoreCaptureClick) return;
         enabled = !captureWasActive && physical.available();
+        initialFocusPending = false;
         if (!enabled) { releaseKeys(); processor.keyboardControl().release(); }
         else focusInput();
         updateLabel();
@@ -115,18 +116,21 @@ void YsfxEditor::showAppearanceMenu()
     });
 }
 
-void YsfxEditor::focusInput()
+bool YsfxEditor::focusInput()
 {
-    view.grabKeyboardFocus();
+    if (!isShowing()) return false;
     // JUCE may still consider the component focused after the host moved native
     // focus to its container. Reassert the peer even when the component call is a no-op.
     if (auto* peer = getPeer()) {
 #if JUCE_LINUX
-        physical.grabFocus(peer->getNativeHandle());
+        if (!physical.grabFocus(peer->getNativeHandle())) return false;
 #else
         peer->grabFocus();
 #endif
+        view.grabKeyboardFocus();
+        return true;
     }
+    return false;
 }
 
 void YsfxEditor::mouseUp(const juce::MouseEvent& event)
@@ -190,6 +194,11 @@ void YsfxEditor::dispatchNativeKeys()
 
 void YsfxEditor::timerCallback()
 {
+    // The host may show the editor before mapping its native parent. Retry only
+    // until the first viewable activation, never after the user moves focus away.
+    if (!isShowing()) initialFocusPending = enabled;
+    else if (initialFocusPending && enabled)
+        initialFocusPending = !focusInput();
     auto info = processor.getCurrentInfo();
     if (displayedEffect != info->effect.get()) {
         displayedEffect = info->effect.get();
@@ -210,7 +219,8 @@ void YsfxEditor::timerCallback()
 
 void YsfxEditor::visibilityChanged()
 {
-    if (isShowing() && enabled) focusInput();
+    initialFocusPending = enabled;
+    if (initialFocusPending && isShowing()) initialFocusPending = !focusInput();
     if (!isShowing()) { releaseKeys(); processor.keyboardControl().release(); }
 }
 

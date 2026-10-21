@@ -1,7 +1,7 @@
 # Bitwig Library audio presets; CLAP effects can also be loaded in REAPER.
 # Input: copied Spark GO mono source, NOT the guitar detector's MIDI output.
 group = "Ambient Guitar"
-track_gain_normalized = 0.5 # approximately -12 dB; safe initial audition level
+track_gain_normalized = 0.7350609216395488 # -2 dB; Library levels.toml recipe
 
 [[presets]]
 name = "AG - 01 Glass Air"

@@ -55,21 +55,22 @@ void PhysicalKeys::refresh()
         down[i] = juce::KeyPress::isKeyCurrentlyDown(chordlabKeys[i].key);
 #endif
 }
-void PhysicalKeys::grabFocus(void* nativeWindow)
+bool PhysicalKeys::grabFocus(void* nativeWindow)
 {
 #if JUCE_LINUX
-    if (!display || !nativeWindow) return;
+    if (!display || !nativeWindow) return false;
     auto* connection = static_cast<Display*>(display);
     const auto window = reinterpret_cast<Window>(nativeWindow);
     XWindowAttributes attributes{};
-    if (!XGetWindowAttributes(connection, window, &attributes) || attributes.map_state != IsViewable) return;
-    // Only called by an explicit editor activation. A cached JUCE user timestamp
+    if (!XGetWindowAttributes(connection, window, &attributes) || attributes.map_state != IsViewable) return false;
+    // Only called on opening or explicit editor activation. A cached JUCE timestamp
     // can predate the host's latest focus change and be rejected by X11.
     XSetInputFocus(connection, window, RevertToParent, CurrentTime);
     XFlush(connection);
 #else
     juce::ignoreUnused(nativeWindow);
 #endif
+    return true;
 }
 bool PhysicalKeys::isDown(int code) const
 {

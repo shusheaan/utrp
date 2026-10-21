@@ -8,14 +8,21 @@ At the user's request, stopped and deleted `utrp-audio-output.service` and `utrp
 
 System PipeWire / WirePlumber, existing Woo EQ and plugin-window service are unchanged. Do not reinstall either audio service from older snapshots. The [historical record](HISTORY.md) preserves the old implementation and diagnostics, not current installation instructions.
 
-## Inside Bitwig (pending live setup)
+## Inside Bitwig (deployed and reopen-verified, 2026-10-21)
 
-- Connect Spark GO and Woo Audio before opening Bitwig. Use native PipeWire in Settings → Audio and select the required physical devices.
-- Choose Woo Audio for output and Spark GO USB mono capture for guitar input, not the removed `Applications → pw-loopback → Spark-GO-Guitar`. Remap all four AG tracks and `GUITAR - raw detection`; keep the raw-detection fader at −∞.
-- If Beat Lab microphone input is needed, explicitly map its input bus to SF-558 inside Bitwig. No background program maintains those links; do not enable recording or auto-arm.
-- Select input and output independently. No forced switch back to Spark, automatic fallback or seamless hotplug guarantee. Check and reselect disconnected hardware inside Bitwig.
+- Settings → Audio: native `PipeWire`, Bitwig's Combined Device `Spark GO USB + WooAudio`, with only those two devices enabled and Spark GO as clock master. Manual 128 samples; Automatic sample rate. This is not a system service or a new virtual input program.
+- All four AG tracks and `GUITAR - raw detection`: `Spark GO USB → Mono capture_MONO`, replacing the old `Spark-GO-Gtrcapture` / `Spark-GO-Guitar` source. Keep the raw-detection fader at −∞.
+- Default Master output: `Spark GO USB → Stereo → Analog Stereo playback_F L/R`.
+- To use Woo, select **Master** and change the left Inspector's **output selector** to `WooAudio → Stereo → Analog Stereo playback_F L/R`. Do not replace the entire Audio device group with WooAudio alone, which would remove Spark inputs. This direct Woo path bypasses the existing system Woo EQ.
+- Switch back through the same Master output selector. Guitar input, MIDI routing and independent audition groups remain unchanged; no auto-arm is enabled.
+- The `beat lab mic` named bus is retained but not remapped or armed in this task; SF-558 is not included in this guitar device group.
+- Save Library to retain the selected output. Normal reopen preserved Spark input, Spark Master output and 128 samples. Saving a later manual Woo selection retains that selection; no startup policy forces Spark. Missing-device startup and physical hotplug were not tested; no automatic fallback guarantee.
 
-Bitwig was not running and Spark GO was absent from the device graph during removal. No project or preference changes were made; direct hardware input mapping and human listening remain unverified. The saved project may still reference the removed virtual source: service removal does not mean guitar audio is restored.
+## Verification and backup
+
+All four AG inputs checked individually, raw detection rechecked. Spark → Bitwig in1 remained connected during the Woo output test; Spark output was then restored. Normal save, exit and reopen verified Master/input/device-group/buffer persistence. Instrument and Audio Auto-arm are off; Beat Lab remained unarmed and recording was not triggered. Human listening remains user acceptance.
+
+Evidence: `target/bitwig-direct-spark/`. Pre-edit project/preferences: `~/storage/daw/Backups/bitwig-direct-spark-20261021T192545Z/`. No controller or plugin source changes. Official mechanism: [Combined Audio Devices](https://www.bitwig.com/userguide/latest/the_dashboard/).
 
 ## Removal verification
 

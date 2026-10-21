@@ -14,6 +14,7 @@
 #include <vector>
 
 void require(bool ok, const char* message) { if (!ok) throw std::runtime_error(message); }
+void gui_focus_probe(const clap_plugin_t* plugin);
 struct HostState { std::thread::id main = std::this_thread::get_id(); std::atomic<bool> callback{false}; };
 const void* extension(const clap_host_t*, const char* id)
 {
@@ -74,6 +75,39 @@ struct State {
 
 template<class T> const T* get(const clap_plugin_t* p, const char* id)
 { const auto* ext = static_cast<const T*>(p->get_extension(p, id)); require(ext != nullptr, id); return ext; }
+void startup_sustain(const clap_plugin_t* p)
+{
+    require(p->activate(p,48000,256,256), "Startup activate");
+    std::exception_ptr failure;
+    std::thread audio([&] { try {
+        require(p->start_processing(p), "Startup start");
+        for (int cycle=0;cycle<3;++cycle) {
+            Events events;
+            if (cycle==1) { events.midi(37,0x9f,87,100); events.midi(38,0x8f,87,0); }
+            clap_process_t block{}; block.frames_count=256; block.steady_time=-1;
+            block.in_events=&events.in; block.out_events=&events.out;
+            require(p->process(p,&block)!=CLAP_PROCESS_ERROR,"Startup process");
+            const int expected=cycle==0?28:cycle==1?14:0;
+            if (events.output.size()!=unsigned(expected)) {
+                std::cerr << "Startup cycle " << cycle << ": expected " << expected
+                          << " MIDI events, observed " << events.output.size() << '\n';
+                for (const auto& event:events.output)
+                    std::cerr << unsigned(event.data[0]) << ' ' << unsigned(event.data[1])
+                              << ' ' << unsigned(event.data[2]) << " @" << event.header.time << '\n';
+            }
+            require(events.output.size()==unsigned(expected),"Startup ON once; manual OFF is retained");
+            for (int i=0;i<expected;++i) {
+                const auto& event=events.output[i];
+                require(event.data[0]==0xb0+i%14 && event.data[1]==64 &&
+                        event.data[2]==(cycle==0 && i>=14?127:0) &&
+                        event.header.time==unsigned(cycle==0?0:37),"Exact startup/reset CC64 sequence");
+            }
+        }
+        p->stop_processing(p);
+    } catch (...) { failure=std::current_exception(); } });
+    audio.join(); p->deactivate(p); if (failure) std::rethrow_exception(failure);
+    std::cout << "Startup Sustain ON, old-state override, manual OFF preserved: PASS\n";
+}
 void metadata(const clap_plugin_t* p)
 {
     auto* notes = get<clap_plugin_note_ports_t>(p, CLAP_EXT_NOTE_PORTS);
@@ -548,7 +582,8 @@ void sustain_press_toggle(const clap_plugin_t* p)
 int main(int argc, char** argv)
 {
     try {
-        require(argc == 2 || argc == 3, "Usage: clap_probe /path/Chord Lab.clap [legacy-state.bin]");
+        require(argc == 2 || argc == 3, "Usage: clap_probe /path/Chord Lab.clap [legacy-state.bin|--focus]");
+        const bool focusProbe=argc==3 && std::strcmp(argv[2],"--focus")==0;
         auto* library = dlopen(argv[1], RTLD_NOW | RTLD_LOCAL); require(library, "dlopen");
         auto* entry = static_cast<const clap_plugin_entry_t*>(dlsym(library,"clap_entry"));
         require(entry && entry->init(argv[1]), "entry init");
@@ -561,7 +596,7 @@ int main(int argc, char** argv)
             extension, [](const clap_host_t*) {}, [](const clap_host_t*) {},
             [](const clap_host_t* h) { static_cast<HostState*>(h->host_data)->callback = true; }};
         auto* a = factory->create_plugin(factory,&host,desc->id); require(a && a->init(a), "Instance A init");
-        if (argc == 3) {
+        if (argc == 3 && !focusProbe) {
             std::ifstream file(argv[2], std::ios::binary);
             require(file.good(), "Open legacy state");
             State legacy; legacy.bytes.assign(std::istreambuf_iterator<char>(file), {});
@@ -569,12 +604,17 @@ int main(int argc, char** argv)
                     "Legacy 18-parameter state loads without an Appearance entry");
             std::cout << "legacy state import: PASS\n";
         }
-        metadata(a); display_only_channel(a); mixed_retrigger(a); held_chord_navigation(a); pedal_baseline(a); performance_controls(a); sustain_press_toggle(a); parameter_writes(a); key_notification(a); process_matrix(a); appearance_preserves_held_midi(a); guitar_mode(a);
+        metadata(a); startup_sustain(a);
+        State savedOff;
+        require(get<clap_plugin_state_t>(a,CLAP_EXT_STATE)->save(a,&savedOff.out),"Save explicitly disabled Sustain");
+        display_only_channel(a); mixed_retrigger(a); held_chord_navigation(a); pedal_baseline(a); performance_controls(a); sustain_press_toggle(a); parameter_writes(a); key_notification(a); process_matrix(a); appearance_preserves_held_midi(a); guitar_mode(a);
         State saved; auto* sa = get<clap_plugin_state_t>(a,CLAP_EXT_STATE);
         require(sa->save(a,&saved.out) && !saved.bytes.empty(), "State save");
         std::string bytes(saved.bytes.begin(), saved.bytes.end());
         require(bytes.find("/tmp/") == std::string::npos, "State must not reference temporary source path");
         auto* b = factory->create_plugin(factory,&host,desc->id); require(b && b->init(b), "Instance B init");
+        require(get<clap_plugin_state_t>(b,CLAP_EXT_STATE)->load(b,&savedOff.in), "Restore explicitly disabled Sustain");
+        startup_sustain(b);
         require(get<clap_plugin_state_t>(b,CLAP_EXT_STATE)->load(b,&saved.in), "State restore in independent instance");
         clap_param_info_t appearance{}; double appearanceValue{};
         auto* params = get<clap_plugin_params_t>(b, CLAP_EXT_PARAMS);
@@ -583,7 +623,8 @@ int main(int argc, char** argv)
         clap_param_info_t mode{}; double modeValue{};
         require(params->get_info(b,19,&mode) && params->get_value(b,mode.id,&modeValue)
                 && modeValue == 1, "Guitar mode restored in independent CLAP instance");
-        process_matrix(b);
+        startup_sustain(b); process_matrix(b);
+        if (focusProbe) gui_focus_probe(b);
         b->destroy(b); a->destroy(a); entry->deinit(); dlclose(library);
         std::cout << "portable state, two independent instances, lifecycle: PASS\n"; return 0;
     } catch (const std::exception& e) { std::cerr << "FAIL: " << e.what() << '\n'; return 1; }

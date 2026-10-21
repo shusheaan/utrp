@@ -4,7 +4,7 @@
 
 - Supersedes 0.9 MIDI arming: selected MIDI/guitar sounds use Active ON, Monitor ON, Arm OFF. Other sounds in the same group are disabled; the other group remains independent. Deferred activation also clears Arm and never writes true.
 - Host Settings → Recording → Auto-arm: both Instrument tracks and Audio tracks are off. Instruments were enabled, audio was already disabled; only the former changed. This is a global selection preference, so other projects now require manual arming.
-- Arm makes a track eligible for recording, not already recording. Live audition uses explicit Monitor ON. To record in Library later, disable Exclusive audition + editors first, then arm manually so reselection does not clear it.
+- Arm makes a track eligible for recording, not already recording. Live audition uses explicit Monitor ON. To record, select a sound and wait for loading, then manually arm it (Keystation 1.1 Center) before pressing Record. Exclusive audition can stay enabled; avoid reselecting sounds in that group after arming because audition clears Arm.
 - 40 related pytest cases passed, including Node startup/activation-restore/cross-group models and no transient Arm true writes. Controller protection of ordinary projects' Active/Arm/Monitor/editor states remains. Live checks of B2-juno60, Suitcase EP, Glass Air and Soft Prism confirmed Arm OFF and Monitor ON; original B2-juno60 + Glass Air restored.
 - Evidence: `target/library-no-auto-arm/`. Default Chord Lab dimensions and twenty frets are unchanged.
 
@@ -282,3 +282,7 @@ Bitwig's global key provides a reference for piano-roll highlighting/Snap to Key
 with Use Global Key enabled, and Grid pitch quantization/scale-degree transposition.
 Changing it alone does not transpose all existing MIDI/audio or change Surge timbres.
 See [Bitwig 6 release notes, pages 16–19](https://downloads.bitwig.com/6.0/Release-Notes-6.0.pdf).
+
+## Current fader levels (2026-10-21)
+
+Audible sounds −2 dB, folders/shared MIDI/Master 0 dB; raw detection stays −∞. This supersedes historical −10/−12 dB fader settings, without changing Arm, monitoring or audio routing. See [recipe and validation](LEVELS.md).

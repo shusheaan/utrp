@@ -10,7 +10,7 @@
 - 仅 Chord Lab 时居中；与 Surge XT／sfizz 或最先打开的主要效果器组成中央组，Chord Lab 在左。其余效果器先找中央组右侧空位，再使用周围空间。
 - 新增窗口能放下时中央组不动；若固定居中造成空间碎片，则尝试整组紧凑排布后居中，仅在能容纳更多窗口时采用。左侧轨道保留区优先于严格屏幕对称。
 - 默认左侧保留 400 logical px，顶端 80 px、底端 48 px、右边 16 px，窗口间隔 16 px。
-- 切换 floating／取消插件 fullscreen，再移动窗口。仅 Surge XT Effects 有例外：新开窗或残留超出可用区的巨大尺寸时，恢复 600×490（配置可调）；它有时会记住 tiling 撑大的尺寸，不能只靠 floating 自动恢复。其他插件不调用 resize；不修改 Surge XT 音源的内部 zoom、音色或工程路由。
+- 切换 floating／取消插件 fullscreen，再移动窗口。仅 Surge XT Effects 有例外：新开窗或残留超出可用区的巨大尺寸时，恢复 600×490（配置可调）；它有时会记住 tiling 撑大的尺寸，不能只靠 floating 自动恢复。Chord Lab 由下述原生开窗规则恢复 920×703；其余插件不调用 resize；不修改 Surge XT 音源的内部 zoom、音色或工程路由。
 - 每 0.4 秒检查一次。仅新增、关闭、标题／尺寸／工作区变化时重排；鼠标移动、点击焦点、手动拖动不触发重排。
   所以手动拖动可以保留到下次布局变化，**不是永久固定位置**。
 - 不改变焦点、不移动到其他 workspace、不自动打开／关闭插件。
@@ -60,3 +60,17 @@ Library 的互斥试听会停用其他音色轨，旧轨插件窗口随之关闭
 重新选回同一音色也会重开；controller 依赖 Bitwig 选轨事件，不轮询强制把手动关闭的窗口再弹出。若当前轨已经选中、再次点击没有产生选轨事件，请切到别轨再回来，或点设备的窗口按钮。
 
 新增单窗居中、音源优先、周边容纳时锚点稳定、关窗重排与局部 Chord Lab 测试；340 种组合现在使用真实插件名验证优先级。日志与实机证据：`target/plugin-windows-center/`。窗口布局不改变音频路由。
+
+## 2026-10-21：Bitwig 固定 Workspace 2
+
+`sway.conf` 新增 `assign [class="^com\.bitwig\.BitwigStudio$"] workspace number 2`，部署在现有 `~/.config/sway/utrp-plugin-windows.conf` include 中。所有启动入口创建的 Bitwig 主窗口均适用；不靠启动时所在 workspace，也不改桌面启动器或增加服务。规则仅匹配 Bitwig，不影响其他软件；布局程序仍不负责工作区迁移。
+
+本次将已打开的 Bitwig 主窗口及两个通过 `transient_for` 关联的插件浮窗一起移至 Workspace 2。Sway 配置校验通过并已 reload；未重启音频引擎或修改工程的 Active / Arm / Monitor。规则在新建主窗口时生效，本轮未再次关闭 Bitwig 做启动验收。主配置 symlink 保留。机制见 [Sway assign](https://man.archlinux.org/man/sway.5.en#assign)。
+
+## 2026-10-21：修复 Chord Lab 开窗变大
+
+修复前实机窗口为 1636×1220（插件允许上限）；窗口事件捕获到重新创建时先 `auto_off` 平铺至 1720×1440，再由 0.4 秒轮询切为 `user_on` 浮动。插件源码仍默认 920×703，20 品改动没有增加默认尺寸。仅手动缩小无法消除首次平铺向宿主反馈大尺寸的时序问题；记录不证明每次平铺都会最终停留在最大值。
+
+`sway.conf` 为 Xwayland normal 窗口的精确 ` / Chord Lab` 标题后缀添加原生 `for_window`：**创建时立即 floating，并恢复 920×703**。Bitwig 插件包装窗口没有 WM_CLASS，故不能复用主窗口 class 条件。规则不匹配主窗口或其他插件、不修改音频或插件内容、不增加服务。仅每个新窗口执行一次，后续手动调整大小仍可保留。
+
+配置校验通过；六次真实重开（含共享和 raw detection 两个实例），首次 focus 事件已是 `user_on`、920×703，随后也保持该尺寸与 Workspace 2。证据：`target/chordlab-window-size/`。修复前备份：`~/storage/daw/Backups/chordlab-window-default-20261021T194605Z/`。没有重编译或替换 CLAP；本轮不声称完成整个 DAW 的重启验收。

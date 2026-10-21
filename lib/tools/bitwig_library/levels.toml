@@ -1,0 +1,11 @@
+# One-shot Library fader recipe; never loaded by the normal controllers.
+project = "Library"
+signature = "CHORD LAB - shared MIDI input"
+capacity = 128
+sound_db = -2.0
+bus_db = 0.0
+preserve = ["GUITAR - raw detection"]
+unity = ["CHORD LAB - shared MIDI input"]
+# Bitwig 6.1.4 volume raw uses cube-root amplitude: dB = 60 * log10(raw).
+raw_db_scale = 60.0
+verify_tolerance_db = 0.06

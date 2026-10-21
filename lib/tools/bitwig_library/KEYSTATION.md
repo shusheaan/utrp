@@ -14,12 +14,12 @@ Hardware controls do not require Chord Lab focus; computer chord keys still do.
 | Play | Start playback from the host playback start; no restart if already playing |
 | Stop | Stop and disable Arranger recording |
 | Record | Start Arranger recording; press again to punch out while playback continues |
-| Up / Down | Previous / next Cursor Track; groups are not guaranteed to be skipped |
-| Left / Right | Move by one current-signature bar duration, clamped at zero |
-| Center dot | Return to arrangement start; does not erase or re-record a take |
+| Up / Down | Previous / next visible GUI track, including folders but skipping collapsed children |
+| Left / Right | Collapse / expand the selected folder, or the immediate parent of a leaf; collapsing a parent selects it |
+| Center dot | Toggle selected instrument/audio track record Arm; no recording starts; groups and Master are excluded |
 
-Navigation is blocked while Arranger recording is enabled, preventing audition routing from disabling a recording track. Stop restores navigation. Press triggers once; release does not trigger; no hold-repeat. Bar movement is relative, not bar-line quantization, using the current signature.
-Record is not take deletion or automatic retry. Count-in, loop, punch and capture behavior remain host settings. Select a playable armed/monitored instrument before recording; use a separate project for composition.
+Navigation and manual Arm changes are blocked while Arranger recording is enabled. Press Record to punch out (playback continues), or Stop to stop both, before navigating or changing Arm. Press triggers once; release does not trigger; no hold-repeat. Left/right/center no longer seek. Top-level leaf folders never target the project root.
+Record is not take deletion or automatic retry. Count-in, loop, punch and capture behavior remain host settings. In Library, select a sound and wait for loading to finish, press Center to arm it, then Record. Selection never auto-arms; selecting another sound in the same group clears that group’s Arm while preserving the other group. There is no need to disable Exclusive audition + editors for this manual Arm workflow. Use a separate project for composition.
 
 ## Slider and wheels
 
@@ -39,7 +39,7 @@ If switched accidentally, follow the [official guide](https://cdn.inmusicbrands.
 ## Validation limits
 
 All eight hardware buttons were captured; installed script reports ready without initialization errors.
-Node tests cover mapping, edge gating, both release encodings, invalid messages/channels, signatures/bounds and recording navigation safety. 927 related pytest cases pass.
+Original 1.0 Node tests covered mapping, edge gating, both release encodings, invalid messages/channels, signatures/bounds and recording navigation safety; 927 related pytest cases passed then. See current 1.1 validation below.
 Installed CLAP probe checks all CC1/7/11 values and representative 14-bit bend values, with sample-exact passthrough on musical channels and reserved-channel isolation; pedal regressions also pass.
 User verification of host transport/navigation/fader behavior has been requested. No test take was recorded into the production Library; wheel effects are patch-specific.
 Evidence and pre-deployment preferences/project backups: `target/keystation-controls/`. Only the CLAP probe was extended; no plugin rebuild/replacement, system volume or Spark output-policy change.
@@ -48,3 +48,11 @@ Evidence and pre-deployment preferences/project backups: `target/keystation-cont
 ## Physical reversed-polarity check (2026-10-18)
 
 Captured down=0/up=127 on this unit. Restarting only the keyboard with its pedal connected and released restored down=127/up=0. Startup pedal state determines polarity (official manual linked above); no CC64 reassignment or latch mode is needed. Values alone cannot establish polarity without knowing the physical action. Generic was briefly disabled for capture and restored afterward; Transport and Volume CC=7 were unchanged.
+
+## 2026-10-21: 1.1 folders and manual Arm
+
+- `Keystation.control.js` / `Keystation.config.js`: left/right fold folders, center toggles Arm, up/down follow visible GUI tracks. Play / Stop / Record semantics are unchanged.
+- `Library.control.js` is unchanged: independent MIDI/guitar audition, no auto-arm, and a 650 ms post-activation historical Arm cleanup. Wait for sound loading before manual Arm; an early Arm during that settling period can still be cleared by existing cleanup. Ordinary projects remain outside the Library audition policy.
+- 405 related pytest cases pass, covering folders/leaves/root/missing selection, audio/MIDI Arm, press gating and recording protection. Live Bitwig console confirms `Keystation Transport 1.1 ready: folders + manual arm`, without initialization errors.
+- No test take was created in production Library; physical-button feel and real recording still need user verification. Keys, slider, audio routing and plugins are unchanged.
+- Pre-deployment backup: `~/storage/daw/Backups/keystation-fold-arm-20261021T195527Z/`; evidence: `target/keystation-fold-arm/`. No commit/push; finish with a Storage recovery snapshot.

@@ -4,7 +4,7 @@
 
 - 取代 0.9 的 MIDI 自动 Arm：已选 MIDI／吉他音色都是 Active ON、Monitor ON、Arm OFF；同组其他音色关闭，组间仍独立。激活后的延迟回调也只清除 Arm，不再写入 true。
 - 宿主 Settings → Recording → Auto-arm：Instrument tracks 与 Audio tracks 均关闭。检查时前者开启、后者已关闭；仅取消前者。这是全局选轨偏好，不只针对 Library，其他工程需要手动 Arm。
-- Arm 只是允许轨道参与录音，并不等于已开始录音。实时演奏使用显式 Monitor ON；若以后要在 Library 录音，先关闭控制器的 Exclusive audition + editors，再手动 Arm，以免再次选轨时被试听规则清除。
+- Arm 只是允许轨道参与录音，并不等于已开始录音。实时演奏使用显式 Monitor ON；录音时先选音色并等加载完成，再手动 Arm（Keystation 1.1 中央键），确认红灯后按 Record。无需关闭互斥试听；录音前不要再切同组音色，否则 Arm 会被试听规则清除。
 - 40 项相关 pytest 通过（含 Node 模型中的启动、激活旧状态、跨组切换及没有瞬间 Arm true 写入）；普通工程的 Active／Arm／Monitor／窗口状态保护不变。实际检查 B2-juno60、Suitcase EP、Glass Air、Soft Prism 均未 Arm，Monitor ON；原 B2-juno60 + Glass Air 已恢复。
 - 证据：`target/library-no-auto-arm/`。默认 Chord Lab 窗口及 20 品没有再改。
 
@@ -260,3 +260,7 @@ Bitwig 顶部调性是工程级参考：用于钢琴卷帘的音阶提示与 Sna
 Use Global Key 的 Note FX，以及 Grid 的音高量化/音阶级数移调。
 它不会仅因改菜单就自动转调所有既有 MIDI、录音或改变 Surge 音色。
 见 [Bitwig 6 官方说明，第 16–19 页](https://downloads.bitwig.com/6.0/Release-Notes-6.0.pdf)。
+
+## 当前推子音量（2026-10-21）
+
+可听音色 −2 dB，文件夹/共享 MIDI/Master 0 dB；raw detection 保留 −∞。这取代旧文档的 −10/−12 dB 推子设置，不改变 Arm/监听或音频路由。详见 [音量配方与验收](LEVELS.cn.md)。

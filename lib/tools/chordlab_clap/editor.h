@@ -20,7 +20,7 @@ private:
     void visibilityChanged() override;
     void mouseDown(const juce::MouseEvent&) override;
     void mouseUp(const juce::MouseEvent&) override;
-    void focusInput();
+    bool focusInput();
     void releaseKeys();
     void dispatchNativeKeys();
     bool hasInputFocus() const;
@@ -35,5 +35,6 @@ private:
     PhysicalKeys physical;
     bool enabled{true}, hadFocus{false}, ignoreCaptureClick{false}, captureWasActive{false};
     bool appearanceMenuOpen{false};
+    bool initialFocusPending{true};
     ysfx_t* displayedEffect{nullptr};
 };

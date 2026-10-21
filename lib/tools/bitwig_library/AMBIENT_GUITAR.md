@@ -108,4 +108,4 @@ This supersedes the earlier missing-input status. Bitwig Audio Selected Device(s
 
 ## 2026-10-21: use Bitwig settings
 
-Custom audio services are removed; do not use the old `Spark-GO-Guitar` virtual source. Follow [current routing notes](../audio_routing/README.md) to select physical Spark GO input and the desired output inside Bitwig. Four AG tracks and raw detection still need live remapping after hardware connection. This removal did not edit the project; preserve raw detection at −∞, Keystation, shared detection and independent two-group audition.
+Custom audio services are removed; do not use the old `Spark-GO-Guitar` virtual source. Follow [current routing notes](../audio_routing/README.md) to select physical Spark GO input and the desired output inside Bitwig. Four AG tracks and raw detection are now mapped to physical Spark mono input, saved and reopen-verified. Master defaults to Spark; switch only its output selector for Woo. Preserve raw detection at −∞, Keystation, shared detection and independent two-group audition.

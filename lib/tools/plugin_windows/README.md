@@ -12,7 +12,7 @@ keeping the track area available. Extra effects use the right-hand gaps first.
 - Preserves native dimensions and internal zoom except Surge XT Effects: new editors
   and leftover oversized editors reset to the verified 600×490 (configurable). It can
   remember a tiled 1763×1440 size even after floating. Surge XT instruments are NOT
-  resized. Never modifies audio or parameters.
+  resized. Chord Lab has the native map-time 920×703 rule described below. Never modifies audio or parameters.
 - Chord Lab alone is centered; with Surge XT/sfizz or the first effect it forms a central
   pair, Chord Lab on the left. Extra windows preserve that pair when they fit. If fixed
   centering fragments space, a compact group is centered only if it fits more editors.
@@ -100,3 +100,17 @@ select another track and return, or use the device editor button.
 Coverage adds centered singleton/pairs, instrument priority, stable fitting cores, closing
 and local Chord Lab selection. The 340 combination orders now use actual plugin names.
 Evidence: `target/plugin-windows-center/`. Window layout does not change audio routing.
+
+## 2026-10-21: pin Bitwig to Workspace 2
+
+`sway.conf` adds `assign [class="^com\.bitwig\.BitwigStudio$"] workspace number 2`, deployed through the existing `~/.config/sway/utrp-plugin-windows.conf` include. It applies to new Bitwig main windows regardless of launch entry point or starting workspace, without changing launchers or adding a service. The class is Bitwig-specific; the layout program still does not migrate workspaces.
+
+Moved the existing main window and its two `transient_for`-associated plugin editors to Workspace 2. Sway configuration validation and reload passed. No audio-engine restart or project Active / Arm / Monitor changes. The rule applies to newly created main windows; a fresh Bitwig launch was not tested this round. The main configuration symlink is preserved. Mechanism: [Sway assign](https://man.archlinux.org/man/sway.5.en#assign).
+
+## 2026-10-21: prevent oversized Chord Lab editors
+
+The live editor was 1636×1220 (its allowed maximum). Before the fix, window events showed recreated editors initially tiled (`auto_off`) at 1720×1440, then converted to floating (`user_on`) by the 0.4-second polling policy. Plugin source still defaults to 920×703; twenty frets did not enlarge the default. Manual resizing alone did not eliminate the initial tiling/host-size feedback timing issue. The trace does not establish that every tiled creation ends at maximum size.
+
+`sway.conf` now applies native `for_window` handling to Xwayland normal windows with the exact ` / Chord Lab` title suffix: **float immediately and restore 920×703 at creation**. Bitwig editor wrappers lack WM_CLASS, so the main-window class condition cannot be reused. Main windows and other editors are excluded; audio/plugin content is untouched and no service is added. It applies once per new window; later manual resizing remains possible.
+
+Configuration validation passed. Six real editor recreations, including shared and raw-detection instances, were already `user_on` at 920×703 in the first focus event and stayed that size on Workspace 2. Evidence: `target/chordlab-window-size/`. Pre-fix backup: `~/storage/daw/Backups/chordlab-window-default-20261021T194605Z/`. No CLAP rebuild/replacement; a full DAW restart is not claimed this round.

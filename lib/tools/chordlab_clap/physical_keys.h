@@ -15,7 +15,7 @@ public:
     PhysicalKeys(const PhysicalKeys&) = delete;
     PhysicalKeys& operator=(const PhysicalKeys&) = delete;
     bool available() const;
-    void grabFocus(void* nativeWindow);
+    bool grabFocus(void* nativeWindow);
     void refresh();
     bool isDown(int code) const;
     std::vector<KeyboardCommand> commands(void* nativeWindow, bool active);

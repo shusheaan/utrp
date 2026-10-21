@@ -22,7 +22,7 @@ slider15:0<0,1000000,1>-Voicing memory revision
 
 slider16:1<0,2,1{Triad,Seventh,Ninth}>-Chord type
 slider17:0<0,127,1>-Voice 5 (read only)
-slider18:0<0,1,1>-Sustain lock (read only)
+slider18:1<0,1,1>-Sustain lock (read only)
 slider19:0<0,1,1{Dark,Bright}>-Appearance
 
 slider20:0<0,1,1{Piano,Guitar}>-Voicing mode
@@ -51,7 +51,7 @@ memset(voices,-1,guitar_voice_capacity);
 key=slider1; degree=slider2; inversion=slider3; kind=slider16; voice_count=3+kind;
 centre=slider4; velocity=slider5; enabled=slider6;
 sounding=0; slider9=0; serial=slider7;
-sustain_on=0; sustain_reset_pending=1; slider18=0;
+sustain_on=1; sustain_reset_pending=1; slider18=1;
 active_slot=-1; gate_serial=0; previous_mode=slider14;
 ui_read=ui_write=0; ui_queue=2600;
 previous_play=play_state;
@@ -63,7 +63,11 @@ settings_dirty=1;
 @block
 midi_bus=0;
 // Saved slider values may be restored after @init: never replay the last command.
-sustain_reset_pending ? (serial=slider7; set_sustain(0,0); sustain_reset_pending=0;);
+// Clear stale downstream pedal state before enabling the new-session baseline.
+sustain_reset_pending ? (
+  serial=slider7; previous_play=play_state;
+  set_sustain(0,0); set_sustain(1,0); sustain_reset_pending=0;
+);
 // A hidden/closed UI cannot deliver its mouse-up; expire only the mouse gate.
 chord_held[7] && time_precise()-ui_heartbeat>0.5 ? release_degree(7,0);
 settings_dirty ? (

@@ -8,7 +8,7 @@ import tomllib
 import pytest
 
 
-@pytest.mark.parametrize("script", ["controller_test.cjs", "key_sync_test.cjs", "keystation_test.cjs"])
+@pytest.mark.parametrize("script", ["controller_test.cjs", "key_sync_test.cjs", "keystation_test.cjs", "levels_test.cjs"])
 def test_controller_model(script: str) -> None:
     result = subprocess.run(
         ["node", str(Path(__file__).with_name(script))],

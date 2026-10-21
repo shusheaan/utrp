@@ -178,3 +178,30 @@ Preserved Spark GO → Woo Audio (EQ) → other physical outputs. `audio_routing
 ## 2026-10-21: remove custom audio services (current recovery rule)
 
 The user requested input/output selection inside Bitwig only. Both audio services are stopped and deleted and excluded from the recovery manifest. Do not restore the virtual source, login services or automatic fallback described in older snapshots or historical entries above. System audio, Woo EQ and plugin-window service are unchanged. Bitwig was not running and Spark was absent; project/preferences were not edited. Remapping four AG tracks and raw detection to physical Spark input remains pending; verify the Beat Lab input bus inside the host as well. See [current routing notes](../audio_routing/README.md). Pre-removal backup: `~/storage/daw/Backups/retire-audio-services-20261021T191202Z/`.
+
+## 2026-10-21: native Bitwig Spark input/output completed
+
+Saved the `Spark GO USB + WooAudio` Combined Device (Spark clock master, 128 samples), physical Spark mono input for four AG tracks and raw detection, and Spark stereo Master output. Select Woo only in the Master output chooser, not by replacing the whole audio device group. Normal exit/reopen verified persistence; both custom services remain not-found/inactive. This completes the pending physical mapping above; do not restore virtual input. The `beat lab mic` bus was not remapped or armed. 41 Library/backup regression tests and all 10 Storage link checks passed. Pre-edit backup: `~/storage/daw/Backups/bitwig-direct-spark-20261021T192545Z/`; evidence: `target/bitwig-direct-spark/`. This turn's documentation is not committed/pushed; create a recovery snapshot at wrap-up.
+
+## 2026-10-21: restore Bitwig Workspace 2 assignment
+
+The existing required `.config/sway/utrp-plugin-windows.conf` now includes the Bitwig main-window Workspace 2 assignment. Source recipe: `lib/tools/plugin_windows/sway.conf`. Restore that file and retain its main-config include; no new service or launcher script is needed. Moved the main window and two existing plugin editors to Workspace 2; configuration validation/reload passed. No audio-routing or project-file changes. This turn's source/documentation remains uncommitted/unpushed; save a recovery snapshot at wrap-up.
+
+## 2026-10-21: persistent compact Chord Lab window rule
+
+Restore `.config/sway/utrp-plugin-windows.conf` from the latest `lib/tools/plugin_windows/sway.conf`, including main-window Workspace 2 assignment and immediate floating/920×703 for new Chord Lab editors. This fixes the initial tiling/polling-float size race; restoring only the older exec_always line is insufficient. No new service or plugin binary change; six editor recreations passed. Pre-fix backup: `~/storage/daw/Backups/chordlab-window-default-20261021T194605Z/`; evidence: `target/chordlab-window-size/`. No commit/push this turn; snapshot the working tree and deployment.
+
+## 2026-10-21: Keystation 1.1 manual Arm / folders
+
+Restore the 1.1 recipes for `Bitwig Studio/Controller Scripts/UTRP/Keystation.control.js` and `Keystation.config.js`: up/down select visible tracks, left/right fold folders, center toggles Arm only, and the dedicated Record controls actual recording. Library 0.10 no-auto-arm policy and Spark/Woo settings are unchanged. 405 related tests pass; the host console confirms ready. No test take was created in production Library. Backup: `~/storage/daw/Backups/keystation-fold-arm-20261021T195527Z/`; see [button documentation](../bitwig_library/KEYSTATION.md). No commit/push.
+
+## 2026-10-21: Library fader levels
+
+Saved Library project: audible sounds −2 dB, folders/shared MIDI/Master 0 dB, raw detection retained at −∞. Live verification covers 114 tracks with zero errors; 406 related tests pass. Recipe: `bitwig_library/levels.toml`; the one-shot helper is not a startup feature and production controllers are unchanged. Pre-change project: `~/storage/daw/Backups/library-levels-20261021T201337Z/Library-live-before.bwproject`. See [level documentation](../bitwig_library/LEVELS.md). No commit/push; snapshot preserves the worktree and current project.
+
+## Chord Lab 0.2.14 startup defaults (2026-10-21)
+
+- Fresh/reloaded instances default to Sustain On and acquire computer-keyboard focus once mapped, without repeatedly stealing focus. Hardware MIDI remains independent. The 920×703 size, twenty frets, routing, Arm and Library group exclusivity remain unchanged.
+- Deployment remains `~/.clap/Chord Lab.clap` through Storage UserData, with the same compatible CLAP ID. Save/quit normally, atomically replace the binary, then reopen Library.
+- Rollback: `~/storage/daw/Backups/chordlab-startup-20261021T203104Z/` contains the prior binary/project. 975 Python tests, nine CTests, real CLAP and isolated focus checks passed; Bitwig reload showed green S/A and native keyboard events triggered the instrument. See the Chord Lab README.
+- No new services; no commit/push. The final Recovery snapshot includes current uncommitted sources and deployment files.

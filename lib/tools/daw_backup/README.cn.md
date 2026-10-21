@@ -198,3 +198,30 @@ PY
 ## 2026-10-21：移除自定义音频服务（当前恢复规则）
 
 用户要求仅在 Bitwig 内选择输入与输出。两个音频服务已停用、删除，恢复清单不再包含它们；旧快照及上方历史中的虚拟输入、自启与自动回退方案均不应恢复。系统音频、Woo EQ、插件窗口服务不变。Bitwig 未运行且 Spark 缺席，未改工程/偏好；四条 AG 与 raw detection 的实体 Spark 输入映射仍待现场完成，Beat Lab 输入总线也需在宿主中核对。详见 [当前路由说明](../audio_routing/README.cn.md)。删除前备份位于 `~/storage/daw/Backups/retire-audio-services-20261021T191202Z/`。
+
+## 2026-10-21：Bitwig 原生 Spark 输入/输出已完成
+
+已在 Bitwig 内保存 `Spark GO USB + WooAudio` Combined Device（Spark clock master，128 samples）、四条 AG 与 raw detection 的实体 Spark mono 输入，以及 Master 的 Spark 立体声输出。Woo 切换只改 Master 输出，不替换整个音频设备组。正常退出重开验证通过；两个自定义服务仍为 not-found/inactive。此条完成上方“实体映射待现场完成”的遗留项；不恢复虚拟输入。`beat lab mic` 未重新映射或 Arm。41 项 Library/备份回归、10 个 Storage 链接检查通过。前置备份 `~/storage/daw/Backups/bitwig-direct-spark-20261021T192545Z/`，证据 `target/bitwig-direct-spark/`；本轮文档未 commit/push，收尾运行恢复快照。
+
+## 2026-10-21：恢复 Bitwig 的 Workspace 2 规则
+
+现有必需项 `.config/sway/utrp-plugin-windows.conf` 现在包含 Bitwig 主窗口的 Workspace 2 assign 规则，源码配方为 `lib/tools/plugin_windows/sway.conf`。恢复该文件并保留主配置中的 include 即可；不需要新的服务或启动脚本。主窗口与两个已打开的插件浮窗已迁至 Workspace 2，配置校验/reload 通过。没有改动音频路由或工程文件；本轮源码和文档尚未 commit/push，收尾保存恢复快照。
+
+## 2026-10-21：Chord Lab 默认小窗口持久规则
+
+恢复现有 `.config/sway/utrp-plugin-windows.conf` 时使用最新 `lib/tools/plugin_windows/sway.conf`：包含 Workspace 2 主窗口分配及 Chord Lab 创建时立即浮动、920×703 的原生规则。该规则修复先平铺后轮询浮动的开窗尺寸竞争，不能只恢复旧的 exec_always 行。无新服务或插件二进制变更；六次编辑器重开验收通过。修复前备份：`~/storage/daw/Backups/chordlab-window-default-20261021T194605Z/`；证据：`target/chordlab-window-size/`。本轮未 commit/push，执行恢复快照保存工作树与部署配置。
+
+## 2026-10-21：Keystation 1.1 手动 Arm / 文件夹
+
+恢复 `Bitwig Studio/Controller Scripts/UTRP/Keystation.control.js` 与 `Keystation.config.js` 的 1.1 配方：上下选可见轨，左右收起/展开文件夹，中央仅切换 Arm，独立 Record 实际录音。原 Library 0.10 自动 Arm 关闭规则与 Spark/Woo 设置不变。405 项相关回归通过，宿主控制台确认 ready；未在正式工程创建测试录音。部署前备份 `~/storage/daw/Backups/keystation-fold-arm-20261021T195527Z/`；详见 [按键说明](../bitwig_library/KEYSTATION.cn.md)。源码未 commit/push。
+
+## 2026-10-21：Library 推子统一
+
+保存后的 Library 工程：可听音色 −2 dB，文件夹/共享 MIDI/Master 0 dB，raw detection 保留 −∞。114 条宿主校验错误 0，406 项回归通过。配方在 `bitwig_library/levels.toml`，一次性维护工具不加入自动启动；正式控制器未改变。修改前工程：`~/storage/daw/Backups/library-levels-20261021T201337Z/Library-live-before.bwproject`。详见 [音量说明](../bitwig_library/LEVELS.cn.md)。未 commit/push，快照保存工作树和当前工程。
+
+## Chord Lab 0.2.14 默认启动（2026-10-21）
+
+- 新建/重载默认 Sustain On；原生窗口映射后获取一次电脑键盘 Focus，不持续抢焦点。实体 MIDI 独立。920×703、20 品、音频路由、Arm 与 Library 两组互斥策略不变。
+- 安装目标仍为 `~/.clap/Chord Lab.clap` → Storage UserData，CLAP ID 与旧工程兼容；正常保存退出后原子替换插件，再打开 Library。
+- 回退：`~/storage/daw/Backups/chordlab-startup-20261021T203104Z/` 保留旧插件和工程。975 项 Python、9 项 CTest、真实 CLAP 与隔离 Focus 验证通过，Bitwig 重载检查 S/A 绿色及电脑按键事件触发音源。详情见 Chord Lab README。
+- 没有新增服务；未 commit/push，收尾 Recovery 快照包含当前未提交源码与部署文件。

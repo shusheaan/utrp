@@ -1,4 +1,26 @@
+# Chord Lab CLAP 0.2.14
+
+## Default Sustain and startup Focus (2026-10-21)
+
+- New or reloaded instances start with Sustain On, including old projects saved Off. The first audio block clears stale downstream sustain with CC64 Off, then enables all 14 musical channels. Saved commands are not replayed; initial host transport delivery is not mistaken for an actual transport stop.
+- Computer keyboard capture starts enabled. The editor acquires focus once its native parent is viewable, including reopening. It does not repeatedly reclaim focus after the user leaves; manually disabling A remains effective in that editor. Hardware MIDI is independent of GUI focus.
+- Space/S can still turn Sustain off. Losing focus or hiding/closing the editor preserves the current baseline. Actual transport Stop and emergency cleanup still release sustain. Reopening the GUI alone does not reset a manual Sustain choice.
+- Default 920×703 size, twenty frets and upper-position dots, 21 parameters and v3 state remain unchanged. No new services or changes to audio routing, levels, Arm or Library exclusivity.
+
+Evidence: `target/chordlab-startup/`. Added real CLAP fresh/restored startup tests and X11 delayed-map, no-focus-stealing, close/recreate tests. Final physical keyboard/speaker listening remains user confirmation.
+
+
+Acceptance: 975 Python tests, nine CTests, and built/installed CLAP probes passed. The additional `clap_probe <plugin> --focus` ran in isolated rootful Xwayland to verify delayed native mapping and one-shot focus. Rootless Sway redirects focus for the probe's unmanaged windows and is unsuitable for that isolated check. The temporary server did not listen on the network and was terminated afterward; JUCE's WM atom names were pre-registered there.
+
+Bitwig Library was saved, backed up and restarted. Its Workspace 2 editor opened at 920×703 with both S/A green. Without clicking the editor, a chord key sent to its existing native focus produced four sfizz voices; release/cleanup restored Sustain On. XTest did not deliver effective keys in this rootless session; the successful evidence uses XSendEvent, not claimed physical keyboard acceptance.
+Installed SHA-256: `39492f9bdf064aaa50aed63cc9df3bf695e847e23866edeb085f3e0e4c65a7ac`.
+
+## Earlier releases
+
 # Chord Lab CLAP 0.2.13
+
+> 2026-10-21 recurrence fix: [native map-time rules](../plugin_windows/README.md) remove the initial tiling/floating size race. New shared/guitar editors open at 920×703. The earlier unchanged-window-policy note below describes the temporary repair. Plugin binary and twenty-fret behavior are unchanged.
+
 
 ## Twenty frets and upper positions (2026-10-21)
 

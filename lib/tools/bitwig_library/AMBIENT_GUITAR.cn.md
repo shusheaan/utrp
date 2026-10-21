@@ -110,4 +110,4 @@ TOML 是可读配方，**不会在启动时自动覆盖你的手动调整**。
 
 ## 2026-10-21：改用 Bitwig 内设置
 
-自定义音频服务已删除，不再使用 `Spark-GO-Guitar` 虚拟输入。请按[当前路由说明](../audio_routing/README.cn.md)在 Bitwig 内选择实体 Spark GO 输入与所需输出；四条 AG 和 raw detection 映射待硬件连接后现场完成。本次未改工程；raw detection 保持 −∞，不改 Keystation、共享识别或两组独立试听。
+自定义音频服务已删除，不再使用 `Spark-GO-Guitar` 虚拟输入。请按[当前路由说明](../audio_routing/README.cn.md)在 Bitwig 内选择实体 Spark GO 输入与所需输出；四条 AG 和 raw detection 已映射到实体 Spark mono 输入并保存、重开验证；默认 Master 输出为 Spark，手动 Woo 切换只改 Master 输出。raw detection 保持 −∞，不改 Keystation、共享识别或两组独立试听。

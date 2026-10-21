@@ -8,14 +8,21 @@
 
 系统 PipeWire / WirePlumber、现有 Woo EQ 和插件窗口服务不变。恢复旧快照时不要重新安装这两个音频服务。旧实现与诊断见 [历史记录](HISTORY.cn.md)，不是当前安装指南。
 
-## Bitwig 内设置（待现场完成）
+## Bitwig 内设置（2026-10-21 已部署并重开验证）
 
-- 先接好 Spark GO 与 Woo Audio，再打开 Bitwig；在 Settings → Audio 中使用原生 PipeWire，选择需要的实体设备。
-- 输出选择 Woo Audio；吉他输入选择 Spark GO USB 的 mono capture，而不是已经删除的 `Applications → pw-loopback → Spark-GO-Guitar`。四条 AG 轨和 `GUITAR - raw detection` 都需要重新指定输入，raw detection 推子保持 −∞。
-- 如需 Beat Lab 麦克风，在 Bitwig 中将其输入总线明确映射到 SF-558；不再由后台程序维护连接，不开启录音或自动 Arm。
-- 输入、输出独立选择；不再强制抢回 Spark，不承诺自动回退或无缝热插拔。设备断开后在 Bitwig 内检查并重新选择。
+- Settings → Audio：原生 `PipeWire`，Bitwig 自带的 Combined Device `Spark GO USB + WooAudio`，只勾选这两个设备；Spark GO 为 clock master。手动 128 samples，Sample rate 保持 Automatic。这不是系统服务或新的虚拟输入程序。
+- 四条 AG 轨及 `GUITAR - raw detection`：输入为 `Spark GO USB → Mono capture_MONO`，不再引用旧的 `Spark-GO-Gtrcapture` / `Spark-GO-Guitar`；raw detection 推子保持 −∞。
+- 默认 Master 输出：`Spark GO USB → Stereo → Analog Stereo playback_F L/R`。
+- 手动换 Woo：选中 **Master**，在左侧 Inspector 的 **输出下拉框**选择 `WooAudio → Stereo → Analog Stereo playback_F L/R`。不要把 Settings → Audio 的整个设备组替换成 WooAudio 单设备，否则 Spark 输入不再可用。Woo 路径是实体设备输出，不经过现有系统 Woo EQ。
+- 切回 Spark：在同一个 Master 输出菜单选 Spark GO 的立体声端口。输入无需修改；两组试听和 MIDI 路由不变，不开启自动 Arm。
+- `beat lab mic` 命名总线保留但不在本轮重新映射或开启录音；SF-558 不加入这套吉他设备组。
+- 保存 Library 后，重开已验证 Spark 输入、Spark Master 输出及 128 samples 保留。以后手动换成 Woo 并保存时会保留该选择，不存在每次启动强制 Spark 的策略。未做缺设备启动或物理热插拔验收，不保证自动回退。
 
-删除服务时 Bitwig 未运行、Spark GO 不在设备图中，未修改工程或偏好，尚未完成上述实体输入映射及真人听音验证。原工程可能仍引用已删除的虚拟输入，不能将服务删除视为吉他已经恢复有声。
+## 本轮验证与备份
+
+四条 AG 输入逐轨检查，raw detection 输入已复验；Woo 输出切换期间 Spark → Bitwig in1 保持，随后恢复 Spark。正常保存、退出并重开，Master / 输入 / 设备组 / buffer 持久化通过。Instrument / Audio Auto-arm 均关闭，Beat Lab 未 Arm，未触发录音。真人听感仍由用户确认。
+
+证据：`target/bitwig-direct-spark/`；修改前工程/偏好备份：`~/storage/daw/Backups/bitwig-direct-spark-20261021T192545Z/`。没有修改 controller 或插件源码。官方机制：[Combined Audio Devices](https://www.bitwig.com/userguide/latest/the_dashboard/)。
 
 ## 删除验收
 
