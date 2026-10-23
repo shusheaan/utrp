@@ -694,3 +694,13 @@ REAPER synth.rpp 与 Guitar Frontend binary 的哈希保持不变。
 - 最终修正：倒计时空轨直接沿用面板背景，不再绘制异色底线；菜单在 GamePanel 内弹出并使用透明圆角，不依赖 X11 顶层透明支持，不越出插件。实窗截图确认没有白色菜单角。
 - 最终验证：1,360 项相关 pytest、Chord Lab 12 项 CTest、Guitar Frontend 2 项 CTest、实际安装 CLAP ABI/状态/延音/输入探针通过；Rust 根 crate 与 game crate test/clippy 通过。180 题生产引擎模拟包括 56 个接近、7 次转调、16 次超时，双方计分正确；与 HEAD 的正常模式 MIDI 逐字节对照通过。隔离实窗注入分解 MIDI 后 Piano +26、Guitar +74，Demo 后仅保留累计分。
 - 已安装 0.3.9，SHA-256 `0ca1b9a9f91cff90307f49c987f5aa04d9aeac365a1c48c1c8054d6fb3e4973a`；旧 0.3.8 和工程磁盘备份在 `~/storage/daw/Backups/chordlab-capsule-controls-20261023/`。真实 Bitwig 已在 Workspace 2 打开 Library；Keystation USB 已识别，但 Spark GO 未出现在 USB/ALSA/PipeWire，Bitwig 显示 `No Output Device Present`，音频引擎未启动。**实体键盘、吉他、扬声器及真实宿主的运行验收仍待 USB 音频连接恢复，不能以隔离测试替代。** 未启用录音，未改音频设备配置，未新增 scene；本轮未保存工程、未 commit/push。
+
+## 2026-10-23：Bitwig 隐藏焦点代理修复（0.3.10 候选）
+
+- 现场根因：Sway 的 focused 容器已是共享 Chord Lab，但 X11 focus 在同一宿主外框下的另一子窗口。该子窗口是位于 `(-1,-1)` 的 `1×1 InputOnly` 代理，与插件 peer 并列；旧 `hostHasFocus()` 只识别祖先，因而宿主后续交接焦点时 A 留红。不是 MIDI/Sustain 参数或音频路由问题。
+- 仅扩展原生焦点交接：同一个直接父窗口下的、可见映射的 `1×1 InputOnly` 代理可将焦点交还 peer。普通 InputOutput 兄弟控件、其他编辑器的代理、其他应用不匹配。仍受 `enabled` 门控，手动关闭 A 不会被该路径重新启用；没有定时全局抢焦点、没有延长启动延时、没有修改 controller 或布局服务。
+- 实际 CLAP 回归新增上述代理，旧安装 0.3.9 稳定失败；0.3.10 候选通过 6 次编辑器重建和 18 次延迟代理交接，覆盖父窗口延迟映射、祖先焦点、普通兄弟控件与其他窗口/代理不抢焦点。1,360 项相关 pytest、12 项 CTest、游戏渲染回归通过。证据：`target/focus-stability-20261023/`。真实 Bitwig 安装/重启验收待用户确认短暂停声；此记录不声称已部署。
+- 补充验证：根 crate 与 `chordlab_game` 的 `cargo test --offline`、`cargo clippy --offline --all-targets -- -D warnings` 均通过。源码和候选构建保留本地，未 commit/push；真实安装版本仍为 0.3.9。
+
+- 后续部署：用户再次报告问题时，已确认 Bitwig 完全退出、磁盘仍安装 0.3.9。备份至 `~/storage/daw/Backups/chordlab-focus-proxy-20261023T164424/` 后，经原 Storage symlink 安装 0.3.10，SHA-256 `e61cfd27cdb3cb501bb35e60eefa51b665584bd51a8be0ab9daa0967f6406a0c`。首次真实冷启动无需点击插件或 A 即 S/A 双绿，X11 focus 为键盘 peer `0x1a00004`；直接电脑 A 产生高亮、sfizz 5 voices 和 Master 电平。焦点切到主窗口后保持主窗口，没有抢回。仅测试和弦未写入原 Library，不启用录音；音频依旧连接 Spark。
+- 真实验收补充：连续 3 次完整冷启动 Library，均在只点击 Bitwig Trial Continue、未点击插件或 A 的情况下 S/A 双绿且 X11 focus 落在键盘 peer。切到 Workspace 1 后保留其他应用焦点，回到 Workspace 2 后自动交还键盘；手动关闭 A 后切离/切回仍为红色，新的冷启动仍默认启用。最终保持第三次刚打开的普通模式供用户确认听感。磁盘 Library 与部署前备份 SHA-256 完全相同；未保存测试选音、未新增录音。备份模块 26 项测试与 10 项 live Storage 检查通过；未 commit/push。

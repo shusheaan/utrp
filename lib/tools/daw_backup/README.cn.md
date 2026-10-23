@@ -256,3 +256,15 @@ PY
 游戏设置改为等高、同字体胶囊，Play/Demo/Mod 并排一行，方向下拉及开关也使用胶囊；普通模式无改动。恢复时需要同时保留 `game_controls.h`、`game_panel.*`、`game_wheel_value.h` 与现有主题生成配方。未 commit/push。
 
 - 2026-10-23：0.3.9 胶囊设置与同色倒计时底轨已部署，备份 `Backups/chordlab-capsule-controls-20261023/`。真实 Library 在 Workspace 2 打开，但 Spark GO USB 未枚举，音频引擎报无输出设备；没有改声卡设置或保存工程。声音验收待设备恢复，安装哈希与测试见 Chord Lab README。
+
+## 2026-10-23：System In + Out 错接麦克风
+
+Spark GO 本次已在 USB/ALSA/PipeWire 正常枚举，但 Bitwig Audio 选成了 `System In + Out`、自动 256 samples，实时图为 SF-558 → Bitwig in1，输出仍到 Spark。此配置跟随系统默认麦克风，不能替代实体 Spark 输入；无法从现有日志确认谁/什么操作改了选择。
+
+已通过 Bitwig GUI 恢复原有 `Spark GO USB + WooAudio` Combined Device（Spark clock master、手动 128 samples）；Woo 缺席显示 Not present，Spark 仍可工作。关闭设置应用后，实时图恢复 Spark capture_MONO → Bitwig in2、out1/out2 → Spark stereo；raw detection 仍为 Mono capture_MONO、Monitor On、−∞，Master 有电平。用户确认“有了”。未改系统默认麦克风、未加服务、未 Arm/录音。
+
+偏好文件已自动落盘（16:33:21）；未重启验证，未确认工程另存成功，不声称做了新的冷启动验收。修改前备份 `~/storage/daw/Backups/spark-routing-20261023/`，证据 `target/spark-no-sound-20261023/`。以后保留该设备组，换扬声器只改 Master 输出；不要为恢复输出切到 System In + Out。
+
+## 2026-10-23 Focus 修复部署
+
+Chord Lab 0.3.10 已通过原 Storage `.clap` 链接部署，修复同一 Bitwig 外框下隐藏 `InputOnly` 焦点代理的交接。回滚插件与未改动的 Library 备份：`~/storage/daw/Backups/chordlab-focus-proxy-20261023T164424/`。真实 Library 连续三次冷启动自动 S/A 双绿，未更改 controller、音频或录音配置；恢复清单已标记 0.3.10。当前源码未 commit/push，需随本轮恢复快照保存。

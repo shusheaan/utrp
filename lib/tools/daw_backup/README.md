@@ -236,3 +236,15 @@ The manifest now tracks 0.3.8: relative major/minor pairs share major-based caps
 Game controls share capsule height and typography; Play/Demo/Mod occupy one row, with capsule register menu and approach toggle. Normal mode is unchanged. Preserve `game_controls.h`, `game_panel.*`, `game_wheel_value.h` and the theme-generation recipe together for recovery. No commit/push.
 
 - 2026-10-23: Deployed 0.3.9 capsule settings and matching countdown background; backup: `Backups/chordlab-capsule-controls-20261023/`. Real Library opened on Workspace 2, but Spark GO USB did not enumerate and the audio engine reported no output device. No audio configuration changes or project save. Sound acceptance awaits device reconnection; see Chord Lab README for hash and tests.
+
+## 2026-10-23: System In + Out selected the microphone
+
+Spark GO was correctly enumerated by USB/ALSA/PipeWire, but Bitwig Audio was set to `System In + Out` with automatic 256-sample blocks. The live graph connected SF-558 to Bitwig in1 while output still went to Spark. This configuration follows the default system microphone, not the physical guitar input. Available logs do not establish who or what changed the selection.
+
+Restored the existing `Spark GO USB + WooAudio` Combined Device through Bitwig GUI (Spark clock master, manual 128 samples). Woo is absent, but Spark remains usable. Applying settings restores Spark capture_MONO to Bitwig in2 and out1/out2 to Spark stereo. Raw detection retains Mono capture_MONO, Monitor On and −∞; Master shows signal. User confirmed sound returned. No system microphone changes, new services, arming or recording.
+
+Preferences auto-saved at 16:33:21. No restart validation or confirmed project save; this is not a fresh cold-start acceptance. Pre-change backup: `~/storage/daw/Backups/spark-routing-20261023/`; evidence: `target/spark-no-sound-20261023/`. Keep this device group and change only Master output for another speaker; do not select System In + Out to recover output.
+
+## 2026-10-23 Focus fix deployment
+
+Chord Lab 0.3.10 was deployed through the existing Storage `.clap` link, fixing the hidden sibling `InputOnly` focus proxy inside the Bitwig wrapper. Rollback plugin and untouched Library backup: `~/storage/daw/Backups/chordlab-focus-proxy-20261023T164424/`. Three real Library cold starts automatically reached green S/A. No controller, audio or recording configuration changes; recovery manifest now identifies 0.3.10. Current source is not committed/pushed and is preserved by the recovery snapshot.

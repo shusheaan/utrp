@@ -85,12 +85,25 @@ bool PhysicalKeys::hostHasFocus(void* nativeWindow) const
     if (focused == None || focused == PointerRoot) return false;
     Window current = reinterpret_cast<Window>(nativeWindow);
     if (current == focused) return false;
+    Window proxyParent{};
+    XWindowAttributes attributes{};
+    if (XGetWindowAttributes(connection, focused, &attributes)
+            && attributes.c_class == InputOnly && attributes.map_state == IsViewable
+            && attributes.width == 1 && attributes.height == 1) {
+        Window root{}, *children{}; unsigned count{};
+        if (!XQueryTree(connection, focused, &root, &proxyParent, &children, &count)) return false;
+        if (children) XFree(children);
+    }
     for (;;) {
         Window root{}, parent{}, *children{}; unsigned count{};
         if (!XQueryTree(connection, current, &root, &parent, &children, &count)) return false;
         if (children) XFree(children);
         if (parent == root || parent == None) return false;
         if (parent == focused) return true;
+        // Bitwig parks focus on a hidden InputOnly sibling after activating the
+        // editor wrapper. Accept only our immediate host's tiny proxy, never a
+        // visible control or another plugin/app's window, even in the same host.
+        if (current == reinterpret_cast<Window>(nativeWindow) && parent == proxyParent) return true;
         current = parent;
     }
 #else

@@ -3,8 +3,8 @@
 backup_root = "storage/daw/Recovery"
 required = [
   ".zshrc", # Includes the gral-managed bitwig/bw Library launch commands.
-  ".clap", # Includes Beat Lab (internal recording, state-embedded PCM + Gate), Chord Lab 0.3.9 (uniform game-only capsule controls and one-row wheel values; fixed relative-major capsule order/labels across both modes, no out-of-key left selection; rounded, inset gray game panel and Demo score awards; cold-start container/keyboard Focus handoff; fixed major-key chord capsules and full game chord context, attack-time Sustain receiver resync, gray Race panel, semantic harmony colors, G game, matching repo plugin_windows/layout.py, v3 normal state, startup Sustain/Focus, 20 frets) / Guitar Front End.
-  ".BitwigStudio/prefs", ".BitwigStudio/view-settings", # Native Spark+Woo Combined Device, 128 samples; instrument/audio Auto-arm OFF.
+  ".clap", # Includes Beat Lab (internal recording, state-embedded PCM + Gate), Chord Lab 0.3.10 (strict same-wrapper hidden InputOnly focus-proxy handoff; uniform game-only capsule controls and one-row wheel values; fixed relative-major capsule order/labels across both modes, no out-of-key left selection; rounded, inset gray game panel and Demo score awards; cold-start container/keyboard Focus handoff; fixed major-key chord capsules and full game chord context, attack-time Sustain receiver resync, gray Race panel, semantic harmony colors, G game, matching repo plugin_windows/layout.py, v3 normal state, startup Sustain/Focus, 20 frets) / Guitar Front End.
+  ".BitwigStudio/prefs", ".BitwigStudio/view-settings", # Native Spark+Woo Combined Device, 128 samples; do not select System In + Out (SF-558 default mic); instrument/audio Auto-arm OFF.
   "Bitwig Studio", # UTRP Library 0.11: folder/empty-selection startup keyboard; no auto-arm; Keystation 1.1: folders and manual Arm.
   ".config/REAPER", ".config/Surge XT.settings",
   ".Surge XT", ".Surge Synth Team", ".config/SFZTools/sfizz",
