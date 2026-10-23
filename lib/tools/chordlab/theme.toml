@@ -89,3 +89,15 @@ inset = 3
 # Extra outer whitespace; keep the embedded canvas and controls at their original size.
 padding_x = 18
 padding_y = 10
+
+[game]
+# Match the Rust progression UI's semantic colors; leave normal mode unchanged.
+background = "#000000"
+border = "#4C5963"
+text = "#E4E9ED"
+muted = "#AAB9C4"
+key = "#68DCE8"
+chord = "#FFE066"
+reason = "#8FDEA5"
+demo = "#FFBA68"
+error = "#FF9999"

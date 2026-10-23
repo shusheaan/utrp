@@ -25,7 +25,9 @@ def processor_source(text: str) -> str:
         if (m_self->getYsfxParameter(i)->hasPendingHostUpdate()) syncParameterToSlider(i);
     updateTimeInfo();""")
     text = replace_once(text, '    processMidiInput(midiMessages);',
-                        '    m_self->m_keyboardControl.process(fx);\n    processMidiInput(midiMessages);')
+                        '    m_self->m_gameControl.process(fx);\n    m_self->m_keyboardControl.process(fx);\n    processMidiInput(midiMessages);')
+    text = replace_once(text, '    processMidiOutput(midiMessages);',
+                        '    m_self->m_gameControl.publish(fx);\n    processMidiOutput(midiMessages);')
     text = replace_once(text, 'bool YsfxProcessor::isMidiEffect() const\n{\n    return false;',
                         'bool YsfxProcessor::isMidiEffect() const\n{\n    return true;')
     text = text.replace('juce::ValueTree root("ysfx");', 'juce::ValueTree root("chordlab");')
@@ -55,7 +57,7 @@ def processor_source(text: str) -> str:
         '                    if (keyGesture) param->endChangeGesture();\n'
         '                }')
     text = replace_once(text, '    ysfx_delayed_init(fx);',
-                        '    m_keyboardControl.release();\n    ysfx_delayed_init(fx);')
+                        '    m_keyboardControl.release();\n    m_gameControl.reset();\n    ysfx_delayed_init(fx);')
     return text
 
 
@@ -81,13 +83,14 @@ def port(source: Path, here: Path) -> None:
     path.write_text(processor_source(path.read_text()))
     path = plugin / 'processor.h'
     text = path.read_text().replace('#include "info.h"',
-        '#include "info.h"\n#include "control.h"\n#include "embedded_source.h"')
+        '#include "info.h"\n#include "control.h"\n#include "game_control.h"\n#include "embedded_source.h"')
     text = replace_once(text, '    YsfxProcessor();',
         '    YsfxProcessor();\n'
+        '    GameControl& gameControl() { return m_gameControl; }\n'
         '    ChordLabControl& keyboardControl() { return m_keyboardControl; }\n'
         '    const EmbeddedSource& embeddedSource() const { return m_embeddedSource; }')
     text = replace_once(text, '    struct Impl;',
-        '    EmbeddedSource m_embeddedSource;\n    ChordLabControl m_keyboardControl;\n    struct Impl;')
+        '    EmbeddedSource m_embeddedSource;\n    ChordLabControl m_keyboardControl;\n    GameControl m_gameControl;\n    struct Impl;')
     path.write_text(text)
     (plugin / 'editor.h').write_bytes((here / 'editor.h').read_bytes())
     # Chord Lab has no gfx_getchar controls. Only our editor owns key routing;

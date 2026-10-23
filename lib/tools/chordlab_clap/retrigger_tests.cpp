@@ -22,8 +22,9 @@ Events send(ysfx_t* fx,int status,int note,int velocity,int frame=37) {
 }
 void command(ysfx_t* fx,int cmd) { send(fx,0x9f,60+cmd,100);send(fx,0x8f,60+cmd,0); }
 void attack(const Events& events,int channel,int note,int velocity,bool retrigger) {
-    require(events.size()==(retrigger?2u:1u),"Every press has exactly one attack, with balanced retrigger");
-    if (retrigger) require(events[0].bytes==std::array<uint8_t,3>{uint8_t(0x80+channel),uint8_t(note),0},"NoteOff before repeated NoteOn");
+    require(events.size()==(retrigger?3u:2u),"Every press syncs sustain then has exactly one balanced attack");
+    require(events[0].bytes==std::array<uint8_t,3>{uint8_t(0xb0+channel),64,127},"Effective sustain before the attack");
+    if (retrigger) require(events[1].bytes==std::array<uint8_t,3>{uint8_t(0x80+channel),uint8_t(note),0},"NoteOff before repeated NoteOn");
     require(events.back().bytes==std::array<uint8_t,3>{uint8_t(0x90+channel),uint8_t(note),uint8_t(velocity)},"Physical velocity/channel/pitch unchanged");
     for (const auto& event:events) require(event.frame==37,"Sample offset preserved");
 }

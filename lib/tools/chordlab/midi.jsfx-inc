@@ -1,6 +1,10 @@
 @init
 // State is private to each JSFX instance, never gmem/global across instances.
 // Channel 16: computer controls. Channel 15: display-only analysis. Hardware: 1..14.
+function emit_sustain(ch,offset) (
+  // S is the pedal-up baseline; CC64 temporarily inverts it on its channel.
+  midisend(offset,$xb0+ch,64,sustain_on!=pedal_down[ch] ? 127 : 0);
+);
 function release_chord(offset) local(i,n) (
   i=0;
   loop(guitar_voice_capacity,
@@ -15,6 +19,9 @@ function release_chord(offset) local(i,n) (
   sounding=0;
 );
 function start_chord(offset) local(i,n,region,count) (
+  // Receivers can load/activate after the one-shot startup CC. Reassert the
+  // effective pedal at the attack boundary, before releasing/retriggering notes.
+  emit_sustain(0,offset);
   // Release the old note set first; duplicate pitches on two strings emit once.
   release_chord(offset);
   i=0; count=0; region=guitar_current();
@@ -90,16 +97,12 @@ function update_gate(offset) local(i,best,stamp) (
   );
 );
 function press_degree(slot,offset) (
-  !chord_held[slot] ? (
+  !game_on && !chord_held[slot] ? (
     gate_serial+=1; chord_held[slot]=gate_serial; update_gate(offset);
   );
 );
 function release_degree(slot,offset) (
   chord_held[slot]=0; update_gate(offset);
-);
-function emit_sustain(ch,offset) (
-  // S is the pedal-up baseline; CC64 temporarily inverts it on its channel.
-  midisend(offset,$xb0+ch,64,sustain_on!=pedal_down[ch] ? 127 : 0);
 );
 function set_sustain(value,offset) local(ch) (
   sustain_on=value; slider18=value; sliderchange(131072);
@@ -115,6 +118,7 @@ function stop_controls(offset) (
   set_sustain(0,offset);
 );
 function command(cmd,offset) (
+  (!game_on || cmd==22 || cmd==23 || cmd==24 || cmd==26 || cmd==27) ? (
   cmd>=0 && cmd<12 ? (
     !sounding && !(play_state&1) && play_state!=5 ? (
       key=cmd; slider1=key; sliderchange(1); slider_automate(1); recall_voicing();
@@ -140,6 +144,7 @@ function command(cmd,offset) (
     : cmd==27 ? set_sustain(0,offset)
     : cmd==28 ? select_voicing_mode(0,offset)
     : cmd==29 ? select_voicing_mode(1,offset);
+);
 );
 function receive_midi(offset,status,note,value) local(type,ch,index) (
   type=status&$xf0; ch=status&15;
@@ -167,6 +172,8 @@ function receive_midi(offset,status,note,value) local(type,ch,index) (
   ) : (
     index=ch*128+note;
     type==$x90 && value>0 ? (
+      // The indicator alone does not prove a late downstream instrument heard it.
+      emit_sustain(ch,offset);
       // Every physical attack sounds, even when the computer owns this pitch.
       // Logical owners survive the off/on pair until their own input releases.
       held[index]>0 || (ch==0 && own[note]) ? midisend(offset,$x80+ch,note,0);

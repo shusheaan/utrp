@@ -31,7 +31,7 @@ def test_assets_unchanged_and_deterministic(tmp_path: Path) -> None:
         assets(source, path, HERE / 'prototype.toml')
     assert paths[0].read_bytes() == paths[1].read_bytes()
     with zipfile.ZipFile(paths[0]) as archive:
-        assert len(archive.namelist()) == 10
+        assert len(archive.namelist()) == 11
         for name in archive.namelist():
             assert archive.read(name) == (source / name).read_bytes()
 

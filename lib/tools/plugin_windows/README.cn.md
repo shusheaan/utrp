@@ -74,3 +74,11 @@ Library 的互斥试听会停用其他音色轨，旧轨插件窗口随之关闭
 `sway.conf` 为 Xwayland normal 窗口的精确 ` / Chord Lab` 标题后缀添加原生 `for_window`：**创建时立即 floating，并恢复 920×703**。Bitwig 插件包装窗口没有 WM_CLASS，故不能复用主窗口 class 条件。规则不匹配主窗口或其他插件、不修改音频或插件内容、不增加服务。仅每个新窗口执行一次，后续手动调整大小仍可保留。
 
 配置校验通过；六次真实重开（含共享和 raw detection 两个实例），首次 focus 事件已是 `user_on`、920×703，随后也保持该尺寸与 Workspace 2。证据：`target/chordlab-window-size/`。修复前备份：`~/storage/daw/Backups/chordlab-window-default-20261021T194605Z/`。没有重编译或替换 CLAP；本轮不声称完成整个 DAW 的重启验收。
+
+## 游戏右栏的布局所有权 — 2026-10-22 候选
+
+- Chord Lab 识别 Bitwig transient 父窗口后，只调整自身宽度，不自行移动或恢复坐标；仍由本程序把 Chord Lab 与主音源整组居中。
+- G 开合会在该窗口上替换自己的 `utrp-chordlab-layout-<revision>` mark，本程序将版本纳入布局 signature。这样快速关/开即使在 0.4 秒内结束、最终宽度不变，也不会漏掉宿主的自动移位。每个窗口仅保留一个版本 mark；其他用户 marks 不变。
+- 手工拖动不会改变版本，因此不会立即被拉回。下一次 G 开合或其他结构变化时重新居中，不回放旧坐标。
+- 必须配套部署候选 CLAP 与本程序；本轮仅在临时 Sway 运行源码，没有重启真实用户服务。正式部署与真实 Bitwig 验收仍待进行。游戏本身不要求新增服务。
+- 368 项布局测试通过，覆盖三种主音源尺寸、三个输出坐标原点、重复开合，以及同尺寸不同版本的漏检回归。完整游戏说明见 [GAME.cn.md](../chordlab_clap/GAME.cn.md)。

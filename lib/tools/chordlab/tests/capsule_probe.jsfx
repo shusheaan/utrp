@@ -2,6 +2,8 @@ desc:Capsule pixel bounds probe
 import ../harmony.jsfx-inc
 import ../guitar_table.jsfx-inc
 import ../guitar.jsfx-inc
+import ../midi.jsfx-inc
+import ../game.jsfx-inc
 import ../ui.jsfx-inc
 @init
 shape_width=160; shape_height=29;

@@ -24,7 +24,7 @@ function staff_clef(x,anchor,bass) local(scale) (
     x-16*scale,anchor-160*scale,128*scale,256*scale);
 );
 function staff_signature(x,centre,w,step) local(count,i,position,sx,sign) (
-  count=key_signature(key); sign=count<0 ? -1 : 1; i=0;
+  count=key_signature(display_key()); sign=count<0 ? -1 : 1; i=0;
   loop(abs(count),
     position=signature_position(i,count<0);
     sx=x+46+i*9*.90;
@@ -61,9 +61,9 @@ function staff_ledgers(x,y,position,step,radius) local(line) (
   );
 );
 function staff_note(x,y,note,role,side,step,scale_view) local(lit,accidental) (
-  lit=(sounding && own[note]) || hardware_held(note)>0;
-  accidental=pitch_accidental(key,note);
-  accidental!=signature_accidental(key,pitch_letter(key,note)) ? (
+  lit=game_on ? game_visible(note) : (sounding && own[note]) || hardware_held(note)>0;
+  accidental=game_on ? game_accidental(note) : pitch_accidental(key,note);
+  accidental!=signature_accidental(display_key(),game_on ? game_letter(note) : pitch_letter(key,note)) ? (
     gfx_a=lit ? 1 : .6;
     staff_accidental(x-staff_accidental_gap-side*20,y,accidental,staff_accidental_scale);
     gfx_a=1;
@@ -80,8 +80,8 @@ function draw_staff(x,y,w,h,scale_view) local(step,centre,note,position,role,pre
   loop(2,
     previous=-100; side=0; note=34;
     loop(54,
-      position=written_step(key,note); role=diagram_role(note%12,key,degree,voice_count,scale_view);
-      staff_in_range(position) && (role>=0 || hardware_held(note)>0) ? (
+      position=display_written_step(note); role=display_role(note,scale_view);
+      staff_in_range(position) && game_visible(note) && (role>=0 || (game_on ? game_visible(note) : hardware_held(note)>0)) ? (
         side=staff_side(position,previous,side); previous=position;
         nx=floor(x+w*.79+.5)+side*20;
         layer==0 ? staff_ledgers(nx,centre-(position-28)*step,position,step,note_radius) :

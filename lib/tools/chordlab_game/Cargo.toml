@@ -1,0 +1,15 @@
+[package]
+name = "chordlab_game"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+path = "game.rs"
+crate-type = ["staticlib", "rlib"]
+
+[dependencies]
+utrp = { path = "../../.." }
+rand = "0.8"
+rand_chacha = "0.3"
+serde = { version = "1", features = ["derive"] }
+toml = "0.8"

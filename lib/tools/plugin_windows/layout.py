@@ -66,6 +66,7 @@ class Window:
     bounds: Rect
     floating: bool
     fullscreen: bool
+    layout_revision: tuple[str, ...] = ()
 
 
 def mapping(value: Json) -> dict[str, Json]:
@@ -109,8 +110,19 @@ def plugin_windows(tree: dict[str, Json], host_pids: frozenset[int]) -> tuple[Wi
             result.append(Window(int(str(node['id'])), title, Rect.parse(node['rect']),
                                  int(str(workspace['id'])), bounds,
                                  node.get('floating') in ('user_on', 'auto_on'),
-                                 bool(node.get('fullscreen_mode'))))
+                                 bool(node.get('fullscreen_mode')), layout_revision(node)))
     return tuple(result)
+
+
+def layout_revision(node: dict[str, Json]) -> tuple[str, ...]:
+    """Persistent resize notification: even a full G cycle between polls is seen."""
+    marks = node.get('marks', [])
+    if not isinstance(marks, list):
+        raise ValueError('Invalid Sway marks')
+    prefix = 'utrp-chordlab-layout-'
+    return tuple(sorted(mark for mark in marks if isinstance(mark, str)
+                        and mark.startswith(prefix) and mark[len(prefix):].isascii()
+                        and mark[len(prefix):].isdigit()))
 
 
 def available(bounds: Rect, config: Config) -> Rect:
@@ -274,7 +286,8 @@ def read_windows() -> tuple[Window, ...]:
 def signature(windows: tuple[Window, ...]) -> tuple[tuple[object, ...], ...]:
     # Ignore position/focus: manual dragging and clicking do not trigger a layout fight.
     return tuple((w.id, w.title, w.rect.width, w.rect.height, w.workspace, w.bounds,
-                  w.floating, w.fullscreen) for w in sorted(windows, key=lambda w: w.id))
+                  w.floating, w.fullscreen, w.layout_revision)
+                 for w in sorted(windows, key=lambda w: w.id))
 
 
 def apply_layout(windows: tuple[Window, ...], config: Config) -> None:

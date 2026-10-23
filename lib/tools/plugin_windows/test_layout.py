@@ -119,8 +119,10 @@ def instrument_orders() -> tuple[tuple[str, ...], ...]:
 
 
 @pytest.mark.parametrize('order', instrument_orders(), ids=lambda order: ''.join(order))
-def test_real_instrument_combinations_fit_in_every_opening_order(order: tuple[str, ...]) -> None:
-    dimensions = {'C': (920, 703), 'S': (1141, 711), 'P': (775, 515),
+@pytest.mark.parametrize('chord_width', [920, 1252], ids=['normal', 'game'])
+def test_real_instrument_combinations_fit_in_every_opening_order(order: tuple[str, ...],
+                                                                chord_width: int) -> None:
+    dimensions = {'C': (chord_width, 703), 'S': (1141, 711), 'P': (775, 515),
                   'F': (600, 490), 'H': (920, 345)}
     windows = tuple(window(index, *dimensions[kind],
                            title='Track / ' + {'C': 'Chord Lab', 'S': 'Surge XT', 'P': 'sfizz', 'F': 'Surge XT Effects', 'H': 'Dragonfly Hall Reverb'}[kind])
@@ -168,3 +170,67 @@ def test_instrument_takes_core_priority_over_old_effect() -> None:
     assert mixed[1] == pair[1]
     assert mixed[3] == pair[3]
     assert mixed[2] is not None
+
+
+@pytest.mark.parametrize('primary', [(775, 515, 'sfizz'), (1141, 711, 'Surge XT'),
+                                     (600, 490, 'Surge XT Effects')])
+@pytest.mark.parametrize('origin', [(0, 0), (-3440, 40), (3440, -200)])
+def test_game_panel_cycle_has_one_centered_group(primary: tuple[int, int, str],
+                                                origin: tuple[int, int]) -> None:
+    """Resize uses the existing center policy, never a competing left-edge anchor."""
+    chord = replace(window(1, 920, 703, 'Shared / Chord Lab'),
+                    bounds=Rect(*origin, 3440, 1440))
+    synth = replace(window(2, primary[0], primary[1], 'Track / ' + primary[2]),
+                    bounds=chord.bounds)
+    closed = (chord, synth)
+    expected = dict(arrange(closed, config()))
+    current = closed
+    for _ in range(30):
+        opened = tuple(replace(w, rect=replace(w.rect, width=1252)) if w.id == 1 else w
+                       for w in current)
+        assert signature(opened) != signature(current)
+        positions = dict(arrange(opened, config()))
+        left, right = positions[1], positions[2]
+        assert left is not None and right is not None
+        assert right.x == left.x + left.width + config().gap
+        assert not overlaps(left, right, config().gap)
+        assert left.width == 1252 and left.height == 703
+        group_width = left.width + config().gap + right.width
+        assert left.x == origin[0] + (3440 - group_width) // 2
+        # Emulate host recentering/random drag during the resize. Positions must
+        # not become policy input; the final signature contains dimensions only.
+        current = tuple(replace(w, rect=replace(w.rect, x=999, y=123)) for w in closed)
+        assert dict(arrange(current, config())) == expected
+
+
+def test_panel_resize_not_misidentified_as_new_window_or_fx_reset() -> None:
+    from layout import needs_effect_size_reset
+    closed = window(1, 920, 703, 'Shared / Chord Lab')
+    opened = replace(closed, rect=replace(closed.rect, width=1252))
+    assert not needs_effect_size_reset(opened, False, config())
+    assert not needs_effect_size_reset(opened, True, config())
+    assert signature((closed,)) != signature((opened,))
+
+
+def test_complete_game_cycle_between_polls_still_requests_centering() -> None:
+    """Same final dimensions cannot hide a host's resize-induced recentering."""
+    before = replace(window(1, 1252, 703, 'Shared / Chord Lab'),
+                     layout_revision=('utrp-chordlab-layout-100',))
+    after = replace(before, rect=replace(before.rect, x=1092),
+                    layout_revision=('utrp-chordlab-layout-102',))
+    assert signature((before,)) != signature((after,))
+    assert dict(arrange((before,), config())) == dict(arrange((after,), config()))
+    # A genuine user drag without a G transition must not cause a layout fight.
+    dragged = replace(after, rect=replace(after.rect, x=333, y=222))
+    assert signature((after,)) == signature((dragged,))
+
+
+def test_resize_notification_preserves_user_marks_and_filters_invalid_names() -> None:
+    from layout import layout_revision
+    node = mapping(json.loads('{"marks": ["user-bookmark", "utrp-chordlab-layout-123", '
+                              '"utrp-chordlab-layout-", "utrp-chordlab-layout-bad", '
+                              '"utrp-chordlab-layout-１２３", 123]}'))
+    assert layout_revision(node) == ('utrp-chordlab-layout-123',)
+    assert layout_revision({}) == ()
+    with pytest.raises(ValueError, match='marks'):
+        layout_revision({'marks': 'invalid'})

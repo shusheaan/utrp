@@ -31,6 +31,11 @@ def make_controls_header(source: Path) -> str:
     if not isinstance(background, str) or not re.fullmatch(r"#[0-9A-Fa-f]{6}", background):
         raise ValueError("Invalid background color")
     values["background"] = background
+    for role in ("background", "border", "text", "muted", "key", "chord", "reason", "demo", "error"):
+        color = raw["game"][role]
+        if not isinstance(color, str) or not re.fullmatch(r"#[0-9A-Fa-f]{6}", color):
+            raise ValueError(f"Invalid game {role} color")
+        values[f"game_{role}"] = color
     inset = raw["choices"]["inset"]
     if isinstance(inset, bool) or not isinstance(inset, int) or not 2 <= inset <= 4:
         raise ValueError("Invalid choices inset")

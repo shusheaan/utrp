@@ -141,6 +141,44 @@ void transport_stop(ysfx_t* fx) {
     const ysfx_time_info_t stopped{120,ysfx_playback_stopped,0,0,{4,4}};
     ysfx_set_time_info(fx,&stopped); command(fx,23); baseline(fx,0);
 }
+void receiver_resync(const Events& events, int channel, bool expected) {
+    // A newly loaded/activated receiver missed startup CC64, or a shared
+    // controller was reset downstream. It starts with the opposite pedal state.
+    bool downstream=!expected;
+    int attacks=0, controllers=0;
+    for (const auto& event:events) {
+        require(event.frame==37,"Resync preserves the exact attack offset");
+        if (event.bytes[0]==0xb0+channel && event.bytes[1]==64) {
+            downstream=event.bytes[2]>=64; ++controllers;
+        }
+        if (event.bytes[0]==0x90+channel && event.bytes[2]>0) {
+            require(downstream==expected,"Receiver must get effective sustain before each attack");
+            ++attacks;
+        }
+    }
+    require(controllers==1 && attacks>0,"One sustain sync per physical attack/computer chord");
+}
+void reconnect(ysfx_t* fx) {
+    for (int base:{0,1}) {
+        if (ysfx_slider_get_value(fx,17)!=base) command(fx,22);
+        for (int channel=0;channel<14;++channel) for (int pedal:{0,127}) {
+            send(fx,0xb0+channel,64,pedal);
+            const bool expected=base!=(pedal>=64);
+            receiver_resync(send(fx,0x90+channel,60,96),channel,expected);
+            const auto release=send(fx,0x80+channel,60,0);
+            require(release.size()==1 && release[0].bytes[0]==0x80+channel,
+                    "Ordinary note-off stays balanced; do not fake sustain with stuck keys");
+            if (channel==0) {
+                receiver_resync(send(fx,0x9f,74,100),0,expected);
+                send(fx,0x8f,74,0);
+            }
+            baseline(fx,base);
+            send(fx,0xb0+channel,64,0);
+        }
+    }
+    require(send(fx,0x9e,60,96).empty(),"Guitar analysis never resyncs instrument sustain");
+    send(fx,0x8e,60,0);
+}
 int main(int argc,char** argv) {
     if (argc!=2) return 2;
     auto* config=ysfx_config_new(); auto* fx=ysfx_new(config); int result=0;
@@ -152,8 +190,8 @@ int main(int argc,char** argv) {
         ysfx_slider_set_value(fx,13,1,true);
         startup(fx);
         truth_table(fx); toggling_while_pressed(fx); sustained_hold(fx);
-        held_notes_and_reserved_channels(fx); focus_and_reset(fx); transport_stop(fx);
-        std::puts("Pedal baseline: 224 threshold/channel cases, mid-pedal toggles, indicator, held notes, reset and isolation: PASS");
+        held_notes_and_reserved_channels(fx); focus_and_reset(fx); transport_stop(fx); reconnect(fx);
+        std::puts("Pedal baseline: 224 threshold/channel cases, toggles, reset, isolation; late/reset receiver sync for 14 channels and computer chords: PASS");
     } catch (const std::exception& error) { std::fprintf(stderr,"FAIL: %s\n",error.what()); result=1; }
     ysfx_free(fx); ysfx_config_free(config); return result;
 }

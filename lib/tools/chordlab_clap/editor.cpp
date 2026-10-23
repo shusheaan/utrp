@@ -1,7 +1,8 @@
 #include "editor.h"
 #include "processor.h"
+#include "game_settings.h"
 
-YsfxEditor::YsfxEditor(YsfxProcessor& p) : AudioProcessorEditor(p), processor(p)
+YsfxEditor::YsfxEditor(YsfxProcessor& p) : AudioProcessorEditor(p), processor(p), gamePanel(p.gameControl())
 {
     enabled = physical.available();
     setWantsKeyboardFocus(true);
@@ -11,18 +12,25 @@ YsfxEditor::YsfxEditor(YsfxProcessor& p) : AudioProcessorEditor(p), processor(p)
                     1600 + 2 * padding_x, 1200 + 2 * padding_y);
     addAndMakeVisible(view);
     view.setEffect(p.getCurrentInfo()->effect.get());
+    if (auto* reserve=ysfx_find_var(p.getCurrentInfo()->effect.get(),"game_button_reserve"))
+        *reserve=chordlabStyle::size+chordlabStyle::gap;
     displayedEffect = p.getCurrentInfo()->effect.get();
     view.setWantsKeyboardFocus(true);
     view.addKeyListener(this);
     view.addMouseListener(this, true);
     capture.addMouseListener(this, false);
     addKeyListener(this);
-    for (auto* button : {&sustain, &capture}) {
+    for (auto* button : {&game, &sustain, &capture}) {
         addAndMakeVisible(button);
         button->setWantsKeyboardFocus(false);
         button->setColour(juce::TextButton::buttonColourId, juce::Colour(chordlabStyle::off));
         button->setColour(juce::TextButton::buttonOnColourId, juce::Colour(chordlabStyle::on));
     }
+    addChildComponent(gamePanel);
+    gamePanel.returnFocus=[this]{focusInput();};
+    game.setName("Game");
+    game.setTooltip("Game: reveal played notes, race piano against guitar. Red = normal mode.");
+    game.onClick=[this]{toggleGame();};
     addChildComponent(errorLabel);
     errorLabel.setInterceptsMouseClicks(false, false);
     errorLabel.setColour(juce::Label::backgroundColourId, juce::Colour(0xffedb5b5));
@@ -54,6 +62,8 @@ YsfxEditor::YsfxEditor(YsfxProcessor& p) : AudioProcessorEditor(p), processor(p)
 YsfxEditor::~YsfxEditor()
 {
     stopTimer();
+    gamePanel.deactivate();
+    gameLayout.restore();
     releaseKeys();
     processor.keyboardControl().release();
     view.removeMouseListener(this);
@@ -65,11 +75,44 @@ YsfxEditor::~YsfxEditor()
 void YsfxEditor::resized()
 {
     using namespace chordlabStyle;
-    const auto canvas = getLocalBounds().reduced(padding_x, padding_y);
+    auto canvas = getLocalBounds().reduced(padding_x, padding_y);
+    if(gameOpen) {
+        gamePanel.setBounds(canvas.removeFromRight(gameSettings::panelWidth));
+        canvas.removeFromRight(12);
+    }
     view.setBounds(canvas);
     capture.setBounds(canvas.getRight() - margin - size, canvas.getY() + 10, size, size);
     sustain.setBounds(capture.getX() - gap - size, capture.getY(), size, size);
+    game.setBounds(sustain.getX() - gap - size, sustain.getY(), size, size);
     errorLabel.setBounds(canvas.getX() + 18, canvas.getY() + 40, canvas.getWidth() - 36, 30);
+}
+
+
+void YsfxEditor::toggleGame()
+{
+    if(!gameOpen) {
+        if(!gamePanel.activate()) return;
+        if(arrangeDelay<0) gameLayout.restore();
+        gameLayout.remember();
+        releaseKeys();
+        normalWidth=getWidth(); normalHeight=getHeight();
+        gameOpen=true; gamePanel.setVisible(true);
+        setResizeLimits(700+2*chordlabStyle::padding_x+gameSettings::panelWidth+12,
+                        560+2*chordlabStyle::padding_y,
+                        1600+2*chordlabStyle::padding_x+gameSettings::panelWidth+12,
+                        1200+2*chordlabStyle::padding_y);
+        setSize(normalWidth+gameSettings::panelWidth+12,normalHeight);
+        arrangeDelay=8;
+    } else {
+        gameLayout.prepareRestore();
+        gamePanel.deactivate(); gameOpen=false; gamePanel.setVisible(false);
+        setResizeLimits(700+2*chordlabStyle::padding_x,560+2*chordlabStyle::padding_y,
+                        1600+2*chordlabStyle::padding_x,1200+2*chordlabStyle::padding_y);
+        setSize(normalWidth,normalHeight);
+        arrangeDelay=-8;
+    }
+    game.setToggleState(gameOpen,juce::dontSendNotification);
+    if(isShowing()) focusInput();
 }
 
 void YsfxEditor::paint(juce::Graphics& g) { g.fillAll(juce::Colour(chordlabStyle::background)); }
@@ -203,6 +246,9 @@ void YsfxEditor::timerCallback()
     if (displayedEffect != info->effect.get()) {
         displayedEffect = info->effect.get();
         view.setEffect(displayedEffect);
+        if(auto* reserve=ysfx_find_var(displayedEffect,"game_button_reserve"))
+            *reserve=chordlabStyle::size+chordlabStyle::gap;
+        if(gameOpen) toggleGame();
         releaseKeys();
     }
     const bool focused = hasInputFocus();
@@ -212,6 +258,18 @@ void YsfxEditor::timerCallback()
     // Key callbacks drain it immediately; the timer also handles host misses.
     dispatchNativeKeys();
     updateLabel();
+    const auto resetSerial=processor.gameControl().resets();
+    if(resetSerial!=gameResetSerial) {
+        gameResetSerial=resetSerial;
+        if(gameOpen) toggleGame();
+    }
+    gamePanel.tick();
+    if(arrangeDelay>0 && --arrangeDelay==0) {
+        gameLayout.arrange();
+        if(gameLayout.noSpace && gameOpen) toggleGame();
+    }
+    if(arrangeDelay<0 && ++arrangeDelay==0) gameLayout.restore();
+    if(gameLayout.error.isNotEmpty()) game.setTooltip(gameLayout.error);
 #if !JUCE_LINUX
     keyStateChanged(false, this);
 #endif
@@ -221,7 +279,7 @@ void YsfxEditor::visibilityChanged()
 {
     initialFocusPending = enabled;
     if (initialFocusPending && isShowing()) initialFocusPending = !focusInput();
-    if (!isShowing()) { releaseKeys(); processor.keyboardControl().release(); }
+    if (!isShowing()) { if(gameOpen) toggleGame(); releaseKeys(); processor.keyboardControl().release(); }
 }
 
 void YsfxEditor::updateLabel()

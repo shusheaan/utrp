@@ -1,4 +1,23 @@
+> **0.3.3 installed in real Bitwig on 2026-10-22**: see [game mode and live validation](GAME.md). [Standalone playback](STANDALONE.md) is deferred; sound menus are cancelled; normal-mode documentation and installation history follow.
+
 # Chord Lab CLAP 0.2.14
+
+## Fixed major-key colors and game chord choices (0.3.3, 2026-10-22)
+
+- Color only the second-row chord capsules; top-row key pairs such as `Am/C` are unchanged. Reuse note fills and text colors, with saturated fill and a white rim for the current target.
+- Colors are fixed to the selected pair's major scale, never rebased on the current chord or relative minor. For example, A remains C major's blue sixth under `Am/C`, not a new red tonic. The game's upper scale diagram uses that same fixed major palette; lower chord-role note colors are unchanged.
+- Keep seven contextual chord choices visible in game mode. The target includes its degree, symbol, exact bass and octave; borrowed/altered chords include labels such as `bII`. Other capsules show current-scale triad context, not invented future voicings.
+- Game choices are read-only. Scoring, deadlines, hidden unanswered notes, revealed hits, normal selection and voicing memories remain unchanged. G off restores normal mode.
+- New real-JSFX label and LICE pixel regressions cover 12 keys × major/minor × 7 roots, inversion/altered degrees, fills/outlines at three widths, locked game clicks and normal interaction. 1348 Python tests, 12 CTests, CLAP probe, `cargo test` and `cargo clippy` passed. Isolated Sway screenshots: `target/chordlab-colored-choices/`; see GAME for live deployment status.
+
+
+## Sustain receiver synchronization (0.3.2, 2026-10-22)
+
+- Fix normal-mode physical MIDI and computer chords releasing immediately despite a green S when the downstream instrument has not received effective CC64. A startup-only message cannot cover late loading, reactivation or a downstream controller reset.
+- Reassert effective per-channel CC64 before each physical NoteOn and once before each computer chord attack, at the same sample offset and before notes. NoteOff remains balanced and unmodified; no periodic polling.
+- Preserve manual S Off, temporary pedal inversion of the baseline, fourteen musical channels and analysis/command isolation. Normal-mode voicing, UI and focus logic are unchanged, as are presets, routing, Arm and services.
+- The new receiver-reset regression fails on the old code and passes with the fix, covering both baselines, both pedal states, fourteen channels and computer chords. Evidence: `target/chordlab-sustain-routing/`.
+
 
 ## Default Sustain and startup Focus (2026-10-21)
 

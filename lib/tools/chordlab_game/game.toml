@@ -1,0 +1,13 @@
+# Intersection of the displayed grand staff and the 20-fret standard guitar.
+low = 40 # E2
+high = 81 # A5
+max_span = 12
+max_step = 5.0 # maximum change of mean MIDI pitch per transition
+phrase_min = 4
+phrase_max = 8
+coverage_weight = 0.16
+common_weight = 0.6
+jitter = 0.8
+answer_seconds = 10
+demo_seconds = 2
+panel_width = 320

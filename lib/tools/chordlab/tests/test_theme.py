@@ -27,6 +27,26 @@ def luminance(color: str) -> float:
     return sum(value * weight for value, weight in zip(linear, (0.2126, 0.7152, 0.0722)))
 
 
+def test_race_palette_is_black_and_does_not_change_normal_renderer() -> None:
+    theme = tomllib.loads((SOURCE / "theme.toml").read_text())
+    assert theme["game"]["background"] == "#000000"
+    assert theme["background"] == "#585858"
+    assert "game_" not in module.make_theme(SOURCE)
+    header = module.make_controls_header(SOURCE)
+    for role, color in theme["game"].items():
+        assert f"game_{role} = 0xff{color[1:]};" in header
+        if role not in ("background", "border"):
+            assert (luminance(color) + 0.05) / 0.05 >= 7
+
+
+@pytest.mark.parametrize("value", ['"#fff"', '"#GGGGGG"', "123"])
+def test_race_palette_rejects_invalid_colors(tmp_path: Path, value: str) -> None:
+    text = (SOURCE / "theme.toml").read_text().replace('key = "#68DCE8"', f'key = {value}')
+    (tmp_path / "theme.toml").write_text(text)
+    with pytest.raises(ValueError, match="game key"):
+        module.make_controls_header(tmp_path)
+
+
 def test_bitwig_neutrals_preserve_light_diagrams() -> None:
     theme = tomllib.loads((SOURCE / "theme.toml").read_text())
     assert theme["background"] == "#585858"
@@ -242,7 +262,7 @@ def test_circular_controls_share_config_and_header_geometry() -> None:
     ui = (SOURCE / 'ui.jsfx-inc').read_text()
     assert 'choice_button(x,y,w,#text' in ui
     editor = (SOURCE.parent / 'chordlab_clap/editor.h').read_text()
-    assert 'StateButton sustain{"S"}, capture{"A"}' in editor
+    assert 'StateButton game{"G"}, sustain{"S"}, capture{"A"}' in editor
     for state in ('off', 'on'):
         assert (luminance(config['foreground']) + .05) / (luminance(config[state]) + .05) >= 4.5
 
@@ -299,7 +319,7 @@ def test_idle_notes_have_no_preselected_region_style() -> None:
 def test_white_ring_marks_sounding_scale_notes_not_static_grips() -> None:
     ui = (SOURCE / "ui.jsfx-inc").read_text()
     assert "lit=(sounding && own[note]) || hw>0" in ui
-    assert "ring=lit && diagram_role(note%12,key,degree,voice_count,1)>=0" in ui
+    assert "ring=lit && display_role(note,1)>=0" in ui
     assert "note_circle(x,y,radius+active_note_ring_width);" in ui
     assert "note_circle(x,y,radius+active_note_ring_width+active_note_glow_width);" in ui
     assert "shape[6-string]" not in ui
@@ -381,7 +401,8 @@ def test_choice_rows_share_pill_geometry_and_font() -> None:
     assert 'hover(x,y,w,choices_height)' in ui
     renderer = ui[ui.index('function choice_button'):ui.index('function role_color')]
     assert 'choices_text_size' in renderer and 'centered_style' not in renderer
-    assert ui.count('choice_button(x,y,w,#text,') == 2
+    assert 'choice_button(x,y,w,#text,display_key()==i,locked)' in ui
+    assert 'chord_choice_button(x,y,w,#text,selected,game_on,chord_choice_role(d))' in ui
 
 
 @pytest.mark.parametrize('name,value', [('height', '25'), ('height', 'true'),
@@ -398,7 +419,7 @@ def test_choice_geometry_rejects_invalid_values(tmp_path: Path, name: str, value
 
 def test_saved_marker_belongs_to_measured_label() -> None:
     ui = (SOURCE / 'ui.jsfx-inc').read_text()
-    text = ui[ui.index('function chord_choice_text'):ui.index('function measure_choice_text')]
+    text = ui[ui.index('function normal_chord_choice_text'):ui.index('function measure_choice_text')]
     assert 'index[0] ? strcat(#text," *")' in text
     row = ui[ui.index('function draw_chord_choices'):ui.index('function ui_begin')]
     assert 'gfx_circle' not in row
@@ -442,7 +463,7 @@ def test_editor_padding_preserves_canvas_and_overlay_alignment() -> None:
     assert 'setSize(884 + 2 * padding_x, 683 + 2 * padding_y)' in editor
     assert '700 + 2 * padding_x, 560 + 2 * padding_y' in editor
     assert '1600 + 2 * padding_x, 1200 + 2 * padding_y' in editor
-    assert 'const auto canvas = getLocalBounds().reduced(padding_x, padding_y)' in editor
+    assert 'auto canvas = getLocalBounds().reduced(padding_x, padding_y)' in editor
     assert 'view.setBounds(canvas)' in editor
     assert 'canvas.getRight() - margin - size, canvas.getY() + 10' in editor
     assert 'capture.getX() - gap - size, capture.getY()' in editor

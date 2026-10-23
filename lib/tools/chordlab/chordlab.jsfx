@@ -32,6 +32,7 @@ import harmony.jsfx-inc
 import guitar_table.jsfx-inc
 import guitar.jsfx-inc
 import midi.jsfx-inc
+import game.jsfx-inc
 import theme.jsfx-inc
 import ui.jsfx-inc
 import staff.jsfx-inc
@@ -62,6 +63,7 @@ settings_dirty=1;
 
 @block
 midi_bus=0;
+game_apply();
 // Saved slider values may be restored after @init: never replay the last command.
 // Clear stale downstream pedal state before enabling the new-session baseline.
 sustain_reset_pending ? (
@@ -99,8 +101,9 @@ while(ui_read!=ui_write) (
   enabled || cmd==23 || cmd==27 ? command(cmd,0);
 );
 while(midirecv(offset,status,note,value)) (
-  midi_bus==0 ? receive_midi(offset,status,note,value) : midisend(offset,status,note,value);
+  midi_bus==0 ? (game_receive(offset,status,note,value); receive_midi(offset,status,note,value);) : midisend(offset,status,note,value);
 );
+game_tick(max(0,samplesblock-1)); game_clock+=samplesblock;
 slider9=sounding;
 slider18=sustain_on;
 slider10=max(0,voices[0]); slider11=max(0,voices[1]);

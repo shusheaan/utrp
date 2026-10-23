@@ -4,6 +4,8 @@
 #include "keyboard.h"
 #include "physical_keys.h"
 #include "state_button.h"
+#include "game_panel.h"
+#include "game_layout.h"
 class YsfxProcessor;
 
 class YsfxEditor final : public juce::AudioProcessorEditor,
@@ -26,9 +28,16 @@ private:
     bool hasInputFocus() const;
     void updateLabel();
     void showAppearanceMenu();
+    void toggleGame();
     YsfxProcessor& processor;
     YsfxGraphicsView view;
-    StateButton sustain{"S"}, capture{"A"};
+    StateButton game{"G"}, sustain{"S"}, capture{"A"};
+    GamePanel gamePanel;
+    int normalWidth{920}, normalHeight{703};
+    bool gameOpen{false};
+    uint32_t gameResetSerial{};
+    GameLayout gameLayout;
+    int arrangeDelay{0};
     juce::Label errorLabel;
     juce::TooltipWindow tooltips{this, 700};
     KeyboardState keyboard;

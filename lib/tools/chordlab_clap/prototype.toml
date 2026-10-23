@@ -8,7 +8,7 @@ plugin_id = "org.saike.ysfx-s-fx"
 plugin_name = "CLAP: ysfx-s FX (Jean Pierre Cimalando / Joep Vanlier)"
 
 [source]
-assets = ["chordlab.jsfx", "harmony.jsfx-inc", "guitar_table.jsfx-inc", "guitar.jsfx-inc", "midi.jsfx-inc", "ui.jsfx-inc", "staff.jsfx-inc", "theme.jsfx-inc", "notation.png", "notation-license.txt"]
+assets = ["chordlab.jsfx", "harmony.jsfx-inc", "guitar_table.jsfx-inc", "guitar.jsfx-inc", "midi.jsfx-inc", "game.jsfx-inc", "ui.jsfx-inc", "staff.jsfx-inc", "theme.jsfx-inc", "notation.png", "notation-license.txt"]
 
 [audio]
 sample_rate = 48000

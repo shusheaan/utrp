@@ -114,3 +114,11 @@ The live editor was 1636×1220 (its allowed maximum). Before the fix, window eve
 `sway.conf` now applies native `for_window` handling to Xwayland normal windows with the exact ` / Chord Lab` title suffix: **float immediately and restore 920×703 at creation**. Bitwig editor wrappers lack WM_CLASS, so the main-window class condition cannot be reused. Main windows and other editors are excluded; audio/plugin content is untouched and no service is added. It applies once per new window; later manual resizing remains possible.
 
 Configuration validation passed. Six real editor recreations, including shared and raw-detection instances, were already `user_on` at 920×703 in the first focus event and stayed that size on Workspace 2. Evidence: `target/chordlab-window-size/`. Pre-fix backup: `~/storage/daw/Backups/chordlab-window-default-20261021T194605Z/`. No CLAP rebuild/replacement; a full DAW restart is not claimed this round.
+
+## Game sidebar layout ownership — 2026-10-22 candidate
+
+- Chord Lab recognizes its Bitwig transient parent and only changes its own width; this policy alone positions the centered Chord Lab/primary-editor group.
+- Each completed G transition replaces its own `utrp-chordlab-layout-<revision>` mark, included in the layout signature. A complete close/open cycle between 0.4-second polls can no longer hide the host's recentering behind identical final dimensions. Only one revision mark remains per editor; unrelated user marks are preserved.
+- Manual dragging does not change the revision and is not immediately undone. The next G transition or structural change recalculates the group rather than restoring stale coordinates.
+- Deploy the matching candidate CLAP and layout source together. This round ran only in temporary Sway and did not restart the real user service; real Bitwig acceptance remains pending. No additional service is required.
+- 368 layout tests passed, including three primary-editor sizes, three output origins, repeated transitions and the equal-size/different-revision regression. See [GAME.md](../chordlab_clap/GAME.md).

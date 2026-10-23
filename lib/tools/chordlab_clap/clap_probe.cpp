@@ -303,9 +303,9 @@ void display_only_channel(const clap_plugin_t* p)
         }
         for (bool displayFirst : {false,true}) {
             Events first; first.midi(1,displayFirst?0x9e:0x90,60,73); process(first);
-            require(first.output.size()==(displayFirst?0u:1u),"Independent note on ownership");
+            require(first.output.size()==(displayFirst?0u:2u),"Independent note on ownership plus sustain sync");
             Events second; second.midi(1,displayFirst?0x90:0x9e,60,73); process(second);
-            require(second.output.size()==(displayFirst?1u:0u),"Analysis cannot suppress real MIDI");
+            require(second.output.size()==(displayFirst?2u:0u),"Analysis cannot suppress real MIDI or its sustain sync");
             Events off; off.midi(1,0x8e,60,0); process(off);
             require(off.output.empty(),"Analysis release cannot cut real MIDI");
             Events realOff; realOff.midi(1,0x80,60,0); process(realOff);
@@ -332,20 +332,28 @@ void mixed_retrigger(const clap_plugin_t* p)
             Events events; events.midi(37,status,note,value); process(events); return events.output;
         };
         Events warmup; process(warmup);
+        // This case reuses a plugin whose prior startup-state test leaves S off.
+        // Establish our baseline explicitly rather than relying on activate().
+        send(0x9f,87,100); send(0x8f,87,0); // Explicit sustain off.
+        send(0x9f,82,100); send(0x8f,82,0); // Toggle baseline on.
         for (bool pedal : {false,true}) for (bool computerOffFirst : {false,true}) {
             send(0xb0,64,pedal?127:0);
             const auto chord=send(0x9f,74,100);
             require(chord.size()>=3,"Retrigger chord sounds");
-            const auto note=chord.front().data[1];
+            const auto firstNote=std::find_if(chord.begin(),chord.end(),[](const auto& e){return e.data[0]==0x90;});
+            require(firstNote!=chord.end(),"Computer chord contains a NoteOn after sustain sync");
+            const auto note=firstNote->data[1];
             send(0x9e,note,100); // Guitar analysis must not add instrument ownership.
             for (uint8_t velocity : {1,43,96,127}) {
                 const auto attack=send(0x90,note,velocity);
-                require(attack.size()==2,"Shared physical press emits off/on pair");
-                require(attack[0].data[0]==0x80 && attack[0].data[1]==note && attack[0].data[2]==0,
+                require(attack.size()==3,"Shared physical press syncs sustain then emits off/on pair");
+                require(attack[0].data[0]==0xb0 && attack[0].data[1]==64 && attack[0].data[2]==(pedal?0:127),
+                        "Effective pedal state precedes the repeated attack");
+                require(attack[1].data[0]==0x80 && attack[1].data[1]==note && attack[1].data[2]==0,
                         "Retrigger releases preceding synth voice first");
-                require(attack[1].data[0]==0x90 && attack[1].data[1]==note && attack[1].data[2]==velocity,
+                require(attack[2].data[0]==0x90 && attack[2].data[1]==note && attack[2].data[2]==velocity,
                         "Retrigger preserves exact physical velocity");
-                require(attack[0].header.time==37 && attack[1].header.time==37,"No extra retrigger delay");
+                require(attack[0].header.time==37 && attack[1].header.time==37 && attack[2].header.time==37,"No extra retrigger delay");
                 require(send(0x80,note,0).empty(),"Chord survives physical release");
             }
             send(0x90,note,75);
