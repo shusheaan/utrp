@@ -225,3 +225,11 @@ PY
 - 安装目标仍为 `~/.clap/Chord Lab.clap` → Storage UserData，CLAP ID 与旧工程兼容；正常保存退出后原子替换插件，再打开 Library。
 - 回退：`~/storage/daw/Backups/chordlab-startup-20261021T203104Z/` 保留旧插件和工程。975 项 Python、9 项 CTest、真实 CLAP 与隔离 Focus 验证通过，Bitwig 重载检查 S/A 绿色及电脑按键事件触发音源。详情见 Chord Lab README。
 - 没有新增服务；未 commit/push，收尾 Recovery 快照包含当前未提交源码与部署文件。
+
+## 2026-10-23：Chord Lab 0.3.5 游戏 UI 与真实验收
+
+- 正式 `~/.clap/Chord Lab.clap` 已在现有 Storage 目录原子更新至 0.3.5，SHA-256 `8da1fc121f6f3ea838f6e8bb0794350d3fe0ca3268106a063ad6667d71dc05d8`。包含单列阶梯、灰色临时接近+色点、转调说明，以及仅位于右侧游戏面板顶部的倒计时条。正常模式尺寸和音乐绘制不变。
+- 旧 0.3.3、0.3.4 和两次工程备份保存在 `~/storage/daw/Backups/chordlab-live-acceptance-20261023T172629Z/`。沿用清单现有 `.clap`、Library、prefs 与源码项；未新增服务、统计目录或改变音频规则/controller。
+- 保存/退出/更新/重开正式 Library 于 Workspace 2；Spark 硬件 mono → Bitwig、Bitwig stereo → Spark，用户确认 MIDI/电脑/吉他三种声音正常。最终 20 次开合验证边界、16 px 间距、组合居中，关闭 G 后正常音乐区像素一致。
+- 真实单音输入链成功计分、超时钢琴回放与默认 Sustain 对照通过；最后修订版本另通过 12 项 CTest、隔离 GUI/CLAP probe。709 项相关 Python、123 项根 Rust（3 个超大覆盖测试仍 ignored）、7 项游戏 Rust、Clippy、2 项 Guitar CTest 通过。4,800 题均衡模拟覆盖 24 调，成功数 171–206；不是全球历史存储或真人完成数量。
+- 证据 `target/live-acceptance-20261023/`；没有对全部音色逐一重新听音，也没有宣称物理热插拔、长期无爆音或实体双人计分均已覆盖。源码未 commit/push；收尾 Recovery 快照保护当前源码与部署文件。

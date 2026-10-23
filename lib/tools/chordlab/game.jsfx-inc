@@ -14,14 +14,21 @@ game_sl0=game_sl1=game_sl2=game_sl3=game_sl4=game_sl5=game_sl6=0;
 game_count=0; game_id=-1; game_limit=10; game_demo_seconds=2;
 game_signature=0; game_tonic=0; game_minor=0; game_root=0; game_root_letter=0;
 game_quality=0; game_degree=0; game_demo_active=0; game_remaining=0;
+game_winner=0; game_award=0;
 function game_demo_off(offset) local(i) (
   game_demo_active ? (
     i=0; loop(game_count,midisend(offset,$x8f,game_notes[i],0); i+=1;);
     midisend(offset,$xbf,64,0); game_demo_active=0;
   );
 );
-function game_reveal(offset) local(i) (
-  game_phase=3; game_timeouts+=1; game_deadline=game_clock+offset+game_demo_seconds*srate;
+function game_reveal(offset,winner) local(i,remaining) (
+  game_winner=winner; game_award=0;
+  winner ? (
+    remaining=max(0,game_deadline-game_clock-offset);
+    game_award=max(1,min(100,ceil(100*remaining/(game_limit*srate))));
+    winner==1 ? game_piano_score+=game_award : game_guitar_score+=game_award;
+  ) : game_timeouts+=1;
+  game_phase=3; game_deadline=game_clock+offset+game_demo_seconds*srate;
   memset(game_seen,0,128); i=0;
   // Outgoing channel 16 belongs to demonstration only; incoming channel 16
   // remains the swallowed computer command bus. Never feed output to judging.
@@ -33,7 +40,7 @@ function game_reveal(offset) local(i) (
 );
 function game_tick(offset) (
   game_on ? (
-    game_phase==2 && game_clock+offset>=game_deadline ? game_reveal(offset);
+    game_phase==2 && game_clock+offset>=game_deadline ? game_reveal(offset,0);
     game_phase==3 && game_clock+offset>=game_deadline ? (game_demo_off(offset); game_phase=4;);
     game_remaining=game_phase==5 ? game_pause_remaining/srate :
       (game_phase==2 || game_phase==3) ? max(0,(game_deadline-game_clock-offset)/srate) : 0;
@@ -42,7 +49,7 @@ function game_tick(offset) (
 function game_apply() (
   game_action==1 ? (
     game_demo_off(0); release_controls(0); game_on=1; game_phase=1;
-    game_piano_score=0; game_guitar_score=0; game_timeouts=0;
+    game_piano_score=0; game_guitar_score=0; game_timeouts=0; game_winner=0; game_award=0;
     memset(game_seen,0,384); game_count=0;
   ) : game_action==2 ? (
     game_demo_off(0); game_on=0; game_phase=0; memset(game_seen,0,384);
@@ -53,7 +60,7 @@ function game_apply() (
     game_letters[0]=game_l0; game_letters[1]=game_l1; game_letters[2]=game_l2; game_letters[3]=game_l3; game_letters[4]=game_l4;
     game_scale[0]=game_s0; game_scale[1]=game_s1; game_scale[2]=game_s2; game_scale[3]=game_s3; game_scale[4]=game_s4; game_scale[5]=game_s5; game_scale[6]=game_s6;
     game_scale_letters[0]=game_sl0; game_scale_letters[1]=game_sl1; game_scale_letters[2]=game_sl2; game_scale_letters[3]=game_sl3; game_scale_letters[4]=game_sl4; game_scale_letters[5]=game_sl5; game_scale_letters[6]=game_sl6;
-    memset(game_seen,0,384); game_piano_hits=0; game_guitar_hits=0;
+    memset(game_seen,0,384); game_piano_hits=0; game_guitar_hits=0; game_winner=0; game_award=0;
     game_phase=2; game_deadline=game_clock+game_limit*srate;
   ) : game_action==4 && game_on ? (
     game_phase==5 ? (
@@ -77,8 +84,7 @@ function game_receive(offset,status,note,value) local(ch,type,i,found,board) (
           board[note]=1; game_seen[note]=1;
           ch==14 ? game_guitar_hits+=1 : game_piano_hits+=1;
           (ch==14 ? game_guitar_hits : game_piano_hits)==game_count ? (
-            ch==14 ? game_guitar_score+=1 : game_piano_score+=1;
-            game_phase=4;
+            game_reveal(offset,ch==14 ? 2 : 1);
           );
         );
       );
@@ -116,7 +122,8 @@ function game_chord_text() (
   game_quality==6 ? strcpy(#gquality,"7") : game_quality==7 ? strcpy(#gquality,"m7b5") :
   game_quality==8 ? strcpy(#gquality,"dim7") : game_quality==9 ? strcpy(#gquality,"mMaj7") :
   game_quality==10 ? strcpy(#gquality,"maj7#5") : game_quality==11 ? strcpy(#gquality,"7#5") : strcpy(#gquality,"dimMaj7");
-  sprintf(#text,"%s%s/%s%d",#groot,#gquality,#gbass,floor(display_written_step(game_notes[0])/7));
+  chord_tone_label(#bass_role,game_notes[0]%12,game_root,game_roles[0]);
+  sprintf(#text,"%s%s/%s%d(%s)",#groot,#gquality,#gbass,floor(display_written_step(game_notes[0])/7),#bass_role);
 );
 
 // Context labels are presentation only: never reuse/write normal voicing memories.
@@ -133,7 +140,7 @@ function game_roman(dest,d,minor,quality) (
   quality==2 || quality==8 || quality==12 ? strcat(dest,"°") :
   quality==7 ? strcat(dest,"ø") : quality==3 || quality==10 || quality==11 ? strcat(dest,"+");
 );
-function game_choice_text(d) local(third,fifth,quality,minor,delta) (
+function game_choice_text(d) local(third,fifth,seventh,quality,minor,delta) (
   d==game_choice_degree() ? (
     game_chord_text(); strcpy(#gchord,#text);
     minor=game_quality==1 || game_quality==2 || game_quality==5 || game_quality==7 ||
@@ -146,9 +153,14 @@ function game_choice_text(d) local(third,fifth,quality,minor,delta) (
     third=(game_scale[(d+2)%7]-game_scale[d]+12)%12;
     fifth=(game_scale[(d+4)%7]-game_scale[d]+12)%12;
     quality=fifth==6 ? 2 : fifth==8 ? 3 : third==3 ? 1 : 0;
+    game_count==4 ? (
+      seventh=(game_scale[(d+6)%7]-game_scale[d]+12)%12;
+      quality=fifth==6 ? (seventh==9 ? 8 : 7) : third==3 ? 5 : seventh==10 ? 6 : 4;
+    );
     game_roman(#groman,d,third==3,quality);
     game_spell(#groot,game_scale[d],game_scale_letters[d]);
-    strcpy(#gquality,quality==2 ? "dim" : quality==3 ? "aug" : quality==1 ? "m" : "");
+    strcpy(#gquality,quality==2 ? "dim" : quality==3 ? "aug" : quality==1 ? "m" :
+      quality==4 ? "maj7" : quality==5 ? "m7" : quality==6 ? "7" : quality==7 ? "m7b5" : quality==8 ? "dim7" : "");
     // Unscheduled chords are scale context, not invented future voicings.
     sprintf(#text,"%s %s%s",#groman,#groot,#gquality);
   );

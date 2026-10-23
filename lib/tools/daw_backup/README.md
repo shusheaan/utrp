@@ -205,3 +205,11 @@ Saved Library project: audible sounds −2 dB, folders/shared MIDI/Master 0 dB, 
 - Deployment remains `~/.clap/Chord Lab.clap` through Storage UserData, with the same compatible CLAP ID. Save/quit normally, atomically replace the binary, then reopen Library.
 - Rollback: `~/storage/daw/Backups/chordlab-startup-20261021T203104Z/` contains the prior binary/project. 975 Python tests, nine CTests, real CLAP and isolated focus checks passed; Bitwig reload showed green S/A and native keyboard events triggered the instrument. See the Chord Lab README.
 - No new services; no commit/push. The final Recovery snapshot includes current uncommitted sources and deployment files.
+
+## 2026-10-23: Chord Lab 0.3.5 live deployment
+
+- Atomically installed 0.3.5 in the existing Storage-backed `~/.clap/Chord Lab.clap`; SHA-256 `8da1fc121f6f3ea838f6e8bb0794350d3fe0ca3268106a063ad6667d71dc05d8`. Compact staircase/neutral approaches/dots/modulation explanations are deployed; countdown is now confined to the top of the game panel. Normal size and music drawing remain unchanged.
+- Previous 0.3.3/0.3.4 binaries and project backups: `~/storage/daw/Backups/chordlab-live-acceptance-20261023T172629Z/`. Existing manifest entries cover plugin, Library, preferences and sources. No new service, statistics directory, audio rule or controller change.
+- Saved/quit/updated/reopened the real Library on Workspace 2. Spark mono input and stereo output connected; user confirmed physical MIDI, computer and guitar sound. Twenty final open/close checks passed bounds, 16 px gap and group centering; normal music pixels restored identically.
+- Real synthesized mono input scored, timeout played the piano answer, and startup Sustain passed an output comparison. Final revision additionally passed 12 CTests and isolated GUI/CLAP probes. 709 related Python tests, 123 root Rust tests (3 huge coverage audits still ignored), 7 game Rust tests, Clippy and 2 Guitar CTests passed. A 4,800-exercise simulated balance audit covered 24 keys with 171–206 successes each; these are not historical user statistics.
+- Evidence: `target/live-acceptance-20261023/`. Not every preset was listened to again; hardware hotplug, extended noise-free operation and physical two-player scoring are not certified. No commit/push; closing Recovery snapshot preserves source and deployed files.

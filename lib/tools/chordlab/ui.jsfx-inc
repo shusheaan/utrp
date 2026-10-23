@@ -222,7 +222,8 @@ function normal_chord_choice_text(d) local(index,bass) (
   ) : spell_note(#bass,key,d+voice_role(index[2],3+index[1])*2);
   spell_note(#root,key,d); chord_quality(#quality,d,index[1]);
   index[1]==0 && strcmp(#quality,"M")==0 ? strcpy(#quality,"");
-  sprintf(#text,"%s %s%s/%s%d",#roman,#root,#quality,#bass,floor(written_step(key,bass)/7));
+  chord_tone_label(#bass_role,bass%12,(key+major_step(d))%12,chord_role(bass%12,key,d,3+index[1]));
+  sprintf(#text,"%s %s%s/%s%d(%s)",#roman,#root,#quality,#bass,floor(written_step(key,bass)/7),#bass_role);
   index[0] ? strcat(#text," *");
 );
 function chord_choice_text(d) (

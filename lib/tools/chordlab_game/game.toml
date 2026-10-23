@@ -8,6 +8,13 @@ phrase_max = 8
 coverage_weight = 0.16
 common_weight = 0.6
 jitter = 0.8
+# Weighted direction selection for each 4–8-chord register phrase.
+hold_weight = 1
+rise_weight = 1
+fall_weight = 1
+# Once all seven backbone degrees were played successfully: check at the next
+# safe boundary, then every four backbone opportunities. Never bypass coverage.
+modulation_check_interval = 4
 answer_seconds = 10
 demo_seconds = 2
-panel_width = 320
+panel_width = 280

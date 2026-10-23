@@ -115,7 +115,10 @@ void YsfxEditor::toggleGame()
     if(isShowing()) focusInput();
 }
 
-void YsfxEditor::paint(juce::Graphics& g) { g.fillAll(juce::Colour(chordlabStyle::background)); }
+void YsfxEditor::paint(juce::Graphics& g)
+{
+    g.fillAll(juce::Colour(chordlabStyle::background));
+}
 
 
 void YsfxEditor::mouseDown(const juce::MouseEvent& event)
@@ -264,6 +267,14 @@ void YsfxEditor::timerCallback()
         if(gameOpen) toggleGame();
     }
     gamePanel.tick();
+    if(gameOpen) {
+        const auto* size=ysfx_find_var(displayedEffect,"choices_text_size");
+        // font_scale compensates the LICE/SWELL font backend, not JUCE text.
+        // Share the fitted theme size without applying that backend correction twice.
+        if(size && *size>0)
+            gamePanel.setCapsuleStyle(gameCapsuleStyle(view.getWidth(),gamePanel.getWidth(),float(*size)));
+        repaint(0,0,getWidth(),4);
+    }
     if(arrangeDelay>0 && --arrangeDelay==0) {
         gameLayout.arrange();
         if(gameLayout.noSpace && gameOpen) toggleGame();

@@ -31,11 +31,26 @@ def make_controls_header(source: Path) -> str:
     if not isinstance(background, str) or not re.fullmatch(r"#[0-9A-Fa-f]{6}", background):
         raise ValueError("Invalid background color")
     values["background"] = background
+    for role in ("root", "third", "fifth", "seventh"):
+        color = raw[role]
+        if not isinstance(color, str) or not re.fullmatch(r"#[0-9A-Fa-f]{6}", color):
+            raise ValueError(f"Invalid capsule {role} color")
+        values[f"capsule_{role}"] = color
     for role in ("background", "border", "text", "muted", "key", "chord", "reason", "demo", "error"):
         color = raw["game"][role]
         if not isinstance(color, str) or not re.fullmatch(r"#[0-9A-Fa-f]{6}", color):
             raise ValueError(f"Invalid game {role} color")
         values[f"game_{role}"] = color
+    for role in ("button_selected", "text_selected"):
+        color = raw[role]
+        if not isinstance(color, str) or not re.fullmatch(r"#[0-9A-Fa-f]{6}", color):
+            raise ValueError(f"Invalid {role} color")
+        values[f"choice_{role}"] = color
+    for name, low, high in (("height", 29, 29), ("font_size", 8, 12)):
+        value = raw["choices"][name]
+        if isinstance(value, bool) or not isinstance(value, int) or not low <= value <= high:
+            raise ValueError(f"Invalid choices {name}")
+        values[f"choice_{name}"] = value
     inset = raw["choices"]["inset"]
     if isinstance(inset, bool) or not isinstance(inset, int) or not 2 <= inset <= 4:
         raise ValueError("Invalid choices inset")

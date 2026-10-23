@@ -28,6 +28,13 @@ function chord_role(pc,key,degree,count) local(i,result) (
   loop(count,(key+major_step(degree+2*i))%12==pc ? result=i; i+=1;);
   result;
 );
+// Chord-relative bass member, never the degree of the root within the key.
+function chord_tone_label(dest,pc,root,role) local(delta) (
+  delta=((pc-root+12)%12-major_step(role*2)+30)%12-6;
+  strcpy(dest,"");
+  loop(abs(delta),strcat(dest,delta<0 ? "b" : "#"););
+  sprintf(dest,"%s%d",dest,role*2+1);
+);
 // Major-scale degrees share the study palette, never the chord's ninth role.
 function scale_role(pc,key) local(i,result) (
   result=-1; i=0;

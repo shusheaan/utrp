@@ -1,24 +1,38 @@
 #include "game_panel.h"
 #include "game_settings.h"
 #include "control_style.h"
+#include "game_view.h"
 
 GamePanel::GamePanel(GameControl& c) : control(c)
 {
     for (auto* b:{&startButton,&pauseButton}) { addAndMakeVisible(b); b->setWantsKeyboardFocus(false); }
-    for (auto* s:{&limit,&demo}) {
-        addAndMakeVisible(s); s->setSliderStyle(juce::Slider::IncDecButtons);
-        s->setTextBoxStyle(juce::Slider::TextBoxLeft,true,48,24); s->setWantsKeyboardFocus(false);
+    for (auto* s:{&limit,&demo,&modulation}) {
+        addAndMakeVisible(s);
         s->onValueChange=[this]{if(returnFocus) returnFocus();};
     }
+    limit.setName("Play"); demo.setName("Demo"); modulation.setName("Modulation chance");
+    limit.setTextValueSuffix(" s"); demo.setTextValueSuffix(" s");
+    limit.setTooltip("Hover and scroll: 1 second per step. Applies to the next chord.");
+    demo.setTooltip("Hover and scroll: 1 second per step. Applies to the next chord.");
     limit.setRange(1,120,1); limit.setValue(gameSettings::answerSeconds);
     demo.setRange(1,10,1); demo.setValue(gameSettings::demoSeconds);
+    modulation.setRange(0,100,5); modulation.setValue(gameSettings::modulationPercent);
+    modulation.setTextValueSuffix(" %");
+    direction.addItemList({"Mixed", "Hold", "Rise", "Fall"},1); direction.setSelectedId(1);
+    direction.setWantsKeyboardFocus(false); addAndMakeVisible(direction);
+    direction.onChange=[this]{if(returnFocus) returnFocus();};
+    approaches.setToggleState(true,juce::dontSendNotification); approaches.setWantsKeyboardFocus(false);
+    approaches.onClick=[this]{if(returnFocus) returnFocus();}; addAndMakeVisible(approaches);
+    direction.setTooltip("Applied at Start/Restart. Rise/Fall turn around at the pitch boundary.");
+    modulation.setTooltip("Hover and scroll: 5% per step. After all 7 degrees succeed; applies on Start/Restart.");
+    approaches.setTooltip("Secondary, tritone-substitute and ii-V approaches. Applies on Start/Restart.");
     startButton.onClick=[this]{start(); if(returnFocus) returnFocus();};
     pauseButton.onClick=[this]{ if(running && !control.send({4})) error="Pause queue full"; if(returnFocus) returnFocus(); };
 }
 GamePanel::~GamePanel() { deactivate(); }
 bool GamePanel::activate()
 {
-    active=control.send({1}); running=false; pending=false; status={}; error.clear();
+    active=control.send({1}); running=false; pending=false; replaying=false; trail.clear(); status={}; error.clear();
     startButton.setButtonText("Start"); pauseButton.setEnabled(false);
     if(!active) error="Game command queue full";
     return active;
@@ -26,16 +40,21 @@ bool GamePanel::activate()
 void GamePanel::deactivate()
 {
     if(active) control.off();
-    active=false; running=false; pending=false; preview.clear();
+    active=false; running=false; pending=false; replaying=false; preview.clear(); trail.clear();
     if(planner) chordlab_game_free(planner);
     planner=nullptr;
 }
 bool GamePanel::plan()
 {
-    while(preview.size()<4) {
+    // Three harmonic groups: NOW and two backbone destinations, including every
+    // committed approach/pivot. Never invent, omit or regenerate preview events.
+    const int needed=current.count && current.backbone ? 2 : 3;
+    int complete=int(std::count_if(preview.begin(),preview.end(),[](const auto& t){return t.backbone!=0;}));
+    while(complete<needed) {
         GameTarget target;
         if(!chordlab_game_next(planner,&target)) { error="No valid target: stopped safely"; running=false; control.off(); return false; }
         preview.push_back(target);
+        if(target.backbone) ++complete;
     }
     return true;
 }
@@ -44,8 +63,14 @@ void GamePanel::start()
     if(!active) return;
     if(planner) chordlab_game_free(planner);
     seed=uint64_t(juce::Time::getHighResolutionTicks());
-    planner=chordlab_game_new(seed); preview.clear();
+    planner=chordlab_game_new(seed); preview.clear(); trail.clear(); replaying=false;
     if(!planner) { error="Harmony planner could not start"; return; }
+    const int motion[]{2,0,1,-1};
+    if(!chordlab_game_configure(planner,modulation.getValue()/100.0,
+        motion[direction.getSelectedId()-1],approaches.getToggleState())) {
+        error="Invalid practice settings"; return;
+    }
+    coverage=0; presented=0; current={};
     error.clear();
     if(!plan() || !control.send({1})) { error="Cannot reset game"; return; }
     running=present();
@@ -55,18 +80,39 @@ bool GamePanel::present()
 {
     if(preview.empty()) return false;
     auto next=preview.front();
+    const auto planned=next;
     next.id=++targetSerial;
     if(!control.send({3,next,limit.getValue(),demo.getValue()})) { error="Target queue full"; return false; }
-    current=next; preview.pop_front(); pending=true;
+    if(current.visit!=planned.visit) coverage=0;
+    if(current.count && current.group==planned.group)
+        trail.push_back({current,status.winner!=0});
+    else trail.clear();
+    practiceScroll=0;
+    answerDuration=limit.getValue(); demoDuration=demo.getValue();
+    replaying=false;
+    current=planned; ++presented; preview.pop_front(); pending=true;
     return plan();
 }
 void GamePanel::tick()
 {
     if(!active) return;
     if(control.read(status)) {
-        if(status.id==int(current.id) && status.phase==2) pending=false;
+        if(status.id==int(targetSerial) && (status.phase==2 || status.phase==3 || status.phase==5)) pending=false;
+        if(status.id==int(targetSerial)) {
+            if(status.phase==3 || status.phase==4) replaying=true;
+            else if(status.phase==2) replaying=false;
+        }
         // A very short/full-chord first block may finish before the UI sees phase 2.
-        if(status.phase==4 && status.id==int(current.id) && running) { pending=false; running=present(); }
+        if(status.phase==4 && status.id==int(targetSerial) && running) {
+            const bool success=status.pianoHits==int(current.count) || status.guitarHits==int(current.count);
+            if(!chordlab_game_complete(planner,current.id,success)) {
+                error="Out-of-order result: stopped safely"; running=false; control.off();
+            } else {
+                if(success && current.backbone && current.degree>=0 && current.degree<7)
+                    coverage|=1u<<current.degree;
+                pending=false; running=present();
+            }
+        }
         if(status.phase==0 && running && !pending) {
             running=false; pauseButton.setEnabled(false); startButton.setButtonText("Start");
             error="Host reset: press Start to resume a new game";
@@ -75,55 +121,55 @@ void GamePanel::tick()
         repaint();
     }
 }
+double GamePanel::progress() const
+{
+    if(!running || pending) return 0;
+    return std::clamp(status.remaining/(replaying ? demoDuration : answerDuration),0.0,1.0);
+}
 void GamePanel::resized()
 {
-    startButton.setBounds(18,48,128,30); pauseButton.setBounds(156,48,128,30);
-    limit.setBounds(170,getHeight()-110,114,26); demo.setBounds(170,getHeight()-74,114,26);
+    const int y=getHeight()-178, half=(getWidth()-36)/2, right=22+half;
+    startButton.setBounds(14,y+12,half,26); pauseButton.setBounds(right,y+12,half,26);
+    limit.setBounds(getWidth()-70,y+46,56,22); demo.setBounds(getWidth()-70,y+72,56,22);
+    modulation.setBounds(getWidth()-80,y+98,66,22);
+    direction.setBounds(right,y+126,half,22);
+    approaches.setBounds(14,y+155,getWidth()-28,16);
 }
+namespace {
+void panelText(juce::Graphics& g,const juce::String& text,juce::Rectangle<int> bounds,
+               float size,juce::Colour color,int lines=1)
+{
+    g.setColour(color); g.setFont(juce::Font(juce::FontOptions("DejaVu Sans",size,juce::Font::plain)));
+    g.drawFittedText(text,bounds,juce::Justification::centredLeft,lines);
+}
+}
+
 void GamePanel::paint(juce::Graphics& g)
 {
     using namespace chordlabStyle;
     g.fillAll(juce::Colour(game_background));
     g.setColour(juce::Colour(game_border)); g.drawVerticalLine(0,0,float(getHeight()));
-    const auto text=[&](juce::String s,int y,int h,float size,juce::Colour colour){
-        g.setColour(colour); g.setFont(juce::Font(juce::FontOptions("DejaVu Sans",size,juce::Font::plain)));
-        g.drawFittedText(s,18,y,getWidth()-36,h,juce::Justification::centredLeft,3);
-    };
-    const auto white=juce::Colour(game_text), muted=juce::Colour(game_muted), green=juce::Colour(game_reason);
-    const auto key=juce::Colour(game_key), chord=juce::Colour(game_chord), warning=juce::Colour(game_error);
-    const bool compact=getHeight()<650;
-    text("CHORD RACE",10,30,20,white);
-    if(!running) {
-        text("Same pitches. Two instruments.\nFirst to finish wins the chord.",100,60,16,white);
-        text("Read the chord / bass capsule.\nPlay every exact pitch once.\nGuitar: any string or fret.",180,100,15,muted);
-    } else {
-        text(juce::String(current.keyLabel),90,28,19,key);
-        text(juce::String(current.label),122,38,26,chord);
-        const juce::String phase=status.phase==3 ? "ANSWER / DEMO" : status.phase==5 ? "PAUSED" : pending ? "LOADING" : "PLAY";
-        text(phase+"   "+juce::String(status.remaining,1)+" s",168,30,20,status.phase==3 ? juce::Colour(game_demo) : green);
-        text("Piano   "+juce::String(status.pianoHits)+" / "+juce::String(current.count)+"       "+juce::String(status.pianoScore)+" pts",208,26,17,white);
-        text("Guitar   "+juce::String(status.guitarHits)+" / "+juce::String(current.count)+"       "+juce::String(status.guitarScore)+" pts",236,26,17,white);
-        text("Timed out: "+juce::String(status.timeouts),264,20,13,muted);
-        text(juce::String("REGISTER: ")+(current.movement>0 ? "RISING" : current.movement<0 ? "FALLING" : "HOLD"),288,24,14,green);
-        // Keep explanations readable: wrap at a fixed font size, never squeeze
-        // a whole modulation sentence into one horizontally compressed line.
-        juce::AttributedString explanation;
-        explanation.append(error.isEmpty() ? juce::String(current.reason) : error,
-            juce::Font(juce::FontOptions("DejaVu Sans",compact ? 13.0f : 15.0f,juce::Font::plain)),
-            error.isEmpty() ? green : warning);
-        explanation.draw(g,{18.0f,316.0f,float(getWidth()-36),float(compact ? 60 : 78)});
-        text("NEXT",compact ? 380 : 406,18,13,muted);
-        for(size_t i=0;i<std::min(size_t(2),preview.size());++i) {
-            juce::AttributedString row;
-            const auto font=juce::Font(juce::FontOptions("DejaVu Sans",compact ? 13.0f : 15.0f,juce::Font::plain));
-            row.append(juce::String(preview[i].label),font,white);
-            row.append("  /  "+juce::String(preview[i].keyLabel),font,key);
-            row.draw(g,{18.0f,float((compact ? 400 : 430)+int(i)*(compact ? 24 : 36)),
-                        float(getWidth()-36),float(compact ? 24 : 34)});
-        }
-    }
-    text("Answer seconds",getHeight()-110,26,14,muted);
-    text("Demo seconds",getHeight()-74,26,14,muted);
-    text("Demo MIDI ch16 -> piano instrument",getHeight()-38,26,11,muted);
-    if(error.isNotEmpty() && !running) text(error,350,60,13,warning);
+    const auto white=juce::Colour(game_text);
+    const int settings=getHeight()-178, right=22+(getWidth()-36)/2;
+    paintGamePractice(g,{0,0,getWidth(),settings},running ? current : GameTarget{},
+        preview,trail,status,replaying,capsuleStyle,practiceScroll);
+    // Countdown belongs to this panel, never to the normal keyboard canvas.
+    g.setColour(juce::Colour(game_border)); g.fillRect(0,0,getWidth(),4);
+    g.setColour(juce::Colour(game_reason));
+    g.fillRect(0,0,int(std::round(getWidth()*progress())),4);
+    g.setColour(juce::Colour(game_border)); g.drawHorizontalLine(settings-3,14,float(getWidth()-14));
+    panelText(g,"Play",{14,settings+46,120,22},11,white);
+    panelText(g,"Demo",{14,settings+72,120,22},11,white);
+    panelText(g,"Modulation chance",{14,settings+98,150,22},11,white);
+    panelText(g,"Register direction",{14,settings+126,right-20,22},11,white);
+    if(error.isNotEmpty()) panelText(g,error,{14,230,getWidth()-28,70},14,juce::Colour(game_error),4);
+}
+
+void GamePanel::mouseWheelMove(const juce::MouseEvent& event,const juce::MouseWheelDetails& wheel)
+{
+    if(event.y>=getHeight()-178 || wheel.deltaY==0) return;
+    const auto rows=gamePracticeRows(current,preview,trail,replaying,status.winner);
+    const int maximum=std::max(0,gamePracticeHeight(rows,capsuleStyle)-(getHeight()-178));
+    practiceScroll=std::clamp(practiceScroll+(wheel.deltaY>0 ? -27 : 27),0,maximum);
+    repaint();
 }

@@ -11,17 +11,25 @@ struct GameTarget {
     int32_t tonic{}, signature{}, minor{}, root{}, rootLetter{}, quality{}, degree{}, movement{};
     uint32_t phrase{};
     char label[96]{}, keyLabel[64]{}, reason[256]{};
+    uint32_t visit{}, backbone{};
+    char action[48]{}, route[128]{};
+    uint32_t group{}, kind{};
+    int32_t paletteRole{};
+    char capsule[64]{}, bass[32]{};
 };
-static_assert(sizeof(GameTarget) == 576, "Rust/C++ game target ABI drift");
+static_assert(sizeof(GameTarget) == 868, "Rust/C++ game target ABI drift");
 extern "C" {
     void* chordlab_game_new(uint64_t seed);
     void chordlab_game_free(void*);
     bool chordlab_game_next(void*, GameTarget*);
+    bool chordlab_game_configure(void*, double probability, int32_t direction, bool approaches);
+    bool chordlab_game_complete(void*, uint32_t id, bool success);
 }
 struct GamePacket { int action{}; GameTarget target{}; double limit{10}, demo{2}; };
 struct GameStatus {
     int phase{}, id{-1}, count{}, pianoHits{}, guitarHits{}, pianoScore{}, guitarScore{}, timeouts{};
     double remaining{};
+    int winner{}, award{};
 };
 
 // Separate SPSC queues: UI -> audio commands; audio -> UI telemetry.
@@ -49,5 +57,5 @@ private:
     ysfx_t* bound{};
     // 12 scalar fields + five notes/roles/letters + seven scale PCs/letters.
     std::array<ysfx_real*, 41> vars{};
-    std::array<ysfx_real*, 9> telemetry{};
+    std::array<ysfx_real*, 11> telemetry{};
 };

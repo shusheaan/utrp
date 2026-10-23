@@ -47,6 +47,14 @@ struct PendingModulation {
     ready: bool,
 }
 
+// Opt-in plugin practice policy. The terminal simulator keeps its original rules.
+struct SeventhPractice {
+    covered: u8,
+    successful: BTreeMap<String, usize>,
+    interval: usize,
+    cooldown: usize,
+}
+
 pub struct Progression {
     config: Simulation,
     templates: Templates,
@@ -66,6 +74,7 @@ pub struct Progression {
     pending_tonic_resolution: bool,
     manual: Option<PendingModulation>,
     manual_notice: String,
+    practice: Option<SeventhPractice>,
 }
 
 impl Progression {
@@ -135,7 +144,82 @@ impl Progression {
             pending_tonic_resolution: false,
             manual: None,
             manual_notice: String::new(),
+            practice: None,
         })
+    }
+    /// Configure before generating anything. The closing tonic is the same cyclic
+    /// position as the opening tonic, so it must not be sampled a second time.
+    pub fn enable_seventh_practice(&mut self, interval: usize) -> Result<()> {
+        ensure!(
+            self.next_id == 0 && self.queue.is_empty(),
+            "practice already started"
+        );
+        ensure!(interval > 0, "practice interval must be positive");
+        ensure!(
+            self.uses_cycle()
+                && self
+                    .config
+                    .modes
+                    .iter()
+                    .all(|m| matches!(m, Mode::Ionian | Mode::Aeolian)),
+            "seventh practice requires the original major/minor cycle"
+        );
+        self.config.seventh_probability = 1.0;
+        self.config.extensions = false;
+        self.config.ambient = false;
+        self.config.cycle_chunk_size = 1;
+        self.cycle_cursor = self.rng.gen_range(0..self.templates.cycle.len() - 1);
+        self.practice = Some(SeventhPractice {
+            covered: 0,
+            successful: self.key_practice.clone(),
+            interval,
+            cooldown: 0,
+        });
+        Ok(())
+    }
+    /// The caller acknowledges each presented event exactly once, in order.
+    /// Approaches/pivots never substitute for practising a backbone degree.
+    pub fn acknowledge_practice(&mut self, event: &ChordEvent, success: bool) {
+        let Some(practice) = &mut self.practice else {
+            return;
+        };
+        if !success {
+            return;
+        }
+        *practice.successful.entry(event.key.label()).or_default() += 1;
+        if event.key == self.key && event.cycle.is_some() {
+            if let Some(degree) = event.degree {
+                practice.covered |= 1 << (degree - 1);
+            }
+        }
+    }
+    pub fn configure_practice(&mut self, probability: f64, approaches: bool) -> Result<()> {
+        ensure!(
+            self.practice.is_some() && self.next_id == 0,
+            "configure before practice starts"
+        );
+        ensure!(
+            probability.is_finite() && (0.0..=1.0).contains(&probability),
+            "invalid probability"
+        );
+        self.config.modulation_probability = probability;
+        self.config.approaches = approaches;
+        Ok(())
+    }
+    fn practice_boundary(&mut self) -> bool {
+        let Some(practice) = &mut self.practice else {
+            return false;
+        };
+        if practice.covered != 0x7f || self.pending_tonic_resolution {
+            return false;
+        }
+        if practice.cooldown > 0 {
+            practice.cooldown -= 1;
+            return false;
+        }
+        practice.cooldown = practice.interval - 1;
+        self.config.modulation_probability > 0.0
+            && self.rng.gen_bool(self.config.modulation_probability)
     }
     pub fn next_event(&mut self) -> ChordEvent {
         self.execute_manual();
@@ -271,7 +355,11 @@ impl Progression {
         &self.key_practice
     }
     fn practice_count(&self, key: &Key) -> usize {
-        *self.key_practice.get(&key.label()).unwrap_or(&0)
+        let counts = self
+            .practice
+            .as_ref()
+            .map_or(&self.key_practice, |p| &p.successful);
+        *counts.get(&key.label()).unwrap_or(&0)
     }
     fn overpracticed(&self) -> bool {
         let minimum = self.key_practice.values().copied().min().unwrap_or(0);
@@ -280,6 +368,10 @@ impl Progression {
     /// Already planned music only: inspecting a phrase never advances the RNG.
     pub(crate) fn pending_events(&self) -> impl Iterator<Item = &ChordEvent> {
         self.queue.iter()
+    }
+    /// Already committed resolution of an approach/modulation, without advancing RNG.
+    pub fn pending_resolution(&self) -> Option<&ChordEvent> {
+        self.queue.iter().find(|event| event.cycle.is_some())
     }
     fn push(
         &mut self,
@@ -316,8 +408,7 @@ impl Progression {
                 // Modal center change: retain at least one sounding chord tone.
                 let functional = modulation::functional(&key);
                 let reachable = if functional {
-                    !modulation::available_methods(&self.key, &key, &self.config.modulation_methods)
-                        .is_empty()
+                    !self.available_methods(&self.key, &key).is_empty()
                 } else {
                     self.previous.as_ref().is_some_and(|c| {
                         c.pcs()
@@ -366,15 +457,20 @@ impl Progression {
         let returning = self.previous_key.as_ref() == Some(&new_key);
         self.returned_last = returning;
         self.previous_key = Some(old.clone());
-        let method = modulation::available_methods(&old, &new_key, &self.config.modulation_methods)
+        let method = self
+            .available_methods(&old, &new_key)
             .choose(&mut self.rng)
             .copied();
         self.key = new_key;
         self.cycle_cursor = 0;
         self.cycle_lap = 1;
         self.phrases_in_key = 0;
+        if let Some(practice) = &mut self.practice {
+            practice.covered = 0;
+            practice.cooldown = 0;
+        }
         self.push_pivot(&old, method);
-        let tonic = self.key.chord(1, false);
+        let tonic = self.key.chord(1, self.practice.is_some());
         if matches!(
             self.key.mode,
             Mode::Ionian | Mode::Aeolian | Mode::HarmonicMinor | Mode::MelodicMinor
@@ -432,10 +528,25 @@ impl Progression {
             self.cycle_cursor = 1; // the arrival already sounded the opening tonic
         }
     }
+    fn available_methods(&self, old: &Key, new: &Key) -> Vec<ModulationMethod> {
+        modulation::available_methods(old, new, &self.config.modulation_methods)
+            .into_iter()
+            .filter(|method| {
+                self.practice.is_none()
+                    || *method != ModulationMethod::SharedChord
+                    || modulation::shared_chords(old, new)
+                        .iter()
+                        .any(|p| p.chord.tones.len() == 4)
+            })
+            .collect()
+    }
     fn push_pivot(&mut self, old: &Key, method: Option<ModulationMethod>) {
         match method {
             Some(ModulationMethod::SharedChord) => {
-                let pivots = modulation::shared_chords(old, &self.key);
+                let pivots: Vec<_> = modulation::shared_chords(old, &self.key)
+                    .into_iter()
+                    .filter(|p| self.practice.is_none() || p.chord.tones.len() == 4)
+                    .collect();
                 // Prefer reinterpreting the chord just played, including its seventh.
                 let preferred: Vec<_> = pivots
                     .iter()
@@ -688,12 +799,16 @@ impl Progression {
     }
     fn build_phrase(&mut self) {
         let boundary = !self.uses_cycle() || self.cycle_cursor == self.templates.cycle.len();
-        let blocked = self.manual.is_none()
-            && boundary
-            && self.phrases_in_key >= self.config.minimum_phrases_in_key
-            && self.config.modulation_probability > 0.0
-            && (self.overpracticed() || self.rng.gen_bool(self.config.modulation_probability))
-            && !self.modulate();
+        let attempt = if self.practice.is_some() {
+            self.practice_boundary()
+        } else {
+            self.manual.is_none()
+                && boundary
+                && self.phrases_in_key >= self.config.minimum_phrases_in_key
+                && self.config.modulation_probability > 0.0
+                && (self.overpracticed() || self.rng.gen_bool(self.config.modulation_probability))
+        };
+        let blocked = attempt && !self.modulate();
         if self.uses_cycle() {
             let seventh = self.rng.gen_bool(self.config.seventh_probability);
             self.build_cycle_chunk(seventh, blocked);

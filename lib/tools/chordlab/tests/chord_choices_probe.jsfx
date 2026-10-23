@@ -13,26 +13,32 @@ function check(value) (!value ? failures+=1;);
 function check_text(d,expected) (
   chord_choice_text(d); check(strcmp(#text,expected)==0);
 );
-check_text(0,"I C/C4"); check(chord_choice_selected(0));
+check_text(0,"I C/C4(1)"); check(chord_choice_selected(0));
 game_on=1; game_count=0;
-check_text(0,"I C/C4"); check(!chord_choice_selected(0));
+check_text(0,"I C/C4(1)"); check(!chord_choice_selected(0));
 game_count=3; game_signature=0; game_root=0; game_root_letter=0; game_quality=0;
-game_notes[0]=64; game_letters[0]=2;
+game_roles[0]=1; game_notes[0]=64; game_letters[0]=2;
 i=0; loop(7,game_scale[i]=major_step(i); game_scale_letters[i]=i; i+=1;);
-check_text(0,"I C/E4"); check_text(1,"ii Dm"); check_text(6,"vii° Bdim");
+check_text(0,"I C/E4(3)"); check_text(1,"ii Dm"); check_text(6,"vii° Bdim");
 check(chord_choice_selected(0)); check(!chord_choice_selected(1));
 // Ordinary game, before any answer: labels never reveal diagram notes.
 check(!game_visible(64)); game_seen[64]=1; check(game_visible(64));
 // Borrowed bII, absent engine degree: use root spelling, not normal key/degree.
 game_root=1; game_root_letter=1; game_degree=-1; game_notes[0]=65; game_letters[0]=3;
-check_text(1,"bII Db/F4"); check(chord_choice_selected(1)); check_text(0,"I C");
+check_text(1,"bII Db/F4(3)"); check(chord_choice_selected(1)); check_text(0,"I C");
 // A minor keeps the fixed C-major palette: A is blue, not a new red tonic.
 game_signature=0; game_tonic=9; game_minor=1; game_root=4; game_root_letter=2;
 game_quality=6; game_notes[0]=56; game_letters[0]=4;
 i=0; loop(7,game_scale[i]=major_step(i+5)%12; game_scale_letters[i]=(i+5)%7; i+=1;);
 check_text(0,"i Am"); check_text(1,"ii° Bdim"); check_text(2,"III C");
-check_text(4,"V E7/G#3"); check(chord_choice_selected(4));
+check_text(4,"V E7/G#3(3)"); check(chord_choice_selected(4));
 check(chord_choice_role(0)==3); check(chord_choice_role(2)==0);
+// Seventh context, and bass degree uses the chord rather than the key.
+game_count=4; check_text(0,"i Am7"); check_text(1,"iiø Bm7b5"); check_text(2,"III Cmaj7");
+game_root=9; game_root_letter=5; game_quality=5; game_roles[0]=3;
+game_notes[0]=55; game_letters[0]=4; check_text(0,"i Am7/G3(b7)");
+game_on=0; key=0; saved[1]=1; saved[2]=3;
+check_text(0,"I CM7/B3(7)"); saved[1]=0; saved[2]=0; game_on=1;
 // Exhaustive roots in every major/minor context: selection and palette agree
 // with the same scale-degree mapping used by the upper note diagram.
 k=0; loop(12,
@@ -54,7 +60,7 @@ k=0; loop(12,
 );
 // Read-only game display cannot change normal key/degree or saved voicings.
 check(key==0 && degree==0 && saved[3]==60);
-game_on=0; check_text(0,"I C/C4"); check(chord_choice_selected(0));
+game_on=0; check_text(0,"I C/C4(1)"); check(chord_choice_selected(0));
 // Stable fixture for the real pixel/hit-test harness.
 game_signature=0; game_root=0; game_root_letter=0; game_quality=0;
 i=0; loop(7,game_scale[i]=major_step(i); game_scale_letters[i]=i; i+=1;);

@@ -45,7 +45,7 @@ void GameControl::bind(ysfx_t* fx)
         }
     }
     const char* names[]{"game_phase","game_id","game_count","game_piano_hits","game_guitar_hits",
-        "game_piano_score","game_guitar_score","game_timeouts","game_remaining"};
+        "game_piano_score","game_guitar_score","game_timeouts","game_remaining","game_winner","game_award"};
     for (unsigned i=0;i<telemetry.size();++i) telemetry[i]=ysfx_find_var(fx,names[i]);
 }
 void GameControl::process(ysfx_t* fx)
@@ -79,6 +79,6 @@ void GameControl::publish(ysfx_t* fx)
     const auto w=sw.load(std::memory_order_relaxed); const auto next=(w+1)%statuses.size();
     if (next==sr.load(std::memory_order_acquire)) return;
     const auto get=[this](unsigned i){return telemetry[i] ? *telemetry[i] : 0.0;};
-    statuses[w]={int(get(0)),int(get(1)),int(get(2)),int(get(3)),int(get(4)),int(get(5)),int(get(6)),int(get(7)),get(8)};
+    statuses[w]={int(get(0)),int(get(1)),int(get(2)),int(get(3)),int(get(4)),int(get(5)),int(get(6)),int(get(7)),get(8),int(get(9)),int(get(10))};
     sw.store(next,std::memory_order_release);
 }

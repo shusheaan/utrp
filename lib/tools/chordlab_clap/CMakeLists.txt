@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(ChordLab VERSION 0.3.3 LANGUAGES C CXX ASM)
+project(ChordLab VERSION 0.3.5 LANGUAGES C CXX ASM)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
@@ -38,7 +38,7 @@ juce_add_plugin(ChordLab
     NEEDS_MIDI_INPUT TRUE NEEDS_MIDI_OUTPUT TRUE
     EDITOR_WANTS_KEYBOARD_FOCUS TRUE
     COPY_PLUGIN_AFTER_BUILD FALSE)
-target_sources(ChordLab PRIVATE embedded_source.cpp control.cpp game_control.cpp game_panel.cpp game_layout.cpp editor.cpp physical_keys.cpp
+target_sources(ChordLab PRIVATE embedded_source.cpp control.cpp game_control.cpp game_panel.cpp game_view.cpp game_layout.cpp editor.cpp physical_keys.cpp
     "${CHORDLAB_DEPS}/ysfx/plugin/processor.cpp"
     "${CHORDLAB_DEPS}/ysfx/plugin/parameter.cpp"
     "${CHORDLAB_DEPS}/ysfx/plugin/info.cpp"
@@ -74,9 +74,9 @@ add_custom_command(OUTPUT "${GAME_LIB}"
 add_custom_target(chordlab_game_build DEPENDS "${GAME_LIB}")
 add_dependencies(ChordLab chordlab_game_build)
 target_link_libraries(ChordLab PRIVATE "${GAME_LIB}" pthread ${CMAKE_DL_LIBS})
-set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${GAME_SOURCE}/game.toml")
+set_property(DIRECTORY APPEND PROPERTY CMAKE_CONFIGURE_DEPENDS "${GAME_SOURCE}/game.toml" "${CMAKE_CURRENT_SOURCE_DIR}/../../../config/simulate.toml")
 execute_process(COMMAND "${Python3_EXECUTABLE}" -c
-    "import tomllib; from pathlib import Path; c=tomllib.loads(Path(r'${GAME_SOURCE}/game.toml').read_text()); Path(r'${CHORDLAB_DEPS}/game_settings.h').write_text('#pragma once\\nnamespace gameSettings { constexpr int panelWidth = %d; constexpr int answerSeconds = %d; constexpr int demoSeconds = %d; }\\n' % (c['panel_width'], c['answer_seconds'], c['demo_seconds']))"
+    "import tomllib; from pathlib import Path; c=tomllib.loads(Path(r'${GAME_SOURCE}/game.toml').read_text()); Path(r'${CHORDLAB_DEPS}/game_settings.h').write_text('#pragma once\\nnamespace gameSettings { constexpr int panelWidth = %d; constexpr int answerSeconds = %d; constexpr int demoSeconds = %d; constexpr int modulationPercent = %d; }\\n' % (c['panel_width'], c['answer_seconds'], c['demo_seconds'], round(tomllib.loads(Path(r'${CMAKE_CURRENT_SOURCE_DIR}/../../../config/simulate.toml').read_text())['simulation']['modulation_probability']*100)))"
     COMMAND_ERROR_IS_FATAL ANY)
 enable_testing()
 add_executable(keyboard_tests keyboard_tests.cpp)
@@ -108,11 +108,19 @@ add_executable(sustain_tests sustain_tests.cpp)
 target_link_libraries(sustain_tests PRIVATE ysfx::ysfx)
 add_test(NAME pedal_baseline COMMAND sustain_tests "${CMAKE_CURRENT_SOURCE_DIR}/../chordlab/chordlab.jsfx")
 add_executable(game_tests game_tests.cpp game_control.cpp)
-target_link_libraries(game_tests PRIVATE ysfx::ysfx)
+add_dependencies(game_tests chordlab_game_build)
+target_link_libraries(game_tests PRIVATE ysfx::ysfx "${GAME_LIB}" pthread ${CMAKE_DL_LIBS})
 add_test(NAME game_isolation COMMAND game_tests "${CMAKE_CURRENT_SOURCE_DIR}/../chordlab/chordlab.jsfx")
 add_executable(game_preview game_preview.cpp)
 target_include_directories(game_preview PRIVATE "${CHORDLAB_DEPS}/clap-juce/clap-libs/clap/include")
 target_link_libraries(game_preview PRIVATE ${CMAKE_DL_LIBS} X11::X11 pthread)
+
+# Explicit GUI regression executable: run in a disposable X11/Sway session.
+add_executable(game_render_tests game_render_tests.cpp)
+target_include_directories(game_render_tests PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}"
+    "${CHORDLAB_DEPS}" "${CHORDLAB_DEPS}/ysfx/include" "${CHORDLAB_DEPS}/juce/modules")
+target_compile_definitions(game_render_tests PRIVATE JUCE_GLOBAL_MODULE_SETTINGS_INCLUDED=1)
+target_link_libraries(game_render_tests PRIVATE ChordLab)
 
 add_test(NAME chord_choice_labels COMMAND harmony_tests "${CMAKE_CURRENT_SOURCE_DIR}/../chordlab/tests/chord_choices_probe.jsfx")
 add_executable(choices_tests choices_tests.cpp)

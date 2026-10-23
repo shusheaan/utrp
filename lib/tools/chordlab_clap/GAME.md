@@ -2,6 +2,97 @@
 
 [中文](GAME.cn.md) · [Normal mode and deployment history](README.md)
 
+## 0.3.5: live Library acceptance and panel-local countdown (2026-10-23)
+
+This supersedes older candidate-only deployment statements. 0.3.5 is installed at the existing Storage-backed `~/.clap/Chord Lab.clap`; no new audio service or controller changes.
+
+- The four-pixel countdown now belongs to the top of the black GamePanel, not the full editor. Closing G hides it along with the panel; the normal music canvas is unchanged.
+- Real Workspace 2 / Library / Spark I/O: the user confirmed physical MIDI, computer A and guitar sound. Released computer notes measured approximately −45.9 dBFS RMS with startup Sustain and −74.4 with Sustain off; S/A restored on.
+- Low-level synthesized A4/C#5/D#5/F#5 through the real Guitar Frontend input path completed D#m7b5/A4 and awarded guitar 67 points. This is an end-to-end synthetic-pitch check, not a claim about human guitar recognition accuracy.
+- A real timeout awarded no points, revealed all notes and played four sfizz voices. The Bitwig-only output capture peaked around −17.1 dBFS. DAW and Beat Lab recording stayed off. Not every library preset was retested.
+- Evidence: `target/live-acceptance-20261023/`. Normal 920×703 and expanded 1212×703 windows recenter together with the sound editor; final layout/countdown screenshots are stored there.
+
+### Statistics: current behavior and proposed persistence
+
+The game already balances reachable destination keys by successful completions within the current run, after successful coverage of all seven backbone degrees, subject to modulation probability and return tolerance. Restart/closing the editor clears these counts. `Progression.key_practice` counts generator consumption and includes committed lookahead in the plugin; it must not be presented as actual user practice.
+
+A new production-planner regression uses three committed groups, seed 20261023, 50% modulation, and one timeout per eleven exercises. Across 4,800 actual exercises it visits all 24 major/minor keys and 574 key/chord identities, with 171–206 successes per key. It checks ordered/duplicate completion, actual-only audit counting and successful-degree gating. These are test audit statistics, not a newly shipped statistics UI or persistent store.
+
+Proposed records: key pitch class/mode, chord root/quality/degree, approach kind, inversion/exact notes, winner, speed score, answer time and timeout. Keep piano/guitar separate; exclude pause/demo time and never count previews. Balance mainly by successful chord count, using presented counts/time diagnostically rather than reducing practice of difficult keys merely because they take longer.
+
+Proposed storage is per-session JSONL under `~/storage/daw/UserData/ChordLab/training/`, separate from TOML configuration. Unique session IDs/files avoid multi-instance overwrites and permit rebuilding summaries. This directory and persistence are **not implemented in this turn**; implementation must also extend recovery coverage. Global balancing would seed starting-key selection from history and continue respecting reachable harmonic routes, not force exact equality by arbitrary jumps.
+
+## 0.3.4 candidate: single-column stairs and wheel controls (2026-10-23)
+
+This section supersedes the earlier wide, horizontal capsule layout below. The user's installed plugin and real Library remain untouched.
+
+- The panel shrinks from 480 to **280 px**: default editor 1212×703, normal mode still 920×703. Default chord/key capsules are 115×23 / 57×23, sharing left-side dimensions and fitted typography. JUCE uses point sizing rather than applying the LICE backend correction twice.
+- Three committed destination groups use a **single-column staircase**: one actual chord per line, 16 px indentation per step, reset at group boundaries. Completed steps remain hollow in place. At small heights only the progression scrolls; scores/settings cannot overlap it.
+- Temporary approaches have gray fill/outline and a 6 px destination-relative degree-color dot; completion leaves a gray hollow capsule and the dot. Other chromatic chords are also neutral rather than falsely claiming diatonic membership. Real diatonic destinations retain the fixed relative-major palette.
+- Future key: white fill/gray text; current key: gray fill/white text. The method below the key comes from the committed route: shared seventh with old/new degrees, diminished pivot, or destination V7. The destination mode determines I/i. Repeated keys are omitted.
+- Top scores show piano/guitar totals only, no 0/4. Successful replay briefly shows `✓ +speed award`, not a new fixed-one-point rule. Harmony, NOW/NEXT/THEN, and textual countdown are removed.
+- A 4 px shrinking green bar spans the whole editor. Pause freezes it; demo uses its own duration. Current durations are latched, so wheel changes cannot jump the active bar.
+- Bottom settings occupy 178 px. Play, Demo, and Modulation chance each have one compact label/value row and wheel input without +/- buttons: steps 1 s / 1 s / 5%, bounds 1–120 s / 1–10 s / 0–100%. Probability, direction, and approaches still apply on restart. Approach text is smaller, with deliberate central whitespace.
+
+The production Rust planner + JSFX bridge passed 180 rounds: piano 4120, guitar 4140, 16 timeouts, 56 approach events, and 7 modulations. Assertions cover every speed award, separate cumulative totals, no replay double-credit, and successful seven-degree coverage before modulation. Live CLAP screenshot evidence is stored separately under `target/chordlab-stairs-ui/evidence/`; synthetic MIDI is not physical-guitar or listening acceptance.
+
+The live run also exposed a modulation-arrow rendering crash caused by using JUCE ASCII string constructors for UTF-8. A new regression exited 139 before the fix and passed after explicit `String::fromUTF8`, covering four method descriptions. Failed-run frames are archived separately and excluded from acceptance. No commit/push.
+
+Additional acceptance: after the UTF-8 fix, isolated CLAP completed 75 alternating synthetic-MIDI rounds, ending at piano 3588 / guitar 3505. Screenshots cover local ii–V, tritone substitutions, shared-seventh modulation, future white keys and current gray keys. The final candidate passed Start/Pause and collapse/expand in a real temporary Bitwig project: 1212×703 centered at x=354; 920×703 restored at x=500. Normal musical rendering pixels matched. 573 related Python tests, 12 CTest cases, root/game Rust tests and Clippy, and the final CLAP probe passed. Installed 0.3.3 SHA is unchanged; temporary-HOME installation is neither production deployment nor listening acceptance.
+
+## 0.3.4 candidate: aligned columns and retained progress (2026-10-23 UI draft)
+
+This follow-up changes only game-panel layout/progress presentation, not harmony generation, scoring, replay, normal input/rendering or the user's Library. It is not deployed to the real home plugin directory. Earlier 320/332 px figures below are historical: the new game panel is 480 px, adding 492 px including spacing. The left area retains its normal width; G off restores the previous size.
+
+- Fixed key column plus three equal chord slots. Single chords no longer stretch across a row. Repeated keys leave their column blank without shifting chords. Future new keys are white; the current key is black.
+- Current: bright fill, white rim, `PLAY`. Upcoming: dimmed degree colors. Success: black fill, colored outline, `DONE`. Timeout: `MISSED` with an error-colored outline, never presented as success.
+- Completed/passed steps stay in their slots within an approach/resolution group, preventing horizontal jumps. Move to the next row only after the whole group ends. This is a bounded active-chain trail, not unlimited history; reset/exit/new group clears it.
+- The upper area shows progression, seconds and separate scores (with hits/current award). Coverage, question/miss counts and extra explanatory text are hidden; the seven-degree modulation gate still applies internally. Existing settings remain below, aligned to the wider panel. Timing/difficulty is unchanged and no unimplemented technique switches are exposed.
+
+Validation/evidence: start/pause and layout verified in isolated real Bitwig 6.1.4. Expansion is 1412×703; collapse restores 920×703, with staff/keyboard/fretboard/capsule pixels identical to the pre-game image. Synthetic MIDI in the isolated CLAP host verified a completed approach staying in place while the next capsule highlights. Root Rust 123 passed (3 ignored), six game-crate tests, both Clippy runs, 1,281 related Python tests, 12 CTests, CLAP probe, normal-MIDI baseline comparison and real painting at three heights passed. A new generated-sequence assertion limits each group to three slots. Screenshots/logs/hashes: `target/chordlab-aligned-columns/evidence/`; `columns-*.png` are explicit paint fixtures, other runtime captures come from isolated hosts. No physical listening acceptance; installed 0.3.3 hash remains unchanged. No commit/push.
+
+### Harmony-study practice: captured scope, not yet implemented
+
+The user requested all five topics. This iteration delivers the UI first. **Dedicated exercises below remain incomplete**, even where the engine has a related behavior:
+
+- [ ] Common-tone Harmony: extend the existing absolute-common-pitch reward into explicit targets/constraints and checks; distinguish a preference from actual retention. Existing foundation: `common_weight` in `chordlab_game/game.rs`.
+- [ ] Chromatic Voice Leading: constrain named voices to semitone motion with correspondence tracking; nearby motion or chromatic chords alone are not sufficient acceptance criteria.
+- [ ] Planing: add structure/spacing-preserving movement and boundary tests; distinguish exact chromatic transposition from diatonic movement, rather than reusing mean-register Rise/Fall.
+- [ ] Modal Interchange: annotate same-tonic borrowing and source mode without declaring modulation. The underlying engine has an `extensions`-gated parallel-minor iv branch, disabled in game practice and producing a triad; this is not a ready all-seventh exercise.
+- [ ] Pedal Point / Upper Structures: specify fixed-bass and upper-chord targets separately. First reconcile sustained bass with the current compact four-note seventh/single-hand constraints, and determine whether the bass is played or supplied by accompaniment. Do not silently discard bass or change answer cardinality.
+
+Each implementation needs generation invariants, exact pitches, readable labels and committed-preview consistency tests. No inactive menus are added now. Named genres describe use cases, not mutually exclusive categories for these techniques.
+
+## 0.3.4 candidate: grouped capsules and completion replay (2026-10-23 follow-up)
+
+**UI verified in a disposable project in real Bitwig 6.1.4 under isolated Sway; the user's installed plugin and Library remain unchanged.** No physical audio device was used. Temporary processes supply a silent audio clock, without installing a service or changing user audio, controllers, sounds or layout services. The next section records the earlier policy milestone.
+
+- NOW / NEXT / THEN are three committed **harmonic destination groups**, including each approach and its resolution, e.g. `ii → V → iii`. The first two labels are relative to iii; the destination retains its home-key iii label. Each chord remains a separate question, and only the currently played capsule has a white outline. FIFO previews are never regenerated after display. Three groups contain at most nine actual events; unlocking modulation does not replace committed previews.
+- The current key is black with white text. A future group entering another key gets a white badge with black text, turning black when current; consecutive unchanged keys omit repeated badges. Destination colors reuse the left panel's fixed relative-major palette. **Local approaches are the exception**, colored relative to their destination root: ii green, V orange, actual tritone bII green and related bvi blue (not every dominant-function chord is orange). Spelled bass/octave and chord-relative bass degree occupy a second line.
+- Both success and timeout reveal all target notes and emit the full demonstration chord, default two seconds, before advancing. Piano/guitar totals are separate; only the first instrument independently collecting all four pitches scores. Replay does not accept another winner. MIDI event validation does not imply audible output or physical-device acceptance.
+- New speed score: `ceil(100 * answer_time_remaining / answer_time_limit)`, clamped to 1–100 for success, zero for timeout. Pauses and replay do not consume answering time. The terminal version used completion-rate statistics, not this speed formula; this is a new rule, not restoration of an existing algorithm.
+- Lower controls remain Start/Restart, Pause/Resume, Play/Demo seconds, modulation chance, register direction and approach toggle; no extra advanced settings. Setting application boundaries remain as documented below.
+- Fixed a real JUCE paint crash caused by non-ASCII text using an ASCII String constructor: arrows and half-diminished symbols explicitly use `String::fromUTF8`. A real paint regression covers idle, three groups/nine capsules, pause/replay, three heights and black/white key-badge pixels.
+
+Validation: root Rust 123 passed/3 ignored plus Clippy; six game-crate tests plus Clippy; 1,340 Python tests; 12 CTests; CLAP lifecycle/state/MIDI probe; isolated JUCE paint regression. Real Bitwig exercised start, pause/resume, timeout reveal/replay and G expansion/collapse. G off restored 920×703; staff, keyboards, fretboards and chord-capsule pixels were identical to the pre-game image. Normal-mode MIDI also matched the pre-follow-up source snapshot. Synthetic MIDI in the isolated native CLAP host confirmed success reveal/replay and speed credit (90 points for roughly one second), plus the white future G minor badge becoming black/current after Gb major. These checks do not replace physical MIDI/guitar, sound routing or listening acceptance.
+
+Evidence: `target/chordlab-game-capsules/`. No commit/push. This follow-up does not change normal-mode rendering/input rules; the previous milestone's bass-degree annotations remain.
+
+## 0.3.4 candidate: seventh-chord practice policy (2026-10-23)
+
+**Source/build candidate only; not installed or accepted in real Bitwig yet.** No Library, sound, routing, controller or window-service changes. Styles and standalone remain deferred.
+
+- The plugin opts into a separate practice policy; the terminal simulator keeps its existing defaults. Start at a random position in the original closed degree cycle (do not double-weight its repeated closing I). All game targets, approaches, pivots and arrivals are complete seventh chords. Shared-chord modulation requires a shared seventh, not merely a shared triad.
+- Unlock automatic modulation only after successful completion of all seven backbone degrees in this visit to the key. Either instrument can supply each completed chord; the two instruments cannot combine partial answers. Timeouts, previews and approaches do not fill the seven-degree checklist. An arrival tonic can fill I. This is degree coverage, not every inversion or every chromatic chord. Revisiting a key resets the checklist.
+- After coverage, check at the next safe planning boundary, then every four eligible backbone opportunities (configurable). Default chance is 50%; 0% disables automatic modulation. Never interrupt a committed approach/resolution. Two upcoming targets are immutable, so unlocking does not replace an already visible chord. The old 40-event balance tolerance is **not** a waiting requirement; it remains only in the inherited return-destination eligibility rule.
+- Destination balance uses successful target counts in this game, not generated previews. Among reachable keys, prefer the least practised, with random ties. The inherited 20% return preference may choose the previous key if eligible, but does not bypass coverage; consecutive returns are suppressed. Route choices remain dominant, shared seventh and diminished seventh, selected from available methods, not fixed equal unconditional probabilities.
+- Voicings are compact, four-note, single-hand inversions within E2–A5, span at most 12 semitones. Fixed chord symbol plus spelled bass/octave uniquely identifies this restricted voicing family (not arbitrary open, rootless or doubled jazz voicings). Capsules now annotate the **bass's chord-relative degree**, e.g. `ii Dm7/F3(b3)`: root D, bass F, minor third. Normal mode retains its triads/sevenths/ninths and guitar choices.
+- Register phrases last 4–8 targets. Mixed samples Hold/Rise/Fall using configurable weights (currently 1:1:1). Minimize sorted voice movement, reward common absolute pitches, discourage overused pitches and add bounded jitter. Rise/Fall constrain the mean pitch direction and reverse at the reachable boundary; mean-pitch step is at most five semitones. These are soft common-tone preferences, not a promise to hold every shared pitch or a five-semitone limit on each individual voice.
+- Top: current key/time, NOW and NEXT +1/+2 cards (degree, chord/bass, action, key route), seven-degree coverage, scores and presented count. Bottom: Start/Restart, Pause/Resume, answer/demo seconds, modulation chance, register direction and approach toggle. Time changes affect the next target; other panel settings apply on Restart. Panel settings are session-local, not new saved host parameters.
+- Advanced defaults remain build-time TOML: `chordlab_game/game.toml` for range, direction weights, phrase length, cost weights and check interval; `config/simulate.toml` for four approach probabilities (10%/5%/10%/5%), return and route pool. These are conditional approach choices, not percentages of all emitted targets. Editing TOML requires rebuilding the plugin. Separate advanced UI controls are not implemented yet.
+
+Validation: root Rust suite and Clippy, four game-crate tests and Clippy, 1,340 related Python tests, 12 CTests, and built CLAP lifecycle/state/MIDI probe passed. New regressions cover missing-degree/timeout lockout, random starts, seven-success gating before a full lap, all-seventh targets, FIFO acknowledgements and committed previews. The final candidate received 60 alternating synthetic piano/guitar MIDI batches in the isolated host: the UI showed P30/G30, Miss0 and target 61, with a shared-seventh modulation visibly announced in advance. Default/minimum layouts and G-off restoration passed. Synthetic input is not real-instrument acceptance. Audio-free isolated Sway evidence is in `target/chordlab-seventh-practice/`; this is not physical MIDI/guitar or real-Bitwig listening acceptance. No commit or push.
+
 ## 0.3.3 chord-choice colors and context acceptance (2026-10-22)
 
 With user approval, Library was saved, Bitwig exited normally, backups created, and 0.3.3 atomically installed before reopening on Workspace 2. SHA-256: `b4ee873cb6aa692a1ebc4c3821ef86aaf2ebe02599592f2a8372b958704c092e`.
@@ -35,10 +126,10 @@ G is an explicit transient mode, not a new host parameter. It defaults red/off. 
 ## Rules
 
 - Both instruments solve the same compact piano voicing. Chord name plus bass octave uniquely identifies it: `Em/G4` means G4–B4–E5, not an arbitrary Em inversion.
-- Match exact MIDI pitches, including octaves, arpeggiated or simultaneous. Each instrument collects independently; their hits never pool. First complete collection earns one point and advances. Host event order breaks simultaneous completion ties.
+- Match exact MIDI pitches, including octaves, arpeggiated or simultaneous. Each instrument collects independently; their hits never pool. First complete collection earns speed credit and advances after full replay (formula in the latest candidate section above). Host event order breaks simultaneous completion ties.
 - Repeats earn no extra credit; held notes do not carry into the next target. Release and attack again. Guitar checks monophonic pitch only, not string, fret, or position.
 - Default answer time is 10 seconds, adjustable 1–120; timeout reveals and demonstrates the answer for 2 seconds, adjustable 1–10, without awarding a point. Changes apply to the next target. Pause freezes remaining time.
-- Keyboard, fretboard, and staff hide answers until correctly played. Hits retain normal scale/chord colors, rims, and halos; wrong pitches do not reveal answers. Timeout reveals the complete target.
+- Keyboard, fretboard, and staff hide answers until correctly played. Hits retain normal scale/chord colors, rims, and halos; wrong pitches do not reveal answers. Success and timeout both reveal the complete target.
 - Automatic computer-keyboard chords and normal voicing navigation are blocked during the game to prevent auto-answering. Physical MIDI, guitar detection, and S sustain remain usable. Normal computer controls return when G closes.
 
 ## Harmony and voicing
