@@ -82,3 +82,12 @@ Library 的互斥试听会停用其他音色轨，旧轨插件窗口随之关闭
 - 手工拖动不会改变版本，因此不会立即被拉回。下一次 G 开合或其他结构变化时重新居中，不回放旧坐标。
 - 必须配套部署候选 CLAP 与本程序；本轮仅在临时 Sway 运行源码，没有重启真实用户服务。正式部署与真实 Bitwig 验收仍待进行。游戏本身不要求新增服务。
 - 368 项布局测试通过，覆盖三种主音源尺寸、三个输出坐标原点、重复开合，以及同尺寸不同版本的漏检回归。完整游戏说明见 [GAME.cn.md](../chordlab_clap/GAME.cn.md)。
+
+## 2026-10-23：Library 冷启动 Focus / Active 修复
+
+- Library controller 0.11：保存时选中文件夹或无选中轨道，也会一次性打开共享 Chord Lab；设备列表延迟就绪有有界重试。此分支不改音色 Active、Arm、Monitor 或其他编辑器，普通工程不启用。
+- Chord Lab 0.3.6：等待宿主打开事务稳定后申请初始键盘焦点；宿主只聚焦外层容器时，将焦点传入自身键盘 peer。手动 A OFF 和离开插件窗口不触发抢焦点。`theme.toml` 的 `interaction.focus_settle_ms=300` 独立于视觉配色。
+- 现有 `utrp-plugin-windows` 布局策略仅对新发现的 Library 共享窗口执行一次 compositor focus，且当前焦点必须仍在同一 Library 主窗口/编辑器。不会因 G 展开收起、移动、点击其他应用或定时轮询反复抢焦点；没有新增服务。
+- 验证：927 项 Python、12 项 CTest、隔离 Sway 的 CLAP 输入/状态/焦点测试通过；新增“宿主稍后聚焦容器”的断言旧 0.3.5 失败、新版通过。真实 Library 冷启动不点击插件/A 即 S/A 双绿；电脑 A 触发音符及 Bitwig 音量表；离开 3 秒仍保持主窗口焦点，返回插件恢复 A。
+- 证据：`target/focus-startup-20261023/`。隔离测试必须使用 compositor-managed 窗口；早期 override-redirect 测试在 rootless Xwayland 得到 PointerRoot，不能作为生产缺陷证明。最终旧/新对比见 `probe-old-host-settle.log` / `probe-final.log`。
+- 本轮不声称重新听测实体 MIDI/吉他或所有音色。插件 SHA256：`9f35503a54f4414ee11aa16c6675c4192e2c6d4cc3375be64a57c0ad6c2b9a41`。原件备份：`~/storage/daw/Backups/chordlab-focus-20261023/`。未自动 commit/push。

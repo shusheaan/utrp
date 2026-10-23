@@ -122,3 +122,12 @@ Configuration validation passed. Six real editor recreations, including shared a
 - Manual dragging does not change the revision and is not immediately undone. The next G transition or structural change recalculates the group rather than restoring stale coordinates.
 - Deploy the matching candidate CLAP and layout source together. This round ran only in temporary Sway and did not restart the real user service; real Bitwig acceptance remains pending. No additional service is required.
 - 368 layout tests passed, including three primary-editor sizes, three output origins, repeated transitions and the equal-size/different-revision regression. See [GAME.md](../chordlab_clap/GAME.md).
+
+## 2026-10-23: Library cold-start Focus / Active repair
+
+- Library controller 0.11 opens the shared Chord Lab once even when the saved selection is a folder or empty. Device readiness has bounded retries. This branch preserves sound activation, Arm, Monitor and other editors; ordinary projects remain excluded.
+- Chord Lab 0.3.6 defers initial keyboard focus until the host opening transaction settles and transfers focus from its own active host container into the keyboard peer. Manual A OFF and focus outside this editor are respected. `theme.toml` exposes `interaction.focus_settle_ms=300` separately from visual colors.
+- The existing `utrp-plugin-windows` policy activates only a newly discovered Library shared editor, once, while focus is still within that same Library main window/editor. Game resizing, dragging, leaving the application and normal polling do not reclaim focus. No new service was added.
+- Validation: 927 Python tests, 12 CTests and isolated Sway CLAP input/state/focus probes passed. The new late-host-container-focus assertion fails on 0.3.5 and passes on the final build. Real Library cold start produced green S/A without clicking the plugin/A; computer A triggered notes and the Bitwig meter. Leaving focus on the main window for 3 seconds did not reclaim it; returning restored A.
+- Evidence: `target/focus-startup-20261023/`. Use compositor-managed probe windows: early override-redirect probes returned PointerRoot under rootless Xwayland and are not production-regression evidence. Final comparison: `probe-old-host-settle.log` / `probe-final.log`.
+- Physical MIDI/guitar listening and every preset were not retested this round. Plugin SHA256: `9f35503a54f4414ee11aa16c6675c4192e2c6d4cc3375be64a57c0ad6c2b9a41`. Original backups: `~/storage/daw/Backups/chordlab-focus-20261023/`. No automatic commit/push.

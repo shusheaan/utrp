@@ -77,7 +77,7 @@ void YsfxEditor::resized()
     using namespace chordlabStyle;
     auto canvas = getLocalBounds().reduced(padding_x, padding_y);
     if(gameOpen) {
-        gamePanel.setBounds(canvas.removeFromRight(gameSettings::panelWidth));
+        gamePanel.setBounds(gamePanelBounds(canvas.removeFromRight(gameSettings::panelWidth),getHeight(),getWidth()));
         canvas.removeFromRight(12);
     }
     view.setBounds(canvas);
@@ -243,8 +243,13 @@ void YsfxEditor::timerCallback()
     // The host may show the editor before mapping its native parent. Retry only
     // until the first viewable activation, never after the user moves focus away.
     if (!isShowing()) initialFocusPending = enabled;
-    else if (initialFocusPending && enabled)
+    else if (initialFocusPending && enabled && juce::Time::getMillisecondCounterHiRes() >= focusAfterMs)
         initialFocusPending = !focusInput();
+    // A host can focus its editor container rather than the keyboard peer.
+    // Hand focus inward only inside our own active window; never from another app.
+    if (enabled && isShowing())
+        if (auto* peer = getPeer(); peer && physical.hostHasFocus(peer->getNativeHandle()))
+            focusInput();
     auto info = processor.getCurrentInfo();
     if (displayedEffect != info->effect.get()) {
         displayedEffect = info->effect.get();
@@ -289,7 +294,9 @@ void YsfxEditor::timerCallback()
 void YsfxEditor::visibilityChanged()
 {
     initialFocusPending = enabled;
-    if (initialFocusPending && isShowing()) initialFocusPending = !focusInput();
+    focusAfterMs = juce::Time::getMillisecondCounterHiRes() + chordlabStyle::focus_settle_ms;
+    // The host may still be attaching/reparenting its native wrapper here.
+    // Let the timer acquire focus after those X11 requests have been dispatched.
     if (!isShowing()) { if(gameOpen) toggleGame(); releaseKeys(); processor.keyboardControl().release(); }
 }
 

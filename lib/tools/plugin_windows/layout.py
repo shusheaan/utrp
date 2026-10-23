@@ -317,6 +317,28 @@ def needs_effect_size_reset(window: Window, is_new: bool, config: Config) -> boo
     return actual != wanted and (is_new or oversized or not window.floating)
 
 
+def library_focus_target(tree: dict[str, Json], new_ids: frozenset[int]) -> int | None:
+    """One-shot activation of a new Library keyboard, never a global focus lock."""
+    nodes = flatten(tree)
+    parents = {n.get('window') for n in nodes
+               if n.get('window') is not None
+               and n.get('name') in ('Bitwig Studio - Library', 'Bitwig Studio - Library-migration')
+               and mapping(n.get('window_properties') or {}).get('class') == 'com.bitwig.BitwigStudio'}
+    focused = next((n for n in nodes if n.get('focused') is True), None)
+    if focused is None:
+        return None
+    focused_props = mapping(focused.get('window_properties') or {})
+    # Do not pull focus away if the user moved to another application/project.
+    if focused.get('window') not in parents and focused_props.get('transient_for') not in parents:
+        return None
+    for node in nodes:
+        if (node.get('id') in new_ids and node.get('focused') is not True
+                and node.get('name') == 'CHORD LAB - shared MIDI input / Chord Lab'
+                and mapping(node.get('window_properties') or {}).get('transient_for') in parents):
+            return int(str(node['id']))
+    return None
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--once', action='store_true')
@@ -335,7 +357,9 @@ def main() -> None:
                 command(f'[con_id={window.id}] resize set width {config.surge_effects_width} px '
                         f'height {config.surge_effects_height} px')
                 converted = True
-        seen = frozenset(w.id for w in windows)
+        current_ids = frozenset(w.id for w in windows)
+        new_ids = current_ids - seen
+        seen = current_ids
         if converted:
             time.sleep(config.poll_seconds)  # Let the plugin restore its native floating size.
             windows = read_windows()
@@ -343,6 +367,10 @@ def main() -> None:
         if current != previous:
             apply_layout(windows, config)
             previous = current
+        if new_ids:
+            target = library_focus_target(mapping(sway(('-t', 'get_tree'))), new_ids)
+            if target is not None:
+                command(f'[con_id={target}] focus')
         if args.once:
             return
         time.sleep(config.poll_seconds)

@@ -61,6 +61,20 @@ def make_controls_header(source: Path) -> str:
         if isinstance(value, bool) or not isinstance(value, int) or not 0 <= value <= 64:
             raise ValueError(f"Invalid editor {name}")
         values[name] = value
+    for name, low, high in (("outer_margin", 20, 40), ("score_top", 12, 32),
+                            ("score_height", 48, 64), ("score_bottom_gap", 12, 32),
+                            ("key_gap", 8, 24), ("step_gap", 4, 12), ("group_gap", 8, 24),
+                            ("dense_key_gap", 4, 8), ("dense_step_gap", 1, 4),
+                            ("dense_group_gap", 2, 8), ("method_height", 16, 22),
+                            ("dense_method_height", 14, 18)):
+        value = raw["game_layout"][name]
+        if isinstance(value, bool) or not isinstance(value, int) or not low <= value <= high:
+            raise ValueError(f"Invalid game_layout {name}")
+        values[f"game_{name}"] = value
+    settle = raw["interaction"]["focus_settle_ms"]
+    if isinstance(settle, bool) or not isinstance(settle, int) or not 0 <= settle <= 2000:
+        raise ValueError("Invalid focus_settle_ms")
+    values["focus_settle_ms"] = settle
     lines = ["#pragma once", "// Generated from chordlab/theme.toml.", "namespace chordlabStyle {"]
     for name, value in values.items():
         if isinstance(value, str):

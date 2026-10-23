@@ -264,3 +264,12 @@ Use Global Key 的 Note FX，以及 Grid 的音高量化/音阶级数移调。
 ## 当前推子音量（2026-10-21）
 
 可听音色 −2 dB，文件夹/共享 MIDI/Master 0 dB；raw detection 保留 −∞。这取代旧文档的 −10/−12 dB 推子设置，不改变 Arm/监听或音频路由。详见 [音量配方与验收](LEVELS.cn.md)。
+
+## 2026-10-23：Library 冷启动 Focus / Active 修复
+
+- Library controller 0.11：保存时选中文件夹或无选中轨道，也会一次性打开共享 Chord Lab；设备列表延迟就绪有有界重试。此分支不改音色 Active、Arm、Monitor 或其他编辑器，普通工程不启用。
+- Chord Lab 0.3.6：等待宿主打开事务稳定后申请初始键盘焦点；宿主只聚焦外层容器时，将焦点传入自身键盘 peer。手动 A OFF 和离开插件窗口不触发抢焦点。`theme.toml` 的 `interaction.focus_settle_ms=300` 独立于视觉配色。
+- 现有 `utrp-plugin-windows` 布局策略仅对新发现的 Library 共享窗口执行一次 compositor focus，且当前焦点必须仍在同一 Library 主窗口/编辑器。不会因 G 展开收起、移动、点击其他应用或定时轮询反复抢焦点；没有新增服务。
+- 验证：927 项 Python、12 项 CTest、隔离 Sway 的 CLAP 输入/状态/焦点测试通过；新增“宿主稍后聚焦容器”的断言旧 0.3.5 失败、新版通过。真实 Library 冷启动不点击插件/A 即 S/A 双绿；电脑 A 触发音符及 Bitwig 音量表；离开 3 秒仍保持主窗口焦点，返回插件恢复 A。
+- 证据：`target/focus-startup-20261023/`。隔离测试必须使用 compositor-managed 窗口；早期 override-redirect 测试在 rootless Xwayland 得到 PointerRoot，不能作为生产缺陷证明。最终旧/新对比见 `probe-old-host-settle.log` / `probe-final.log`。
+- 本轮不声称重新听测实体 MIDI/吉他或所有音色。插件 SHA256：`9f35503a54f4414ee11aa16c6675c4192e2c6d4cc3375be64a57c0ad6c2b9a41`。原件备份：`~/storage/daw/Backups/chordlab-focus-20261023/`。未自动 commit/push。

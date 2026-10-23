@@ -90,9 +90,13 @@ inset = 3
 padding_x = 18
 padding_y = 10
 
+[interaction]
+# Allow the host's window-open transaction to finish before one-shot keyboard focus.
+focus_settle_ms = 300
+
 [game]
 # Match the Rust progression UI's semantic colors; leave normal mode unchanged.
-background = "#000000"
+background = "#494949"
 border = "#4C5963"
 text = "#E4E9ED"
 muted = "#AAB9C4"
@@ -101,3 +105,19 @@ chord = "#FFE066"
 reason = "#8FDEA5"
 demo = "#FFBA68"
 error = "#FF9999"
+
+[game_layout]
+# Game-only spacing. Normal-mode geometry and embedded theme remain unchanged.
+outer_margin = 20
+score_top = 20
+score_height = 52
+score_bottom_gap = 20
+key_gap = 12
+step_gap = 6
+group_gap = 12
+# Dense previews reduce whitespace only; capsules/fonts stay unchanged.
+dense_key_gap = 6
+dense_step_gap = 2
+dense_group_gap = 4
+method_height = 18
+dense_method_height = 16

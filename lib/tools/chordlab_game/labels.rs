@@ -14,7 +14,7 @@ pub fn kind(event: &ChordEvent) -> u32 {
 /// Tritone substitution is bII (green), not mislabeled V (orange).
 pub fn capsule(event: &ChordEvent, resolution: &ChordEvent) -> (String, i32) {
     let letter = |s: &str| "CDEFGAB".find(s.chars().next().unwrap()).unwrap() as i32;
-    let relative = kind(event) == 1;
+    let relative = matches!(kind(event), 1 | 2);
     let tonic = if relative {
         &resolution.chord.root
     } else {

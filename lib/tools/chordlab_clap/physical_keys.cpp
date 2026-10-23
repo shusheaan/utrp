@@ -66,11 +66,37 @@ bool PhysicalKeys::grabFocus(void* nativeWindow)
     // Only called on opening or explicit editor activation. A cached JUCE timestamp
     // can predate the host's latest focus change and be rejected by X11.
     XSetInputFocus(connection, window, RevertToParent, CurrentTime);
-    XFlush(connection);
+    XSync(connection, False);
+    Window focused{}; int revert{};
+    XGetInputFocus(connection, &focused, &revert);
+    return focused == window;
 #else
     juce::ignoreUnused(nativeWindow);
 #endif
     return true;
+}
+bool PhysicalKeys::hostHasFocus(void* nativeWindow) const
+{
+#if JUCE_LINUX
+    if (!display || !nativeWindow) return false;
+    auto* connection = static_cast<Display*>(display);
+    Window focused{}; int revert{};
+    XGetInputFocus(connection, &focused, &revert);
+    if (focused == None || focused == PointerRoot) return false;
+    Window current = reinterpret_cast<Window>(nativeWindow);
+    if (current == focused) return false;
+    for (;;) {
+        Window root{}, parent{}, *children{}; unsigned count{};
+        if (!XQueryTree(connection, current, &root, &parent, &children, &count)) return false;
+        if (children) XFree(children);
+        if (parent == root || parent == None) return false;
+        if (parent == focused) return true;
+        current = parent;
+    }
+#else
+    juce::ignoreUnused(nativeWindow);
+    return false;
+#endif
 }
 bool PhysicalKeys::isDown(int code) const
 {

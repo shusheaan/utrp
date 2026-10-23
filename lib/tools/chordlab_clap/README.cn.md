@@ -651,3 +651,24 @@ Dark Mode 的未按音符混色从 45% 提至 55%，按下颜色也略提亮；�
 REAPER synth.rpp 与 Guitar Frontend binary 的哈希保持不变。
 证据：`target/chordlab-dot-ui/`；安装 SHA256：
 `ea232a33fe70c9e3bf5719cf899ac90f5c0eb59fb9132cfee28c0a43e28ed044`。
+
+## 2026-10-23：Library 冷启动 Focus / Active 修复
+
+- Library controller 0.11：保存时选中文件夹或无选中轨道，也会一次性打开共享 Chord Lab；设备列表延迟就绪有有界重试。此分支不改音色 Active、Arm、Monitor 或其他编辑器，普通工程不启用。
+- Chord Lab 0.3.6：等待宿主打开事务稳定后申请初始键盘焦点；宿主只聚焦外层容器时，将焦点传入自身键盘 peer。手动 A OFF 和离开插件窗口不触发抢焦点。`theme.toml` 的 `interaction.focus_settle_ms=300` 独立于视觉配色。
+- 现有 `utrp-plugin-windows` 布局策略仅对新发现的 Library 共享窗口执行一次 compositor focus，且当前焦点必须仍在同一 Library 主窗口/编辑器。不会因 G 展开收起、移动、点击其他应用或定时轮询反复抢焦点；没有新增服务。
+- 验证：927 项 Python、12 项 CTest、隔离 Sway 的 CLAP 输入/状态/焦点测试通过；新增“宿主稍后聚焦容器”的断言旧 0.3.5 失败、新版通过。真实 Library 冷启动不点击插件/A 即 S/A 双绿；电脑 A 触发音符及 Bitwig 音量表；离开 3 秒仍保持主窗口焦点，返回插件恢复 A。
+- 证据：`target/focus-startup-20261023/`。隔离测试必须使用 compositor-managed 窗口；早期 override-redirect 测试在 rootless Xwayland 得到 PointerRoot，不能作为生产缺陷证明。最终旧/新对比见 `probe-old-host-settle.log` / `probe-final.log`。
+- 本轮不声称重新听测实体 MIDI/吉他或所有音色。插件 SHA256：`9f35503a54f4414ee11aa16c6675c4192e2c6d4cc3375be64a57c0ad6c2b9a41`。原件备份：`~/storage/daw/Backups/chordlab-focus-20261023/`。未自动 commit/push。
+
+## 游戏面板留白与圆角（2026-10-23，0.3.7）
+
+- 仅游戏 UI：背景与左侧两条胶囊带统一为 `#494949`；上、下、右外边距均为 20 px，倒计时顶边与左侧选调带同高。整个面板与进度条共用圆角裁切，半径为 `choice_height / 2`（14.5 px）。普通模式尺寸、内嵌主题与音频/计分规则不变。
+- 积分卡顶距 20 px、高 52 px，下方到调号留 20 px；调号/转调说明与和弦之间留 12 px。间距由 `chordlab/theme.toml` 的 `game_layout` 配置；长预览仍可滚动，不覆盖设置区。
+- 答对者累计分旁显示绿色 `+N`，整个 Demo（包括暂停）保持，下一题立即隐藏；超时和另一方不显示加分。隔离 CLAP 测试宿主模拟输入实测钢琴 `+79`、吉他 `+96`，下一题保留总分、清除提示。不代表实体乐器音频验收。
+- 验证：932 项 Python 测试、12 项 CTest、三个高度的渲染像素/四角透明/间距/轮调测试；根项目及 `chordlab_game` 的 `cargo test`、`cargo clippy --all-targets -- -D warnings` 通过。证据：`target/game-spacing-20261023/`。
+
+- 同轮补充：按实际可用高度逐步缩小预览空隙，而非缩小字体或胶囊；默认窗口验证了 **9 个和弦 + 3 个调号 + 3 条转调说明** 可完整放在设置区上方。比默认更矮的用户自定义窗口保留裁切和滚动，不溢出、不覆盖设置区。绘制和滚动范围共用同一个测高逻辑。
+- 所有临时接近和转调桥接（`kind=1/2`）都使用灰胶囊+目标相对级数色点，即使完全调内也不整颗上色；已完成保持黑底空心。真实到达/目标保持原配色。修正 F major 预览夹具漏标过渡的示例，并补充真实 Rust bridge/pivot 的目标相对色点测试。
+
+- 最终部署验收：Library 已保存并在 Workspace 2 重载 0.3.7（SHA-256 `1efee0fae0328be388a538bb21b993c60a6138f767259e0844dbf12125b3f321`）；普通模式打开后 S/A 双绿，游戏展开后圆角/灰色/对齐正确，当前停在 Pause（按钮为 Resume），未启动 DAW 录音。真实界面截图：`target/game-spacing-20261023/live-final.png`。本轮不声称重新验收实体乐器音频。

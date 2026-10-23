@@ -697,3 +697,24 @@ This round did not retest every sound or the physical MIDI keyboard.
 REAPER synth.rpp and Guitar Frontend binary hashes remain unchanged.
 Evidence: `target/chordlab-dot-ui/`; installed SHA256:
 `ea232a33fe70c9e3bf5719cf899ac90f5c0eb59fb9132cfee28c0a43e28ed044`.
+
+## 2026-10-23: Library cold-start Focus / Active repair
+
+- Library controller 0.11 opens the shared Chord Lab once even when the saved selection is a folder or empty. Device readiness has bounded retries. This branch preserves sound activation, Arm, Monitor and other editors; ordinary projects remain excluded.
+- Chord Lab 0.3.6 defers initial keyboard focus until the host opening transaction settles and transfers focus from its own active host container into the keyboard peer. Manual A OFF and focus outside this editor are respected. `theme.toml` exposes `interaction.focus_settle_ms=300` separately from visual colors.
+- The existing `utrp-plugin-windows` policy activates only a newly discovered Library shared editor, once, while focus is still within that same Library main window/editor. Game resizing, dragging, leaving the application and normal polling do not reclaim focus. No new service was added.
+- Validation: 927 Python tests, 12 CTests and isolated Sway CLAP input/state/focus probes passed. The new late-host-container-focus assertion fails on 0.3.5 and passes on the final build. Real Library cold start produced green S/A without clicking the plugin/A; computer A triggered notes and the Bitwig meter. Leaving focus on the main window for 3 seconds did not reclaim it; returning restored A.
+- Evidence: `target/focus-startup-20261023/`. Use compositor-managed probe windows: early override-redirect probes returned PointerRoot under rootless Xwayland and are not production-regression evidence. Final comparison: `probe-old-host-settle.log` / `probe-final.log`.
+- Physical MIDI/guitar listening and every preset were not retested this round. Plugin SHA256: `9f35503a54f4414ee11aa16c6675c4192e2c6d4cc3375be64a57c0ad6c2b9a41`. Original backups: `~/storage/daw/Backups/chordlab-focus-20261023/`. No automatic commit/push.
+
+## Game-panel spacing and corners (2026-10-23, 0.3.7)
+
+- Game UI only: `#494949` matches both left capsule strips. Top/bottom/right outer margins are 20 px; countdown top aligns with the key strip. One rounded clip covers the panel and countdown, using the strip radius `choice_height / 2` (14.5 px). Normal dimensions, embedded theme, audio and scoring rules are unchanged.
+- Score cards: 20 px top spacing, 52 px height, 20 px below. Key/modulation explanations have 12 px clearance before chords. Spacing lives in `chordlab/theme.toml` under `game_layout`; long previews remain scrollable above settings.
+- Green `+N` beside the winning total lasts throughout Demo (including pause), then clears on the next question. Timeout and the losing side show no award. Isolated CLAP MIDI simulation observed piano `+79`, guitar `+96`, and retained totals without stale awards on the next question. This is not physical-instrument audio acceptance.
+- Validation: 932 Python tests, 12 CTests, three-height render/pixel/transparent-corner/spacing/wheel checks; root and `chordlab_game` cargo tests and clippy with `--all-targets -- -D warnings` passed. Evidence: `target/game-spacing-20261023/`.
+
+- Follow-up in the same update: preview whitespace adapts to available height without shrinking fonts/capsules. The default window fits **9 chords + 3 key badges + 3 modulation explanations** above settings. Shorter custom windows retain clipping/scrolling without overlapping settings; drawing and scroll limits share the same height calculation.
+- Every approach and modulation bridge/pivot (`kind=1/2`) uses a gray capsule plus destination-relative degree dot, even when fully diatonic. Completed transitions stay hollow/black. Real arrivals/targets keep their palette. Fixed missing transition flags in the F-major screenshot fixture; added Rust bridge/pivot relative-palette regression tests.
+
+- Final deployment: Library saved and reloaded on Workspace 2 with 0.3.7 (SHA-256 `1efee0fae0328be388a538bb21b993c60a6138f767259e0844dbf12125b3f321`). Normal startup showed green S/A; expanded live UI confirmed gray rounded panel and alignment. Game is paused (Resume button); no DAW recording was started. Screenshot: `target/game-spacing-20261023/live-final.png`. Physical-instrument audio was not re-accepted in this UI task.

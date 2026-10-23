@@ -45,5 +45,6 @@ private:
     bool enabled{true}, hadFocus{false}, ignoreCaptureClick{false}, captureWasActive{false};
     bool appearanceMenuOpen{false};
     bool initialFocusPending{true};
+    double focusAfterMs{};
     ysfx_t* displayedEffect{nullptr};
 };

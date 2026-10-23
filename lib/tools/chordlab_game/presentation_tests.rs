@@ -164,3 +164,29 @@ fn committed_game_session_balances_completed_keys_not_preview_counts() {
     );
     println!("4800 actual exercises, 24 keys, {} key/chord identities, successful/key={min}..{max}; counts(pitch class, minor)={counts:?}", chords.len());
 }
+
+#[test]
+fn modulation_transitions_use_target_relative_dot_colors() {
+    let mut event = Planner::new(0).unwrap().engine.next_event();
+    event.key = Key {
+        tonic: Tone::parse("C").unwrap(),
+        mode: Mode::Ionian,
+    };
+    let mut goal = event.clone();
+    goal.key = Key {
+        tonic: Tone::parse("F").unwrap(),
+        mode: Mode::Ionian,
+    };
+    goal.chord = goal.key.chord(1, true);
+    goal.role = "arrival".into();
+    // C7 is old-key I, but V of the F destination: its dot must be orange.
+    event.chord = goal.key.chord(5, true);
+    for role in ["bridge", "shared_pivot", "diminished_pivot"] {
+        event.role = role.into();
+        assert_eq!(labels::kind(&event), 2);
+        assert_eq!(labels::capsule(&event, &goal).1, 2);
+        assert!(labels::capsule(&event, &goal).0.starts_with("V "));
+    }
+    assert_eq!(labels::kind(&goal), 3);
+    assert_eq!(labels::capsule(&goal, &goal).1, 0);
+}

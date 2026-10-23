@@ -233,3 +233,16 @@ PY
 - 保存/退出/更新/重开正式 Library 于 Workspace 2；Spark 硬件 mono → Bitwig、Bitwig stereo → Spark，用户确认 MIDI/电脑/吉他三种声音正常。最终 20 次开合验证边界、16 px 间距、组合居中，关闭 G 后正常音乐区像素一致。
 - 真实单音输入链成功计分、超时钢琴回放与默认 Sustain 对照通过；最后修订版本另通过 12 项 CTest、隔离 GUI/CLAP probe。709 项相关 Python、123 项根 Rust（3 个超大覆盖测试仍 ignored）、7 项游戏 Rust、Clippy、2 项 Guitar CTest 通过。4,800 题均衡模拟覆盖 24 调，成功数 171–206；不是全球历史存储或真人完成数量。
 - 证据 `target/live-acceptance-20261023/`；没有对全部音色逐一重新听音，也没有宣称物理热插拔、长期无爆音或实体双人计分均已覆盖。源码未 commit/push；收尾 Recovery 快照保护当前源码与部署文件。
+
+## 2026-10-23：Library 冷启动 Focus / Active 修复
+
+- Library controller 0.11：保存时选中文件夹或无选中轨道，也会一次性打开共享 Chord Lab；设备列表延迟就绪有有界重试。此分支不改音色 Active、Arm、Monitor 或其他编辑器，普通工程不启用。
+- Chord Lab 0.3.6：等待宿主打开事务稳定后申请初始键盘焦点；宿主只聚焦外层容器时，将焦点传入自身键盘 peer。手动 A OFF 和离开插件窗口不触发抢焦点。`theme.toml` 的 `interaction.focus_settle_ms=300` 独立于视觉配色。
+- 现有 `utrp-plugin-windows` 布局策略仅对新发现的 Library 共享窗口执行一次 compositor focus，且当前焦点必须仍在同一 Library 主窗口/编辑器。不会因 G 展开收起、移动、点击其他应用或定时轮询反复抢焦点；没有新增服务。
+- 验证：927 项 Python、12 项 CTest、隔离 Sway 的 CLAP 输入/状态/焦点测试通过；新增“宿主稍后聚焦容器”的断言旧 0.3.5 失败、新版通过。真实 Library 冷启动不点击插件/A 即 S/A 双绿；电脑 A 触发音符及 Bitwig 音量表；离开 3 秒仍保持主窗口焦点，返回插件恢复 A。
+- 证据：`target/focus-startup-20261023/`。隔离测试必须使用 compositor-managed 窗口；早期 override-redirect 测试在 rootless Xwayland 得到 PointerRoot，不能作为生产缺陷证明。最终旧/新对比见 `probe-old-host-settle.log` / `probe-final.log`。
+- 本轮不声称重新听测实体 MIDI/吉他或所有音色。插件 SHA256：`9f35503a54f4414ee11aa16c6675c4192e2c6d4cc3375be64a57c0ad6c2b9a41`。原件备份：`~/storage/daw/Backups/chordlab-focus-20261023/`。未自动 commit/push。
+
+## 游戏 UI 更新（2026-10-23）
+
+恢复清单现包含 Chord Lab 0.3.7：灰色圆角游戏面板、同宽倒计时、20 px 外边距、Demo 加分提示、9 和弦密集预览自适应及所有过渡灰胶囊色点。旧插件和保存前工程备份位于 Storage 的 `Backups/chordlab-game-ui-20261023/`。源码尚未 commit/push，需保留本次 Recovery 源码快照；配方见 `chordlab/theme.toml` 和 `chordlab_clap/README.cn.md`。

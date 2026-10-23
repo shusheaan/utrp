@@ -147,8 +147,13 @@ void panelText(juce::Graphics& g,const juce::String& text,juce::Rectangle<int> b
 void GamePanel::paint(juce::Graphics& g)
 {
     using namespace chordlabStyle;
+    // Same outer radius as the two embedded choice strips (height / 2).
+    // Clip the countdown too, so full progress never paints square corners.
+    juce::Graphics::ScopedSaveState saved(g);
+    juce::Path outline;
+    outline.addRoundedRectangle(getLocalBounds().toFloat(),float(choice_height)/2);
+    g.reduceClipRegion(outline);
     g.fillAll(juce::Colour(game_background));
-    g.setColour(juce::Colour(game_border)); g.drawVerticalLine(0,0,float(getHeight()));
     const auto white=juce::Colour(game_text);
     const int settings=getHeight()-178, right=22+(getWidth()-36)/2;
     paintGamePractice(g,{0,0,getWidth(),settings},running ? current : GameTarget{},
@@ -169,7 +174,7 @@ void GamePanel::mouseWheelMove(const juce::MouseEvent& event,const juce::MouseWh
 {
     if(event.y>=getHeight()-178 || wheel.deltaY==0) return;
     const auto rows=gamePracticeRows(current,preview,trail,replaying,status.winner);
-    const int maximum=std::max(0,gamePracticeHeight(rows,capsuleStyle)-(getHeight()-178));
+    const int maximum=std::max(0,gamePracticeHeight(rows,capsuleStyle,getHeight()-178)-(getHeight()-178));
     practiceScroll=std::clamp(practiceScroll+(wheel.deltaY>0 ? -27 : 27),0,maximum);
     repaint();
 }

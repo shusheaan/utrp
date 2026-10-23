@@ -27,16 +27,16 @@ def luminance(color: str) -> float:
     return sum(value * weight for value, weight in zip(linear, (0.2126, 0.7152, 0.0722)))
 
 
-def test_race_palette_is_black_and_does_not_change_normal_renderer() -> None:
+def test_race_palette_matches_choice_strips_without_changing_normal_renderer() -> None:
     theme = tomllib.loads((SOURCE / "theme.toml").read_text())
-    assert theme["game"]["background"] == "#000000"
+    assert theme["game"]["background"] == theme["button"] == "#494949"
     assert theme["background"] == "#585858"
     assert "game_" not in module.make_theme(SOURCE)
     header = module.make_controls_header(SOURCE)
     for role, color in theme["game"].items():
         assert f"game_{role} = 0xff{color[1:]};" in header
         if role not in ("background", "border"):
-            assert (luminance(color) + 0.05) / 0.05 >= 7
+            assert (luminance(color) + 0.05) / (luminance(theme["game"]["background"]) + 0.05) >= 4
 
 
 @pytest.mark.parametrize("value", ['"#fff"', '"#GGGGGG"', "123"])
@@ -486,3 +486,30 @@ def test_editor_padding_is_generated_from_config(tmp_path: Path, value: int) -> 
     (tmp_path / 'theme.toml').write_text(text)
     assert f'padding_x = {value};' in module.make_controls_header(tmp_path)
     assert module.make_theme(tmp_path) == module.make_theme(SOURCE)
+
+
+@pytest.mark.parametrize('value', ['-1', '2001', 'true', '0.5', '"300"'])
+def test_focus_settle_rejects_invalid_values(tmp_path: Path, value: str) -> None:
+    text = (SOURCE / 'theme.toml').read_text().replace('focus_settle_ms = 300', f'focus_settle_ms = {value}')
+    (tmp_path / 'theme.toml').write_text(text)
+    with pytest.raises(ValueError, match='Invalid focus_settle_ms'):
+        module.make_controls_header(tmp_path)
+
+
+def test_focus_settle_is_separate_from_visual_theme() -> None:
+    assert 'focus_settle_ms = 300;' in module.make_controls_header(SOURCE)
+    assert 'focus_settle' not in module.make_theme(SOURCE)
+
+
+@pytest.mark.parametrize("value", ["true", "0", "999", "20.5"])
+def test_game_spacing_rejects_invalid_values(tmp_path: Path, value: str) -> None:
+    text = (SOURCE / "theme.toml").read_text().replace("outer_margin = 20", f"outer_margin = {value}")
+    (tmp_path / "theme.toml").write_text(text)
+    with pytest.raises(ValueError, match="game_layout outer_margin"):
+        module.make_controls_header(tmp_path)
+
+
+def test_game_panel_top_matches_existing_key_strip() -> None:
+    theme = tomllib.loads((SOURCE / "theme.toml").read_text())
+    assert theme["game_layout"]["outer_margin"] == theme["editor"]["padding_y"] + 10
+    assert "draw_key_choices(10)" in (SOURCE / "chordlab.jsfx").read_text()

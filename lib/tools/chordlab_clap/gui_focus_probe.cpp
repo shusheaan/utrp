@@ -29,32 +29,43 @@ void gui_focus_probe(const clap_plugin_t* plugin)
     const auto* gui=static_cast<const clap_plugin_gui_t*>(plugin->get_extension(plugin,CLAP_EXT_GUI));
     const auto* timer=static_cast<const clap_plugin_timer_support_t*>(plugin->get_extension(plugin,CLAP_EXT_TIMER_SUPPORT));
     check(gui && timer,"Focus probe GUI/timer extensions");
-    const auto pump=[&] {
-        for (int i=0;i<20;++i) {
+    const auto pump=[&](int ticks = 20) {
+        for (int i=0;i<ticks;++i) {
             std::this_thread::sleep_for(std::chrono::milliseconds(20));
             plugin->on_main_thread(plugin); timer->on_timer(plugin,42);
         }
         XSync(display,False);
     };
-    XSetWindowAttributes attributes{}; attributes.override_redirect=True;
+    XSetWindowAttributes attributes{}; attributes.override_redirect=False;
     const auto window=[&] {
         return XCreateWindow(display,DefaultRootWindow(display),0,0,920,703,0,
             CopyFromParent,InputOutput,CopyFromParent,CWOverrideRedirect,&attributes);
     };
-    const auto other=window(); XMapWindow(display,other); XSync(display,False);
+    const auto other=window(); XMapWindow(display,other); XSync(display,False); pump();
     for (int cycle=0;cycle<2;++cycle) {
         const auto parent=window();
+        XStoreName(display, parent, "Chord Lab focus regression host");
+        if (cycle == 1) { XMapWindow(display,parent); XSync(display,False); pump(); }
         XSetInputFocus(display,other,RevertToParent,CurrentTime); XSync(display,False);
         check(gui->create(plugin,CLAP_WINDOW_API_X11,false),"Create focus editor");
         clap_window_t host{}; host.api=CLAP_WINDOW_API_X11; host.x11=parent;
         check(gui->set_parent(plugin,&host) && gui->show(plugin),"Attach/show before parent map");
-        pump(); check(!inside(display,parent),"Unmapped editor must not take focus");
-        XMapWindow(display,parent); XSync(display,False); pump();
+        if (cycle == 0) {
+            pump(); check(!inside(display,parent),"Unmapped editor must not take focus");
+            XMapWindow(display,parent); XSync(display,False);
+        } else {
+            pump(5);
+            // The host finishes opening by focusing its container, not the peer.
+            XSetInputFocus(display,parent,RevertToParent,CurrentTime); XSync(display,False);
+        }
+        pump();
         check(inside(display,parent),"Mapped editor automatically receives initial focus");
+        Window focused{}; int revert{}; XGetInputFocus(display,&focused,&revert);
+        check(focused != parent,"Keyboard peer, not just host wrapper, owns startup focus");
         XSetInputFocus(display,other,RevertToParent,CurrentTime); XSync(display,False); pump();
         check(inside(display,other),"Editor must not reclaim focus after user leaves");
         gui->destroy(plugin); XDestroyWindow(display,parent); XSync(display,False);
     }
     XDestroyWindow(display,other); XCloseDisplay(display);
-    std::cout << "X11 delayed map, startup focus, no focus stealing, close/recreate: PASS\n";
+    std::cout << "X11 delayed map, late host focus, keyboard peer activation, no focus stealing, recreate: PASS\n";
 }

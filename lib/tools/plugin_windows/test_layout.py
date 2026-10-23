@@ -234,3 +234,27 @@ def test_resize_notification_preserves_user_marks_and_filters_invalid_names() ->
     assert layout_revision({}) == ()
     with pytest.raises(ValueError, match='marks'):
         layout_revision({'marks': 'invalid'})
+
+
+def test_library_focus_is_one_shot_and_scoped() -> None:
+    from layout import library_focus_target
+    parent = {'id': 1, 'window': 101, 'name': 'Bitwig Studio - Library', 'focused': True,
+              'window_properties': {'class': 'com.bitwig.BitwigStudio'}}
+    plugin = {'id': 2, 'window': 102, 'focused': False,
+              'name': 'CHORD LAB - shared MIDI input / Chord Lab',
+              'window_properties': {'transient_for': 101}}
+    tree = {'nodes': [parent, plugin]}
+    assert library_focus_target(tree, frozenset({2})) == 2
+    assert library_focus_target(tree, frozenset()) is None
+    parent['name'] = 'Bitwig Studio - Recording'
+    assert library_focus_target(tree, frozenset({2})) is None
+    parent['name'] = 'Bitwig Studio - Library'
+    parent['focused'] = False
+    tree['nodes'].append({'id': 3, 'window': 103, 'focused': True, 'name': 'Terminal'})
+    assert library_focus_target(tree, frozenset({2})) is None
+    tree['nodes'].pop(); parent['focused'] = True
+    plugin['name'] = 'GUITAR - raw detection / Chord Lab'
+    assert library_focus_target(tree, frozenset({2})) is None
+    plugin['name'] = 'CHORD LAB - shared MIDI input / Chord Lab'
+    plugin['window_properties']['transient_for'] = 999
+    assert library_focus_target(tree, frozenset({2})) is None
