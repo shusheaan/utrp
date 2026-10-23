@@ -1,5 +1,6 @@
 #include "game_view.h"
 #include "control_style.h"
+#include "game_controls.h"
 
 GameRows gamePracticeRows(const GameTarget& current,const std::deque<GameTarget>& preview,
                          const std::deque<GameTrailStep>& trail,bool replaying,int winner)
@@ -47,10 +48,9 @@ constexpr int practiceTop=game_score_top+game_score_height+game_score_bottom_gap
 void text(juce::Graphics& g,const juce::String& label,juce::Rectangle<int> area,
           float size,juce::Colour color,bool centered=false,bool pointSize=false)
 {
-    auto options=juce::FontOptions("DejaVu Sans",size,juce::Font::plain).withMetricsKind(juce::TypefaceMetricsKind::legacy);
     // JSFX theme typography is point-sized; LICE applies its own line-height correction.
-    if(pointSize) options=options.withPointHeight(size);
-    g.setFont(juce::Font(options));
+    const auto font=gameControls::font(size);
+    g.setFont(pointSize ? font : font.withHeight(size));
     g.setColour(color);
     g.drawFittedText(label,area,centered ? juce::Justification::centred : juce::Justification::centredLeft,1,0.8f);
 }

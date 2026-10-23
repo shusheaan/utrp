@@ -246,3 +246,13 @@ PY
 ## 游戏 UI 更新（2026-10-23）
 
 恢复清单现包含 Chord Lab 0.3.7：灰色圆角游戏面板、同宽倒计时、20 px 外边距、Demo 加分提示、9 和弦密集预览自适应及所有过渡灰胶囊色点。旧插件和保存前工程备份位于 Storage 的 `Backups/chordlab-game-ui-20261023/`。源码尚未 commit/push，需保留本次 Recovery 源码快照；配方见 `chordlab/theme.toml` 和 `chordlab_clap/README.cn.md`。
+
+### 2026-10-23：Chord Lab 0.3.8 固定级数显示
+
+恢复清单升级至 0.3.8：关系大小调统一大调胶囊级数和固定色序，调外和弦不占用左侧槽位；底层循环、覆盖与转调仍区分大小调。详见 `chordlab_clap/README.cn.md`。本次源码未 commit/push，以 Recovery 工作树快照保底。
+
+### 2026-10-23：Chord Lab 0.3.9 游戏设置胶囊
+
+游戏设置改为等高、同字体胶囊，Play/Demo/Mod 并排一行，方向下拉及开关也使用胶囊；普通模式无改动。恢复时需要同时保留 `game_controls.h`、`game_panel.*`、`game_wheel_value.h` 与现有主题生成配方。未 commit/push。
+
+- 2026-10-23：0.3.9 胶囊设置与同色倒计时底轨已部署，备份 `Backups/chordlab-capsule-controls-20261023/`。真实 Library 在 Workspace 2 打开，但 Spark GO USB 未枚举，音频引擎报无输出设备；没有改声卡设置或保存工程。声音验收待设备恢复，安装哈希与测试见 Chord Lab README。

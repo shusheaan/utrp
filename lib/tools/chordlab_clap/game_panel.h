@@ -12,7 +12,7 @@ public:
     void deactivate();
     void tick();
     double progress() const;
-    void setCapsuleStyle(GameCapsuleStyle style) { capsuleStyle=style; }
+    void setCapsuleStyle(GameCapsuleStyle);
     void resized() override;
     void paint(juce::Graphics&) override;
     void mouseWheelMove(const juce::MouseEvent&,const juce::MouseWheelDetails&) override;
@@ -27,6 +27,7 @@ private:
     std::deque<GameTrailStep> trail;
     GameTarget current{};
     GameStatus status{};
+    GameCapsuleLookAndFeel controlsLook;
     juce::TextButton startButton{"Start"}, pauseButton{"Pause"};
     GameWheelValue limit, demo, modulation;
     GameCapsuleStyle capsuleStyle;

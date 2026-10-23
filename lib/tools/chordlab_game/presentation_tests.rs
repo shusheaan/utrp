@@ -53,6 +53,44 @@ fn approaches_use_destination_relative_palette_and_targets_keep_major_palette() 
         3,
         "minor tonic keeps relative-major VI blue"
     );
+    assert_eq!(labels::capsule(&source, &source).0, "vi Am7");
+    assert_eq!(labels::degree(&source), "i", "engine degree stays minor");
+}
+
+#[test]
+fn relative_keys_share_capsule_labels_without_changing_actual_mode_or_degree() {
+    let names = [
+        "C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B",
+    ];
+    let mut event = Planner::new(0).unwrap().engine.next_event();
+    event.role = "diatonic".into();
+    for name in names {
+        let major = Key {
+            tonic: Tone::parse(name).unwrap(),
+            mode: Mode::Ionian,
+        };
+        let minor = Key {
+            tonic: major.tonic.transpose(9, 5),
+            mode: Mode::Aeolian,
+        };
+        for d in 1..=7 {
+            event.key = major.clone();
+            event.chord = major.chord(d, true);
+            event.degree = Some(d);
+            let expected = labels::capsule(&event, &event);
+            event.key = minor.clone();
+            let minor_degree = (d + 1) % 7 + 1;
+            event.chord = minor.chord(minor_degree, true);
+            event.degree = Some(minor_degree);
+            assert_eq!(labels::capsule(&event, &event), expected);
+            let notes = candidates(&event, &Settings::load().unwrap()).remove(0);
+            let target = target_from_event(&event, &event, &notes, 0, 1).unwrap();
+            assert_eq!(target.minor, 1);
+            assert_eq!(target.degree, i32::from(minor_degree) - 1);
+            assert_eq!(target.signature, i32::from(major.tonic.pc));
+            assert_eq!(event.key, minor, "notation never changes harmony");
+        }
+    }
 }
 
 #[test]

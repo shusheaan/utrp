@@ -226,3 +226,13 @@ Saved Library project: audible sounds −2 dB, folders/shared MIDI/Master 0 dB, 
 ## Game UI update (2026-10-23)
 
 The recovery manifest now includes Chord Lab 0.3.7: gray rounded game panel, full-width countdown, 20 px outer margins, Demo award hints, adaptive nine-chord previews and neutral transition capsules with colored dots. Old plugin and pre-save project backups are in Storage at `Backups/chordlab-game-ui-20261023/`. Sources remain uncommitted/unpushed; preserve this Recovery source snapshot. Recipes: `chordlab/theme.toml` and `chordlab_clap/README.md`.
+
+### 2026-10-23: Chord Lab 0.3.8 fixed degree display
+
+The manifest now tracks 0.3.8: relative major/minor pairs share major-based capsule degrees and fixed color order; external chords do not occupy left slots. Harmony cycles, coverage and modulation remain mode-aware. See `chordlab_clap/README.md`. No commit/push was created; preserve the Recovery working-tree snapshot.
+
+### 2026-10-23: Chord Lab 0.3.9 capsule game controls
+
+Game controls share capsule height and typography; Play/Demo/Mod occupy one row, with capsule register menu and approach toggle. Normal mode is unchanged. Preserve `game_controls.h`, `game_panel.*`, `game_wheel_value.h` and the theme-generation recipe together for recovery. No commit/push.
+
+- 2026-10-23: Deployed 0.3.9 capsule settings and matching countdown background; backup: `Backups/chordlab-capsule-controls-20261023/`. Real Library opened on Workspace 2, but Spark GO USB did not enumerate and the audio engine reported no output device. No audio configuration changes or project save. Sound acceptance awaits device reconnection; see Chord Lab README for hash and tests.

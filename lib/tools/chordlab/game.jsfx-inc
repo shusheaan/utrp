@@ -127,10 +127,20 @@ function game_chord_text() (
 );
 
 // Context labels are presentation only: never reuse/write normal voicing memories.
+// Left capsules always use the selected relative-major signature, exactly as
+// normal practice. A mode/target must never rotate or replace those seven slots.
+function game_choice_quality(d) (
+  game_count==4 ? (d==6 ? 7 : d==4 ? 6 : d==0 || d==3 ? 4 : 5) :
+    (d==6 ? 2 : d==1 || d==2 || d==5 ? 1 : 0);
+);
 function game_choice_degree() local(i,result) (
-  result=0; i=0;
-  // Spelling also places borrowed/altered chords whose engine degree is absent.
-  loop(7,game_scale_letters[i]==game_root_letter ? result=i; i+=1;); result;
+  result=-1; i=0;
+  loop(7,
+    game_root==(game_signature+major_step(i))%12 &&
+      game_root_letter==(key_letter(game_signature)+i)%7 &&
+      game_quality==game_choice_quality(i) ? result=i;
+    i+=1;
+  ); result;
 );
 function game_roman(dest,d,minor,quality) (
   d==0 ? strcpy(dest,minor ? "i" : "I") : d==1 ? strcpy(dest,minor ? "ii" : "II") :
@@ -140,28 +150,18 @@ function game_roman(dest,d,minor,quality) (
   quality==2 || quality==8 || quality==12 ? strcat(dest,"°") :
   quality==7 ? strcat(dest,"ø") : quality==3 || quality==10 || quality==11 ? strcat(dest,"+");
 );
-function game_choice_text(d) local(third,fifth,seventh,quality,minor,delta) (
+function game_choice_text(d) local(quality,minor) (
+  quality=game_choice_quality(d);
+  minor=quality==1 || quality==2 || quality==5 || quality==7;
+  game_roman(#groman,d,minor,quality);
   d==game_choice_degree() ? (
     game_chord_text(); strcpy(#gchord,#text);
-    minor=game_quality==1 || game_quality==2 || game_quality==5 || game_quality==7 ||
-      game_quality==8 || game_quality==9 || game_quality==12;
-    game_roman(#groman,d,minor,game_quality);
-    delta=(game_root-game_scale[d]+18)%12-6; strcpy(#alter,"");
-    loop(abs(delta),strcat(#alter,delta<0 ? "b" : "#"););
-    sprintf(#text,"%s%s %s",#alter,#groman,#gchord);
+    sprintf(#text,"%s %s",#groman,#gchord);
   ) : (
-    third=(game_scale[(d+2)%7]-game_scale[d]+12)%12;
-    fifth=(game_scale[(d+4)%7]-game_scale[d]+12)%12;
-    quality=fifth==6 ? 2 : fifth==8 ? 3 : third==3 ? 1 : 0;
-    game_count==4 ? (
-      seventh=(game_scale[(d+6)%7]-game_scale[d]+12)%12;
-      quality=fifth==6 ? (seventh==9 ? 8 : 7) : third==3 ? 5 : seventh==10 ? 6 : 4;
-    );
-    game_roman(#groman,d,third==3,quality);
-    game_spell(#groot,game_scale[d],game_scale_letters[d]);
-    strcpy(#gquality,quality==2 ? "dim" : quality==3 ? "aug" : quality==1 ? "m" :
-      quality==4 ? "maj7" : quality==5 ? "m7" : quality==6 ? "7" : quality==7 ? "m7b5" : quality==8 ? "dim7" : "");
-    // Unscheduled chords are scale context, not invented future voicings.
+    spell_note(#groot,game_signature,d);
+    strcpy(#gquality,quality==2 ? "dim" : quality==1 ? "m" :
+      quality==4 ? "maj7" : quality==5 ? "m7" : quality==6 ? "7" : quality==7 ? "m7b5" : "");
+    // Unscheduled chords are fixed scale context, not future voicings.
     sprintf(#text,"%s %s%s",#groman,#groot,#gquality);
   );
 );

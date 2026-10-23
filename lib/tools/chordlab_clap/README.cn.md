@@ -672,3 +672,25 @@ REAPER synth.rpp 与 Guitar Frontend binary 的哈希保持不变。
 - 所有临时接近和转调桥接（`kind=1/2`）都使用灰胶囊+目标相对级数色点，即使完全调内也不整颗上色；已完成保持黑底空心。真实到达/目标保持原配色。修正 F major 预览夹具漏标过渡的示例，并补充真实 Rust bridge/pivot 的目标相对色点测试。
 
 - 最终部署验收：Library 已保存并在 Workspace 2 重载 0.3.7（SHA-256 `1efee0fae0328be388a538bb21b993c60a6138f767259e0844dbf12125b3f321`）；普通模式打开后 S/A 双绿，游戏展开后圆角/灰色/对齐正确，当前停在 Pause（按钮为 Resume），未启动 DAW 录音。真实界面截图：`target/game-spacing-20261023/live-final.png`。本轮不声称重新验收实体乐器音频。
+
+## 固定大调显示与真实大小调进行（2026-10-23，0.3.8）
+
+- 显示层与和声层独立：同一组关系大小调共用大调级数与颜色。左侧始终按 `vi、vii、I、ii、iii、IV、V` 排列（蓝蓝红绿绿黄黄），不再按小调音阶数组重复索引。右侧普通目标胶囊同步用关系大调级数；实际调名仍明确显示 `major/minor`。临时接近与转调桥仍是灰胶囊、相对目标级数和色点。
+- 左侧选中要求根音音高、拼写及完整和弦性质匹配。调外和弦不替换任何调内胶囊，也不点亮同名字母的错误槽位；正确答题音、高亮、计分及 Demo 不受此限制。
+- 底层固定数字循环仍按实际调式构造和弦。例如 A minor 的 `1→3→1` 生成 `Am7→Cmaj7→Am7`，显示为 `vi→I→vi`，不是按 C major 生成题目。`Target.degree`、覆盖门槛与 `(tonic, minor)` 训练身份仍按实际调式。
+- 原引擎已支持 12 大调＋12 小调；本次不修改随机转调概率、音高/转位或计分算法。`dominant/shared_chord/diminished` 各模拟 4,800 题，均观察到大小调双向转换和同类转换；所有转换均满足七级成功覆盖。不是每对调都支持每种路线：共同七和弦/减七枢纽仍必须满足可达条件。
+- 验证：1,310 项相关 pytest、12 项 CTest、根 crate 与 game crate 的 `cargo test`/`cargo clippy --all-targets -- -D warnings`；24 调×7 目标×3 窗宽实际 JSFX 像素检查，含调外和弦无选中。隔离插件 F# minor 实例左右均显示蓝色 `vi F#m7`；注入 MIDI 得 69 分，Demo `+69` 后下一题清除提示。普通模式沿用原有交互与 voicing 记忆。
+- 证据：`target/game-fixed-left-20261023/`；`tests/mode_practice.rs`、`chordlab_game/presentation_tests.rs` 与 `chord_choices_probe.jsfx` 为长期回归。截图 `minor-tonic.png` 来自真实 CLAP 的无声隔离宿主，不是 Bitwig 现场截图。
+- 已安装至 Storage 的 `.clap` 入口，SHA-256 `08ec9f61167afb66433379f6acaf649ea8337c0171bd654fe44e2d0dde236255`；旧 0.3.7 与原磁盘工程备份：`~/storage/daw/Backups/chordlab-fixed-major-20261023/`。用户已批准保存重载，但操作时无 Bitwig 进程/真实 Sway 会话，因此没有伪造一次工程保存或重载，Library 原文件未改，下次启动加载新版。10 项 Storage 链接检查通过；本轮没有实体声音验收，没有启动录音。
+
+## 游戏设置胶囊化（2026-10-23，0.3.9）
+
+- 右下角 `Play 10 s / Demo 2 s / Mod 50 %` 并成一行。Start/Restart、Pause/Resume、数值、音区方向下拉框、Approach 开关及下拉菜单项全部使用胶囊。控件高度直接复用和弦胶囊 `29−2×3=23 px`，圆角为半高，字体同步左侧实际拟合字号；宽度按一行两项/三项或整行分配。
+- 设置区域由控件主题尺寸派生为 134 px，底部对齐，中间留白增加。密集和弦预览得到更大区域；尺寸测量、绘制及滚动边界使用同一个设置区高度。
+- LookAndFeel 只属于 GamePanel，不修改全局或普通模式。关闭游戏同时关闭残留下拉菜单。滚轮步长、范围、反向滚动、重开才生效的参数、计分和和声逻辑均不变。
+- 字体使用 JUCE 实际可用的系统 sans face，游戏胶囊与设置共用。当前系统没有 DejaVu Sans，直接以该缺失字体请求 point-height 在 JUCE 默认按钮布局中会得到空 Typeface；隔离测试发现并改为真实系统字体，避免在绘制按钮时崩溃。
+- 回归增加 3 种宽度×3 种高度：全部控件等高、不越界、不重叠；三个数值同一行；最大 `120 s/10 s/100 %` 不压缩文字；四角透明、字体一致、滚轮边界、下拉与开关状态正确。证据目录 `target/game-capsule-controls-20261023/`。
+
+- 最终修正：倒计时空轨直接沿用面板背景，不再绘制异色底线；菜单在 GamePanel 内弹出并使用透明圆角，不依赖 X11 顶层透明支持，不越出插件。实窗截图确认没有白色菜单角。
+- 最终验证：1,360 项相关 pytest、Chord Lab 12 项 CTest、Guitar Frontend 2 项 CTest、实际安装 CLAP ABI/状态/延音/输入探针通过；Rust 根 crate 与 game crate test/clippy 通过。180 题生产引擎模拟包括 56 个接近、7 次转调、16 次超时，双方计分正确；与 HEAD 的正常模式 MIDI 逐字节对照通过。隔离实窗注入分解 MIDI 后 Piano +26、Guitar +74，Demo 后仅保留累计分。
+- 已安装 0.3.9，SHA-256 `0ca1b9a9f91cff90307f49c987f5aa04d9aeac365a1c48c1c8054d6fb3e4973a`；旧 0.3.8 和工程磁盘备份在 `~/storage/daw/Backups/chordlab-capsule-controls-20261023/`。真实 Bitwig 已在 Workspace 2 打开 Library；Keystation USB 已识别，但 Spark GO 未出现在 USB/ALSA/PipeWire，Bitwig 显示 `No Output Device Present`，音频引擎未启动。**实体键盘、吉他、扬声器及真实宿主的运行验收仍待 USB 音频连接恢复，不能以隔离测试替代。** 未启用录音，未改音频设备配置，未新增 scene；本轮未保存工程、未 commit/push。

@@ -40,9 +40,19 @@ pub fn capsule(event: &ChordEvent, resolution: &ChordEvent) -> (String, i32) {
         local.key.mode = utrp::theory::key::Mode::Ionian;
         degree(&local)
     } else {
-        degree(event)
+        fixed_degree(event)
     };
     (format!("{roman} {}", event.chord.symbol()), role)
+}
+
+/// Capsule memory uses the relative major; engine degrees remain mode-relative.
+pub fn fixed_degree(event: &ChordEvent) -> String {
+    let mut display = event.clone();
+    if display.key.mode == utrp::theory::key::Mode::Aeolian {
+        display.key.tonic = display.key.tonic.transpose(3, 2);
+        display.key.mode = utrp::theory::key::Mode::Ionian;
+    }
+    degree(&display)
 }
 
 pub fn degree(event: &ChordEvent) -> String {

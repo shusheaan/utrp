@@ -5,12 +5,13 @@
 
 GamePanel::GamePanel(GameControl& c) : control(c)
 {
+    setLookAndFeel(&controlsLook);
     for (auto* b:{&startButton,&pauseButton}) { addAndMakeVisible(b); b->setWantsKeyboardFocus(false); }
     for (auto* s:{&limit,&demo,&modulation}) {
         addAndMakeVisible(s);
         s->onValueChange=[this]{if(returnFocus) returnFocus();};
     }
-    limit.setName("Play"); demo.setName("Demo"); modulation.setName("Modulation chance");
+    limit.setName("Play"); demo.setName("Demo"); modulation.setName("Mod");
     limit.setTextValueSuffix(" s"); demo.setTextValueSuffix(" s");
     limit.setTooltip("Hover and scroll: 1 second per step. Applies to the next chord.");
     demo.setTooltip("Hover and scroll: 1 second per step. Applies to the next chord.");
@@ -18,7 +19,7 @@ GamePanel::GamePanel(GameControl& c) : control(c)
     demo.setRange(1,10,1); demo.setValue(gameSettings::demoSeconds);
     modulation.setRange(0,100,5); modulation.setValue(gameSettings::modulationPercent);
     modulation.setTextValueSuffix(" %");
-    direction.addItemList({"Mixed", "Hold", "Rise", "Fall"},1); direction.setSelectedId(1);
+    direction.addItemList({"Register: Mixed", "Register: Hold", "Register: Rise", "Register: Fall"},1); direction.setSelectedId(1);
     direction.setWantsKeyboardFocus(false); addAndMakeVisible(direction);
     direction.onChange=[this]{if(returnFocus) returnFocus();};
     approaches.setToggleState(true,juce::dontSendNotification); approaches.setWantsKeyboardFocus(false);
@@ -29,7 +30,15 @@ GamePanel::GamePanel(GameControl& c) : control(c)
     startButton.onClick=[this]{start(); if(returnFocus) returnFocus();};
     pauseButton.onClick=[this]{ if(running && !control.send({4})) error="Pause queue full"; if(returnFocus) returnFocus(); };
 }
-GamePanel::~GamePanel() { deactivate(); }
+GamePanel::~GamePanel() { deactivate(); setLookAndFeel(nullptr); }
+void GamePanel::setCapsuleStyle(GameCapsuleStyle style)
+{
+    capsuleStyle=style;
+    if(controlsLook.fontHeight==style.fontHeight) return;
+    controlsLook.fontHeight=style.fontHeight;
+    for(auto* value:{&limit,&demo,&modulation}) value->fontHeight=style.fontHeight;
+    sendLookAndFeelChange(); repaint();
+}
 bool GamePanel::activate()
 {
     active=control.send({1}); running=false; pending=false; replaying=false; trail.clear(); status={}; error.clear();
@@ -39,6 +48,7 @@ bool GamePanel::activate()
 }
 void GamePanel::deactivate()
 {
+    direction.hidePopup();
     if(active) control.off();
     active=false; running=false; pending=false; replaying=false; preview.clear(); trail.clear();
     if(planner) chordlab_game_free(planner);
@@ -128,12 +138,17 @@ double GamePanel::progress() const
 }
 void GamePanel::resized()
 {
-    const int y=getHeight()-178, half=(getWidth()-36)/2, right=22+half;
-    startButton.setBounds(14,y+12,half,26); pauseButton.setBounds(right,y+12,half,26);
-    limit.setBounds(getWidth()-70,y+46,56,22); demo.setBounds(getWidth()-70,y+72,56,22);
-    modulation.setBounds(getWidth()-80,y+98,66,22);
-    direction.setBounds(right,y+126,half,22);
-    approaches.setBounds(14,y+155,getWidth()-28,16);
+    using namespace gameControls;
+    const int width=getWidth()-2*margin, half=(width-gap)/2;
+    int y=getHeight()-settingsHeight+2*gap;
+    startButton.setBounds(margin,y,half,height);
+    pauseButton.setBounds(margin+half+gap,y,width-half-gap,height);
+    y+=height+gap;
+    const int third=(width-2*gap)/3;
+    limit.setBounds(margin,y,third,height);demo.setBounds(margin+third+gap,y,third,height);
+    modulation.setBounds(margin+2*(third+gap),y,width-2*(third+gap),height);
+    y+=height+gap; direction.setBounds(margin,y,width,height);
+    y+=height+gap; approaches.setBounds(margin,y,width,height);
 }
 namespace {
 void panelText(juce::Graphics& g,const juce::String& text,juce::Rectangle<int> bounds,
@@ -154,27 +169,23 @@ void GamePanel::paint(juce::Graphics& g)
     outline.addRoundedRectangle(getLocalBounds().toFloat(),float(choice_height)/2);
     g.reduceClipRegion(outline);
     g.fillAll(juce::Colour(game_background));
-    const auto white=juce::Colour(game_text);
-    const int settings=getHeight()-178, right=22+(getWidth()-36)/2;
+    const int settings=getHeight()-gameControls::settingsHeight;
     paintGamePractice(g,{0,0,getWidth(),settings},running ? current : GameTarget{},
         preview,trail,status,replaying,capsuleStyle,practiceScroll);
     // Countdown belongs to this panel, never to the normal keyboard canvas.
-    g.setColour(juce::Colour(game_border)); g.fillRect(0,0,getWidth(),4);
+    // The unfilled countdown track is the panel itself, not a separate stripe.
     g.setColour(juce::Colour(game_reason));
     g.fillRect(0,0,int(std::round(getWidth()*progress())),4);
     g.setColour(juce::Colour(game_border)); g.drawHorizontalLine(settings-3,14,float(getWidth()-14));
-    panelText(g,"Play",{14,settings+46,120,22},11,white);
-    panelText(g,"Demo",{14,settings+72,120,22},11,white);
-    panelText(g,"Modulation chance",{14,settings+98,150,22},11,white);
-    panelText(g,"Register direction",{14,settings+126,right-20,22},11,white);
     if(error.isNotEmpty()) panelText(g,error,{14,230,getWidth()-28,70},14,juce::Colour(game_error),4);
 }
 
 void GamePanel::mouseWheelMove(const juce::MouseEvent& event,const juce::MouseWheelDetails& wheel)
 {
-    if(event.y>=getHeight()-178 || wheel.deltaY==0) return;
+    if(event.y>=getHeight()-gameControls::settingsHeight || wheel.deltaY==0) return;
     const auto rows=gamePracticeRows(current,preview,trail,replaying,status.winner);
-    const int maximum=std::max(0,gamePracticeHeight(rows,capsuleStyle,getHeight()-178)-(getHeight()-178));
+    const int available=getHeight()-gameControls::settingsHeight;
+    const int maximum=std::max(0,gamePracticeHeight(rows,capsuleStyle,available)-available);
     practiceScroll=std::clamp(practiceScroll+(wheel.deltaY>0 ? -27 : 27),0,maximum);
     repaint();
 }

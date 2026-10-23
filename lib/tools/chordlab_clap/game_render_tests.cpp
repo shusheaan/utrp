@@ -49,9 +49,54 @@ bool wheelControls(GamePanel& panel)
     return count==3;
 }
 
+bool capsuleControls(GamePanel& panel)
+{
+    std::vector<juce::Rectangle<int>> bounds;
+    std::vector<juce::Rectangle<int>> numeric;
+    int buttons=0, menus=0, toggles=0;
+    for(auto* child:panel.getChildren()) {
+        const auto area=child->getBounds();
+        if(area.getHeight()!=gameControls::height || !panel.getLocalBounds().contains(area)) return false;
+        for(const auto& previous:bounds) if(previous.intersects(area)) return false;
+        bounds.push_back(area);
+        const auto image=child->createComponentSnapshot(child->getLocalBounds());
+        for(auto point:{juce::Point<int>{0,0},{area.getWidth()-1,0},
+                        {0,area.getHeight()-1},{area.getWidth()-1,area.getHeight()-1}})
+            if(image.getPixelAt(point.x,point.y).getAlpha()!=0) return false;
+        if(auto* value=dynamic_cast<GameWheelValue*>(child)) {
+            numeric.push_back(area);
+            if(value->fontHeight!=10) return false;
+            const auto previous=value->getValue();value->setValue(value->getMaximum());
+            juce::GlyphArrangement glyphs;
+            glyphs.addLineOfText(gameControls::font(10),value->getName()+" "+value->getTextFromValue(value->getValue()),0,0);
+            if(glyphs.getBoundingBox(0,-1,true).getWidth()>float(area.getWidth()-10)) return false;
+            value->setValue(previous);
+        }
+        if(auto* button=dynamic_cast<juce::TextButton*>(child)) {
+            ++buttons;
+            if(button->getLookAndFeel().getTextButtonFont(*button,area.getHeight())!=gameControls::font(10)) return false;
+        }
+        if(auto* combo=dynamic_cast<juce::ComboBox*>(child)) {
+            ++menus;
+            if(combo->getNumItems()!=4 || combo->getLookAndFeel().getComboBoxFont(*combo)!=gameControls::font(10)) return false;
+            const auto previous=combo->getSelectedId();combo->setSelectedId(4,juce::sendNotificationSync);
+            if(combo->getSelectedId()!=4) return false;
+            combo->setSelectedId(previous,juce::sendNotificationSync);
+        }
+        if(auto* toggle=dynamic_cast<juce::ToggleButton*>(child)) {
+            ++toggles;
+            const bool previous=toggle->getToggleState();toggle->setToggleState(!previous,juce::sendNotificationSync);
+            if(toggle->getToggleState()==previous) return false;
+            toggle->setToggleState(previous,juce::sendNotificationSync);
+        }
+    }
+    return buttons==2 && menus==1 && toggles==1 && numeric.size()==3 &&
+        numeric[0].getY()==numeric[1].getY() && numeric[1].getY()==numeric[2].getY();
+}
+
 bool densePreview(const juce::File& output,const GameCapsuleStyle& style,bool exportImages)
 {
-    constexpr int width=278, height=663, practice=height-178;
+    constexpr int width=278, height=663, practice=height-gameControls::settingsHeight;
     for(int keyCount:{2,3}) {
         std::deque<GameTarget> events;
         for(unsigned group=1;group<=3;++group) for(unsigned step=0;step<3;++step) {
@@ -100,6 +145,17 @@ bool densePreview(const juce::File& output,const GameCapsuleStyle& style,bool ex
 int main(int argc,char** argv)
 {
     juce::ScopedJuceInitialiser_GUI gui;
+    GameCapsuleLookAndFeel look;
+    if(gameControls::font(10).getTypefacePtr()==nullptr) return 20;
+    if(look.findColour(juce::PopupMenu::backgroundColourId).isOpaque()) return 21;
+    juce::Component menuParent,menuTarget,menuWindow;
+    menuParent.addChildComponent(menuTarget);
+    if(look.getParentComponentForMenuOptions(juce::PopupMenu::Options{}.withTargetComponent(&menuTarget))!=&menuParent) return 23;
+    menuWindow.setOpaque(true);look.preparePopupMenuWindow(menuWindow);
+    if(menuWindow.isOpaque()) return 24;
+    juce::Image popup(juce::Image::ARGB,250,120,true);juce::Graphics popupGraphics(popup);
+    look.drawPopupMenuBackground(popupGraphics,250,120);
+    if(popup.getPixelAt(0,0).getAlpha()!=0 || popup.getPixelAt(125,60).getAlpha()!=255) return 22;
     const int width=gameSettings::panelWidth;
     GameControl control;
     GamePanel panel(control);
@@ -107,6 +163,13 @@ int main(int argc,char** argv)
     const auto style=gameCapsuleStyle(884,width,10);
     panel.setCapsuleStyle(style);
     if(style.keyWidth!=57 || style.chordWidth!=115) return 9;
+    for(int w:{278,320,480}) for(int h:{520,663,1180}) {
+        panel.setSize(w,h);
+        if(!capsuleControls(panel)) return 18;
+    }
+    panel.setSize(width,663);
+    if(argc==2 && !writeImage(panel.createComponentSnapshot(panel.getLocalBounds()),
+        juce::File(argv[1]),"capsule-settings.png")) return 19;
     if(!densePreview(argc==2 ? juce::File(argv[1]) : juce::File{},style,argc==2)) return 17;
     auto previous=target(1,3,1,1,"C ionian","ii Am7","C4(b3)");
     auto current=target(2,3,1,2,"C ionian","V D7","C4(b7)");
@@ -146,7 +209,7 @@ int main(int argc,char** argv)
         for(auto point:{juce::Point<int>{0,0},{width-1,0},{0,height-1},{width-1,height-1}})
             if(idle.getPixelAt(point.x,point.y).getAlpha()!=0) return 15;
         if(idle.getPixelAt(0,height/2)!=juce::Colour(chordlabStyle::game_background)) return 16;
-        if(idle.getPixelAt(width/2,1)!=juce::Colour(chordlabStyle::game_border) ||
+        if(idle.getPixelAt(width/2,1)!=juce::Colour(chordlabStyle::game_background) ||
            idle.getPixelAt(width/2,4)!=juce::Colour(chordlabStyle::game_background)) return 10;
         for(int outcome:{0,1,2,3}) {
             GameStatus s{};s.phase=outcome ? 3 : 2;s.remaining=outcome ? 1.8 : 8.6;
@@ -155,8 +218,8 @@ int main(int argc,char** argv)
             juce::Image image=panel.createComponentSnapshot(panel.getLocalBounds());
             juce::Graphics g(image);
             juce::Path panelOutline;panelOutline.addRoundedRectangle(image.getBounds().toFloat(),float(chordlabStyle::choice_height)/2);
-            g.reduceClipRegion(panelOutline);g.setColour(juce::Colour(chordlabStyle::game_background));g.fillRect(0,4,width,height-182);
-            paintGamePractice(g,{0,0,width,height-178},current,preview,trail,s,replaying,style);
+            g.reduceClipRegion(panelOutline);g.setColour(juce::Colour(chordlabStyle::game_background));g.fillRect(0,4,width,height-gameControls::settingsHeight-4);
+            paintGamePractice(g,{0,0,width,height-gameControls::settingsHeight},current,preview,trail,s,replaying,style);
             const int start=24;
             if(height>=663 && (image.getPixelAt(20,103)!=juce::Colour(chordlabStyle::choice_button_selected) ||
                image.getPixelAt(20,278)!=juce::Colours::white ||
@@ -182,7 +245,7 @@ int main(int argc,char** argv)
                                "Modulate: destination V7","Arrival: same tonic, new mode"}) {
             std::snprintf(unicode.action,sizeof unicode.action,"%s",method);
             std::snprintf(unicode.reason,sizeof unicode.reason,"Shared chord: old 2 = new 6; then V7 -> tonic");
-            paintGamePractice(g,{0,0,width,height-178},unicode,full,{},paused,true,style);
+            paintGamePractice(g,{0,0,width,height-gameControls::settingsHeight},unicode,full,{},paused,true,style);
         }
     }
     std::cout<<"Single-column stairs, shared capsule metrics, gray approaches, gray/white keys, retained trail, wheel controls/bounds, UTF-8, 3 heights: PASS\n";

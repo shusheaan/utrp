@@ -234,7 +234,7 @@ function chord_choice_selected(d) (
 );
 function chord_choice_role(d) (
   // Fixed to the selected major signature, never rebase on a minor tonic/chord.
-  scale_role(game_on && game_count>0 ? game_scale[d] : (key+major_step(d))%12,display_key());
+  scale_role((display_key()+major_step(d))%12,display_key());
 );
 // Fit once for BOTH rows, never resize only one label or the selected label.
 function measure_choice_text() local(i,tw,th,fit,w) (

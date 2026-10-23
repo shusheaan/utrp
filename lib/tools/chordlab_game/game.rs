@@ -404,7 +404,7 @@ fn fill_labels(out: &mut Target, event: &ChordEvent, resolution: &ChordEvent, ba
         &mut out.label,
         &format!(
             "{} {}/{}{octave}({})",
-            labels::degree(event),
+            labels::fixed_degree(event),
             event.chord.symbol(),
             bass.name,
             event.chord.degree_label(out.roles[0] as usize)
