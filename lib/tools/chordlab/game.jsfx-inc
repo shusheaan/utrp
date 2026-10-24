@@ -14,18 +14,20 @@ game_sl0=game_sl1=game_sl2=game_sl3=game_sl4=game_sl5=game_sl6=0;
 game_count=0; game_id=-1; game_limit=10; game_demo_seconds=2;
 game_signature=0; game_tonic=0; game_minor=0; game_root=0; game_root_letter=0;
 game_quality=0; game_degree=0; game_demo_active=0; game_remaining=0;
-game_winner=0; game_award=0;
+game_winner=0; game_award=0; game_answer_start=0; game_pause_clock=0;
 function game_demo_off(offset) local(i) (
   game_demo_active ? (
     i=0; loop(game_count,midisend(offset,$x8f,game_notes[i],0); i+=1;);
     midisend(offset,$xbf,64,0); game_demo_active=0;
   );
 );
-function game_reveal(offset,winner) local(i,remaining) (
+// Original Rust 872294a: integer-second quartic curve, independent of Play limit.
+function game_speed_award(seconds) (max(0,8-floor(max(0,seconds)))^4;);
+function game_reveal(offset,winner) local(i,elapsed) (
   game_winner=winner; game_award=0;
   winner ? (
-    remaining=max(0,game_deadline-game_clock-offset);
-    game_award=max(1,min(100,ceil(100*remaining/(game_limit*srate))));
+    elapsed=(game_clock+offset-game_answer_start)/srate;
+    game_award=game_speed_award(elapsed);
     winner==1 ? game_piano_score+=game_award : game_guitar_score+=game_award;
   ) : game_timeouts+=1;
   game_phase=3; game_deadline=game_clock+offset+game_demo_seconds*srate;
@@ -61,13 +63,14 @@ function game_apply() (
     game_scale[0]=game_s0; game_scale[1]=game_s1; game_scale[2]=game_s2; game_scale[3]=game_s3; game_scale[4]=game_s4; game_scale[5]=game_s5; game_scale[6]=game_s6;
     game_scale_letters[0]=game_sl0; game_scale_letters[1]=game_sl1; game_scale_letters[2]=game_sl2; game_scale_letters[3]=game_sl3; game_scale_letters[4]=game_sl4; game_scale_letters[5]=game_sl5; game_scale_letters[6]=game_sl6;
     memset(game_seen,0,384); game_piano_hits=0; game_guitar_hits=0; game_winner=0; game_award=0;
-    game_phase=2; game_deadline=game_clock+game_limit*srate;
+    game_phase=2; game_answer_start=game_clock; game_deadline=game_clock+game_limit*srate;
   ) : game_action==4 && game_on ? (
     game_phase==5 ? (
       game_phase=game_paused_phase; game_deadline=game_clock+game_pause_remaining;
+      game_phase==2 ? game_answer_start+=game_clock-game_pause_clock;
       // A paused demonstration stays revealed but does not replay audio.
     ) : (game_phase==2 || game_phase==3) ? (
-      game_paused_phase=game_phase; game_pause_remaining=max(0,game_deadline-game_clock);
+      game_pause_clock=game_clock; game_paused_phase=game_phase; game_pause_remaining=max(0,game_deadline-game_clock);
       game_demo_off(0); game_phase=5;
     );
   );
@@ -94,7 +97,10 @@ function game_receive(offset,status,note,value) local(ch,type,i,found,board) (
 function display_key() (game_on && game_count>0 ? game_signature : key;);
 function game_visible(note) (!game_on || (game_count>0 && game_seen[note]>0););
 function display_role(note,scale_view) local(i,result) (
-  !game_on ? diagram_role(note%12,key,degree,voice_count,scale_view) : (
+  !game_on ? (
+    result=diagram_role(note%12,key,degree,voice_count,scale_view);
+    !scale_view && result==0 && rootless_saved[degree] ? -1 : result;
+  ) : (
     result=-1; i=0;
     scale_view ? result=scale_role(note%12,display_key()) :
       loop(game_count,game_notes[i]==note ? result=game_roles[i]; i+=1;);

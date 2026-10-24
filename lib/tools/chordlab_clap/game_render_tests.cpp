@@ -200,7 +200,9 @@ int main(int argc,char** argv)
             if(gameAwardText(status,instrument,replaying) !=
                 (replaying && winner==instrument ? "+86" : "")) return 13;
         status.award=0;
-        if(gameAwardText(status,winner,true).isNotEmpty()) return 14;
+        if(gameAwardText(status,winner,true)!=(winner ? "+0" : "")) return 14;
+        status.award=4096;
+        if(winner && gameAwardText(status,winner,true)!="+4096") return 15;
     }
     for(int height:{520,663,1180}) {
         panel.setSize(width,height);
@@ -213,7 +215,7 @@ int main(int argc,char** argv)
            idle.getPixelAt(width/2,4)!=juce::Colour(chordlabStyle::game_background)) return 10;
         for(int outcome:{0,1,2,3}) {
             GameStatus s{};s.phase=outcome ? 3 : 2;s.remaining=outcome ? 1.8 : 8.6;
-            s.winner=outcome==1 ? 1 : outcome==3 ? 2 : 0;s.award=86;s.pianoScore=240;s.guitarScore=180;
+            s.winner=outcome==1 ? 1 : outcome==3 ? 2 : 0;s.award=4096;s.pianoScore=240100;s.guitarScore=180000;
             const bool replaying=outcome!=0;
             juce::Image image=panel.createComponentSnapshot(panel.getLocalBounds());
             juce::Graphics g(image);

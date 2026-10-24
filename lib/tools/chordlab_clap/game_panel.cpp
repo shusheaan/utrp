@@ -13,7 +13,7 @@ GamePanel::GamePanel(GameControl& c) : control(c)
     }
     limit.setName("Play"); demo.setName("Demo"); modulation.setName("Mod");
     limit.setTextValueSuffix(" s"); demo.setTextValueSuffix(" s");
-    limit.setTooltip("Hover and scroll: 1 second per step. Applies to the next chord.");
+    limit.setTooltip("Hover and scroll: 1 second per step. Applies to the next chord. Scoring keeps the original fixed 8-second curve.");
     demo.setTooltip("Hover and scroll: 1 second per step. Applies to the next chord.");
     limit.setRange(1,120,1); limit.setValue(gameSettings::answerSeconds);
     demo.setRange(1,10,1); demo.setValue(gameSettings::demoSeconds);

@@ -26,3 +26,5 @@
 32 22
 9 25
 13 21
+; G: current chord root/rootless; unrelated to the game UI button.
+71 30

@@ -1,3 +1,26 @@
+## 0.3.12: original speed scoring and rooted Enter reset (2026-10-24)
+
+This section supersedes the historical linear 1–100 scoring below. The earliest Rust commit `872294a`, `src/app.rs` MIDI chord-match branch, awards `max(0, 8 - floor(active answering seconds))^4`. This is a whole-second quartic staircase, not an exponential or the current terminal simulator's completion percentage.
+
+| Active seconds | Award |
+| --- | --- |
+| [0, 1) | 4096 |
+| [1, 2) | 2401 |
+| [2, 3) | 1296 |
+| [3, 4) | 625 |
+| [4, 5) | 256 |
+| [5, 6) | 81 |
+| [6, 7) | 16 |
+| [7, 8) | 1 |
+| >= 8 | 0 |
+
+- Play remains wheel-adjustable from 1–120 seconds, effective next target. It controls the deadline only, never the score curve. Pauses are excluded; demonstration time is not charged to the next target.
+- The first instrument to collect all target notes independently wins; piano/guitar totals remain separate. With a longer deadline, success after eight seconds still completes/reveals/replays and displays `+0`. A timeout has no winner or award label. An event exactly at the deadline is too late.
+- In normal mode Enter restores the current chord rooted (clears `RL`), resets its current mode position, and preserves type, other degrees, and the other mode's position. Rootless remains shared by both modes for that degree. During games Enter still cannot alter normal memory.
+- No new parameters, v4 format changes, routing changes, harmony-planner changes, panel dimension changes or normal-mode palette changes. Score boxes reserve space for four-digit awards and larger totals.
+
+See the README header for validation/deployment status; evidence: `target/scoring-20261024/`.
+
 # Chord Race: Bitwig game mode
 
 [中文](GAME.cn.md) · [Normal mode and deployment history](README.md)

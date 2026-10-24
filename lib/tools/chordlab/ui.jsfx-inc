@@ -215,15 +215,16 @@ function normal_chord_choice_text(d) local(index,bass) (
   d==0 ? strcpy(#roman,"I") : d==1 ? strcpy(#roman,"ii") : d==2 ? strcpy(#roman,"iii") :
   d==3 ? strcpy(#roman,"IV") : d==4 ? strcpy(#roman,"V") : d==5 ? strcpy(#roman,"vi") :
   strcpy(#roman,index[1]==0 ? "vii°" : "viiø");
-  bass=chord_note(key,d,index[2],0,index[3],3+index[1]);
+  bass=piano_bass(key,d,index[2],index[3],3+index[1],rootless_saved[d]);
   voicing_mode ? (
-    bass=guitar_bass(guitar_region_record(key,d,index[1],guitar_saved[d]));
+    bass=guitar_filtered_bass(guitar_region_record(key,d,index[1],guitar_saved[d]),key,d,rootless_saved[d]);
     spell_pitch(#bass,key,bass);
-  ) : spell_note(#bass,key,d+voice_role(index[2],3+index[1])*2);
+  ) : spell_pitch(#bass,key,bass);
   spell_note(#root,key,d); chord_quality(#quality,d,index[1]);
   index[1]==0 && strcmp(#quality,"M")==0 ? strcpy(#quality,"");
   chord_tone_label(#bass_role,bass%12,(key+major_step(d))%12,chord_role(bass%12,key,d,3+index[1]));
   sprintf(#text,"%s %s%s/%s%d(%s)",#roman,#root,#quality,#bass,floor(written_step(key,bass)/7),#bass_role);
+  rootless_saved[d] ? strcat(#text," RL");
   index[0] ? strcat(#text," *");
 );
 function chord_choice_text(d) (

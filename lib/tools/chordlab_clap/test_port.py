@@ -131,7 +131,8 @@ def test_one_hand_mapping() -> None:
     assert mapping[32] == 22  # Space: Sustain toggle, no longer reset
     assert mapping[13] == 21  # Enter: current chord/current mode only
     assert mapping[9] == 25   # Tab: chord type remains
-    assert not {27, 71, 86, 59}.intersection(mapping)  # G/V/semicolon retired
+    assert mapping[71] == 30  # G: per-chord rootless, not game mode
+    assert not {27, 86, 59}.intersection(mapping)  # Esc/V/semicolon retired
     assert tuple(mapping[key] for key in (90, 88, 67, 65, 83, 68, 70)) == tuple(range(12, 19))
 
 

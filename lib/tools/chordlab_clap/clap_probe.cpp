@@ -587,6 +587,55 @@ void sustain_press_toggle(const clap_plugin_t* p)
     audio.join(); p->deactivate(p); if (failure) std::rethrow_exception(failure);
     std::cout << "Space command: toggle on press, no repeat/release toggle, no chord reset: PASS\n";
 }
+void rootless_notes(const clap_plugin_t* p, bool toggle)
+{
+    require(p->activate(p,48000,256,256),"Rootless activate");
+    std::exception_ptr failure;
+    std::thread audio([&] { try {
+        require(p->start_processing(p),"Rootless start processing");
+        std::array<bool,128> sounding{};
+        const auto process=[&](Events& events) {
+            clap_process_t block{};block.frames_count=256;block.steady_time=-1;
+            block.in_events=&events.in;block.out_events=&events.out;
+            require(p->process(p,&block)!=CLAP_PROCESS_ERROR,"Rootless block");
+            for(const auto& e:events.output) {
+                require((e.data[0]&15)!=15,"G command cannot leak to instrument");
+                if((e.data[0]&0xf0)==0x90)sounding[e.data[1]]=e.data[2]!=0;
+                if((e.data[0]&0xf0)==0x80)sounding[e.data[1]]=false;
+            }
+        };
+        Events warmup;process(warmup);
+        Events attack;attack.midi(0,0x9f,74,100);process(attack);
+        if(toggle) {
+            require(sounding[60]&&sounding[64]&&sounding[67]&&sounding[71],"Fresh CLAP starts rooted");
+            Events g;g.midi(0,0x9f,90,100);g.midi(1,0x8f,90,0);process(g);
+        }
+        require(!sounding[60]&&sounding[64]&&sounding[67]&&sounding[71]&&
+                std::count(sounding.begin(),sounding.end(),true)==3,"CLAP G/rootless restore keeps exact E4 G4 B4");
+        Events enter;enter.midi(0,0x9f,81,100);enter.midi(1,0x8f,81,0);process(enter);
+        require(sounding[60]&&sounding[64]&&sounding[67]&&sounding[71]&&
+                std::count(sounding.begin(),sounding.end(),true)==4,"CLAP Enter restores rooted default voicing");
+        // Keep the saved state rootless for the cross-instance persistence test.
+        Events again;again.midi(0,0x9f,90,100);again.midi(1,0x8f,90,0);process(again);
+        require(!sounding[60]&&std::count(sounding.begin(),sounding.end(),true)==3,"G can re-enable RL after Enter");
+        Events release;release.midi(0,0x8f,74,0);process(release);
+        require(std::none_of(sounding.begin(),sounding.end(),[](bool v){return v;}),"Rootless releases all generated voices");
+        p->stop_processing(p);
+    } catch(...) { failure=std::current_exception(); } });
+    audio.join();p->deactivate(p);if(failure)std::rethrow_exception(failure);
+}
+void rootless_roundtrip(const clap_plugin_factory_t* factory,const clap_host_t* host,const char* id)
+{
+    auto* original=factory->create_plugin(factory,host,id);require(original&&original->init(original),"Rootless instance init");
+    rootless_notes(original,true);
+    State state;require(get<clap_plugin_state_t>(original,CLAP_EXT_STATE)->save(original,&state.out),"Save CLAP rootless state");
+    auto* restored=factory->create_plugin(factory,host,id);require(restored&&restored->init(restored),"Rootless restored instance init");
+    require(get<clap_plugin_state_t>(restored,CLAP_EXT_STATE)->load(restored,&state.in),"Load CLAP rootless state");
+    rootless_notes(restored,false);
+    restored->destroy(restored);original->destroy(original);
+    std::cout<<"CLAP G rootless / Enter rooted reset: exact notes, release, independent-instance save/load: PASS\n";
+}
+
 int main(int argc, char** argv)
 {
     try {
@@ -633,6 +682,7 @@ int main(int argc, char** argv)
                 && modeValue == 1, "Guitar mode restored in independent CLAP instance");
         startup_sustain(b); process_matrix(b);
         if (focusProbe) gui_focus_probe(b);
+        rootless_roundtrip(factory,&host,desc->id);
         b->destroy(b); a->destroy(a); entry->deinit(); dlclose(library);
         std::cout << "portable state, two independent instances, lifecycle: PASS\n"; return 0;
     } catch (const std::exception& e) { std::cerr << "FAIL: " << e.what() << '\n'; return 1; }

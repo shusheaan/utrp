@@ -3,6 +3,9 @@
 #include <algorithm>
 #include <array>
 #include <cstdio>
+#include <cstdlib>
+#include <cstring>
+#include <limits>
 #include <stdexcept>
 #include <set>
 #include <vector>
@@ -195,14 +198,16 @@ void current_chord_reset(ysfx_config_t* config, const char* path) {
             command(fx,notes,otherMode); command(fx,notes,19); const Notes otherVoicing=notes;
             command(fx,notes,mode);
             command(fx,notes,19); check(notes!=initial,"Move away from default before reset");
-            command(fx,notes,21); check(notes==initial,"Held reset restores exact default pitch set");
+            command(fx,notes,30); check(ysfx_read_vmem_single(fx,3200+(slot-72+5)%7)==1,"Enable RL before held reset");
+            command(fx,notes,21); check(notes==initial,"Held reset restores rooted default pitch set");
+            check(ysfx_read_vmem_single(fx,3200+(slot-72+5)%7)==0,"Enter clears current RL flag");
             command(fx,notes,otherMode); check(notes==otherVoicing,"Reset preserves other mode memory");
             command(fx,notes,mode); check(notes==initial,"Reset position recalled after mode switch");
             midi(fx,notes,0x8f,slot,0);
             const int other=72+(slot-72+1)%7;
-            midi(fx,notes,0x9f,other); command(fx,notes,19); const Notes otherChord=notes;
+            midi(fx,notes,0x9f,other); command(fx,notes,19); command(fx,notes,30); const Notes otherChord=notes;
             midi(fx,notes,0x8f,other,0);
-            midi(fx,notes,0x9f,slot); command(fx,notes,19); midi(fx,notes,0x8f,slot,0);
+            midi(fx,notes,0x9f,slot); command(fx,notes,19); command(fx,notes,30); midi(fx,notes,0x8f,slot,0);
             command(fx,notes,21); check(notes.empty(),"Idle reset does not audition");
             midi(fx,notes,0x9f,other); check(notes==otherChord,"Reset preserves other degree memory");
             midi(fx,notes,0x8f,other,0);
@@ -248,16 +253,130 @@ void display_only_notes(ysfx_config_t* config, const char* path) {
     check(ysfx_read_vmem_single(fx,14*128+50)==0,"Velocity-zero Note On releases display");
     ysfx_free(fx);
 }
+Notes without_root(const Notes& notes, int root) {
+    Notes result;
+    for (int note:notes) if (note%12!=root) result.insert(note);
+    return result;
+}
+void rootless_matrix(ysfx_config_t* config, const char* path) {
+    constexpr int steps[]{0,2,4,5,7,9,11};
+    auto* fx=load(config,path); Notes notes; process(fx,notes);
+    for (int key=0;key<12;++key) {
+        command(fx,notes,key);
+        for (int slot=72;slot<=78;++slot) {
+            midi(fx,notes,0x9f,slot);
+            const int degree=(slot-72+5)%7, root=(key+steps[degree])%12;
+            for (int kind=0;kind<3;++kind) {
+                while (ysfx_slider_get_value(fx,15)!=kind) command(fx,notes,25);
+                for (int mode:{28,29}) {
+                    command(fx,notes,mode); command(fx,notes,21);
+                    for (int inversion=0;inversion<3+kind;++inversion) {
+                        const Notes rooted=notes;
+                        // Holding G/repeated key-down must toggle exactly once.
+                        midi(fx,notes,0x9f,90);
+                        check(notes==without_root(rooted,root),"G removes only harmonic roots, preserving all other exact pitches");
+                        midi(fx,notes,0x9f,90);
+                        check(notes==without_root(rooted,root),"Held G is not a second toggle");
+                        midi(fx,notes,0x8f,90,0);
+                        command(fx,notes,30); check(notes==rooted,"G restores exact rooted pitches");
+                        command(fx,notes,20);
+                    }
+                }
+            }
+            midi(fx,notes,0x8f,slot,0); check(notes.empty(),"Rootless toggles leave no owned notes");
+        }
+    }
+    ysfx_free(fx);
+}
+void rootless_navigation(ysfx_config_t* config, const char* path) {
+    auto* fx=load(config,path); Notes notes; process(fx,notes);
+    midi(fx,notes,0x9f,74);
+    for (int kind=0;kind<3;++kind) {
+        while (ysfx_slider_get_value(fx,15)!=kind) command(fx,notes,25);
+        command(fx,notes,21); command(fx,notes,30);
+        for (int direction:{20,19}) for (int i=0;i<75;++i) {
+            const Notes before=notes; command(fx,notes,direction);
+            check(notes.size()==size_t(2+kind),"Rootless H/L preserves reduced voice count");
+            check(notes==without_root(notes,0),"H/L and Tab do not reintroduce roots");
+            if (notes!=before) check(direction==20 ? *notes.begin()>*before.begin() : *notes.begin()<*before.begin(),
+                                    "Rootless H/L strictly moves actual bass, or clamps at edge");
+        }
+    }
+    midi(fx,notes,0x8f,74,0); check(notes.empty(),"Release navigated rootless chord");
+    ysfx_free(fx);
+}
+void rootless_memory(ysfx_config_t* config, const char* path) {
+    auto* fx=load(config,path); Notes notes; process(fx,notes);
+    midi(fx,notes,0x9f,74); const Notes rooted=notes;
+    command(fx,notes,30); const Notes reduced=notes;
+    midi(fx,notes,0x8f,74,0);
+    midi(fx,notes,0x9f,75); check(notes.size()==4,"Another degree defaults rooted");
+    midi(fx,notes,0x8f,75,0);
+    midi(fx,notes,0x9f,74); check(notes==reduced,"Degree remembers rootless independently");
+    // Physical roots remain owned by hardware; G only filters generated chords.
+    const int root=*rooted.begin(); midi(fx,notes,0x90,root);
+    command(fx,notes,30); command(fx,notes,30);
+    check(notes.count(root)==1,"Rootless toggle never cuts a held hardware root");
+    midi(fx,notes,0x80,root,0); check(notes==reduced,"Physical root releases normally");
+    midi(fx,notes,0x8f,74,0);
+    auto* saved=ysfx_save_state(fx); check(saved!=nullptr,"Save rootless state");
+    auto* restored=load(config,path); check(ysfx_load_state(restored,saved),"Load rootless state");
+    process(restored,notes); check(notes.empty(),"Restore is silent");
+    midi(restored,notes,0x9f,74); check(notes==reduced,"Rootless survives independent instance restore");
+    midi(restored,notes,0x8f,74,0);
+    midi(restored,notes,0x9f,75); check(notes.size()==4,"Other degree remains rooted after restore");
+    midi(restored,notes,0x8f,75,0);
+    ysfx_state_free(saved); ysfx_free(restored); ysfx_free(fx);
+}
+
+void rootless_legacy(ysfx_config_t* config, const char* path) {
+    auto* fx=load(config,path); Notes notes; process(fx,notes);
+    midi(fx,notes,0x9f,74); const Notes rooted=notes;
+    command(fx,notes,30); midi(fx,notes,0x8f,74,0);
+    auto* saved=ysfx_save_state(fx); check(saved && saved->data_size==43*4,"v4 appends seven flags without changing v3 offsets");
+    const auto set_float=[](uint8_t* bytes,float value) { std::memcpy(bytes,&value,4); };
+    for(int version:{1,2,3}) {
+        auto* legacy=ysfx_state_dup(saved);
+        if(version==1) {
+            std::free(legacy->data); legacy->data_size=253*4;
+            legacy->data=static_cast<uint8_t*>(std::calloc(legacy->data_size,1));
+            check(legacy->data!=nullptr,"allocate v1 fixture");
+            for(int i=0;i<84;++i) {
+                set_float(legacy->data+4*(1+3*i),1);
+                set_float(legacy->data+4*(3+3*i),60);
+            }
+        } else legacy->data_size=(version==2 ? 29 : 36)*4;
+        set_float(legacy->data,float(version));
+        check(ysfx_load_state(fx,saved),"reload rootless before each legacy load"); process(fx,notes);
+        check(ysfx_load_state(fx,legacy),"load legacy into previously rootless instance"); process(fx,notes);
+        for(int d=0;d<7;++d) check(ysfx_read_vmem_single(fx,3200+d)==0,"legacy state clears every rootless flag");
+        midi(fx,notes,0x9f,74); check(notes==rooted,"legacy pitches remain rooted");
+        midi(fx,notes,0x8f,74,0); ysfx_state_free(legacy);
+    }
+    for(float invalid:{-1.f,2.f,0.5f,std::numeric_limits<float>::quiet_NaN()}) {
+        auto* malformed=ysfx_state_dup(saved); set_float(malformed->data+36*4,invalid);
+        check(ysfx_load_state(fx,malformed),"load malformed flag state"); process(fx,notes);
+        check(ysfx_read_vmem_single(fx,3200)==0,"invalid rootless values default rooted");
+        ysfx_state_free(malformed);
+    }
+    auto* truncated=ysfx_state_dup(saved); truncated->data_size=36*4;
+    check(ysfx_load_state(fx,saved),"prime rootless for truncation test"); process(fx,notes);
+    check(ysfx_load_state(fx,truncated),"truncated appended flags are safe"); process(fx,notes);
+    check(ysfx_read_vmem_single(fx,3200)==0,"missing appended flags default rooted");
+    ysfx_state_free(truncated); ysfx_state_free(saved); ysfx_free(fx);
+}
+
 int main(int argc,char** argv) {
     if (argc!=2) return 2;
     try {
         auto* config=ysfx_config_new();
         ysfx_set_log_reporter(config,[](intptr_t,ysfx_log_level,const char* s){std::fprintf(stderr,"%s\n",s);});
         auto* fx=load(config,argv[1]); Notes notes; process(fx,notes);
+        current_chord_reset(config,argv[1]);
+        rootless_matrix(config,argv[1]); rootless_navigation(config,argv[1]); rootless_memory(config,argv[1]); rootless_legacy(config,argv[1]);
         matrix(fx,notes); persistence(config,argv[1],fx,notes); mixed(fx,notes);
         upper_position_persistence(config,argv[1]);
         automatic_position_recall(config,argv[1]);
-        current_chord_reset(config,argv[1]);
         display_only_notes(config,argv[1]);
         open_position_persistence(config,argv[1]); expanded_voice_ownership(config,argv[1]);
         ysfx_free(fx); ysfx_config_free(config);

@@ -1,3 +1,26 @@
+## 0.3.12 deployed: rooted Enter reset and original scoring (2026-10-24)
+
+- Enter restores the current chord rooted and resets the current mode position, preserving other degrees and the other mode's position. G can enable RL again.
+- Game awards follow the earliest Rust `max(0, 8-floor(active seconds))^4`; Play timeout never enters the formula, pauses are excluded, and successful answers after eight seconds display `+0`. See [game rules](GAME.md).
+- Passed 1486 related Python tests, 12 CTests, root/game Rust tests and clippy, and actual CLAP G/Enter/cross-instance persistence. A 180-round simulation produced piano 42085, guitar 42084, 16 timeouts, 56 approaches and 7 modulations. Coverage includes three sample rates, six timeouts, samples around integer-second boundaries and repeated pauses.
+- Isolated Sway native G→L→Enter restored rooted notation and position. Both notation areas match initial pixels exactly; only the existing saved-position `*` is added to the capsule, with no RL. Real JUCE rendering verified six-digit totals and the complete `+4096` label. No physical listening acceptance is claimed.
+- **After user confirmation, saved Library, exited normally, installed 0.3.12 and reopened on Workspace 2.** Current key, all seven chord capsules and both notation regions match saved pre-restart pixels exactly. Automatic green S/A, plugin focus and 920×703 size retained. Pre/post `pw-link -l` outputs are identical; no tone, routing, controller or recording changes. All ten Storage links passed verification. SHA-256: `cbf605833dc56340413a43ef80e5139ee478d93e7f3aad07d4190c36d54a0574`. Pre-upgrade project/plugin backup: `~/storage/daw/Backups/chordlab-scoring-20261024T135307/`. Evidence: `target/scoring-20261024/`. Source uncommitted/unpushed.
+
+## Computer G: per-chord Rootless (0.3.11, 2026-10-24)
+
+- In normal mode, computer `g` toggles the current chord's root. No new button; the game G control is unchanged. Requires active A and editor focus. Modifiers and held-key repeats do not retrigger.
+- Omit the harmonic root (all root octaves in Guitar voicings), not simply the lowest note. Retain every other exact pitch. Append `RL` only when rootless; bass pitch, octave and chord-member label reflect the remaining bass. Chord identity, fixed major-degree ordering and colors remain unchanged.
+- Follow existing seven-degree slot memory, shared across transposition rather than adding 84 per-key slots. Piano/Guitar share each degree's rootless flag while retaining separate position memories. Tab and H/L preserve the flag. From 0.3.12, Enter restores the current chord rooted and resets only the current mode position. Rootless H/L skips duplicate inversions with unchanged bass.
+- The lower keyboard, fretboard and staff omit root chord markers; the upper complete scale stays unchanged. Physical MIDI is not filtered. Sustain retains its existing tail behavior; toggling G never forces pedal-up.
+- During a game, G is locked like other normal voicing edits. It cannot alter targets, scoring, demonstrations or normal memory. Leaving the game restores the original rootless setting.
+- **v4** state appends seven flags after v3, retaining 21 parameters and the stable plugin ID (internal Command range extends to 30). v1/v2/v3 default rooted, including loading into a previously rootless instance. Invalid/truncated flags are tested. Downgrading requires the pre-update project backup because old engines do not understand v4.
+- Validation: 1486 related Python tests, 12 CTests, actual CLAP note/state roundtrip, root/game cargo test and clippy, native G in an isolated GUI, and game layout regression passed. Full `lib/tools` collection is blocked by the unrelated harmony tool's missing `soundfile`; this is not claimed as a full-repository pass. Evidence: `target/rootless-20261024/`.
+
+
+### 0.3.11 live deployment and host persistence
+
+Installed in Storage-backed `.clap/Chord Lab.clap`; SHA-256: `95b36016697e35ac7fc2cd6a6446caf08e137725fbd92ded1e94ff5b548ec550`. Real Library opened in Workspace 2 at 920×703 with automatic green S/A. Native X11 G events sent to the current focus verified omission of D from Dm7, RL and the correct C4(b7) bass. This is not a claim of human keyboard/listening acceptance. Saved RL, exited Bitwig normally and reopened: RL and diagrams persisted. Then restored the original rooted state with G and saved again. No recording, new scenes, routing or controller changes. Pre-update backup: `~/storage/daw/Backups/chordlab-rootless-20261024T131347/`. Source is uncommitted/unpushed; the final Recovery snapshot preserves working-tree source.
+
 > **0.3.3 installed in real Bitwig on 2026-10-22**: see [game mode and live validation](GAME.md). [Standalone playback](STANDALONE.md) is deferred; sound menus are cancelled; normal-mode documentation and installation history follow.
 
 # Chord Lab CLAP 0.2.14

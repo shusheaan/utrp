@@ -11,7 +11,7 @@ slider4:60<12,115,1>-Voicing centre (MIDI)
 slider5:64<1,127,1>-Velocity
 slider6:1<0,1,1>-Enabled
 slider7:0<0,1000000,1>-Command serial
-slider8:23<0,29,1>-Command
+slider8:23<0,30,1>-Command
 slider9:0<0,1,1>-Sounding (read only)
 slider10:0<0,127,1>-Voice 1 (read only)
 slider11:0<0,127,1>-Voice 2 (read only)
@@ -47,6 +47,7 @@ saved=3000; memory_index=0; loop(7,
   memory_index+=1;
 );
 guitar_saved=3100; memory_index=0; loop(7,guitar_saved[memory_index]=guitar_default_anchor; memory_index+=1;);
+rootless_saved=3200; memset(rootless_saved,0,7);
 voicing_mode=slider20;
 memset(voices,-1,guitar_voice_capacity);
 key=slider1; degree=slider2; inversion=slider3; kind=slider16; voice_count=3+kind;
@@ -110,8 +111,10 @@ slider10=max(0,voices[0]); slider11=max(0,voices[1]);
 slider12=max(0,voices[2]); slider13=max(0,voices[3]); slider17=max(0,voices[4]); slider21=max(0,voices[5]);
 
 @serialize
-// v3 appends independent guitar anchors. v1/v2 projects default to Piano.
+// v4 appends seven rootless flags, retaining all earlier record offsets.
+// Clear appended fields on EVERY load, including loading an old state into a used instance.
 file_avail(0)>=0 ? (
+  memset(rootless_saved,0,7);
   file_var(0,memory_version);
   memory_version==1 ? (
     file_mem(0,4000,252); memory_index=0;
@@ -120,8 +123,9 @@ file_avail(0)>=0 ? (
       oldcell[0]==1 ? (cell[0]=1; cell[1]=1; cell[2]=oldcell[1]; cell[3]=oldcell[2];);
       memory_index+=1;
     );
-  ) : memory_version==2 || memory_version==3 ? file_mem(0,saved,28);
-  memory_version==3 ? file_mem(0,guitar_saved,7);
+  ) : memory_version==2 || memory_version==3 || memory_version==4 ? file_mem(0,saved,28);
+  memory_version==3 || memory_version==4 ? file_mem(0,guitar_saved,7);
+  memory_version==4 ? file_mem(0,rootless_saved,7);
   memory_index=0; loop(7,
     cell=saved+memory_index*4;
     !((cell[0]==0 || cell[0]==1) && cell[1]>=0 && cell[1]<=2 && cell[1]==floor(cell[1]) &&
@@ -131,10 +135,11 @@ file_avail(0)>=0 ? (
       );
     !(guitar_saved[memory_index]>=0 && guitar_saved[memory_index]<=guitar_max_anchor &&
       guitar_saved[memory_index]==floor(guitar_saved[memory_index])) ? guitar_saved[memory_index]=guitar_default_anchor;
+    rootless_saved[memory_index]=(rootless_saved[memory_index]>=1 && rootless_saved[memory_index]<=1) ? 1 : 0;
     memory_index+=1;
   );
 ) : (
-  memory_version=3; file_var(0,memory_version); file_mem(0,saved,28); file_mem(0,guitar_saved,7);
+  memory_version=4; file_var(0,memory_version); file_mem(0,saved,28); file_mem(0,guitar_saved,7); file_mem(0,rootless_saved,7);
 );
 
 @gfx 884 683

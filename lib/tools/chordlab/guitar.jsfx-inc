@@ -15,6 +15,13 @@ function guitar_region_record(k,d,t,anchor) local(record,i,best,distance,p) (
   best;
 );
 function guitar_bass(region) (region[2];);
+function guitar_filtered_bass(region,k,d,rootless) local(i,result) (
+  i=0; result=-1;
+  loop(region[1],
+    result<0 && chord_includes(region[i+2],k,d,rootless) ? result=region[i+2];
+    i+=1;
+  ); result;
+);
 function guitar_current() (guitar_region_record(key,degree,kind,guitar_saved[degree]););
 // Exact-pitch union across all strings. Shared display oracle for the sounding region.
 function guitar_region_contains(note,k,d,t,anchor) local(string,fret,found) (

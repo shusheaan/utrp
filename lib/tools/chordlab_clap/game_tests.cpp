@@ -34,8 +34,8 @@ struct Engine {
         return out;
     }
     void on() { check(control.send({1}),"game on command"); block(); }
-    void target(int id=1) {
-        GamePacket p{3}; p.target.id=id; p.target.count=4;
+    void target(int id=1, double limit=10) {
+        GamePacket p{3}; p.limit=limit; p.target.id=id; p.target.count=4;
         const int notes[]{60,64,67,71}, roles[]{0,1,2,3}, letters[]{0,2,4,6}, scale[]{0,2,4,5,7,9,11};
         std::copy(notes,notes+4,p.target.notes);std::copy(roles,roles+4,p.target.roles);std::copy(letters,letters+4,p.target.letters);
         std::copy(scale,scale+7,p.target.scale); p.target.quality=4;
@@ -55,10 +55,10 @@ void race(const char* path) {
     e.midi(0x9f,72);e.midi(0x8f,72,0);const auto controls=e.block();
     check(std::none_of(controls.begin(),controls.end(),[](auto d){return (d[0]&0xf0)==0x90;}),"computer chord cannot auto-answer");
     for(auto note:{60,64}) {e.midi(0x9e,note);e.midi(0x8e,note,0);e.block();}
-    check(e.get("game_phase")==3 && e.get("game_guitar_score")==100 && e.get("game_piano_score")==0,"guitar wins and replays");
+    check(e.get("game_phase")==3 && e.get("game_guitar_score")==4096 && e.get("game_piano_score")==0,"guitar wins and replays");
     e.target(2);check(e.get("game_piano_hits")==0 && e.get("game_guitar_hits")==0,"next clears hits");
     for(auto note:{60,64,67,71})e.midi(0x90,note);
-    e.block();check(e.get("game_piano_score")==100,"piano simultaneous chord wins");
+    e.block();check(e.get("game_piano_score")==4096,"piano simultaneous chord wins");
     e.target(3);e.midi(0x90,60);e.block();check(e.get("game_piano_hits")==0,"held note not inherited");
     e.midi(0x80,60,0);e.midi(0x80,60,0);e.midi(0x90,60);e.block();check(e.get("game_piano_hits")==1,"fresh attack counts");
 }
@@ -88,13 +88,18 @@ void isolation(const char* path, const char* baseline) {
     Engine normal(baseline), toggled(path);normal.block();toggled.block();
     std::array<double,21> before{};
     for(unsigned i=0;i<21;++i)before[i]=ysfx_slider_get_value(toggled.fx.get(),i);
+    for(auto* engine:{&normal,&toggled}) {
+        engine->midi(0x9f,90);engine->midi(0x8f,90,0);engine->block();
+    }
+    for(unsigned i=0;i<21;++i)before[i]=ysfx_slider_get_value(toggled.fx.get(),i);
     ysfx_state_u savedBefore{ysfx_save_state(toggled.fx.get())};
     toggled.on();toggled.target();
+    toggled.midi(0x9f,90);toggled.midi(0x8f,90,0);toggled.block();
     ysfx_state_u savedDuring{ysfx_save_state(toggled.fx.get())};
     check(ysfx_is_state_equal(savedBefore.get(),savedDuring.get()),"game cannot alter serialized normal state");
     toggled.control.off();toggled.block();
     for(unsigned i=0;i<21;++i)check(before[i]==ysfx_slider_get_value(toggled.fx.get(),i),"all 21 parameters unchanged by game");
-    for(unsigned i=3000;i<3107;++i)check(ysfx_read_vmem_single(normal.fx.get(),i)==ysfx_read_vmem_single(toggled.fx.get(),i),"voicing memory unchanged");
+    for(unsigned i=3000;i<3207;++i)check(ysfx_read_vmem_single(normal.fx.get(),i)==ysfx_read_vmem_single(toggled.fx.get(),i),"voicing memory unchanged");
     for(auto d:std::vector<Event>{{0x9f,72,100},{0x9f,79,100},{0x8f,79,0},{0x90,60,90},{0xb0,64,127},{0x80,60,0},{0x8f,72,0},{0xb0,64,0}}) {
         normal.midi(d[0],d[1],d[2]);toggled.midi(d[0],d[1],d[2]);
         check(normal.block()==toggled.block(),"off MIDI equals untouched instance byte-for-byte");
@@ -129,18 +134,21 @@ void boundaries(const char* path) {
 }
 
 void speed_and_success_replay(const char* path) {
-    for(int remaining:{1,3,8}) {
+    for(int elapsed:{1,3,8}) {
         Engine e(path);e.block();e.on();e.target();
-        // Equivalent elapsed answering time, independent of block rounding.
-        *ysfx_find_var(e.fx.get(),"game_deadline")=e.get("game_clock")+remaining*48000;
-        check(e.control.send({4}),"pause before completion");e.block();
-        for(int i=0;i<500;++i)e.block();
-        check(e.control.send({4}),"resume before completion");e.block();
+        // Advance audio time, not the deadline: pauses must not lower the award.
+        *ysfx_find_var(e.fx.get(),"game_clock")=e.get("game_answer_start")+elapsed*48000;
+        const int award=int(std::pow(8-elapsed,4));
+        for(int pause=0;pause<2;++pause) {
+            check(e.control.send({4}),"pause before completion");e.block();
+            for(int i=0;i<500;++i)e.block();
+            check(e.control.send({4}),"resume before completion");e.block();
+        }
         GameStatus status;e.control.read(status); // simulate editor draining pause telemetry
         for(auto n:{60,64,67,71})e.midi(0x90,n);
         const auto output=e.block();
         check(e.get("game_phase")==3 && e.get("game_winner")==1,"success enters replay");
-        check(e.get("game_award")==remaining*10,"speed score excludes pause");
+        check(e.get("game_award")==award,"speed score excludes pause");
         check(e.get("game_timeouts")==0,"success is not a timeout");
         check(std::count_if(output.begin(),output.end(),[](auto d){return d[0]==0x9f;})==4,"success plays exact four-note answer");
         for(auto n:{60,64,67,71}) {
@@ -149,12 +157,35 @@ void speed_and_success_replay(const char* path) {
         }
         e.block();check(e.get("game_guitar_score")==0,"second player cannot score during replay");
         e.control.read(status);
-        check(status.winner==1 && status.award==remaining*10,"winner and award published");
+        check(status.winner==1 && status.award==award,"winner and award published");
         for(int i=0;i<370;++i)e.block();
         check(e.get("game_phase")==3,"success replay not prematurely skipped");
         for(int i=0;i<10;++i)e.block();
         check(e.get("game_phase")==4 && e.get("game_demo_active")==0,"success advances after two seconds, notes released");
-        check(e.get("game_piano_score")==remaining*10,"success scored exactly once");
+        check(e.get("game_piano_score")==award,"success scored exactly once");
+    }
+}
+
+
+void original_score_curve(const char* path) {
+    // Fixtures transcribed from the earliest Rust commit 872294a, not JSFX.
+    constexpr int awards[]{4096,2401,1296,625,256,81,16,1,0,0};
+    for(int rate:{44100,48000,96000}) for(int limit:{1,2,5,10,30,120}) {
+        Engine e(path); ysfx_set_sample_rate(e.fx.get(),rate); e.block(); e.on();
+        int total=0;
+        for(int second=0;second<10;++second) for(int delta:{-1,0,1}) {
+            const int samples=second*rate+delta;
+            if(samples<256 || samples>=limit*rate) continue;
+            e.target(second*3+delta+2,limit);
+            const int offset=123;
+            *ysfx_find_var(e.fx.get(),"game_clock")=e.get("game_answer_start")+samples-offset;
+            for(auto n:{60,64,67,71}) { e.midi(0x90,n,100,offset);e.midi(0x80,n,0,offset); }
+            e.block();
+            const int expected=awards[second-(delta<0 ? 1 : 0)]; total+=expected;
+            check(e.get("game_award")==expected,"original quartic second boundaries independent of timeout/sample rate");
+            check(e.get("game_piano_score")==total,"independent cumulative original scoring");
+            check(e.get("game_winner")==1 && e.get("game_timeouts")==0,"zero-point success remains success");
+        }
     }
 }
 
@@ -181,15 +212,16 @@ void extended_session(const char* path) {
         check(t.count==4,"exact seventh chord target");
         check(e.control.send({3,t,10,1}),"submit committed target");e.block();
         const bool success=round%11!=10;
-        const int remaining=1+round%9, winner=round%2;
-        *ysfx_find_var(e.fx.get(),"game_deadline")=e.get("game_clock")+(success ? remaining*48000 : 0);
+        const int elapsed=1+round%9, winner=round%2;
+        const int award=int(std::pow(std::max(0,8-elapsed),4));
+        *ysfx_find_var(e.fx.get(),"game_clock")=e.get("game_answer_start")+(success ? elapsed*48000 : 10*48000);
         if(success) for(unsigned i=0;i<t.count;++i) {
             e.midi(winner ? 0x9e : 0x90,uint8_t(t.notes[i]));
             e.midi(winner ? 0x8e : 0x80,uint8_t(t.notes[i]),0);
         }
         e.block();
-        if(success) (winner ? guitar : piano)+=remaining*10; else ++timeouts;
-        check(e.get("game_award")== (success ? remaining*10 : 0),"exact per-round speed award");
+        if(success) (winner ? guitar : piano)+=award; else ++timeouts;
+        check(e.get("game_award")== (success ? award : 0),"exact per-round speed award");
         check(e.get("game_winner")== (success ? winner+1 : 0),"correct winning instrument");
         // The losing side cannot score during the answer demonstration.
         for(unsigned i=0;i<t.count;++i) {
@@ -211,6 +243,6 @@ void extended_session(const char* path) {
 
 }
 int main(int argc,char** argv) {
-    try {check(argc==2 || argc==3,"JSFX path and optional original baseline required");race(argv[1]);timeout(argv[1]);isolation(argv[1],argc==3 ? argv[2] : argv[1]);boundaries(argv[1]);speed_and_success_replay(argv[1]);extended_session(argv[1]);std::cout<<"game race / speed / success replay / timeout / normal isolation: PASS\n";}
+    try {check(argc==2 || argc==3,"JSFX path and optional original baseline required");original_score_curve(argv[1]);race(argv[1]);timeout(argv[1]);isolation(argv[1],argc==3 ? argv[2] : argv[1]);boundaries(argv[1]);speed_and_success_replay(argv[1]);extended_session(argv[1]);std::cout<<"game race / speed / success replay / timeout / normal isolation: PASS\n";}
     catch(const std::exception& e){std::cerr<<e.what()<<'\n';return 1;}
 }

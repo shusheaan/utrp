@@ -28,7 +28,7 @@ function start_chord(offset) local(i,n,region,count) (
   loop(voicing_mode ? region[1] : voice_count,
     n=voicing_mode ? region[i+2] :
       chord_note(key,degree,inversion,i,centre,voice_count);
-    n>=0 ? !own[n] ? (
+    chord_includes(n,key,degree,rootless_saved[degree]) ? !own[n] ? (
       voices[count]=n; count+=1; own[n]=1;
       // Rearticulate a shared pitch without stacking unmatched synth voices.
       held[n]>0 ? midisend(offset,$x80,n,0);
@@ -57,25 +57,35 @@ function save_voicing() local(index) (
   index[0]=1; index[1]=kind; index[2]=inversion; index[3]=centre;
   slider15=(slider15+1)%1000001; sliderchange(16384);
 );
-function move_voicing(direction,offset) local(oldlow,nextinv,nextlow,nextcentre) (
+function move_voicing(direction,offset) local(oldlow,nextinv,nextlow,nextcentre,rawlow,rawnext,attempt) (
   voicing_mode ? (
     guitar_move(direction) ? (
       slider15=(slider15+1)%1000001; sliderchange(16384);
       sounding ? start_chord(offset);
     );
   ) : (
-  oldlow=chord_note(key,degree,inversion,0,centre,voice_count);
-  nextinv=(inversion+direction+voice_count)%voice_count;
-  nextlow=chord_note(key,degree,nextinv,0,centre,voice_count);
-  nextcentre=centre;
-  direction>0 && nextlow<=oldlow ? nextcentre+=12;
-  direction<0 && nextlow>=oldlow ? nextcentre-=12;
-  nextlow=chord_note(key,degree,nextinv,0,nextcentre,voice_count);
+  oldlow=piano_bass(key,degree,inversion,centre,voice_count,rootless_saved[degree]);
+  nextinv=inversion; nextcentre=centre; nextlow=oldlow; attempt=0;
+  // Rootless inversions can share the same bass. Skip that duplicate step;
+  // still walk the original rooted ordering so restoring G preserves pitches.
+  while(attempt<voice_count && (nextlow-oldlow)*direction<=0) (
+    rawlow=chord_note(key,degree,nextinv,0,nextcentre,voice_count);
+    nextinv=(nextinv+direction+voice_count)%voice_count;
+    rawnext=chord_note(key,degree,nextinv,0,nextcentre,voice_count);
+    direction>0 && rawnext<=rawlow ? nextcentre+=12;
+    direction<0 && rawnext>=rawlow ? nextcentre-=12;
+    nextlow=piano_bass(key,degree,nextinv,nextcentre,voice_count,rootless_saved[degree]);
+    attempt+=1;
+  );
   nextcentre>=12 && nextcentre<=115 && (nextlow-oldlow)*direction>0 ? (
     inversion=nextinv; centre=nextcentre; publish_voicing(); save_voicing();
     sounding ? start_chord(offset);
   );
   );
+);
+function toggle_rootless(offset) (
+  rootless_saved[degree]=!rootless_saved[degree]; save_voicing();
+  sounding ? start_chord(offset);
 );
 function cycle_kind(offset) (
   kind=(kind+1)%3; inversion=inversion%(3+kind); publish_voicing(); save_voicing();
@@ -129,7 +139,9 @@ function command(cmd,offset) (
   ) : cmd==19 ? move_voicing(-1,offset)
     : cmd==20 ? move_voicing(1,offset)
     : cmd==21 ? (
-      // Enter resets only this degree in the current mode; type is preserved.
+      // Enter restores this degree rooted; position resets only in the current mode.
+      // Chord type and other degrees/mode positions remain unchanged.
+      rootless_saved[degree]=0;
       voicing_mode ? (
         guitar_saved[degree]=guitar_default_anchor;
         slider15=(slider15+1)%1000001; sliderchange(16384);
@@ -143,7 +155,8 @@ function command(cmd,offset) (
     : cmd==22 || cmd==26 ? set_sustain(!sustain_on,offset)
     : cmd==27 ? set_sustain(0,offset)
     : cmd==28 ? select_voicing_mode(0,offset)
-    : cmd==29 ? select_voicing_mode(1,offset);
+    : cmd==29 ? select_voicing_mode(1,offset)
+    : cmd==30 ? toggle_rootless(offset);
 );
 );
 function receive_midi(offset,status,note,value) local(type,ch,index) (

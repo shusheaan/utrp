@@ -38,7 +38,7 @@ juce::Rectangle<int> gamePanelBounds(juce::Rectangle<int> slot,int editorHeight,
 
 juce::String gameAwardText(const GameStatus& status,int instrument,bool replaying)
 {
-    return replaying && status.winner==instrument && status.award>0
+    return replaying && instrument>=1 && instrument<=2 && status.winner==instrument && status.award>=0
         ? "+"+juce::String(status.award) : juce::String{};
 }
 
@@ -181,9 +181,14 @@ void scoreboard(juce::Graphics& g,juce::Rectangle<int> area,const GameStatus& s,
         text(g,instrument==1 ? "PIANO" : "GUITAR",{box.getX()+10,box.getY()+6,width-20,16},
              10,juce::Colour(game_muted));
         const auto total=juce::String(instrument==1 ? s.pianoScore : s.guitarScore);
-        const int numberWidth=std::clamp(total.length()*12,24,width-64);
-        text(g,total,{box.getX()+10,box.getY()+25,numberWidth,20},20,juce::Colour(game_text));
-        text(g,award,{box.getX()+14+numberWidth,box.getY()+25,width-numberWidth-24,20},
+        // Original scoring can add 4096 at once: reserve its full label width.
+        const int awardWidth=award.isEmpty() ? 0 :
+            int(std::ceil(gameControls::font(14).withHeight(14).getStringWidthFloat(award)));
+        const int numberWidth=width-20-(awardWidth ? awardWidth+4 : 0);
+        const float naturalWidth=gameControls::font(20).withHeight(20).getStringWidthFloat(total);
+        const float numberSize=20*std::min(1.0f,float(numberWidth)/std::max(1.0f,naturalWidth));
+        text(g,total,{box.getX()+10,box.getY()+25,numberWidth,20},numberSize,juce::Colour(game_text));
+        text(g,award,{box.getX()+14+numberWidth,box.getY()+25,awardWidth,20},
              14,juce::Colour(game_reason));
     }
 }

@@ -23,6 +23,14 @@ function chord_note(key,degree,inversion,voice,centre,count) local(i,total,shift
   shift=max(-12*floor(low/12),min(12*floor((127-high)/12),shift));
   base_pitch(key,degree,voice+inversion,count)+shift;
 );
+// Filter the harmonic root without recomputing/recentring the existing voicing.
+function chord_includes(note,k,d,rootless) (
+  note>=0 && (!rootless || note%12!=(k+major_step(d))%12);
+);
+function piano_bass(k,d,inv,centre,count,rootless) local(note) (
+  note=chord_note(k,d,inv,0,centre,count);
+  chord_includes(note,k,d,rootless) ? note : chord_note(k,d,inv,1,centre,count);
+);
 function chord_role(pc,key,degree,count) local(i,result) (
   result=-1; i=0;
   loop(count,(key+major_step(degree+2*i))%12==pc ? result=i; i+=1;);

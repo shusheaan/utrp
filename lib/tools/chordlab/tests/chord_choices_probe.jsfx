@@ -7,7 +7,7 @@ import ../game.jsfx-inc
 import ../theme.jsfx-inc
 import ../ui.jsfx-inc
 @init
-failures=0; saved=3000; key=0; degree=0; voicing_mode=0;
+failures=0; saved=3000; rootless_saved=3200; guitar_saved=3100; key=0; degree=0; voicing_mode=0;
 i=0; loop(7,saved[i*4+3]=60; i+=1;);
 function check(value) (!value ? failures+=1;);
 function check_text(d,expected) (
@@ -69,6 +69,18 @@ game_seen[66]=1; check(game_visible(66));
 // Read-only game display cannot change normal key/degree or saved voicings.
 check(key==0 && degree==0 && saved[3]==60);
 game_on=0; check_text(0,"I C/C4(1)"); check(chord_choice_selected(0));
+// Rootless labels use the actual bass; identity, degree and palette do not move.
+rootless_saved[0]=1; check_text(0,"I C/E4(3) RL");
+saved[1]=1; check_text(0,"I CM7/E4(3) RL");
+saved[2]=3; check_text(0,"I CM7/B3(7) RL");
+saved[1]=2; saved[2]=0; check_text(0,"I CM9/D4(9) RL");
+voice_count=5; check(display_role(60,0)==-1); check(display_role(60,1)==0);
+check(display_role(62,0)==4); check(chord_choice_role(0)==0);
+check_text(1,"ii Dm/D4(1)");
+game_on=1;game_count=4;game_root=0;game_root_letter=0;game_quality=4;
+game_roles[0]=0;game_notes[0]=60;game_letters[0]=0;
+check_text(0,"I Cmaj7/C4(1)");check(display_role(60,0)==0);
+game_on=0;rootless_saved[0]=0;saved[1]=0;saved[2]=0;
 // Stable fixture for the real pixel/hit-test harness.
 game_count=3; game_signature=0; game_root=0; game_root_letter=0; game_quality=0;
 i=0; loop(7,game_scale[i]=major_step(i); game_scale_letters[i]=i; i+=1;);
