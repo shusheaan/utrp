@@ -35,3 +35,13 @@ Spark GO was correctly enumerated by USB/ALSA/PipeWire, but Bitwig Audio was set
 Restored the existing `Spark GO USB + WooAudio` Combined Device through Bitwig GUI (Spark clock master, manual 128 samples). Woo is absent, but Spark remains usable. Applying settings restores Spark capture_MONO to Bitwig in2 and out1/out2 to Spark stereo. Raw detection retains Mono capture_MONO, Monitor On and −∞; Master shows signal. User confirmed sound returned. No system microphone changes, new services, arming or recording.
 
 Preferences auto-saved at 16:33:21. No restart validation or confirmed project save; this is not a fresh cold-start acceptance. Pre-change backup: `~/storage/daw/Backups/spark-routing-20261023/`; evidence: `target/spark-no-sound-20261023/`. Keep this device group and change only Master output for another speaker; do not select System In + Out to recover output.
+
+## 2026-10-24: Woo-only device selection left Master missing
+
+Audio Selected Device(s) was the single `WooAudio` device, while Master still referenced Spark's physical stereo output and displayed `[missing]`. Woo USB/ALSA/PipeWire was healthy, hardware/software mute was off and volume was 100%. Existing Bitwig→Woo graph ports did not prove that the project Master was routed to them.
+
+Restored the existing `Spark GO USB + WooAudio` Combined Device in the GUI (both enabled, Spark clock master, 128 samples), then explicitly selected Master output `WooAudio → Stereo → Analog Stereo playback_F L/R`. Live links showed Spark capture_MONO→Bitwig in3 and Bitwig→Woo left/right. Port numbers are runtime identifiers, not persistent configuration. The user confirmed sound returned. No system-default-output, EQ, controller, plugin or recording changes; no new service.
+
+Switch speakers only through **Master Inspector's output menu**, keeping the combined device in Settings→Audio. Both Spark/Woo should appear in that menu. Restoring the combined device immediately resolved the previous missing Master destination back to Spark, confirming the excluded Spark port as the cause.
+
+Saved Library using File→Save (12:24:10, SHA-256 `8c3889531a7ee4802f4e2bd1064c0a55010010c30adb5b32f12af11f82bcdb19`). No restart or hot-plug acceptance was performed. Pre-change project/preferences backup: `~/storage/daw/Backups/woo-master-20261024T122033/`; screenshots/routes: `target/woo-output-20261024/`.
